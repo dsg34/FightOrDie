@@ -9,6 +9,7 @@ pistola::pistola() {
 }
 
 pistola::pistola(const pistola& orig) {
+    
 }
 
 pistola::~pistola() {
