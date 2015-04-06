@@ -16,6 +16,7 @@ pistola::~pistola() {
 /***********************************METODOS GET Y SET************************************************/
 int pistola::getDanyo(){
     return danyo;
+    
 }
 void pistola::setDanyo(int d){
     danyo=d;
