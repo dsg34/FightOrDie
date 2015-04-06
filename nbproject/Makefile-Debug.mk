@@ -35,6 +35,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/Personaje.o \
+	${OBJECTDIR}/Protagonista.o \
 	${OBJECTDIR}/bala.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/pistola.o
@@ -63,6 +65,16 @@ LDLIBSOPTIONS=-L../../../Downloads/Programas/Netbeans/SFML-2.1/lib -lsfml-graphi
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fight_or_die.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fight_or_die ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/Personaje.o: Personaje.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../../../Downloads/Programas/Netbeans/SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Personaje.o Personaje.cpp
+
+${OBJECTDIR}/Protagonista.o: Protagonista.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../../../Downloads/Programas/Netbeans/SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Protagonista.o Protagonista.cpp
 
 ${OBJECTDIR}/bala.o: bala.cpp 
 	${MKDIR} -p ${OBJECTDIR}
