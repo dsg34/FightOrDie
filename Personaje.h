@@ -17,8 +17,9 @@ public:
     Personaje();
     Personaje(const Personaje& orig);
     virtual ~Personaje();
-    virtual void update(); //Se emplea virtual para que, si se crea una instancia de una clase hija de personaje, se llame a los métodos de dicha clase y no a los genericos
-    virtual void render();
+    virtual void update()=0; //Se emplea virtual para que, si se crea una instancia de una clase hija de personaje, se llame a los métodos de dicha clase y no a los genericos
+    virtual void render(sf::RenderWindow &window)=0;
+
 private:
     sf::Sprite sprite;
     int vida;

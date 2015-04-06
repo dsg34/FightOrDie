@@ -16,3 +16,6 @@ Personaje::Personaje(const Personaje& orig) {
 Personaje::~Personaje() {
 }
 
+void Personaje::render(sf::RenderWindow &window){
+    window.draw(sprite);
+}
