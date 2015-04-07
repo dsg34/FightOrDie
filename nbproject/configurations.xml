@@ -4,10 +4,12 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>Arma.h</itemPath>
+      <itemPath>ArmaFactory.h</itemPath>
+      <itemPath>Bala.h</itemPath>
       <itemPath>Personaje.h</itemPath>
       <itemPath>Protagonista.h</itemPath>
-      <itemPath>bala.h</itemPath>
-      <itemPath>pistola.h</itemPath>
+      <itemPath>librerias.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -16,11 +18,12 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>Arma.cpp</itemPath>
+      <itemPath>ArmaFactory.cpp</itemPath>
+      <itemPath>Bala.cpp</itemPath>
       <itemPath>Personaje.cpp</itemPath>
       <itemPath>Protagonista.cpp</itemPath>
-      <itemPath>bala.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
-      <itemPath>pistola.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -62,6 +65,18 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="Arma.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Arma.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ArmaFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ArmaFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Bala.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Bala.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Personaje.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Personaje.h" ex="false" tool="3" flavor2="0">
@@ -70,15 +85,9 @@
       </item>
       <item path="Protagonista.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="bala.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="bala.h" ex="false" tool="3" flavor2="0">
+      <item path="librerias.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="pistola.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="pistola.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -117,6 +126,18 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="Arma.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Arma.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ArmaFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ArmaFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Bala.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Bala.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Personaje.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Personaje.h" ex="false" tool="3" flavor2="0">
@@ -125,15 +146,9 @@
       </item>
       <item path="Protagonista.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="bala.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="bala.h" ex="false" tool="3" flavor2="0">
+      <item path="librerias.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="pistola.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="pistola.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

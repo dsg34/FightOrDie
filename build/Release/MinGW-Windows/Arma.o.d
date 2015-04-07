@@ -1,4 +1,4 @@
-build/Release/MinGW-Windows/main.o: main.cpp Protagonista.h Arma.h Bala.h \
+build/Release/MinGW-Windows/Arma.o: Arma.cpp Arma.h Bala.h \
  ../SFML-2.1/include/SFML/Graphics.hpp \
  ../SFML-2.1/include/SFML/Window.hpp ../SFML-2.1/include/SFML/System.hpp \
  ../SFML-2.1/include/SFML/Config.hpp \
@@ -61,9 +61,7 @@ build/Release/MinGW-Windows/main.o: main.cpp Protagonista.h Arma.h Bala.h \
  ../SFML-2.1/include/SFML/Graphics/RectangleShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/ConvexShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
- ../SFML-2.1/include/SFML/Graphics/Text.hpp Personaje.h ArmaFactory.h
-
-Protagonista.h:
+ ../SFML-2.1/include/SFML/Graphics/Text.hpp
 
 Arma.h:
 
@@ -196,7 +194,3 @@ Bala.h:
 ../SFML-2.1/include/SFML/Graphics/Sprite.hpp:
 
 ../SFML-2.1/include/SFML/Graphics/Text.hpp:
-
-Personaje.h:
-
-ArmaFactory.h:

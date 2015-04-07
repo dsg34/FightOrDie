@@ -1,5 +1,5 @@
 build/Release/MinGW-Windows/Protagonista.o: Protagonista.cpp \
- Protagonista.h ../SFML-2.1/include/SFML/Graphics.hpp \
+ Protagonista.h Arma.h Bala.h ../SFML-2.1/include/SFML/Graphics.hpp \
  ../SFML-2.1/include/SFML/Window.hpp ../SFML-2.1/include/SFML/System.hpp \
  ../SFML-2.1/include/SFML/Config.hpp \
  ../SFML-2.1/include/SFML/System/Clock.hpp \
@@ -64,6 +64,10 @@ build/Release/MinGW-Windows/Protagonista.o: Protagonista.cpp \
  ../SFML-2.1/include/SFML/Graphics/Text.hpp Personaje.h
 
 Protagonista.h:
+
+Arma.h:
+
+Bala.h:
 
 ../SFML-2.1/include/SFML/Graphics.hpp:
 

@@ -1,11 +1,8 @@
-#include <iostream>
-#include <SFML/Graphics.hpp>
+
 #include <math.h> 
 #include <vector>
-#include "bala.h"
-#include "pistola.h"
-//#include <Vector2.hpp>
-
+#include "Protagonista.h"
+#include "ArmaFactory.h"
 #define kVel 5
 
 sf::Vector2<int> posicionCursor(sf::RenderWindow &window){
@@ -46,8 +43,11 @@ int main()
     reloj.restart();
     sf::Time frecuencia;    
     
-    pistola miPistola = pistola();
+    /////////////////////////////////////////////////Pruebas ArmaFactory
+    ArmaFactory* fabricaArmas = new ArmaFactory();
     
+    Arma* miPistola = fabricaArmas->crearPistola();
+    //Arma* miSecundaria = fabricaArmas->crearGranada();
     int balas=0;
     bool existePersonaje=true;
         
@@ -93,11 +93,11 @@ int main()
                 case sf::Event::Closed:
                     window.close();
                     break;
-                /***** Al hacer click izquierdo con el raton, se llama al evento disparar de la pistola ************************************************************/
+                /***** Al hacer click izquierdo con el raton, se llama al evento disparar de la Arma ************************************************************/
                 case sf::Event::MouseButtonPressed:
                     if (event.mouseButton.button == sf::Mouse::Left)
                     {
-                        miPistola.disparar(spriteBala, sprite.getPosition(), vectorDisparo(sprite.getPosition(), posicionCursor(window)));
+                        miPistola->disparar(spriteBala, sprite.getPosition(), vectorDisparo(sprite.getPosition(), posicionCursor(window)));
                     }
                     break;
                 //Se pulsó una tecla, imprimo su codigo
@@ -129,7 +129,19 @@ int main()
                         case sf::Keyboard::S:
                             sprite.setTextureRect(sf::IntRect(0*75, 0*75, 75, 75));
                             sprite.move(0,kVel); 
-                        break;                        
+                        break;     
+                        
+                        case sf::Keyboard::Num1:
+                            miPistola = fabricaArmas->crearPistola();
+                        break;
+                        
+                        case sf::Keyboard::Num2:
+                            miPistola = fabricaArmas->crearEscopeta();
+                        break;
+                        
+                        case sf::Keyboard::Num3:
+                            miPistola = fabricaArmas->crearMetralleta();
+                        break;
                         
                         //Pulsar R para reiniciar partida
                         case sf::Keyboard::R:
@@ -159,10 +171,10 @@ int main()
         if(frecuencia.asSeconds()>0.05){  
             window.clear();
             //Actualizamos la posicion de las balas
-            miPistola.updateBalas();
+            miPistola->updateBalas();
             
             //Pintamos las balas
-            miPistola.pintarBalas(window);
+            miPistola->pintarBalas(window);
                       
             //Pintamos los demas sprites
             window.draw(sprite);

@@ -8,19 +8,18 @@
 #ifndef PROTAGONISTA_H
 #define	PROTAGONISTA_H
 
-#include <iostream>
-#include <SFML/Graphics.hpp>
-#include <math.h> 
-#include <vector>
+#include "Arma.h"
 #include "Personaje.h"
 
 class Protagonista: public Personaje {
 public:
-    Protagonista();
+    Protagonista(sf::Sprite* p, Arma* a);
     Protagonista(const Protagonista& orig);
     virtual ~Protagonista();
 private:
-
+    int prueba;
+    Arma* arma;
+    Arma* armaSec;
 };
 
 #endif	/* PROTAGONISTA_H */

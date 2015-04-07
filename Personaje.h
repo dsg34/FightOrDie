@@ -4,10 +4,7 @@
  *
  * Created on 6 de abril de 2015, 15:50
  */
-#include <iostream>
-#include <SFML/Graphics.hpp>
-#include <math.h> 
-#include <vector>
+
 
 #ifndef PERSONAJE_H
 #define	PERSONAJE_H
@@ -20,10 +17,14 @@ public:
     virtual void update()=0; //Se emplea virtual para que, si se crea una instancia de una clase hija de personaje, se llame a los métodos de dicha clase y no a los genericos
     virtual void render(sf::RenderWindow &window)=0;
 
-private:
-    sf::Sprite sprite;
+protected:
+    sf::Sprite* sprite;
     int vida;
     int maxVida;
+    int velocidad;
+    int cont;//Contador de la posicion del sprite en la que se esta
+    int direc;//Direccion del personaje
+    bool muriendo;//Booleano para determinar si el personaje esta en animacion de muerte
 };
 
 #endif	/* PERSONAJE_H */

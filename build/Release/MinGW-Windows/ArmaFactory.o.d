@@ -1,5 +1,5 @@
-build/Release/MinGW-Windows/Personaje.o: Personaje.cpp Personaje.h \
- ../SFML-2.1/include/SFML/Graphics.hpp \
+build/Release/MinGW-Windows/ArmaFactory.o: ArmaFactory.cpp ArmaFactory.h \
+ Arma.h Bala.h ../SFML-2.1/include/SFML/Graphics.hpp \
  ../SFML-2.1/include/SFML/Window.hpp ../SFML-2.1/include/SFML/System.hpp \
  ../SFML-2.1/include/SFML/Config.hpp \
  ../SFML-2.1/include/SFML/System/Clock.hpp \
@@ -63,7 +63,11 @@ build/Release/MinGW-Windows/Personaje.o: Personaje.cpp Personaje.h \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
  ../SFML-2.1/include/SFML/Graphics/Text.hpp
 
-Personaje.h:
+ArmaFactory.h:
+
+Arma.h:
+
+Bala.h:
 
 ../SFML-2.1/include/SFML/Graphics.hpp:
 

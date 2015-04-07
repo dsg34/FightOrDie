@@ -17,5 +17,6 @@ Personaje::~Personaje() {
 }
 
 void Personaje::render(sf::RenderWindow &window){
-    window.draw(sprite);
+    sf::Sprite aux = *sprite;
+    window.draw(aux);
 }
