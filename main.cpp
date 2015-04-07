@@ -171,10 +171,10 @@ int main()
         if(frecuencia.asSeconds()>0.05){  
             window.clear();
             //Actualizamos la posicion de las balas
-            miPistola->updateBalas();
+            miPistola->updateProyectiles();
             
             //Pintamos las balas
-            miPistola->pintarBalas(window);
+            miPistola->pintarProyectiles(window);
                       
             //Pintamos los demas sprites
             window.draw(sprite);

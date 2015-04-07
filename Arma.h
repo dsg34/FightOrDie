@@ -5,7 +5,7 @@
  * Created on 7 de abril de 2015, 13:08
  */
 
-#include "Bala.h"
+#include "Proyectil.h"
 
 #ifndef ARMA_H
 #define	ARMA_H
@@ -16,27 +16,27 @@ public:
     Arma(const Arma& orig);
     virtual ~Arma();
     
-    std::vector<Bala*> getCargador();
+    std::vector<Proyectil*> getCargador();
     int getDanyo();
     int getVelocidad();
     int getMunicion();
-    int getMaxBalas();
+    int getMaxProyectiles();
     
-    void setCargador(std::vector<Bala*> v);        
+    void setCargador(std::vector<Proyectil*> v);        
     void setDanyo(int d);
     void setVelocidad(int v);
     void setMunicion(int m);
-    void setMaxBalas(int b);
+    void setMaxProyectiles(int b);
     
-    bool disparar(sf::Sprite spriteBala, sf::Vector2<float> s, sf::Vector2<float> m);
-    void updateBalas();
-    void pintarBalas(sf::RenderWindow &window);
-    void eliminarBala(int i);
+    bool disparar(sf::Sprite spriteProyectil, sf::Vector2<float> s, sf::Vector2<float> m);
+    void updateProyectiles();
+    void pintarProyectiles(sf::RenderWindow &window);
+    void eliminarProyectil(int i);
 protected:
-    std::vector<Bala*> cargador;
+    std::vector<Proyectil*> cargador;
     int danyo;
     int velocidad;
-    int maxBalas;
+    int maxProyectiles;
     int municion;
     float cadencia;
     int tipo;

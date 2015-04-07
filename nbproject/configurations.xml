@@ -6,7 +6,6 @@
                    projectFiles="true">
       <itemPath>Arma.h</itemPath>
       <itemPath>ArmaFactory.h</itemPath>
-      <itemPath>Bala.h</itemPath>
       <itemPath>Personaje.h</itemPath>
       <itemPath>Protagonista.h</itemPath>
       <itemPath>Proyectil.h</itemPath>
@@ -21,7 +20,6 @@
                    projectFiles="true">
       <itemPath>Arma.cpp</itemPath>
       <itemPath>ArmaFactory.cpp</itemPath>
-      <itemPath>Bala.cpp</itemPath>
       <itemPath>Personaje.cpp</itemPath>
       <itemPath>Protagonista.cpp</itemPath>
       <itemPath>Proyectil.cpp</itemPath>
@@ -74,10 +72,6 @@
       <item path="ArmaFactory.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ArmaFactory.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Bala.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Bala.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Personaje.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -139,10 +133,6 @@
       <item path="ArmaFactory.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ArmaFactory.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Bala.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Bala.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Personaje.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -1,5 +1,5 @@
-build/Release/MinGW-Windows/main.o: main.cpp Protagonista.h Arma.h Bala.h \
- ../SFML-2.1/include/SFML/Graphics.hpp \
+build/Release/MinGW-Windows/main.o: main.cpp Protagonista.h Arma.h \
+ Proyectil.h ../SFML-2.1/include/SFML/Graphics.hpp \
  ../SFML-2.1/include/SFML/Window.hpp ../SFML-2.1/include/SFML/System.hpp \
  ../SFML-2.1/include/SFML/Config.hpp \
  ../SFML-2.1/include/SFML/System/Clock.hpp \
@@ -67,7 +67,7 @@ Protagonista.h:
 
 Arma.h:
 
-Bala.h:
+Proyectil.h:
 
 ../SFML-2.1/include/SFML/Graphics.hpp:
 

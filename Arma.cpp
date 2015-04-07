@@ -11,11 +11,11 @@ Arma::Arma(int t, int d, int v, int mB, int m, float c) {
     tipo=t;
     danyo=d;    
     velocidad=v;
-    maxBalas=mB;
+    maxProyectiles=mB;
     municion=m;
     cadencia=c;
     
-    cargador = std::vector<Bala*>();   
+    cargador = std::vector<Proyectil*>();   
     reloj.restart();
     tiempo=reloj.getElapsedTime();
 }
@@ -50,33 +50,33 @@ void Arma::setMunicion(int m){
     municion=m;
 }  
 
-std::vector<Bala*> Arma::getCargador(){
+std::vector<Proyectil*> Arma::getCargador(){
     return cargador;
 }
-void Arma::setCargador(std::vector<Bala*> v){
+void Arma::setCargador(std::vector<Proyectil*> v){
     cargador=v;
 }        
 
-int Arma::getMaxBalas(){
-    return maxBalas;
+int Arma::getMaxProyectiles(){
+    return maxProyectiles;
 }
-void Arma::setMaxBalas(int m){
-    maxBalas=m;
+void Arma::setMaxProyectiles(int m){
+    maxProyectiles=m;
 }  
 /**************************************METODOS CUSTOM***********************************************************/
 
-//El metodo disparar crea una nueva Bala de las disparadas por la Arma a no ser que se haya alcanzado el maximo de Balas simultaneas disponible
-bool Arma::disparar(sf::Sprite spriteBala, sf::Vector2<float> s, sf::Vector2<float> m){
+//El metodo disparar crea una nueva Proyectil de las disparadas por la Arma a no ser que se haya alcanzado el maximo de Proyectiles simultaneas disponible
+bool Arma::disparar(sf::Sprite spriteProyectil, sf::Vector2<float> s, sf::Vector2<float> m){
     bool agotadas=false;
     
-    Bala* auxBala;
+    Proyectil* auxProyectil;
     tiempo=reloj.getElapsedTime();
     std::cout<<tiempo.asSeconds()<<std::endl;
     if(municion>0){
         if(tiempo.asSeconds()>cadencia){//Control de cadencia
-            if(cargador.size()<maxBalas){ //Controlamos que no se exceda un numero maximo de balas para que el programa no tenga problemas
-                auxBala = new Bala(spriteBala, s, m, danyo, velocidad);//Control de velocidad y danyo
-                cargador.push_back(auxBala);
+            if(cargador.size()<maxProyectiles){ //Controlamos que no se exceda un numero maximo de balas para que el programa no tenga problemas
+                auxProyectil = new Proyectil(spriteProyectil, s, m, danyo, velocidad);//Control de velocidad y danyo
+                cargador.push_back(auxProyectil);
                 municion--;
                 reloj.restart();
             }
@@ -89,25 +89,25 @@ bool Arma::disparar(sf::Sprite spriteBala, sf::Vector2<float> s, sf::Vector2<flo
     return agotadas;
 }
 
-//Actualiza la posicion de cada Bala llamando al metodo update de la propia Bala
-void Arma::updateBalas(){
+//Actualiza la posicion de cada Proyectil llamando al metodo update de la propia Proyectil
+void Arma::updateProyectiles(){
     
     for(int i=0;i<cargador.size(); i++){
-        if(cargador[i]->updatePosition()==true){//Si la actualizacion de posicion devuelve true, se elimina la Bala del cargador
+        if(cargador[i]->updatePosition()==true){//Si la actualizacion de posicion devuelve true, se elimina la Proyectil del cargador
             cargador.erase(cargador.begin()+i);
         }
     }
 }
 
-//Pinta cada Bala
-void Arma::pintarBalas(sf::RenderWindow &window){
+//Pinta cada Proyectil
+void Arma::pintarProyectiles(sf::RenderWindow &window){
     for(int i=0; i<cargador.size(); i++){
         window.draw(cargador[i]->getSprite());
     }
 }
 
-//Elimina una Bala de forma manual. Metodo necesario para cuando una Bala colisione con un objeto
-void Arma::eliminarBala(int i){
+//Elimina una Proyectil de forma manual. Metodo necesario para cuando una Proyectil colisione con un objeto
+void Arma::eliminarProyectil(int i){
     if(i>=0 && i<cargador.size())
         cargador.erase(cargador.begin()+i);
 }
