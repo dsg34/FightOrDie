@@ -97,6 +97,7 @@ void Arma::updateProyectiles(){
             cargador.erase(cargador.begin()+i);
         }
     }
+   
 }
 
 //Pinta cada Proyectil
