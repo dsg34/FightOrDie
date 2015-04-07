@@ -40,6 +40,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Bala.o \
 	${OBJECTDIR}/Personaje.o \
 	${OBJECTDIR}/Protagonista.o \
+	${OBJECTDIR}/Proyectil.o \
 	${OBJECTDIR}/main.o
 
 
@@ -91,6 +92,11 @@ ${OBJECTDIR}/Protagonista.o: Protagonista.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I../../../Downloads/Programas/Netbeans/SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Protagonista.o Protagonista.cpp
+
+${OBJECTDIR}/Proyectil.o: Proyectil.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../../../Downloads/Programas/Netbeans/SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Proyectil.o Proyectil.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
