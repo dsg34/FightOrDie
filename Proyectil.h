@@ -16,11 +16,11 @@
 class Proyectil {
 public:
     Proyectil();
-    Proyectil(sf::Sprite spriteProyectil, sf::Vector2<float> s, sf::Vector2<float> m, int d, int v);
+    Proyectil(sf::Sprite* spriteProyectil, sf::Vector2<float> s, sf::Vector2<float> m, int d, int v, int r);
     Proyectil(const Proyectil& orig);
     virtual ~Proyectil();
     
-    sf::Sprite getSprite();
+    sf::Sprite* getSprite();
     int getContador();
     sf::Vector2<float> getMov();
     int getVelocidad();
@@ -39,7 +39,7 @@ public:
 private:
 
 protected:
-    sf::Sprite sprite;        
+    sf::Sprite* sprite;        
     int contador;
     sf::Vector2<float> mov;
     

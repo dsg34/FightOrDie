@@ -18,6 +18,7 @@ public:
     Arma* crearPistola();
     Arma* crearMetralleta();
     Arma* crearEscopeta();
+    Arma* crearHacha();
 private:
 
 };

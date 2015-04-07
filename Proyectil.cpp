@@ -8,17 +8,17 @@
 
 #include "Proyectil.h"
 
-Proyectil::Proyectil(sf::Sprite spriteProyectil, sf::Vector2<float> s, sf::Vector2<float> m, int d, int v) {
+Proyectil::Proyectil(sf::Sprite* spriteProyectil, sf::Vector2<float> s, sf::Vector2<float> m, int d, int v, int r) {
     
-    spriteProyectil.setOrigin(75/2,75/2);
-    spriteProyectil.setTextureRect(sf::IntRect(0*75, 4*75, 75, 75));
-    spriteProyectil.setPosition(s);
-    sprite=sf::Sprite(spriteProyectil);
+    spriteProyectil->setOrigin(75/2,75/2);
+    spriteProyectil->setTextureRect(sf::IntRect(0*75, 4*75, 75, 75));
+    spriteProyectil->setPosition(s);
+    sprite= new sf::Sprite(*spriteProyectil);
     danyo=d;
     velocidad=v;    
     
     setMov(m);    
-    rango=60;
+    rango=r;
     
     contador=0;
 
@@ -31,12 +31,12 @@ Proyectil::~Proyectil() {
 }
 
 /********************************METODOS GET Y SET*******************************************************/
-sf::Sprite Proyectil::getSprite(){
+sf::Sprite* Proyectil::getSprite(){
     return sprite;
 }
 
 void Proyectil::setSprite(sf::Sprite s){
-    sprite=sf::Sprite(s);
+    sprite= new sf::Sprite(s);
 }
 
 int Proyectil::getContador(){
@@ -86,7 +86,7 @@ bool Proyectil::updatePosition(){
     bool devuelve = false;    
 
     if(contador<rango){        
-        sprite.move(2*velocidad*mov.x, 2*velocidad*mov.y);
+        sprite->move(2*velocidad*mov.x, 2*velocidad*mov.y);
         contador++;
     }else{
         devuelve=true;
@@ -96,5 +96,5 @@ bool Proyectil::updatePosition(){
 }
 
 void Proyectil::setPositionSprite(sf::Vector2<float> v){
-    sprite.setPosition(v.x, v.y);
+    sprite->setPosition(v.x, v.y);
 }

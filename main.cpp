@@ -97,7 +97,7 @@ int main()
                 case sf::Event::MouseButtonPressed:
                     if (event.mouseButton.button == sf::Mouse::Left)
                     {
-                        miPistola->disparar(spriteBala, sprite.getPosition(), vectorDisparo(sprite.getPosition(), posicionCursor(window)));
+                        miPistola->disparar(sprite.getPosition(), vectorDisparo(sprite.getPosition(), posicionCursor(window)));
                     }
                     break;
                 //Se pulsó una tecla, imprimo su codigo
@@ -136,12 +136,17 @@ int main()
                         break;
                         
                         case sf::Keyboard::Num2:
-                            miPistola = fabricaArmas->crearEscopeta();
+                            miPistola = fabricaArmas->crearMetralleta();
                         break;
                         
                         case sf::Keyboard::Num3:
-                            miPistola = fabricaArmas->crearMetralleta();
+                            miPistola = fabricaArmas->crearEscopeta();
                         break;
+                        
+                        case sf::Keyboard::Num4:
+                            miPistola = fabricaArmas->crearHacha();
+                        break;
+                        
                         
                         //Pulsar R para reiniciar partida
                         case sf::Keyboard::R:

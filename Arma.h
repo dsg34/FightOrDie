@@ -12,7 +12,7 @@
 
 class Arma {
 public:
-    Arma(int t, int d, int v, int mB, int m, float c);
+    Arma(sf::Sprite* s, int t, int d, int v, int mB, int m, float c, int r);
     Arma(const Arma& orig);
     virtual ~Arma();
     
@@ -28,20 +28,22 @@ public:
     void setMunicion(int m);
     void setMaxProyectiles(int b);
     
-    bool disparar(sf::Sprite spriteProyectil, sf::Vector2<float> s, sf::Vector2<float> m);
+    bool disparar(sf::Vector2<float> s, sf::Vector2<float> m);
     void updateProyectiles();
     void pintarProyectiles(sf::RenderWindow &window);
-    void eliminarProyectil(int i);
+    void eliminarProyectil(int i);    
 protected:
     std::vector<Proyectil*> cargador;
     int danyo;
     int velocidad;
     int maxProyectiles;
     int municion;
+    int rango;
     float cadencia;
     int tipo;
     sf::Clock reloj;
     sf::Time tiempo;
+    sf::Sprite* spriteProyectil;
 };
 
 #endif	/* ARMA_H */

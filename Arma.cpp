@@ -7,13 +7,15 @@
 
 #include "Arma.h"
 
-Arma::Arma(int t, int d, int v, int mB, int m, float c) {
+Arma::Arma(sf::Sprite* s, int t, int d, int v, int mB, int m, float c, int r) {
+    spriteProyectil = new sf::Sprite(*s);
     tipo=t;
     danyo=d;    
     velocidad=v;
     maxProyectiles=mB;
     municion=m;
     cadencia=c;
+    rango = r;
     
     cargador = std::vector<Proyectil*>();   
     reloj.restart();
@@ -66,20 +68,27 @@ void Arma::setMaxProyectiles(int m){
 /**************************************METODOS CUSTOM***********************************************************/
 
 //El metodo disparar crea una nueva Proyectil de las disparadas por la Arma a no ser que se haya alcanzado el maximo de Proyectiles simultaneas disponible
-bool Arma::disparar(sf::Sprite spriteProyectil, sf::Vector2<float> s, sf::Vector2<float> m){
+bool Arma::disparar(sf::Vector2<float> s, sf::Vector2<float> m){
     bool agotadas=false;
     
     Proyectil* auxProyectil;
     tiempo=reloj.getElapsedTime();
-    std::cout<<tiempo.asSeconds()<<std::endl;
     if(municion>0){
         if(tiempo.asSeconds()>cadencia){//Control de cadencia
             if(cargador.size()<maxProyectiles){ //Controlamos que no se exceda un numero maximo de balas para que el programa no tenga problemas
-                auxProyectil = new Proyectil(spriteProyectil, s, m, danyo, velocidad);//Control de velocidad y danyo
-                cargador.push_back(auxProyectil);
-                municion--;
-                reloj.restart();
+                if(tipo!=3){
+                    auxProyectil = new Proyectil(spriteProyectil, s, m, danyo, velocidad, rango);//Control de velocidad y danyo
+                    cargador.push_back(auxProyectil);
+                    municion--;
+                    reloj.restart();
+                }
+                else{//Comportamiento de la escopeta
+                
+                }
             }
+            
+            m.x=m.x-0.1;
+                m.y=m.y+0.1;
         }
     }
     else{
@@ -103,7 +112,8 @@ void Arma::updateProyectiles(){
 //Pinta cada Proyectil
 void Arma::pintarProyectiles(sf::RenderWindow &window){
     for(int i=0; i<cargador.size(); i++){
-        window.draw(cargador[i]->getSprite());
+
+        window.draw(*cargador[i]->getSprite());
     }
 }
 
