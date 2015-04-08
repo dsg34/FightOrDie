@@ -84,7 +84,10 @@ bool Arma::disparar(sf::Vector2<float> s, sf::Vector2<float> m){
                     reloj.restart();
                 }
                 else{//Comportamiento de la escopeta
-                
+                    auxProyectil = new Proyectil(spriteProyectil, tex, s, m, danyo, velocidad, rango);//Control de velocidad y danyo
+                    cargador.push_back(auxProyectil);
+                    municion--;
+                    reloj.restart();
                 }
             }
             

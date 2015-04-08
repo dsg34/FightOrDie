@@ -28,7 +28,7 @@ Arma* ArmaFactory::crearPistola(){//Se debe controlar que, al acabarse la munici
     
     //Este es el sprite que le pasaremos a disparar, para que las balas que se creen lo hagan con dicho sprite
     spriteBala.setOrigin(75/2,75/2);
-    spriteBala.setTextureRect(sf::IntRect(0*75, 4*75, 75, 75));
+    spriteBala.setTextureRect(sf::IntRect(1*75, 3*75, 75, 75));
     
     sf::Sprite* aux = new sf::Sprite(spriteBala);
     
@@ -88,7 +88,7 @@ Arma* ArmaFactory::crearHacha(){//Se debe controlar que, al acabarse la municion
     
     //Este es el sprite que le pasaremos a disparar, para que las balas que se creen lo hagan con dicho sprite
     spriteBala.setOrigin(75/2,75/2);
-    spriteBala.setTextureRect(sf::IntRect(0*75, 4*75, 75, 75));
+    spriteBala.setTextureRect(sf::IntRect(1*75, 3*75, 75, 75));
     
     sf::Sprite* aux = new sf::Sprite(spriteBala);
     
