@@ -61,7 +61,7 @@ build/Release/MinGW-Windows/Arma.o: Arma.cpp Arma.h Proyectil.h \
  ../SFML-2.1/include/SFML/Graphics/RectangleShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/ConvexShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
- ../SFML-2.1/include/SFML/Graphics/Text.hpp
+ ../SFML-2.1/include/SFML/Graphics/Text.hpp Granada.h
 
 Arma.h:
 
@@ -194,3 +194,5 @@ Proyectil.h:
 ../SFML-2.1/include/SFML/Graphics/Sprite.hpp:
 
 ../SFML-2.1/include/SFML/Graphics/Text.hpp:
+
+Granada.h:

@@ -1,0 +1,150 @@
+/* 
+ * File:   Granada.cpp
+ * Author: Dani
+ * 
+ * Created on 8 de abril de 2015, 19:56
+ */
+#include <iostream>
+#include "Granada.h"
+
+Granada::Granada(sf::Vector2<float> s, sf::Vector2<float> m, int d) {
+    
+    sf::Texture tex;
+    if (!tex.loadFromFile("resources/sprite_general.png"))
+    {
+        std::cerr << "Error cargando la imagen sprites.png";
+        exit(0);
+    }
+    sf::Sprite spriteGranada(tex);
+    spriteGranada.setOrigin(75/2,75/2);
+    //Cojo el sprite que me interesa por defecto del sheet
+    spriteGranada.setTextureRect(sf::IntRect(1*75, 0*75, 75, 75));
+    spriteGranada.setPosition(s);
+    
+    sprite=new sf::Sprite(spriteGranada);
+
+    iteracionExplosion.x=2;
+    iteracionExplosion.y=0;
+    
+    contador=0;
+    rango=60;
+    velocidad=5;
+    danyo=d;
+    
+    mov=m;
+    
+}
+
+Granada::Granada(const Granada& orig) {
+}
+
+Granada::~Granada() {
+}
+
+/**********************************************MÉTODOS GET Y SET**********************************************************************/
+int Granada::getContador(){
+    return contador;
+}
+
+void Granada::setContador(int c){
+    contador=c;
+}
+
+int Granada::getVelocidad(){
+    return velocidad;
+}
+
+void Granada::setVelocidad(int vel){
+    velocidad=vel;
+}
+
+int Granada::getRango(){
+    return rango;
+}
+
+void Granada::setRango(int r){
+    rango=r;
+}
+
+sf::Vector2<int> Granada::getIteracionExplosion(){
+    return iteracionExplosion;
+}
+
+void Granada::setIteracionExplosion(sf::Vector2<int> v){
+    iteracionExplosion=v;
+}
+
+sf::Sprite* Granada::getSprite(){
+    return sprite;
+}
+
+void Granada::setSprite(sf::Sprite* s){
+    sprite=s;
+}
+
+sf::Vector2<float> Granada::getMov(){
+    return mov;
+}
+
+void Granada::setMov(sf::Vector2<float> m){
+    mov=m;
+}
+
+void Granada::setDanyo(int d){
+    danyo=d;
+}
+
+int Granada::getDanyo(){
+    return danyo;
+}
+
+/**********************************************MÉTODOS CUSTOM**********************************************************************/
+//Facilita el cambio de recorte del sprite
+void Granada::setRecorteSprite(int i, int j){
+    sprite->setTextureRect(sf::IntRect(i*75, j*75, 75, 75));
+}
+  
+//Actualiza la posicion de la Granada y devuelve 0 en caso de estar en movimiento sin explotar, 1 en caso de estar explotando (debe causar daño) y 2 si ha acabado su ciclo
+int Granada::updateGranada(){
+    int devuelve = 0;
+    //Posicion inicial de las imagenes de explosion
+    double cont = 1.0;   
+            
+    
+    if(contador<rango-20){          
+        sprite->move(velocidad*mov.x,velocidad*mov.y); 
+        sprite->rotate(10);
+    }else if(contador<rango){//Cuando termino el rango de movimiento empiezo la animacion de explosion
+        //Dependiendo si la explosion esta empezando o acabando, la aumentamos o reducimos
+        if(contador<rango-10)
+            cont=sprite->getScale().x+0.1;
+        else
+            cont=sprite->getScale().x-0.1;   
+        
+        //hasta que se acaben las filas
+        if(iteracionExplosion.y<5){                
+            if(iteracionExplosion.x<5){
+                iteracionExplosion.x++;
+            }
+            else{
+                iteracionExplosion.x=2;
+                iteracionExplosion.y++;
+            }
+            //std::cout << cont << std::endl;
+        }
+
+        setRecorteSprite(iteracionExplosion.x,iteracionExplosion.y);
+        sprite->setScale(cont,cont);   
+        devuelve = 1;
+    }else{//Cuando se acaba el movimiento y la explosion, se devuelve 2 para eliminar la Granada
+        devuelve = 2;
+        setRecorteSprite(1,0);
+    }
+    contador++;
+    return devuelve;
+}
+
+//Pinta la Granada en la ventana que recibe
+void Granada::pintarGranada(sf::RenderWindow &window){
+    window.draw(*sprite);
+}

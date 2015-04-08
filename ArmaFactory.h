@@ -19,6 +19,7 @@ public:
     Arma* crearMetralleta();
     Arma* crearEscopeta();
     Arma* crearHacha();
+    Arma* crearGranada();
 private:
 
 };

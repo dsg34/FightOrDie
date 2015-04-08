@@ -61,7 +61,7 @@ build/Release/MinGW-Windows/Protagonista.o: Protagonista.cpp \
  ../SFML-2.1/include/SFML/Graphics/RectangleShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/ConvexShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
- ../SFML-2.1/include/SFML/Graphics/Text.hpp Personaje.h
+ ../SFML-2.1/include/SFML/Graphics/Text.hpp Granada.h Personaje.h
 
 Protagonista.h:
 
@@ -196,5 +196,7 @@ Proyectil.h:
 ../SFML-2.1/include/SFML/Graphics/Sprite.hpp:
 
 ../SFML-2.1/include/SFML/Graphics/Text.hpp:
+
+Granada.h:
 
 Personaje.h:

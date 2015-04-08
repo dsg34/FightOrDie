@@ -6,6 +6,7 @@
  */
 
 #include "Proyectil.h"
+#include "Granada.h"
 
 #ifndef ARMA_H
 #define	ARMA_H
@@ -17,36 +18,46 @@ public:
     virtual ~Arma();
     
     std::vector<Proyectil*> getCargador();
+    std::vector<Granada*> getSecundaria();
     int getDanyo();
+    int getDanyoSecundaria();
     int getVelocidad();
     int getMunicion();
     int getMaxProyectiles();
     
-    void setCargador(std::vector<Proyectil*> v);        
+    void setCargador(std::vector<Proyectil*> v); 
+    void setSecundaria(std::vector<Granada*> g);
     void setDanyo(int d);
     void setVelocidad(int v);
     void setMunicion(int m);
     void setMaxProyectiles(int b);
+    void setMunicionSecundaria(int i);
+    void setDanyoSecundaria(int ds);
+    
     void aumentarDanyo();
     void aumentarMunicion();
     
     bool disparar(sf::Vector2<float> s, sf::Vector2<float> m);
+    void dispararSecundaria(sf::Vector2<float> s, sf::Vector2<float> m);
     void updateProyectiles();
     void pintarProyectiles(sf::RenderWindow &window);
     void eliminarProyectil(int i);    
 protected:
     std::vector<Proyectil*> cargador;
+    std::vector<Granada*> secundaria;
     int danyo;
+    int danyoSecundaria;
     int velocidad;
     int maxProyectiles;
     int municion;
+    int municionSecundaria;
     int rango;
     float cadencia;
     int tipo;
     sf::Clock reloj;
     sf::Time tiempo;
     sf::Sprite* spriteProyectil;
-    sf::Texture* tex;
+    sf::Texture* tex;   
 };
 
 #endif	/* ARMA_H */

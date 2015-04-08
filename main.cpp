@@ -47,6 +47,7 @@ int main()
     ArmaFactory* fabricaArmas = new ArmaFactory();
     
     Arma* miPistola = fabricaArmas->crearPistola();
+    miPistola->setMunicionSecundaria(20);
     //Arma* miSecundaria = fabricaArmas->crearGranada();
     int balas=0;
     bool existePersonaje=true;
@@ -93,6 +94,9 @@ int main()
                     if (event.mouseButton.button == sf::Mouse::Left)
                     {
                         miPistola->disparar(sprite.getPosition(), vectorDisparo(sprite.getPosition(), posicionCursor(window)));
+                    }else if (event.mouseButton.button == sf::Mouse::Right)
+                    {
+                        miPistola->dispararSecundaria(sprite.getPosition(), vectorDisparo(sprite.getPosition(), posicionCursor(window)));
                     }
                     break;
                 //Se pulsó una tecla, imprimo su codigo
@@ -175,7 +179,7 @@ int main()
             
             //Pintamos las balas
             miPistola->pintarProyectiles(window);
-                      
+            //std::cout << miPistola->getSecundaria().size() << std::endl;
             //Pintamos los demas sprites
             window.draw(sprite);
                 

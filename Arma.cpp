@@ -12,9 +12,11 @@ Arma::Arma(sf::Sprite* s, sf::Texture* te, int t, int d, int v, int mB, int m, f
     tex = new sf::Texture(*te);
     tipo=t;
     danyo=d;    
+    danyoSecundaria=0;
     velocidad=v;
     maxProyectiles=mB;
     municion=m;
+    municionSecundaria=0;
     cadencia=c;
     rango = r;
     
@@ -36,6 +38,14 @@ int Arma::getDanyo(){
 }
 void Arma::setDanyo(int d){
     danyo=d;
+}
+
+int Arma::getDanyoSecundaria(){
+    return danyoSecundaria;
+    
+}
+void Arma::setDanyoSecundaria(int ds){
+    danyoSecundaria=ds;
 }
 
 int Arma::getVelocidad(){
@@ -60,6 +70,13 @@ void Arma::setCargador(std::vector<Proyectil*> v){
     cargador=v;
 }        
 
+std::vector<Granada*> Arma::getSecundaria(){
+    return secundaria;
+}
+void Arma::setSecundaria(std::vector<Granada*> g){
+    secundaria=g;
+}   
+
 int Arma::getMaxProyectiles(){
     return maxProyectiles;
 }
@@ -73,6 +90,10 @@ void Arma::aumentarDanyo(){
 
 void Arma::aumentarMunicion(){
     municion++;
+}
+
+void Arma::setMunicionSecundaria(int i){
+    municionSecundaria=i;
 }
 /**************************************METODOS CUSTOM***********************************************************/
 
@@ -96,11 +117,13 @@ bool Arma::disparar(sf::Vector2<float> s, sf::Vector2<float> m){
                     cargador.push_back(auxProyectil);
                     municion--;
                     reloj.restart();
+                    
+                    /**m.x=m.x-0.1;
+                    m.y=m.y+0.1;**/
                 }
             }
             
-            m.x=m.x-0.1;
-                m.y=m.y+0.1;
+            
         }
     }
     else{
@@ -108,6 +131,18 @@ bool Arma::disparar(sf::Vector2<float> s, sf::Vector2<float> m){
     }
     
     return agotadas;
+}
+//Lanzara las granadas
+void Arma::dispararSecundaria(sf::Vector2<float> s, sf::Vector2<float> m){
+    Granada* auxGranada;
+    tiempo=reloj.getElapsedTime();
+    if(municionSecundaria>0){
+        if(secundaria.size()<maxProyectiles){ //Controlamos que no se exceda un numero maximo de balas para que el programa no tenga problemas
+            auxGranada = new Granada(s, m, danyoSecundaria);//Control de velocidad y danyo
+            secundaria.push_back(auxGranada);
+            municionSecundaria--;        
+        }
+    }
 }
 
 //Actualiza la posicion de cada Proyectil llamando al metodo update de la propia Proyectil
@@ -118,14 +153,23 @@ void Arma::updateProyectiles(){
             cargador.erase(cargador.begin()+i);
         }
     }
+    for(int i=0;i<secundaria.size(); i++){
+        if(secundaria[i]->updateGranada()==2){//Si la actualizacion de posicion devuelve true, se elimina la Proyectil del cargador
+            secundaria.erase(secundaria.begin()+i);
+        }
+    }
    
 }
 
 //Pinta cada Proyectil
 void Arma::pintarProyectiles(sf::RenderWindow &window){
     for(int i=0; i<cargador.size(); i++){
-
         window.draw(*cargador[i]->getSprite());
+    }
+    for(int j=0; j<secundaria.size();j++){
+        sf::Sprite aux = *secundaria[j]->getSprite();
+        aux.setTexture(*tex);
+        window.draw(aux);
     }
 }
 
