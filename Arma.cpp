@@ -65,7 +65,15 @@ int Arma::getMaxProyectiles(){
 }
 void Arma::setMaxProyectiles(int m){
     maxProyectiles=m;
-}  
+}
+
+void Arma::aumentarDanyo(){
+    danyo++;
+}
+
+void Arma::aumentarMunicion(){
+    municion++;
+}
 /**************************************METODOS CUSTOM***********************************************************/
 
 //El metodo disparar crea una nueva Proyectil de las disparadas por la Arma a no ser que se haya alcanzado el maximo de Proyectiles simultaneas disponible

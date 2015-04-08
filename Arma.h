@@ -27,6 +27,8 @@ public:
     void setVelocidad(int v);
     void setMunicion(int m);
     void setMaxProyectiles(int b);
+    void aumentarDanyo();
+    void aumentarMunicion();
     
     bool disparar(sf::Vector2<float> s, sf::Vector2<float> m);
     void updateProyectiles();
