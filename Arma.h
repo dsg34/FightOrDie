@@ -12,7 +12,7 @@
 
 class Arma {
 public:
-    Arma(sf::Sprite* s, int t, int d, int v, int mB, int m, float c, int r);
+    Arma(sf::Sprite* s, sf::Texture* te, int t, int d, int v, int mB, int m, float c, int r);
     Arma(const Arma& orig);
     virtual ~Arma();
     
@@ -44,6 +44,7 @@ protected:
     sf::Clock reloj;
     sf::Time tiempo;
     sf::Sprite* spriteProyectil;
+    sf::Texture* tex;
 };
 
 #endif	/* ARMA_H */

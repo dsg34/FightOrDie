@@ -8,12 +8,15 @@
 
 #include "Proyectil.h"
 
-Proyectil::Proyectil(sf::Sprite* spriteProyectil, sf::Vector2<float> s, sf::Vector2<float> m, int d, int v, int r) {
+Proyectil::Proyectil(sf::Sprite* spriteProyectil, sf::Texture* t, sf::Vector2<float> s, sf::Vector2<float> m, int d, int v, int r) {
     
     spriteProyectil->setOrigin(75/2,75/2);
     spriteProyectil->setTextureRect(sf::IntRect(0*75, 4*75, 75, 75));
     spriteProyectil->setPosition(s);
     sprite= new sf::Sprite(*spriteProyectil);
+    tex=t;
+    
+    sprite->setTexture(*t);
     danyo=d;
     velocidad=v;    
     

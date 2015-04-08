@@ -32,7 +32,7 @@ Arma* ArmaFactory::crearPistola(){//Se debe controlar que, al acabarse la munici
     
     sf::Sprite* aux = new sf::Sprite(spriteBala);
     
-    Arma* p = new Arma(aux, 1, 2, 5, 150, 2000, 0.3, 45);
+    Arma* p = new Arma(aux, new sf::Texture(tex), 1, 2, 5, 150, 2000, 0.3, 45);
     
     return p;
 }
@@ -52,7 +52,7 @@ Arma* ArmaFactory::crearMetralleta(){//Se debe controlar que, al acabarse la mun
     
     sf::Sprite* aux = new sf::Sprite(spriteBala);
     
-    Arma* m = new Arma(aux, 2, 1, 7, 150, 100, 0.1, 45);
+    Arma* m = new Arma(aux, new sf::Texture(tex), 2, 1, 7, 150, 100, 0.1, 45);
     
     return m;
 }
@@ -72,7 +72,7 @@ Arma* ArmaFactory::crearEscopeta(){//Se debe controlar que, al acabarse la munic
     
     sf::Sprite* aux = new sf::Sprite(spriteBala);
     
-    Arma* e = new Arma(aux, 3, 3, 5, 150, 50, 0.7, 20);
+    Arma* e = new Arma(aux, new sf::Texture(tex), 3, 3, 5, 150, 50, 0.7, 20);
     
     return e;
 }
@@ -92,7 +92,7 @@ Arma* ArmaFactory::crearHacha(){//Se debe controlar que, al acabarse la municion
     
     sf::Sprite* aux = new sf::Sprite(spriteBala);
     
-    Arma* h = new Arma(aux, 4, 4, 7, 150, 2000, 0.1, 3);
+    Arma* h = new Arma(aux, new sf::Texture(tex), 4, 4, 7, 1, 2000, 0.1, 3);
    
     return h;
 }

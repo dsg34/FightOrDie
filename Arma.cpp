@@ -7,8 +7,9 @@
 
 #include "Arma.h"
 
-Arma::Arma(sf::Sprite* s, int t, int d, int v, int mB, int m, float c, int r) {
+Arma::Arma(sf::Sprite* s, sf::Texture* te, int t, int d, int v, int mB, int m, float c, int r) {
     spriteProyectil = new sf::Sprite(*s);
+    tex = new sf::Texture(*te);
     tipo=t;
     danyo=d;    
     velocidad=v;
@@ -77,7 +78,7 @@ bool Arma::disparar(sf::Vector2<float> s, sf::Vector2<float> m){
         if(tiempo.asSeconds()>cadencia){//Control de cadencia
             if(cargador.size()<maxProyectiles){ //Controlamos que no se exceda un numero maximo de balas para que el programa no tenga problemas
                 if(tipo!=3){
-                    auxProyectil = new Proyectil(spriteProyectil, s, m, danyo, velocidad, rango);//Control de velocidad y danyo
+                    auxProyectil = new Proyectil(spriteProyectil, tex, s, m, danyo, velocidad, rango);//Control de velocidad y danyo
                     cargador.push_back(auxProyectil);
                     municion--;
                     reloj.restart();

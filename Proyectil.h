@@ -16,7 +16,7 @@
 class Proyectil {
 public:
     Proyectil();
-    Proyectil(sf::Sprite* spriteProyectil, sf::Vector2<float> s, sf::Vector2<float> m, int d, int v, int r);
+    Proyectil(sf::Sprite* spriteProyectil, sf::Texture* t, sf::Vector2<float> s, sf::Vector2<float> m, int d, int v, int r);
     Proyectil(const Proyectil& orig);
     virtual ~Proyectil();
     
@@ -39,7 +39,8 @@ public:
 private:
 
 protected:
-    sf::Sprite* sprite;        
+    sf::Sprite* sprite;     
+    sf::Texture* tex;
     int contador;
     sf::Vector2<float> mov;
     
