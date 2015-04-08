@@ -62,11 +62,6 @@ int main()
     //Y creo el spritesheet a partir de la imagen anterior
     sf::Sprite sprite(tex);
     sf::Sprite apuntar(tex);
-    /*sf::Sprite spriteBala(tex);
-    
-    //Este es el sprite que le pasaremos a disparar, para que las balas que se creen lo hagan con dicho sprite
-    spriteBala.setOrigin(75/2,75/2);
-    spriteBala.setTextureRect(sf::IntRect(1*75, 3*75, 75, 75));*/
     
     //Le pongo el centroide donde corresponde
     sprite.setOrigin(75/2,75/2);
