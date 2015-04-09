@@ -147,12 +147,8 @@ bool Arma::disparar(sf::Vector2<float> s, sf::Vector2<int> pos){
                     if(fabs(fabs(m.x)-fabs(m.y))<0.2){
                         aux.x=aux.x+80;
                         aux.y=aux.y-80;
-                        std::cout<<"Cambia"<<std::endl;
                     }                   
                     
-                    std::cout<< fabs(m.x)<<" - "<< fabs(m.y) << " = " << fabs(fabs(m.x)-fabs(m.y)) <<std::endl;
-                    std::cout<<std::endl<< aux.x<<" - "<< aux.y << " MAS 50" <<std::endl;
-                    std::cout<< pos.x<<" - "<< pos.y << " ORIGINAL" <<std::endl;
                     sf::Vector2<float> m1 = vectorDisparo(s, aux);                                        
                     
                     auxProyectil = new Proyectil(spriteProyectil, tex, s, m1, danyo, velocidad, rango);//Control de velocidad y danyo
@@ -166,12 +162,7 @@ bool Arma::disparar(sf::Vector2<float> s, sf::Vector2<int> pos){
                     if(fabs(fabs(m.x)-fabs(m.y))<0.2){
                         aux.x=aux.x+80;
                         aux.y=aux.y-80;
-                        std::cout<<"Cambia2"<<std::endl;
-                    }
-                    
-                    std::cout<< aux.x<<" - "<< aux.y << " MENOS 50" <<std::endl;
-                    std::cout<< " -------------------------------------- "<<std::endl;
-                    
+                    }                    
                     
                     m1 = vectorDisparo(s, aux);
                     auxProyectil = new Proyectil(spriteProyectil, tex, s, m1, danyo, velocidad, rango);//Control de velocidad y danyo
