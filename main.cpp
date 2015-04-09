@@ -93,10 +93,10 @@ int main()
                 case sf::Event::MouseButtonPressed:
                     if (event.mouseButton.button == sf::Mouse::Left)
                     {
-                        miPistola->disparar(sprite.getPosition(), vectorDisparo(sprite.getPosition(), posicionCursor(window)));
+                        miPistola->disparar(sprite.getPosition(), posicionCursor(window));
                     }else if (event.mouseButton.button == sf::Mouse::Right)
                     {
-                        miPistola->dispararSecundaria(sprite.getPosition(), vectorDisparo(sprite.getPosition(), posicionCursor(window)));
+                        miPistola->dispararSecundaria(sprite.getPosition(), posicionCursor(window));
                     }
                     break;
                 //Se pulsó una tecla, imprimo su codigo

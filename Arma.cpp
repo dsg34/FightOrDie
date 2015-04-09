@@ -97,10 +97,32 @@ void Arma::setMunicionSecundaria(int i){
 }
 /**************************************METODOS CUSTOM***********************************************************/
 
-//El metodo disparar crea una nueva Proyectil de las disparadas por la Arma a no ser que se haya alcanzado el maximo de Proyectiles simultaneas disponible
-bool Arma::disparar(sf::Vector2<float> s, sf::Vector2<float> m){
-    bool agotadas=false;
+sf::Vector2<float> Arma::vectorDisparo(sf::Vector2<float> puntoPersonaje, sf::Vector2<int> puntoCursor){
+    static const float pi = 3.141592654f;        
     
+    sf::Vector2<float> devuelve;
+    
+    float vecX = (float) puntoCursor.x - puntoPersonaje.x;
+    float vecY = (float) puntoCursor.y - puntoPersonaje.y;
+    
+    float angulo = atan(vecY/vecX);
+    
+    devuelve.x = cos(angulo);
+    devuelve.y = sin(angulo);
+
+    if(vecX<0){
+        devuelve.x = -devuelve.x;
+        devuelve.y = -devuelve.y;
+    } 
+    return devuelve;
+}
+
+//El metodo disparar crea una nueva Proyectil de las disparadas por la Arma a no ser que se haya alcanzado el maximo de Proyectiles simultaneas disponible
+bool Arma::disparar(sf::Vector2<float> s, sf::Vector2<int> pos){
+    bool agotadas=false;    
+    sf::Vector2<int> aux;
+    sf::Vector2<float> m = vectorDisparo(s, pos);
+
     Proyectil* auxProyectil;
     tiempo=reloj.getElapsedTime();
     if(municion>0){
@@ -113,17 +135,54 @@ bool Arma::disparar(sf::Vector2<float> s, sf::Vector2<float> m){
                     reloj.restart();
                 }
                 else{//Comportamiento de la escopeta
+                    //Bala central
                     auxProyectil = new Proyectil(spriteProyectil, tex, s, m, danyo, velocidad, rango);//Control de velocidad y danyo
                     cargador.push_back(auxProyectil);
-                    municion--;
-                    reloj.restart();
+                                
+                    //Bala lateral 1                    
+                    aux.x = pos.x + fabs(m.y*40);
+                    aux.y = pos.y + fabs(m.x*40);
                     
+                    //Evitamos que se junten las balas en las diagonales
+                    if(fabs(fabs(m.x)-fabs(m.y))<0.2){
+                        aux.x=aux.x+80;
+                        aux.y=aux.y-80;
+                        std::cout<<"Cambia"<<std::endl;
+                    }                   
+                    
+                    std::cout<< fabs(m.x)<<" - "<< fabs(m.y) << " = " << fabs(fabs(m.x)-fabs(m.y)) <<std::endl;
+                    std::cout<<std::endl<< aux.x<<" - "<< aux.y << " MAS 50" <<std::endl;
+                    std::cout<< pos.x<<" - "<< pos.y << " ORIGINAL" <<std::endl;
+                    sf::Vector2<float> m1 = vectorDisparo(s, aux);                                        
+                    
+                    auxProyectil = new Proyectil(spriteProyectil, tex, s, m1, danyo, velocidad, rango);//Control de velocidad y danyo
+                    cargador.push_back(auxProyectil);
+                    
+                    //Bala lateral 2
+                    aux.x = pos.x - fabs(m.y*40);
+                    aux.y = pos.y - fabs(m.x*40);
+                    
+                    //Evitamos que se junten las balas en las diagonales
+                    if(fabs(fabs(m.x)-fabs(m.y))<0.2){
+                        aux.x=aux.x+80;
+                        aux.y=aux.y-80;
+                        std::cout<<"Cambia2"<<std::endl;
+                    }
+                    
+                    std::cout<< aux.x<<" - "<< aux.y << " MENOS 50" <<std::endl;
+                    std::cout<< " -------------------------------------- "<<std::endl;
+                    
+                    
+                    m1 = vectorDisparo(s, aux);
+                    auxProyectil = new Proyectil(spriteProyectil, tex, s, m1, danyo, velocidad, rango);//Control de velocidad y danyo
+                    cargador.push_back(auxProyectil);
+                    
+                    reloj.restart();
+                    municion--;
                     /**m.x=m.x-0.1;
                     m.y=m.y+0.1;**/
                 }
-            }
-            
-            
+            }            
         }
     }
     else{
@@ -133,8 +192,9 @@ bool Arma::disparar(sf::Vector2<float> s, sf::Vector2<float> m){
     return agotadas;
 }
 //Lanzara las granadas
-void Arma::dispararSecundaria(sf::Vector2<float> s, sf::Vector2<float> m){
+void Arma::dispararSecundaria(sf::Vector2<float> s, sf::Vector2<int> pos){
     Granada* auxGranada;
+    sf::Vector2<float> m = vectorDisparo(s, pos);
     tiempo=reloj.getElapsedTime();
     if(municionSecundaria>0){
         if(secundaria.size()<maxProyectiles){ //Controlamos que no se exceda un numero maximo de balas para que el programa no tenga problemas

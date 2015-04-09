@@ -73,7 +73,7 @@ Arma* ArmaFactory::crearEscopeta(){//Se debe controlar que, al acabarse la munic
     
     sf::Sprite* aux = new sf::Sprite(spriteBala);
     
-    Arma* e = new Arma(aux, new sf::Texture(tex), 3, 3, 5, 150, 50, 0.7, 20);
+    Arma* e = new Arma(aux, new sf::Texture(tex), 3, 3, 7, 150, 50, 0.7, 20);
     
     return e;
 }
