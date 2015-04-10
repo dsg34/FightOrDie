@@ -12,7 +12,7 @@
 
 class Personaje {
 public:
-    Personaje(sf::Sprite* s, sf::Vector2<float> p, int mV, int ve);
+    Personaje(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int ve);
     Personaje(const Personaje& orig);
     virtual ~Personaje();
     virtual void update()=0; //Se emplea virtual para que, si se crea una instancia de una clase hija de personaje, se llame a los métodos de dicha clase y no a los genericos
@@ -21,6 +21,7 @@ public:
     sf::Vector2<float> getPosAnterior();
     sf::Vector2<float> getPosActual();
     sf::Sprite* getSprite();
+    sf::Texture* getTexture();
     int getVida();
     int getMaxVida();
     int getVelocidad();
@@ -31,6 +32,7 @@ public:
     void setPosAnterior(sf::Vector2<float> v);
     void setPosActual(sf::Vector2<float> v);
     void setSprite(sf::Sprite* s);
+    void setTexture(sf::Texture* t);
     void setVida(int v);
     void setMaxVida(int mV);
     void setVelocidad(int ve);
@@ -40,6 +42,7 @@ public:
 
 protected:
     sf::Sprite* sprite;
+    sf::Texture* tex;
     int vida;
     int maxVida;
     int velocidad;

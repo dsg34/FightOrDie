@@ -13,14 +13,14 @@
 
 class Protagonista: public Personaje {
 public:
-    Protagonista(sf::Sprite* s, Arma* a, sf::Vector2<float> p, int mV, int ve);
+    Protagonista(sf::Sprite* s, sf::Texture* t, Arma* a, sf::Vector2<float> p, int mV, int ve);
     Protagonista(const Protagonista& orig2);
     virtual ~Protagonista();
     
     Arma* getArma();
     //std::Vector<Recurso*> getInventario();
     
-    void setArma(Arma a);
+    void setArma(Arma* a);
     //void setInventario(std::Vector<Recurso*> i);
 private:
 

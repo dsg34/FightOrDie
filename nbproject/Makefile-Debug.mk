@@ -39,6 +39,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/ArmaFactory.o \
 	${OBJECTDIR}/Granada.o \
 	${OBJECTDIR}/Personaje.o \
+	${OBJECTDIR}/PersonajeFactory.o \
 	${OBJECTDIR}/Protagonista.o \
 	${OBJECTDIR}/Proyectil.o \
 	${OBJECTDIR}/main.o
@@ -87,6 +88,11 @@ ${OBJECTDIR}/Personaje.o: Personaje.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I../../../Downloads/Programas/Netbeans/SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Personaje.o Personaje.cpp
+
+${OBJECTDIR}/PersonajeFactory.o: PersonajeFactory.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../../../Downloads/Programas/Netbeans/SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/PersonajeFactory.o PersonajeFactory.cpp
 
 ${OBJECTDIR}/Protagonista.o: Protagonista.cpp 
 	${MKDIR} -p ${OBJECTDIR}

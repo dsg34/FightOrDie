@@ -7,8 +7,9 @@
 
 #include "Personaje.h"
 
-Personaje::Personaje(sf::Sprite* s, sf::Vector2<float> p, int mV, int ve){
+Personaje::Personaje(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int ve){
     
+    tex=t;
     sprite=new sf::Sprite(*s);
     sprite->setPosition(p);
     
@@ -57,6 +58,14 @@ sf::Sprite* Personaje::getSprite(){
 }
 void Personaje::setSprite(sf::Sprite* s){
     sprite = s;
+}
+
+sf::Texture* Personaje::getTexture(){
+    return tex;
+}
+
+void Personaje::setTexture(sf::Texture* t){
+    tex=t;
 }
 
 int Personaje::getVida(){

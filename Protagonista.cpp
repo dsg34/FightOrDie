@@ -7,10 +7,9 @@
 
 #include "Protagonista.h"
 
-Protagonista::Protagonista(sf::Sprite* s, Arma* a, sf::Vector2<float> p, int mV, int ve) :Personaje(s,p,mV,ve) {
+Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, Arma* a, sf::Vector2<float> p, int mV, int ve) :Personaje(s,t,p,mV,ve) {
 
     //this->Personaje(sf::Sprite* s, p, mV, ve);
-    sprite=s;
     arma=a;
     
 }
@@ -25,7 +24,7 @@ Protagonista::~Protagonista() {
 Arma* Protagonista::getArma(){
     return arma;
 }
-void Protagonista::setArma(Arma a){
+void Protagonista::setArma(Arma* a){
     arma=a;
 }
 
