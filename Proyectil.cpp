@@ -23,6 +23,8 @@ Proyectil::Proyectil(sf::Sprite* spriteProyectil, sf::Texture* t, sf::Vector2<fl
     
     contador=0;
 
+    posActual = s;
+    posAnterior = s;
 }
 
 Proyectil::Proyectil(const Proyectil& orig) {
@@ -78,6 +80,22 @@ int Proyectil::getDanyo(){
         
 void Proyectil::setDanyo(int i){
     danyo=i;
+}
+
+sf::Vector2<float> Proyectil::getPosAnterior(){
+    return posAnterior;
+}
+
+void Proyectil::setPosAnterior(sf::Vector2<float> v){
+    posAnterior= v;
+}
+
+sf::Vector2<float> Proyectil::getPosActual(){
+    return posActual;
+}
+
+void Proyectil::setPosActual(sf::Vector2<float> v){
+    posActual = v;
 }
 
 /********************************METODOS CUSTOM*******************************************************/

@@ -33,6 +33,9 @@ Granada::Granada(sf::Vector2<float> s, sf::Vector2<float> m, int d) {
     
     mov=m;
     
+    posActual = s;
+    posAnterior = s;
+    
 }
 
 Granada::Granada(const Granada& orig) {
@@ -90,12 +93,28 @@ void Granada::setMov(sf::Vector2<float> m){
     mov=m;
 }
 
+int Granada::getDanyo(){
+    return danyo;
+}
+
 void Granada::setDanyo(int d){
     danyo=d;
 }
 
-int Granada::getDanyo(){
-    return danyo;
+sf::Vector2<float> Granada::getPosAnterior(){
+    return posAnterior;
+}
+
+void Granada::setPosAnterior(sf::Vector2<float> v){
+    posAnterior= v;
+}
+
+sf::Vector2<float> Granada::getPosActual(){
+    return posActual;
+}
+
+void Granada::setPosActual(sf::Vector2<float> v){
+    posActual = v;
 }
 
 /**********************************************MÉTODOS CUSTOM**********************************************************************/

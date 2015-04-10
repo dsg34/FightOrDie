@@ -7,29 +7,38 @@
 
 #include "Protagonista.h"
 
-Protagonista::Protagonista(sf::Sprite* p, Arma* a) {
-    prueba=0;
-    sprite=p;
-    arma=a;
-    cont=0;
-    velocidad=5;
-    direc=0;
-    
-    vida=20;
-    maxVida=20;
+Protagonista::Protagonista(sf::Sprite* s, Arma* a, sf::Vector2<float> p, int mV, int ve) :Personaje(s,p,mV,ve) {
 
-    direc=0;//Direccion del personaje
-    muriendo=false;//Booleano para determinar si el personaje esta en animacion de muerte
+    //this->Personaje(sf::Sprite* s, p, mV, ve);
+    sprite=s;
+    arma=a;
     
 }
 
-Protagonista::Protagonista(const Protagonista& orig) {
+Protagonista::Protagonista(const Protagonista& orig) : Personaje(orig) {
 }
 
 Protagonista::~Protagonista() {
 }
 
 
+Arma* Protagonista::getArma(){
+    return arma;
+}
+void Protagonista::setArma(Arma a){
+    arma=a;
+}
+
+/*std::Vector<Recurso*> Protagonista::getInventario(){
+    return inventario;
+    
+1}    
+void Protagonista::setInventario(std::Vector<Recurso*> i){
+    inventario=i;
+}
+void Protagonista::anyadirAlInventario(Recurso* r){
+    inventario.push_back(r);
+}*
 /**************************************CODIGO MANU********************************************************/
 /*
 bool Protagonista::actualizaMuerte(){

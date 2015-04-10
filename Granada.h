@@ -23,7 +23,9 @@ public:
     int getVelocidad();
     int getRango();
     int getDanyo();
-    
+    sf::Vector2<float> getPosAnterior();
+    sf::Vector2<float> getPosActual();
+            
     void setContador(int c);
     void setIteracionExplosion(sf::Vector2<int> v);
     void setSprite(sf::Sprite* s);
@@ -32,6 +34,8 @@ public:
     void setVelocidad(int vel);
     void setRango(int r);
     void setDanyo(int g);
+    void setPosAnterior(sf::Vector2<float> v);
+    void setPosActual(sf::Vector2<float> v);
     
     int updateGranada();
     void pintarGranada(sf::RenderWindow &window);
@@ -44,6 +48,9 @@ protected:
     sf::Vector2<int> iteracionExplosion;
     sf::Sprite* sprite;
     sf::Vector2<float> mov;
+    
+    sf::Vector2<float> posAnterior;
+    sf::Vector2<float> posActual;
 private:
 
 };
