@@ -28,7 +28,7 @@ Granada::Granada(sf::Vector2<float> s, sf::Vector2<float> m, int d) {
     
     contador=0;
     rango=60;
-    velocidad=5;
+    velocidad=8;
     danyo=d;
     
     mov=m;

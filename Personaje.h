@@ -15,8 +15,8 @@ public:
     Personaje(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int ve);
     Personaje(const Personaje& orig);
     virtual ~Personaje();
-    virtual void update()=0; //Se emplea virtual para que, si se crea una instancia de una clase hija de personaje, se llame a los métodos de dicha clase y no a los genericos
-    virtual void render(sf::RenderWindow &window)=0;
+    void update(); //Se emplea virtual para que, si se crea una instancia de una clase hija de personaje, se llame a los métodos de dicha clase y no a los genericos
+    void render(sf::RenderWindow &window);
     
     sf::Vector2<float> getPosAnterior();
     sf::Vector2<float> getPosActual();

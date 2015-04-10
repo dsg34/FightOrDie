@@ -20,6 +20,7 @@ Protagonista::Protagonista(const Protagonista& orig) : Personaje(orig) {
 Protagonista::~Protagonista() {
 }
 
+/**************************************************METODOS GET Y SET**************************************************************+*
 
 Arma* Protagonista::getArma(){
     return arma;
@@ -27,6 +28,16 @@ Arma* Protagonista::getArma(){
 void Protagonista::setArma(Arma* a){
     arma=a;
 }
+
+/***************************************************METODOS CUSTOM*************************************************************+*/
+
+void update(){
+    
+}
+
+void render(sf::RenderWindow &window){
+    
+} 
 
 /*std::Vector<Recurso*> Protagonista::getInventario(){
     return inventario;
