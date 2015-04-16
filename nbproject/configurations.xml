@@ -7,6 +7,7 @@
       <itemPath>Arma.h</itemPath>
       <itemPath>ArmaFactory.h</itemPath>
       <itemPath>Granada.h</itemPath>
+      <itemPath>HUD.h</itemPath>
       <itemPath>Personaje.h</itemPath>
       <itemPath>PersonajeFactory.h</itemPath>
       <itemPath>Protagonista.h</itemPath>
@@ -23,6 +24,7 @@
       <itemPath>Arma.cpp</itemPath>
       <itemPath>ArmaFactory.cpp</itemPath>
       <itemPath>Granada.cpp</itemPath>
+      <itemPath>HUD.cpp</itemPath>
       <itemPath>Personaje.cpp</itemPath>
       <itemPath>PersonajeFactory.cpp</itemPath>
       <itemPath>Protagonista.cpp</itemPath>
@@ -52,12 +54,12 @@
       <compileType>
         <ccTool>
           <incDir>
-            <pElem>../../../Downloads/Programas/Netbeans/SFML-2.1/include</pElem>
+            <pElem>../SFML-2.1/include</pElem>
           </incDir>
         </ccTool>
         <linkerTool>
           <linkerAddLib>
-            <pElem>../../../Downloads/Programas/Netbeans/SFML-2.1/lib</pElem>
+            <pElem>../SFML-2.1/lib</pElem>
           </linkerAddLib>
           <linkerLibItems>
             <linkerLibLibItem>sfml-graphics-d</linkerLibLibItem>
@@ -80,6 +82,10 @@
       <item path="Granada.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Granada.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="HUD.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="HUD.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Personaje.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -149,6 +155,10 @@
       <item path="Granada.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Granada.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="HUD.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="HUD.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Personaje.cpp" ex="false" tool="1" flavor2="0">
       </item>

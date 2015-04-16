@@ -38,6 +38,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Arma.o \
 	${OBJECTDIR}/ArmaFactory.o \
 	${OBJECTDIR}/Granada.o \
+	${OBJECTDIR}/HUD.o \
 	${OBJECTDIR}/Personaje.o \
 	${OBJECTDIR}/PersonajeFactory.o \
 	${OBJECTDIR}/Protagonista.o \
@@ -83,6 +84,11 @@ ${OBJECTDIR}/Granada.o: Granada.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Granada.o Granada.cpp
+
+${OBJECTDIR}/HUD.o: HUD.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/HUD.o HUD.cpp
 
 ${OBJECTDIR}/Personaje.o: Personaje.cpp 
 	${MKDIR} -p ${OBJECTDIR}
