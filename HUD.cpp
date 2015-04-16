@@ -7,67 +7,77 @@
 
 #include "HUD.h"
 
-HUD::HUD(Personaje* p, sf::RenderWindow w) {
-    
-    if (!textura->loadFromFile("resources/HUD.png"))
+HUD::HUD(Personaje* p, sf::Vector2<int> tam) {
+    sf::Texture tex;
+    if (!tex.loadFromFile("resources/HUD.png"))
     {
         std::cerr << "Error cargando la imagen sprites.png";
         exit(0);
     }
-    sf::Vector2<unsigned int> tam = w.getSize();
-    
+    //sf::Vector2<int> tam = (sf::Vector2<int>) w.getSize();
+    textura=new sf::Texture(tex);
     //***************************************************Inicializacion sprites
     sf::Sprite spritePistola(*textura);sf::Sprite spriteHacha(*textura);        
            
     //Este es el sprite que le pasaremos a disparar, para que las balas que se creen lo hagan con dicho sprite
     spritePistola.setOrigin(75/2,75/2);
-    spritePistola.setTextureRect(sf::IntRect(1*75, 9*75, 75, 75));
+    spritePistola.setTextureRect(sf::IntRect(9*75, 1*75, 75, 75));
     
     spriteHacha.setOrigin(75/2,75/2);
-    spriteHacha.setTextureRect(sf::IntRect(2*75, 9*75, 75, 75));
+    spriteHacha.setTextureRect(sf::IntRect(9*75, 2*75, 75, 75));
     
     armas = std::vector<sf::Sprite*>();  
     armas.push_back(new sf::Sprite(spritePistola));
     armas.push_back(new sf::Sprite(spriteHacha));
-    
+     //***************************************************Inicializacion sprite municion
     municion = new sf::Sprite(*textura);
+    municion->setScale(0.8,0.8);
     municion->setOrigin(75/2,75/2);
-    municion->setTextureRect(sf::IntRect(2*75, 10*75, 75, 75));
-    municion->setPosition((tam.x/8)*7, tam.y/7);
+    municion->setTextureRect(sf::IntRect(10*75, 2*75, 75, 75));
+    municion->setPosition(tam.x/10*8.6, tam.y/8*7.4);
     
-    spriteVida = new sf::Sprite(*textura);
-    spriteVida->setOrigin(75/4,(75*9)/2);   
-    spriteVida->setPosition(tam.x/8, tam.y/7);
+    
     //***************************************************Inicializacion sprite vida
+    spriteVida = new sf::Sprite(*textura);
+    spriteVida->setOrigin((75*9)/2, 75/4); 
+    spriteVida->setScale(0.6,0.6);
+    /*std::cout<<"Tam x:" << tam.x << " Tam y: " << tam.y << std::endl;
+    std::cout<<"Pos x:" << tam.x/6*5 << " Pos y: " << tam.y/8*7 << std::endl;*/
+    spriteVida->setPosition(tam.x/10*2.7, tam.y/8*7.4);
+    //spriteVida->setPosition(133, 500);
     vida=p->getVida();
     cargarSpriteVida(vida);
     boss=false;
 
-    //***************************************************Inicializacion sprite municion
-    sf::Sprite* municion;
-
-    
     //***************************************************Inicializacion textos        
     // Load it from a file
-    if (!fuente->loadFromFile("fonts/ZOMBIE.ttf"))
+    sf::Font font;
+    if (!font.loadFromFile("fonts/ZOMBIE.ttf"))
     {
         // error...
     }    
+    fuente = new sf::Font(font);
+    sf::Text texto;
+    texto.setFont(*fuente);
+    texto.setCharacterSize(60);
+    texto.setPosition(tam.x/10*0.5, tam.y/8*0.5);
+    puntuacion = new sf::Text(texto);    
+    setPuntuacion(2568);       
     
-    puntuacion->setFont(*fuente);
-    puntuacion->setCharacterSize(30);    
-    puntuacion->setPosition(tam.x/8, (tam.y/6)*5);
-    setPuntuacion(0);       
+    numRecursos = std::vector<int>();
     
-    numRecursos = std::vector<sf::Text*>();
-    
+    balas = new sf::Text();
+    balas->setFont(*fuente);
+    balas->setCharacterSize(80);
+    balas->setString(puntuacionAString(8));
+    balas->setRotation(90);
+    balas->setPosition(tam.x/10*9.7, tam.y/8*7.15);
     //***************************************************Inicializacion de opacidades
     boss=false;
     opacidadVida=1.0;
     opacidadMunicion=1.0;
     opacidadPuntuacion=1.0;
     opacidadVidaBoss=0.0;
-    
 }
 
 HUD::HUD(const HUD& orig) {
@@ -149,7 +159,8 @@ void HUD::setOpacidadVidaBoss(float f){
 /******************************************METODOS CUSTOM************************************************************/   
     
 void HUD::cargarSpriteVida(int i){    
-    municion->setTextureRect(sf::IntRect(0*75*8, (i-1)*75/2, 75*8, 75/2));
+    spriteVida->setTextureRect(sf::IntRect(0*75*9, (i-1)*75/2, 75*8, 75/2));
+    //spriteVida->setPosition(400, 400);
 }
 
 void HUD::cargarSpriteVidaBoss(int i){
@@ -210,16 +221,39 @@ std::string HUD::puntuacionAString(int p){
 }
     
 void HUD::pintarHUD(sf::RenderWindow &window){
-    for(int i=0; i<armas.size(); i++)
-        window.draw(*armas[i]);
-    
-    for(int j=0; j<recursos.size(); j++)
+    for(int i=0; i<armas.size(); i++){
+        //window.draw(*armas[i]);
+    }
+    sf::Text auxTexto;
+    auxTexto.setFont(*fuente);
+    auxTexto.setCharacterSize(10);
+    for(int j=0; j<recursos.size(); j++){
         window.draw(*recursos[j]);
-    
-    for(int k=0; k<numRecursos.size(); k++)
-        window.draw(*numRecursos[k]);
+        auxTexto.setPosition(recursos[j]->getPosition().x+1,recursos[j]->getPosition().y+1);
+        auxTexto.setString("x"+puntuacionAString(numRecursos[j]));
+        auxTexto.setScale(1.05, 1.05);
+        auxTexto.setColor(sf::Color::White);
+        window.draw(auxTexto);
+        auxTexto.setColor(sf::Color::Black);
+        auxTexto.setScale(1.0,1.0);
+        window.draw(*puntuacion);
+    }
     
     window.draw(*spriteVida);
+    
     window.draw(*municion);
+    
+    balas->setColor(sf::Color::White);
+    balas->setScale(1.05,1.05);
+    window.draw(*balas);
+    balas->setColor(sf::Color::Black);
+    balas->setScale(1.0,1.0);
+    window.draw(*balas);
+    
+    puntuacion->setColor(sf::Color::White);
+    puntuacion->setScale(1.05,1.05);
+    window.draw(*puntuacion);
+    puntuacion->setColor(sf::Color::Black);
+    puntuacion->setScale(1.0,1.0);
     window.draw(*puntuacion);
 }

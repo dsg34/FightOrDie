@@ -61,7 +61,7 @@ build/Release/MinGW-Windows/main.o: main.cpp Protagonista.h Arma.h \
  ../SFML-2.1/include/SFML/Graphics/RectangleShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/ConvexShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
- ../SFML-2.1/include/SFML/Graphics/Text.hpp Granada.h Personaje.h \
+ ../SFML-2.1/include/SFML/Graphics/Text.hpp Granada.h Personaje.h HUD.h \
  ArmaFactory.h
 
 Protagonista.h:
@@ -201,5 +201,7 @@ Proyectil.h:
 Granada.h:
 
 Personaje.h:
+
+HUD.h:
 
 ArmaFactory.h:

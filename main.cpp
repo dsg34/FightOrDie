@@ -2,6 +2,7 @@
 #include <math.h> 
 #include <vector>
 #include "Protagonista.h"
+#include "HUD.h"
 #include "ArmaFactory.h"
 #define kVel 5
 
@@ -37,7 +38,7 @@ sf::Vector2<float> vectorDisparo(sf::Vector2<float> puntoPersonaje, sf::Vector2<
 int main()
 {
     //Creamos una ventana 
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Disparo de balas");
+    sf::RenderWindow window(sf::VideoMode(1024, 768), "Fight or Die");
 
     sf::Clock reloj;
     reloj.restart();
@@ -46,12 +47,12 @@ int main()
     /////////////////////////////////////////////////Pruebas ArmaFactory
     ArmaFactory* fabricaArmas = new ArmaFactory();
     
-    Arma* miPistola = fabricaArmas->crearPistola();
+    Arma* miPistola = fabricaArmas->crearMetralleta();
     miPistola->setMunicionSecundaria(20);
     //Arma* miSecundaria = fabricaArmas->crearGranada();
     int balas=0;
     bool existePersonaje=true;
-        
+    
     /***********************************************************CARGA DE SPRITES****************************************************************************/
     sf::Texture tex;
     if (!tex.loadFromFile("resources/sprite_general.png"))
@@ -75,6 +76,10 @@ int main()
     // Lo dispongo en el centro de la pantalla
     sprite.setPosition(320, 240);
 
+    Personaje* pers = new Personaje(new sf::Sprite(sprite),new sf::Texture(tex),sprite.getPosition(), 20, 5);
+    sf::Vector2<int> vec = (sf::Vector2<int>) window.getSize();
+    
+    HUD hud = HUD(pers, vec);
     //Bucle del juego
     while (window.isOpen())
     {
@@ -179,6 +184,7 @@ int main()
             
             //Pintamos las balas
             miPistola->pintarProyectiles(window);
+            hud.pintarHUD(window);
             //std::cout << miPistola->getSecundaria().size() << std::endl;
             //Pintamos los demas sprites
             window.draw(sprite);

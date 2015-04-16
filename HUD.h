@@ -13,7 +13,7 @@
 
 class HUD {
 public:
-    HUD(Personaje* p, sf::RenderWindow w);
+    HUD(Personaje* p, sf::Vector2<int> tam);
     HUD(const HUD& orig);
     virtual ~HUD();    
     
@@ -59,16 +59,17 @@ public:
     
     void cambiarOpacidad(sf::Vector2<float> v);
     
-    void pintarHUD();
+    void pintarHUD(sf::RenderWindow &window);
 private:
     sf::Texture* textura;
     sf::Sprite* spriteVida;
     sf::Sprite* municion;
     std::vector<sf::Sprite*> armas;
     std::vector<sf::Sprite*> recursos;
-    std::vector<sf::Text*> numRecursos;
+    std::vector<int> numRecursos;
     sf::Font* fuente;
     sf::Text* puntuacion;
+    sf::Text* balas;
     int vida;
     bool boss;
     float opacidadVida;
