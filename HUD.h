@@ -5,8 +5,9 @@
  * Created on 15 de abril de 2015, 20:05
  */
 
-#include "Personaje.h"
+#include "Protagonista.h"
 #include "Arma.h"
+#include "RecursoHUD.h"
 #include <sstream>
 #ifndef HUD_H
 #define	HUD_H
@@ -48,8 +49,9 @@ public:
     void reducirBalas();
     void aumentarBalas();
     
-    void actualizarHUD(Personaje* p);
-    std::string puntuacionAString(int p);
+    void actualizarArmasHUD();
+    void actualizarHUD(Protagonista* p);
+    std::string intAString(int p);
     
     void anyadirArma(Arma* a);
     void eliminarArma(Arma* a);
@@ -62,16 +64,21 @@ public:
     void pintarHUD(sf::RenderWindow &window);
 private:
     sf::Texture* textura;
+    sf::Font* fuente;
+    
     sf::Sprite* spriteVida;
     sf::Sprite* spriteVidaBoss;
     sf::Sprite* municion;
-    std::vector<sf::Sprite*> armas;
-    std::vector<sf::Sprite*> recursos;
-    std::vector<int> numRecursos;
-    sf::Font* fuente;
+    std::vector<RecursoHUD*> armas;
+    std::vector<RecursoHUD*> recursos;
+
     sf::Text* puntuacion;
     sf::Text* balas;
+    
+    sf::Vector2<int>* tamPantalla;
+    
     int vida;
+    int tipoPrincipal;
     bool boss;
     float opacidadVida;
     float opacidadMunicion;

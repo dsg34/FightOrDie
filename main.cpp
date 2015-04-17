@@ -47,7 +47,7 @@ int main()
     /////////////////////////////////////////////////Pruebas ArmaFactory
     ArmaFactory* fabricaArmas = new ArmaFactory();
     
-    Arma* miPistola = fabricaArmas->crearMetralleta();
+    Arma* miPistola = fabricaArmas->crearPistola();
     miPistola->setMunicionSecundaria(20);
     //Arma* miSecundaria = fabricaArmas->crearGranada();
     int balas=0;

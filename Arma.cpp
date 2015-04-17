@@ -107,7 +107,7 @@ void Arma::setTipo(int i){
 
 sf::Vector2<float> Arma::vectorDisparo(sf::Vector2<float> puntoPersonaje, sf::Vector2<int> puntoCursor){
     static const float pi = 3.141592654f;        
-    std::cout<<puntoCursor.x<<" - "<< puntoCursor.y << std::endl;
+    //std::cout<<puntoCursor.x<<" - "<< puntoCursor.y << std::endl;
     sf::Vector2<float> devuelve;
     
     float vecX = (float) puntoCursor.x - puntoPersonaje.x;

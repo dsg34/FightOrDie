@@ -12,6 +12,7 @@
       <itemPath>PersonajeFactory.h</itemPath>
       <itemPath>Protagonista.h</itemPath>
       <itemPath>Proyectil.h</itemPath>
+      <itemPath>RecursoHUD.h</itemPath>
       <itemPath>librerias.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -29,6 +30,7 @@
       <itemPath>PersonajeFactory.cpp</itemPath>
       <itemPath>Protagonista.cpp</itemPath>
       <itemPath>Proyectil.cpp</itemPath>
+      <itemPath>RecursoHUD.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -103,6 +105,10 @@
       </item>
       <item path="Proyectil.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="RecursoHUD.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RecursoHUD.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="librerias.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
@@ -175,6 +181,10 @@
       <item path="Proyectil.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Proyectil.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RecursoHUD.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RecursoHUD.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="librerias.h" ex="false" tool="3" flavor2="0">
       </item>
