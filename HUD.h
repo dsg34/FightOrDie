@@ -39,7 +39,7 @@ public:
     void setOpacidadPuntuacion(float f);
     void setOpacidadVidaBoss(float f);
     
-    void cargarSpriteVida(int i);
+    void cargarSpriteVida();
     void cargarSpriteVidaBoss(int i);
     
     void reducirVida();
@@ -51,8 +51,8 @@ public:
     void actualizarHUD(Personaje* p);
     std::string puntuacionAString(int p);
     
-    void anyadirArma(Arma a);
-    void eliminarArma(Arma a);
+    void anyadirArma(Arma* a);
+    void eliminarArma(Arma* a);
     
     /*void anyadirRecurso(Recurso r);
     void eliminarRecurso(Recurso r);*/
@@ -63,6 +63,7 @@ public:
 private:
     sf::Texture* textura;
     sf::Sprite* spriteVida;
+    sf::Sprite* spriteVidaBoss;
     sf::Sprite* municion;
     std::vector<sf::Sprite*> armas;
     std::vector<sf::Sprite*> recursos;

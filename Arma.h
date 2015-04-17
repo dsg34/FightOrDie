@@ -24,6 +24,7 @@ public:
     int getVelocidad();
     int getMunicion();
     int getMaxProyectiles();
+    int getTipo();
     
     void setCargador(std::vector<Proyectil*> v); 
     void setSecundaria(std::vector<Granada*> g);
@@ -33,6 +34,7 @@ public:
     void setMaxProyectiles(int b);
     void setMunicionSecundaria(int i);
     void setDanyoSecundaria(int ds);
+    void setTipo(int i);
     
     void aumentarDanyo();
     void aumentarMunicion();

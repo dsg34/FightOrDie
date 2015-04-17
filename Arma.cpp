@@ -95,6 +95,14 @@ void Arma::aumentarMunicion(){
 void Arma::setMunicionSecundaria(int i){
     municionSecundaria=i;
 }
+
+int Arma::getTipo(){
+    return tipo;
+}
+void Arma::setTipo(int i){
+    tipo=i;
+}
+
 /**************************************METODOS CUSTOM***********************************************************/
 
 sf::Vector2<float> Arma::vectorDisparo(sf::Vector2<float> puntoPersonaje, sf::Vector2<int> puntoCursor){

@@ -46,7 +46,7 @@ HUD::HUD(Personaje* p, sf::Vector2<int> tam) {
     spriteVida->setPosition(tam.x/10*2.7, tam.y/8*7.4);
     //spriteVida->setPosition(133, 500);
     vida=p->getVida();
-    cargarSpriteVida(vida);
+    cargarSpriteVida();
     boss=false;
 
     //***************************************************Inicializacion textos        
@@ -158,21 +158,22 @@ void HUD::setOpacidadVidaBoss(float f){
     
 /******************************************METODOS CUSTOM************************************************************/   
     
-void HUD::cargarSpriteVida(int i){    
-    spriteVida->setTextureRect(sf::IntRect(0*75*9, (i-1)*75/2, 75*8, 75/2));
-    //spriteVida->setPosition(400, 400);
+void HUD::cargarSpriteVida(){    
+    spriteVida->setTextureRect(sf::IntRect(0*75*9, (vida-1)*75/2, 75*8, 75/2));
 }
 
 void HUD::cargarSpriteVidaBoss(int i){
-    
+    spriteVidaBoss->setTextureRect(sf::IntRect(0*75*9, (i-1)*75/2, 75*8, 75/2));
 }
 
 void HUD::reducirVida(){
-    
+    vida--;
+    cargarSpriteVida();
 }
 
 void HUD::aumentarVida(){
-    
+    vida++;
+    cargarSpriteVida();
 }
     
 void HUD::reducirBalas(){
@@ -189,11 +190,11 @@ void HUD::actualizarHUD(Personaje* p){
 }
     
     
-void HUD::anyadirArma(Arma a){
-    
+void HUD::anyadirArma(Arma* a){
+    a->getTipo();
 }
 
-void HUD::eliminarArma(Arma a){
+void HUD::eliminarArma(Arma* a){
     
 }
 
