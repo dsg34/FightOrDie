@@ -7,12 +7,11 @@
 
 #include "HUD.h"
 
-HUD::HUD(Personaje* p, sf::Vector2<int> tam) {
+HUD::HUD(Protagonista* p, sf::Vector2<int> tam) {
     tamPantalla=new sf::Vector2<int>();
     tamPantalla->x=tam.x;
     tamPantalla->y=tam.y;
-    tipoPrincipal=1;
-    
+    tipoPrincipal=p->getArma()->getTipo();
     sf::Texture tex;
     if (!tex.loadFromFile("resources/HUD.png"))
     {
@@ -23,7 +22,7 @@ HUD::HUD(Personaje* p, sf::Vector2<int> tam) {
     textura=new sf::Texture(tex);
     //***************************************************Inicializacion sprites        
     RecursoHUD* pistola = new RecursoHUD(1);
-    RecursoHUD* hacha = new RecursoHUD(2);
+    RecursoHUD* hacha = new RecursoHUD(4);
     armas = std::vector<RecursoHUD*>();  
     armas.push_back(pistola);
     armas.push_back(hacha);
@@ -63,19 +62,25 @@ HUD::HUD(Personaje* p, sf::Vector2<int> tam) {
     setPuntuacion(2568);       
 
     balas = new sf::Text();
-    balas->setFont(*fuente);
-    balas->setCharacterSize(80);
-    balas->setString(intAString(8));
-    balas->setRotation(90);
-    balas->setPosition(tam.x/10*9.7, tam.y/8*7.15);
+    balas->setFont(*fuente);    
+    if(tipoPrincipal==1 || tipoPrincipal==4){
+        balas->setRotation(90);
+        balas->setCharacterSize(100);
+        balas->setString(intAString(8));
+        balas->setPosition(tam.x/10*9.93, tam.y/8*7.15);
+    }else{
+        balas->setCharacterSize(60);
+        balas->setString(intAString(p->getArma()->getMunicion()));
+        balas->setPosition(tam.x/10*9, tam.y/8*7);
+    }    
+    
     //***************************************************Inicializacion de opacidades
     boss=false;
     opacidadVida=1.0;
     opacidadMunicion=1.0;
     opacidadPuntuacion=1.0;
     opacidadVidaBoss=0.0;
-    recursos = std::vector<RecursoHUD*>();     
-
+    recursos = std::vector<RecursoHUD*>();         
 }
 
 HUD::HUD(const HUD& orig) {
@@ -172,36 +177,49 @@ void HUD::reducirVida(){
 void HUD::aumentarVida(){
     vida++;
     cargarSpriteVida();
-}
-    
-void HUD::reducirBalas(){
-    
-}
-
-void HUD::aumentarBalas(){
-    
-}
+}  
     
 void HUD::actualizarHUD(Protagonista* p){
     vida=p->getVida();
+    //Actualizamos vida
     cargarSpriteVida();
     
-    //tipoPrincipal=p->getArma()->getTipo();
+    //Actualizamos arma principal
+    Arma* a = p->getArma();
+    tipoPrincipal=a->getTipo();
+    if(tipoPrincipal!=1 && tipoPrincipal!=4){        
+        balas->setRotation(0);
+        balas->setCharacterSize(60);
+        balas->setString(intAString(a->getMunicion()));
+        balas->setPosition(tamPantalla->x/10*9, tamPantalla->y/8*7);        
+    }else{
+        balas->setCharacterSize(100);
+        balas->setRotation(90);
+        balas->setString(intAString(8));
+        balas->setPosition(tamPantalla->x/10*9.93, tamPantalla->y/8*7.15);
+    }
+    //Actualizamos las opacidades
+    sf::Vector2<float> pos = p->getSprite()->getPosition();
+    actualizarOpacidades(pos);
+    actualizarArmasHUD();
 }
     
 void HUD::actualizarArmasHUD(){    
-    float separacion=50;        
+    float separacion=70;        
     float posX=tamPantalla->x/10*9.7;// .getPosition().x;
     float posY=tamPantalla->y/8*7.15;
     int j=0;
     for(int i=0; i<armas.size();i++){
         if(armas[i]->getTipo()!=tipoPrincipal){
-            armas[i]->cambiarPosicion(posX-50, (2*-separacion)+posY-(j*separacion));//(i*separacion));
+            armas[i]->setScale(1);
+            armas[i]->cambiarPosicion(posX-50, (-separacion)+posY-(j*separacion));//(i*separacion));
             j++;
-            std::cout<<armas[i]->getTipo()<<std::endl;
+            if(armas[i]->getMostrarPuntuacion()==false)
+                armas[i]->setMostrarPuntuacion(true);
         }else{
             armas[i]->setScale(1.5);
-            armas[i]->cambiarPosicion(posX-200, posY);
+            armas[i]->cambiarPosicion(posX-200, posY+30);
+            armas[i]->setMostrarPuntuacion(false);
         }
     }
 }
@@ -246,8 +264,37 @@ void HUD::eliminarRecurso(Recurso r){
     
 }*/
 
-void HUD::cambiarOpacidad(sf::Vector2<float> v){
-    
+void HUD::actualizarOpacidades(sf::Vector2<float> pos){    
+    float opacidad = 0.2;
+    if(pos.x<tamPantalla->x/4 && pos.y<tamPantalla->y/4){//Cerca de puntuacion
+        opacidadPuntuacion = opacidad;
+        opacidadMunicion = 1.0; 
+        opacidadVida = 1.0;
+    }else if(pos.x<tamPantalla->x/2 && pos.y>tamPantalla->y/4*3){//Cerca de vida y recursos
+        opacidadPuntuacion = 1.0;
+        opacidadMunicion = 1.0; 
+        opacidadVida = opacidad;
+    }else if(pos.x>tamPantalla->x/6*4 && pos.y>tamPantalla->y/2){//Cerca de municion y armas
+        opacidadPuntuacion = 1.0;
+        opacidadMunicion = opacidad; 
+        opacidadVida = 1.0;
+    }else{
+        opacidadPuntuacion = 1.0;
+        opacidadMunicion = 1.0; 
+        opacidadVida = 1.0;
+    }
+}
+
+void  HUD::cambiarOpacidad(sf::Sprite* &s, float o){
+    sf::Color c = s->getColor();
+    c.a=255*o;
+    s->setColor(c);        
+}
+
+void  HUD::cambiarOpacidad(sf::Text* &t, float o){
+    sf::Color c=t->getColor();
+    c.a=255*o;
+    t->setColor(c);     
 }
 
 std::string HUD::intAString(int p){
@@ -263,30 +310,38 @@ std::string HUD::intAString(int p){
     
 void HUD::pintarHUD(sf::RenderWindow &window){
     for(int i=0; i<armas.size(); i++){
+        armas[i]->setOpacity(opacidadMunicion);
         armas[i]->pintarRecurso(window);       
     }
     sf::Text auxTexto;
     auxTexto.setFont(*fuente);
     auxTexto.setCharacterSize(10);
     /*for(int j=0; j<recursos.size(); j++){
+        recursos[j]->setOpacity(opacidadVida);
         recursos[j]->pintarRecurso(window);        
     }*/
 
+    cambiarOpacidad(spriteVida, opacidadVida);
     window.draw(*spriteVida);
     
+    cambiarOpacidad(municion, opacidadMunicion);
     window.draw(*municion);
-    
+        
     balas->setColor(sf::Color::White);
+    cambiarOpacidad(balas, opacidadMunicion);
     balas->setScale(1.05,1.05);
     window.draw(*balas);
     balas->setColor(sf::Color::Black);
+    cambiarOpacidad(balas, opacidadMunicion);
     balas->setScale(1.0,1.0);
     window.draw(*balas);
     
     puntuacion->setColor(sf::Color::White);
+    cambiarOpacidad(puntuacion, opacidadPuntuacion);
     puntuacion->setScale(1.05,1.05);
     window.draw(*puntuacion);
     puntuacion->setColor(sf::Color::Black);
+    cambiarOpacidad(puntuacion, opacidadPuntuacion);
     puntuacion->setScale(1.0,1.0);
     window.draw(*puntuacion);
 }

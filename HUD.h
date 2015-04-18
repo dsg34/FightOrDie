@@ -14,7 +14,7 @@
 
 class HUD {
 public:
-    HUD(Personaje* p, sf::Vector2<int> tam);
+    HUD(Protagonista* p, sf::Vector2<int> tam);
     HUD(const HUD& orig);
     virtual ~HUD();    
     
@@ -44,10 +44,7 @@ public:
     void cargarSpriteVidaBoss(int i);
     
     void reducirVida();
-    void aumentarVida();
-    
-    void reducirBalas();
-    void aumentarBalas();
+    void aumentarVida();    
     
     void actualizarArmasHUD();
     void actualizarHUD(Protagonista* p);
@@ -59,7 +56,9 @@ public:
     /*void anyadirRecurso(Recurso r);
     void eliminarRecurso(Recurso r);*/
     
-    void cambiarOpacidad(sf::Vector2<float> v);
+    void actualizarOpacidades(sf::Vector2<float> v);
+    void cambiarOpacidad(sf::Sprite* &s, float o);
+    void cambiarOpacidad(sf::Text* &t, float o);
     
     void pintarHUD(sf::RenderWindow &window);
 private:

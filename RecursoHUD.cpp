@@ -9,6 +9,7 @@
 
 RecursoHUD::RecursoHUD(int ti) {
     //Tipo: 1=pistola; 2=hacha; 3=metralleta; 4=escopeta; 5=barril; 6=madera; 7=valla; 8=granada
+    //Tipo: 1=pistola; 2=metralleta; 3=escopeta; 4=hacha; 5=barril; 6=madera; 7=valla; 8=granada
     tipo=ti;
     num=0;
     sf::Texture texture;
@@ -24,11 +25,11 @@ RecursoHUD::RecursoHUD(int ti) {
     sprite=new sf::Sprite(aux);  
     sprite->setOrigin(75/2,75/2);
     int i=-1, j=-1;
-    switch(tipo){
+    switch(tipo){                
         case 1: i=9; j=1; break;
-        case 2: i=9; j=2; break;
-        case 3: i=10; j=1; break;
-        case 4: i=11; j=1; break;
+        case 2: i=10; j=1; break;
+        case 3: i=11; j=1; break;
+        case 4: i=9; j=2; break;
         case 5: i=9; j=0; break;
         case 6: i=11; j=0; break;
         case 7: i=10; j=0; break;
@@ -49,7 +50,7 @@ RecursoHUD::RecursoHUD(int ti) {
     auxFont.setFont(*fuente);
     
     //Si las armas son del tipo pistola o hacha, creamos el simbolo infinito
-    if(tipo==1 || tipo==2){
+    if(tipo==1 || tipo==4){
         num=8;
         auxFont.setRotation(90);
         auxFont.setString(intAString(num));
@@ -59,6 +60,7 @@ RecursoHUD::RecursoHUD(int ti) {
     
     auxFont.setCharacterSize(35);        
     texto = new sf::Text(auxFont);
+    mostrarPuntuacion=true;
 }
 
 RecursoHUD::RecursoHUD(const RecursoHUD& orig) {
@@ -75,6 +77,21 @@ sf::Sprite* RecursoHUD::getSprite(){
 }
 void RecursoHUD::setSprite(sf::Sprite* s){
     sprite=s;
+}
+
+bool RecursoHUD::getMostrarPuntuacion(){
+    return mostrarPuntuacion;
+}
+void RecursoHUD::setMostrarPuntuacion(bool m){
+    mostrarPuntuacion=m;
+}
+
+void RecursoHUD::setOpacity(float o){
+    sf::Color c = sprite->getColor();
+    c.a=255*o;
+    sprite->setColor(c);
+    
+    opacidad=o;
 }
 
 int RecursoHUD::getNum(){
@@ -97,20 +114,20 @@ void RecursoHUD::setScale(float s){
 }
 
 void RecursoHUD::aumentarNum(int i){
-    if(tipo!=1 && tipo!=2){
+    if(tipo!=1 && tipo!=4){
         num+i;    
         texto->setString("x"+intAString(num));
     }
 }
        
 void RecursoHUD::masNum(){
-    if(tipo!=1 && tipo!=2){
+    if(tipo!=1 && tipo!=4){
         num++;    
         texto->setString("x"+intAString(num));
     }
 }
 void RecursoHUD::menosNum(){
-    if(tipo!=1 && tipo!=2){
+    if(tipo!=1 && tipo!=4){
         num--;    
         texto->setString("x"+intAString(num));
     }
@@ -134,12 +151,15 @@ std::string RecursoHUD::intAString(int p){
 
 void RecursoHUD::pintarRecurso(sf::RenderWindow &window){
     window.draw(*sprite);
-        
-    texto->setScale(1.05, 1.05);
-    texto->setColor(sf::Color::White);
-    window.draw(*texto);
-    texto->setColor(sf::Color::Black);
-    texto->setScale(1.0,1.0);
-    window.draw(*texto);
-    
+
+    if(mostrarPuntuacion==true){
+        sf::Color c = sf::Color(255,255,255,opacidad*255);        
+        texto->setScale(1.05, 1.05);
+        texto->setColor(c);        
+        window.draw(*texto);
+        c = sf::Color(0,0,0,opacidad*255);
+        texto->setColor(c);
+        texto->setScale(1.0,1.0);
+        window.draw(*texto);
+    }
 }

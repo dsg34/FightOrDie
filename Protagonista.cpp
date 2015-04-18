@@ -7,7 +7,7 @@
 
 #include "Protagonista.h"
 
-Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, Arma* a, sf::Vector2<float> p, int mV, int ve) :Personaje(s,t,p,mV,ve) {
+Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int ve, Arma* a ) :Personaje(s,t,p,mV,ve) {
 
     //this->Personaje(sf::Sprite* s, p, mV, ve);
     arma=a;
@@ -20,7 +20,7 @@ Protagonista::Protagonista(const Protagonista& orig) : Personaje(orig) {
 Protagonista::~Protagonista() {
 }
 
-/**************************************************METODOS GET Y SET**************************************************************+*
+/**************************************************METODOS GET Y SET***************************************************************/
 
 Arma* Protagonista::getArma(){
     return arma;

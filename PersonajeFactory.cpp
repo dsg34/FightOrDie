@@ -33,7 +33,7 @@ Protagonista* PersonajeFactory::crearProtagonista(Arma* a, sf::Vector2<float> p)
         sprite.setTextureRect(sf::IntRect(0*75, 0*75, 75, 75));
 
         sf::Sprite* aux = new sf::Sprite(sprite);
-        protagonista = new Protagonista(aux, tex, a, p, 30, 5);
+        protagonista = new Protagonista(aux, tex, p, 30, 5, a);
     }
     return protagonista;
 }

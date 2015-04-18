@@ -47,7 +47,7 @@ int main()
     /////////////////////////////////////////////////Pruebas ArmaFactory
     ArmaFactory* fabricaArmas = new ArmaFactory();
     
-    Arma* miPistola = fabricaArmas->crearPistola();
+    Arma* miPistola = fabricaArmas->crearMetralleta();
     miPistola->setMunicionSecundaria(20);
     //Arma* miSecundaria = fabricaArmas->crearGranada();
     int balas=0;
@@ -75,11 +75,11 @@ int main()
    
     // Lo dispongo en el centro de la pantalla
     sprite.setPosition(320, 240);
-
-    Personaje* pers = new Personaje(new sf::Sprite(sprite),new sf::Texture(tex),sprite.getPosition(), 20, 5);
+    
+    Protagonista* prota = new Protagonista(new sf::Sprite(sprite),new sf::Texture(tex),sprite.getPosition(), 20, 5, miPistola);
     sf::Vector2<int> vec = (sf::Vector2<int>) window.getSize();
     
-    HUD hud = HUD(pers, vec);
+    HUD hud = HUD(prota, vec);
     //Bucle del juego
     while (window.isOpen())
     {
@@ -115,7 +115,7 @@ int main()
                             sprite.setTextureRect(sf::IntRect(0*75, 2*75, 75, 75));
                             //Escala por defecto
                             sprite.setScale(1,1);
-                            sprite.move(kVel,0);
+                            sprite.move(kVel,0);                            
                         break;
 
                         case sf::Keyboard::A:
@@ -137,18 +137,22 @@ int main()
                         
                         case sf::Keyboard::Num1:
                             miPistola = fabricaArmas->crearPistola();
+                            prota->setArma(miPistola);
                         break;
                         
                         case sf::Keyboard::Num2:
                             miPistola = fabricaArmas->crearMetralleta();
+                            prota->setArma(miPistola);
                         break;
                         
                         case sf::Keyboard::Num3:
                             miPistola = fabricaArmas->crearEscopeta();
+                            prota->setArma(miPistola);
                         break;
                         
                         case sf::Keyboard::Num4:
                             miPistola = fabricaArmas->crearHacha();
+                            prota->setArma(miPistola);
                         break;
                         
                         
@@ -170,7 +174,7 @@ int main()
                         break;
                               
                     }
-
+                    prota->setSprite(new sf::Sprite(sprite));
             }
             
         }
@@ -180,15 +184,16 @@ int main()
         if(frecuencia.asSeconds()>0.05){  
             window.clear();
             //Actualizamos la posicion de las balas
+            hud.actualizarHUD(prota);
             miPistola->updateProyectiles();
             
             //Pintamos las balas
             miPistola->pintarProyectiles(window);
-            hud.pintarHUD(window);
+            
             //std::cout << miPistola->getSecundaria().size() << std::endl;
             //Pintamos los demas sprites
             window.draw(sprite);
-                
+            hud.pintarHUD(window);
             apuntar.setPosition(posicionCursor(window).x, posicionCursor(window).y);
             window.draw(apuntar);
             
