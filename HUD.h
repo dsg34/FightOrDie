@@ -47,6 +47,8 @@ public:
     void aumentarVida();    
     
     void actualizarArmasHUD();
+    void actualizarArrayArmas(std::vector<Arma*> v);
+    void actualizarRecursosHUD();
     void actualizarHUD(Protagonista* p);
     std::string intAString(int p);
     

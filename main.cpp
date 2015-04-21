@@ -110,6 +110,14 @@ int main()
                     //Verifico si se pulsa alguna tecla de movimiento
                     switch(event.key.code) {
                         
+                        case sf::Keyboard::Z:
+                            prota->setVida(prota->getVida()-1);                             
+                        break;
+                        
+                        case sf::Keyboard::X:
+                            prota->setVida(prota->getVida()+1);                            
+                        break;
+                        
                         //Mapeo del cursor
                         case sf::Keyboard::D:
                             sprite.setTextureRect(sf::IntRect(0*75, 2*75, 75, 75));

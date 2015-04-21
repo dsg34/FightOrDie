@@ -27,7 +27,7 @@ public:
     void setMostrarPuntuacion(bool m);
     void setOpacity(float o);
     
-    void prueba(std::string s);
+    void cambiarNum(int i);
     void aumentarNum(int i);
     void masNum();
     void menosNum();

@@ -23,9 +23,13 @@ HUD::HUD(Protagonista* p, sf::Vector2<int> tam) {
     //***************************************************Inicializacion sprites        
     RecursoHUD* pistola = new RecursoHUD(1);
     RecursoHUD* hacha = new RecursoHUD(4);
+    RecursoHUD* metralleta = new RecursoHUD(3);
+    RecursoHUD* escopeta = new RecursoHUD(2);
     armas = std::vector<RecursoHUD*>();  
     armas.push_back(pistola);
     armas.push_back(hacha);
+    armas.push_back(metralleta);
+    armas.push_back(escopeta);
     actualizarArmasHUD();
     //***************************************************Inicializacion sprite municion
     municion = new sf::Sprite(*textura);
@@ -80,7 +84,17 @@ HUD::HUD(Protagonista* p, sf::Vector2<int> tam) {
     opacidadMunicion=1.0;
     opacidadPuntuacion=1.0;
     opacidadVidaBoss=0.0;
-    recursos = std::vector<RecursoHUD*>();         
+    recursos = std::vector<RecursoHUD*>();    
+    RecursoHUD* recurso1 = new RecursoHUD(5);
+    RecursoHUD* recurso2 = new RecursoHUD(6);
+    RecursoHUD* recurso3 = new RecursoHUD(7);
+    RecursoHUD* recurso4 = new RecursoHUD(8);
+    recursos.push_back(recurso1);
+    recursos.push_back(recurso2);
+    recursos.push_back(recurso3);
+    recursos.push_back(recurso4);
+    actualizarRecursosHUD();
+        
 }
 
 HUD::HUD(const HUD& orig) {
@@ -205,39 +219,77 @@ void HUD::actualizarHUD(Protagonista* p){
 }
     
 void HUD::actualizarArmasHUD(){    
-    float separacion=70;        
+    float separacion=80;        
     float posX=tamPantalla->x/10*9.7;// .getPosition().x;
     float posY=tamPantalla->y/8*7.15;
     int j=0;
+    float l=1;
     for(int i=0; i<armas.size();i++){
+        if(armas[i]->getTipo()==2 ||armas[i]->getTipo()==3)
+            l=2;
+        else
+            l=1.5;
         if(armas[i]->getTipo()!=tipoPrincipal){
             armas[i]->setScale(1);
-            armas[i]->cambiarPosicion(posX-50, (-separacion)+posY-(j*separacion));//(i*separacion));
+            
+            armas[i]->cambiarPosicion(posX-50*l, (-separacion)+posY-(j*separacion));
             j++;
             if(armas[i]->getMostrarPuntuacion()==false)
                 armas[i]->setMostrarPuntuacion(true);
         }else{
             armas[i]->setScale(1.5);
-            armas[i]->cambiarPosicion(posX-200, posY+30);
+            armas[i]->cambiarPosicion(posX-200*l/1.5, posY+30);
             armas[i]->setMostrarPuntuacion(false);
         }
     }
 }
+
+void HUD::actualizarRecursosHUD(){    
+    float separacion=70;  
     
+    float posX=50+tamPantalla->x/10*1;// .getPosition().x;
+    float posY=-20+tamPantalla->y/8*7;
+    int j=0;
+    for(int i=0; i<recursos.size();i++){
+        recursos[i]->cambiarPosicion(posX+(separacion*i), posY);//(i*separacion));        
+    }
+}
+
+void HUD::actualizarArrayArmas(std::vector<Arma*> v){
+    for(int i=0; i<v.size();i++){
+        Arma* aux = v[i];
+
+        //Comprobamos si su municion es mayor a 0 para insertarlo/borrarlo
+        if(aux->getMunicion()>0){
+            anyadirArma(aux);
+        }else{
+            eliminarArma(aux);
+        }
+    }
+    actualizarArmasHUD();
+} 
+
+/*void HUD::actualizarArrayRecursos(std::vector<Recurso*> v){
+    for(int i=0; i<v.size();i++){
+        Recurso* aux = v[i];
+        anyadirRecurso();
+    }
+    actualizarArmasHUD();
+}*/
+
 void HUD::anyadirArma(Arma* a){
     int tipo = a->getTipo();
     bool esta=false;
     for(int i=0; i<armas.size();i++){
         if(esta==false && armas[i]->getTipo()==tipo){
-            armas[i]->masNum();
+            armas[i]->cambiarNum(a->getMunicion());
             esta=true;
         }            
     }
     
     if(esta==false){
         RecursoHUD* nuevoRecurso = new RecursoHUD(tipo);
-        armas.push_back(nuevoRecurso);
-        actualizarArmasHUD();
+        armas.push_back(nuevoRecurso);        
     }    
 }
 
@@ -257,7 +309,20 @@ void HUD::eliminarArma(Arma* a){
 }
 
 /*void HUD::anyadirRecurso(Recurso r){
+    int tipo = a->getTipo();
+    bool esta=false;
+    for(int i=0; i<recursos.size();i++){
+        if(esta==false && recursos[i]->getTipo()==tipo){
+            recursos[i]->masNum();
+            esta=true;
+        }            
+    }
     
+    if(esta==false){
+        RecursoHUD* nuevoRecurso = new RecursoHUD(tipo);
+        recursos.push_back(nuevoRecurso);
+        actualizarRecurosHUD();
+    }    
 }
 
 void HUD::eliminarRecurso(Recurso r){
@@ -316,10 +381,10 @@ void HUD::pintarHUD(sf::RenderWindow &window){
     sf::Text auxTexto;
     auxTexto.setFont(*fuente);
     auxTexto.setCharacterSize(10);
-    /*for(int j=0; j<recursos.size(); j++){
+    for(int j=0; j<recursos.size(); j++){
         recursos[j]->setOpacity(opacidadVida);
         recursos[j]->pintarRecurso(window);        
-    }*/
+    }
 
     cambiarOpacidad(spriteVida, opacidadVida);
     window.draw(*spriteVida);

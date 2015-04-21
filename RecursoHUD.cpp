@@ -8,7 +8,6 @@
 #include "RecursoHUD.h"
 
 RecursoHUD::RecursoHUD(int ti) {
-    //Tipo: 1=pistola; 2=hacha; 3=metralleta; 4=escopeta; 5=barril; 6=madera; 7=valla; 8=granada
     //Tipo: 1=pistola; 2=metralleta; 3=escopeta; 4=hacha; 5=barril; 6=madera; 7=valla; 8=granada
     tipo=ti;
     num=0;
@@ -24,19 +23,28 @@ RecursoHUD::RecursoHUD(int ti) {
     aux.setTexture(*tex);
     sprite=new sf::Sprite(aux);  
     sprite->setOrigin(75/2,75/2);
-    int i=-1, j=-1;
+    int j=-1;
+    float i=-1, k=1.0;
     switch(tipo){                
         case 1: i=9; j=1; break;
-        case 2: i=10; j=1; break;
-        case 3: i=11; j=1; break;
+        case 2: i=10; j=1;
+                sprite->setOrigin(75/3, 75/2);
+                k=1.5;
+                break;
+        case 3: i=11.5; j=1;
+                sprite->setOrigin(75/3, 75/2);
+                k=1.5;
+                break;
         case 4: i=9; j=2; break;
-        case 5: i=9; j=0; break;
+        case 5: i=9; j=0;                 
+                break;
         case 6: i=11; j=0; break;
         case 7: i=10; j=0; break;
-        case 8: i=11; j=0; break;
+        case 8: i=12; j=0; break;
         default: i=11; j=2; break;
     }
-    sprite->setTextureRect(sf::IntRect(i*75, j*75, 75, 75));
+    
+    sprite->setTextureRect(sf::IntRect(i*75, j*75, k*75, 75));
     
   
     //Configuracion texto
@@ -61,6 +69,11 @@ RecursoHUD::RecursoHUD(int ti) {
     auxFont.setCharacterSize(35);        
     texto = new sf::Text(auxFont);
     mostrarPuntuacion=true;
+    
+    if(tipo>4){//Menor tamanyo para los recursos
+        sprite->setScale(0.8,0.8);
+        texto->setScale(0.6,0.6);
+    }
 }
 
 RecursoHUD::RecursoHUD(const RecursoHUD& orig) {
@@ -69,9 +82,6 @@ RecursoHUD::RecursoHUD(const RecursoHUD& orig) {
 RecursoHUD::~RecursoHUD() {
 }
 
-void RecursoHUD::prueba(std::string s){
-    texto->setString(s);
-} 
 sf::Sprite* RecursoHUD::getSprite(){
     return sprite;
 }
@@ -113,6 +123,12 @@ void RecursoHUD::setScale(float s){
     texto->setScale(s,s);
 }
 
+void RecursoHUD::cambiarNum(int i){
+    if(tipo!=1 && tipo!=4){    
+        texto->setString("x"+intAString(i));
+    }
+}
+
 void RecursoHUD::aumentarNum(int i){
     if(tipo!=1 && tipo!=4){
         num+i;    
@@ -135,7 +151,11 @@ void RecursoHUD::menosNum(){
 
 void RecursoHUD::cambiarPosicion(int x, int y){
     sprite->setPosition(x,y);
-    texto->setPosition(x+30,y+15);
+    if(tipo<=4)
+        texto->setPosition(x+30,y+15);
+    else
+        texto->setPosition(x+10,y+5);
+        
 }
 
 std::string RecursoHUD::intAString(int p){
