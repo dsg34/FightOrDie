@@ -132,10 +132,10 @@ int Granada::updateGranada(){
     double cont = 1.0;   
             
     sf::Vector2<int> pos = (sf::Vector2<int>) sprite->getPosition();
-    
-    if(posicionFinal.x==pos.x && posicionFinal.y==pos.y) //&& posicionFinal.y=pos.y)
+    if(abs(posicionFinal.x-pos.x)<10 && abs(posicionFinal.y-pos.y)<10){ //&& posicionFinal.y=pos.y)
         contador=rango-20;
-    
+        
+    }
     if(contador<rango-20){          
         sprite->move(velocidad*mov.x,velocidad*mov.y); 
         sprite->rotate(10);
