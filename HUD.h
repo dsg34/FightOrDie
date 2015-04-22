@@ -49,7 +49,7 @@ public:
     void actualizarArmasHUD();
     void actualizarArrayArmas(std::vector<Arma*> v);
     void actualizarRecursosHUD();
-    void actualizarHUD(Protagonista* p);
+    void actualizarHUD(Protagonista* p, int punt);
     std::string intAString(int p);
     
     void anyadirArma(Arma* a);
@@ -63,6 +63,8 @@ public:
     void cambiarOpacidad(sf::Text* &t, float o);
     
     void pintarHUD(sf::RenderWindow &window);
+    
+    void crearMensaje(std::string s, int t, int cont);
 private:
     sf::Texture* textura;
     sf::Font* fuente;
@@ -75,6 +77,10 @@ private:
 
     sf::Text* puntuacion;
     sf::Text* balas;
+    
+    sf::Text* mensaje;
+    int contMensaje;
+    int tiempoMensaje;
     
     sf::Vector2<int>* tamPantalla;
     

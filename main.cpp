@@ -38,7 +38,7 @@ sf::Vector2<float> vectorDisparo(sf::Vector2<float> puntoPersonaje, sf::Vector2<
 int main()
 {
     //Creamos una ventana 
-    sf::RenderWindow window(sf::VideoMode(1024, 768), "Fight or Die");
+    sf::RenderWindow window(sf::VideoMode(1300, 800), "Fight or Die");
 
     sf::Clock reloj;
     reloj.restart();
@@ -163,6 +163,10 @@ int main()
                             prota->setArma(miPistola);
                         break;
                         
+                        case sf::Keyboard::M:
+                            hud.crearMensaje("Has pulsado la M \nENHORABUENA", -1, 30);
+                            
+                        break;
                         
                         //Pulsar R para reiniciar partida
                         case sf::Keyboard::R:
@@ -192,7 +196,7 @@ int main()
         if(frecuencia.asSeconds()>0.05){  
             window.clear();
             //Actualizamos la posicion de las balas
-            hud.actualizarHUD(prota);
+            hud.actualizarHUD(prota, 200);
             miPistola->updateProyectiles();
             
             //Pintamos las balas

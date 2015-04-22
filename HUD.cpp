@@ -44,7 +44,7 @@ HUD::HUD(Protagonista* p, sf::Vector2<int> tam) {
     spriteVida->setScale(0.6,0.6);
     /*std::cout<<"Tam x:" << tam.x << " Tam y: " << tam.y << std::endl;
     std::cout<<"Pos x:" << tam.x/6*5 << " Pos y: " << tam.y/8*7 << std::endl;*/
-    spriteVida->setPosition(tam.x/10*2.7, tam.y/8*7.4);
+    spriteVida->setPosition(tam.x/10*2, tam.y/8*7.4);
     //spriteVida->setPosition(133, 500);
     vida=p->getVida();
     cargarSpriteVida();
@@ -95,6 +95,8 @@ HUD::HUD(Protagonista* p, sf::Vector2<int> tam) {
     recursos.push_back(recurso4);
     actualizarRecursosHUD();
         
+    contMensaje=0;
+    tiempoMensaje=50;
 }
 
 HUD::HUD(const HUD& orig) {
@@ -193,7 +195,7 @@ void HUD::aumentarVida(){
     cargarSpriteVida();
 }  
     
-void HUD::actualizarHUD(Protagonista* p){
+void HUD::actualizarHUD(Protagonista* p, int punt){
     vida=p->getVida();
     //Actualizamos vida
     cargarSpriteVida();
@@ -215,6 +217,7 @@ void HUD::actualizarHUD(Protagonista* p){
     //Actualizamos las opacidades
     sf::Vector2<float> pos = p->getSprite()->getPosition();
     actualizarOpacidades(pos);
+    
     actualizarArmasHUD();
 }
     
@@ -238,7 +241,7 @@ void HUD::actualizarArmasHUD(){
                 armas[i]->setMostrarPuntuacion(true);
         }else{
             armas[i]->setScale(1.5);
-            armas[i]->cambiarPosicion(posX-200*l/1.5, posY+30);
+            armas[i]->cambiarPosicion(posX-(tamPantalla->x/5.5)*l/1.5, posY+30);
             armas[i]->setMostrarPuntuacion(false);
         }
     }
@@ -372,6 +375,26 @@ std::string HUD::intAString(int p){
     
     return devuelve;
 }
+
+void HUD::crearMensaje(std::string s, int t, int cont){
+    mensaje = new sf::Text();
+    int tam;
+    if(t>0)
+        tam=t;
+    else
+        tam=60;
+    mensaje->setFont(*fuente);
+    mensaje->setCharacterSize(60);
+    mensaje->setPosition(tamPantalla->x/4+((tamPantalla->x/20)), tamPantalla->y/2-(tamPantalla->y/10));
+    mensaje->setString(s);
+    
+    if(cont>25)
+        tiempoMensaje=cont;
+    else
+        tiempoMensaje=60;
+                
+    contMensaje=1;
+}
     
 void HUD::pintarHUD(sf::RenderWindow &window){
     for(int i=0; i<armas.size(); i++){
@@ -409,4 +432,10 @@ void HUD::pintarHUD(sf::RenderWindow &window){
     cambiarOpacidad(puntuacion, opacidadPuntuacion);
     puntuacion->setScale(1.0,1.0);
     window.draw(*puntuacion);
+    
+    if(contMensaje>0 && contMensaje<60){
+        window.draw(*mensaje);
+        contMensaje++;
+    }else if(contMensaje>tiempoMensaje)
+        contMensaje=0;
 }

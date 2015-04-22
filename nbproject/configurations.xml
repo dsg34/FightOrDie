@@ -8,6 +8,8 @@
       <itemPath>ArmaFactory.h</itemPath>
       <itemPath>Granada.h</itemPath>
       <itemPath>HUD.h</itemPath>
+      <itemPath>Nivel.h</itemPath>
+      <itemPath>Oleada.h</itemPath>
       <itemPath>Personaje.h</itemPath>
       <itemPath>PersonajeFactory.h</itemPath>
       <itemPath>Protagonista.h</itemPath>
@@ -26,6 +28,8 @@
       <itemPath>ArmaFactory.cpp</itemPath>
       <itemPath>Granada.cpp</itemPath>
       <itemPath>HUD.cpp</itemPath>
+      <itemPath>Nivel.cpp</itemPath>
+      <itemPath>Oleada.cpp</itemPath>
       <itemPath>Personaje.cpp</itemPath>
       <itemPath>PersonajeFactory.cpp</itemPath>
       <itemPath>Protagonista.cpp</itemPath>
@@ -88,6 +92,14 @@
       <item path="HUD.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="HUD.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Nivel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Nivel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Oleada.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Oleada.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Personaje.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -165,6 +177,14 @@
       <item path="HUD.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="HUD.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Nivel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Nivel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Oleada.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Oleada.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Personaje.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -12,7 +12,7 @@
 
 class Granada {
 public:
-    Granada(sf::Vector2<float> s, sf::Vector2<float> m, int d);
+    Granada(sf::Vector2<float> s, sf::Vector2<float> m, int d, sf::Vector2<int> pos);
     Granada(const Granada& orig);
     virtual ~Granada();
     
@@ -51,6 +51,7 @@ protected:
     
     sf::Vector2<float> posAnterior;
     sf::Vector2<float> posActual;
+    sf::Vector2<int> posicionFinal;
 private:
 
 };

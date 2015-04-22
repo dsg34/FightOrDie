@@ -7,7 +7,7 @@
 #include <iostream>
 #include "Granada.h"
 
-Granada::Granada(sf::Vector2<float> s, sf::Vector2<float> m, int d) {
+Granada::Granada(sf::Vector2<float> s, sf::Vector2<float> m, int d, sf::Vector2<int> pos) {
     
     sf::Texture tex;
     if (!tex.loadFromFile("resources/sprite_general.png"))
@@ -32,6 +32,8 @@ Granada::Granada(sf::Vector2<float> s, sf::Vector2<float> m, int d) {
     danyo=d;
     
     mov=m;
+    
+    posicionFinal=pos;
     
     posActual = s;
     posAnterior = s;
@@ -129,6 +131,10 @@ int Granada::updateGranada(){
     //Posicion inicial de las imagenes de explosion
     double cont = 1.0;   
             
+    sf::Vector2<int> pos = (sf::Vector2<int>) sprite->getPosition();
+    
+    if(posicionFinal.x==pos.x && posicionFinal.y==pos.y) //&& posicionFinal.y=pos.y)
+        contador=rango-20;
     
     if(contador<rango-20){          
         sprite->move(velocidad*mov.x,velocidad*mov.y); 
