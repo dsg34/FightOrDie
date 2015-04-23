@@ -62,7 +62,7 @@ build/Release/MinGW-Windows/main.o: main.cpp Protagonista.h Arma.h \
  ../SFML-2.1/include/SFML/Graphics/ConvexShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
  ../SFML-2.1/include/SFML/Graphics/Text.hpp Granada.h Personaje.h HUD.h \
- RecursoHUD.h ArmaFactory.h
+ RecursoHUD.h ArmaFactory.h MapLoader.h
 
 Protagonista.h:
 
@@ -207,3 +207,5 @@ HUD.h:
 RecursoHUD.h:
 
 ArmaFactory.h:
+
+MapLoader.h:

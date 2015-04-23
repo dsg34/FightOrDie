@@ -141,6 +141,8 @@ int Granada::updateGranada(){
         contador=rango-20;
         
     }
+    if(contador==0)
+        sprite->setScale(0.6,0.6);
     if(contador<rango-20){                  
         sprite->move(velocidad*mov.x,velocidad*mov.y); 
         sprite->rotate(10);

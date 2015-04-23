@@ -8,13 +8,16 @@
       <itemPath>ArmaFactory.h</itemPath>
       <itemPath>Granada.h</itemPath>
       <itemPath>HUD.h</itemPath>
+      <itemPath>MapLoader.h</itemPath>
       <itemPath>Nivel.h</itemPath>
       <itemPath>Oleada.h</itemPath>
       <itemPath>Personaje.h</itemPath>
       <itemPath>PersonajeFactory.h</itemPath>
       <itemPath>Protagonista.h</itemPath>
       <itemPath>Proyectil.h</itemPath>
+      <itemPath>Recurso.h</itemPath>
       <itemPath>RecursoHUD.h</itemPath>
+      <itemPath>RecursosFactory.h</itemPath>
       <itemPath>librerias.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -28,13 +31,16 @@
       <itemPath>ArmaFactory.cpp</itemPath>
       <itemPath>Granada.cpp</itemPath>
       <itemPath>HUD.cpp</itemPath>
+      <itemPath>MapLoader.cpp</itemPath>
       <itemPath>Nivel.cpp</itemPath>
       <itemPath>Oleada.cpp</itemPath>
       <itemPath>Personaje.cpp</itemPath>
       <itemPath>PersonajeFactory.cpp</itemPath>
       <itemPath>Protagonista.cpp</itemPath>
       <itemPath>Proyectil.cpp</itemPath>
+      <itemPath>Recurso.cpp</itemPath>
       <itemPath>RecursoHUD.cpp</itemPath>
+      <itemPath>RecursosFactory.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -48,6 +54,12 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>lib/tinyxml/tinystr.cpp</itemPath>
+    <itemPath>lib/tinyxml/tinystr.h</itemPath>
+    <itemPath>lib/tinyxml/tinyxml.cpp</itemPath>
+    <itemPath>lib/tinyxml/tinyxml.h</itemPath>
+    <itemPath>lib/tinyxml/tinyxmlerror.cpp</itemPath>
+    <itemPath>lib/tinyxml/tinyxmlparser.cpp</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -128,6 +140,22 @@
       <item path="RecursoHUD.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="RecursoHUD.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RecursosFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RecursosFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/tinyxml/tinystr.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/tinyxml/tinystr.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/tinyxml/tinyxml.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/tinyxml/tinyxml.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/tinyxml/tinyxmlerror.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/tinyxml/tinyxmlparser.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="librerias.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -221,6 +249,22 @@
       <item path="RecursoHUD.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="RecursoHUD.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RecursosFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RecursosFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/tinyxml/tinystr.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/tinyxml/tinystr.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/tinyxml/tinyxml.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/tinyxml/tinyxml.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/tinyxml/tinyxmlerror.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/tinyxml/tinyxmlparser.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="librerias.h" ex="false" tool="3" flavor2="0">
       </item>

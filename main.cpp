@@ -4,6 +4,7 @@
 #include "Protagonista.h"
 #include "HUD.h"
 #include "ArmaFactory.h"
+#include "MapLoader.h"
 #define kVel 5
 
 sf::Vector2<int> posicionCursor(sf::RenderWindow &window){
@@ -38,7 +39,7 @@ sf::Vector2<float> vectorDisparo(sf::Vector2<float> puntoPersonaje, sf::Vector2<
 int main()
 {
     //Creamos una ventana 
-    sf::RenderWindow window(sf::VideoMode(1300, 800), "Fight or Die");
+    sf::RenderWindow window(sf::VideoMode(1300, 750), "Fight or Die");
 
     sf::Clock reloj;
     reloj.restart();
@@ -46,7 +47,8 @@ int main()
     
     /////////////////////////////////////////////////Pruebas ArmaFactory
     ArmaFactory* fabricaArmas = new ArmaFactory();
-    
+    MapLoader* map = new MapLoader();
+    map->LoadFromFile("resources/nivel1.tmx");
     Arma* miPistola = fabricaArmas->crearMetralleta();
     miPistola->setMunicionSecundaria(20);
     //Arma* miSecundaria = fabricaArmas->crearGranada();
@@ -123,6 +125,40 @@ int main()
                             sprite.setTextureRect(sf::IntRect(0*75, 2*75, 75, 75));
                             //Escala por defecto
                             sprite.setScale(1,1);
+                            if(map->Colision((sprite.getPosition().x + kVel),(sprite.getPosition().y + 75/2))){                                
+                                sprite.move(kVel,0);
+                            }
+                        break;
+
+                        case sf::Keyboard::A:
+                            sprite.setTextureRect(sf::IntRect(0*75, 2*75, 75, 75));
+                            //Reflejo vertical
+                            sprite.setScale(-1,1);
+                            if(map->Colision((sprite.getPosition().x-kVel),sprite.getPosition().y + 75/2)){                                
+                                sprite.move(-kVel,0); 
+                            }
+                        break;
+                        
+                        case sf::Keyboard::W:
+                            sprite.setTextureRect(sf::IntRect(0*75, 3*75, 75, 75));
+                            if(map->Colision(sprite.getPosition().x,(sprite.getPosition().y - kVel + 75/2))){
+                                sprite.move(0,-kVel);  
+                            }
+                                                         
+                        break;
+                        
+                        case sf::Keyboard::S:
+                            sprite.setTextureRect(sf::IntRect(0*75, 0*75, 75, 75));
+                            if(map->Colision(sprite.getPosition().x,(sprite.getPosition().y + kVel + 75/2))){
+                                sprite.move(0,kVel);
+                            }
+                        break;  
+                        /*
+                        //Mapeo del cursor
+                        case sf::Keyboard::D:
+                            sprite.setTextureRect(sf::IntRect(0*75, 2*75, 75, 75));
+                            //Escala por defecto
+                            sprite.setScale(1,1);
                             sprite.move(kVel,0);                            
                         break;
 
@@ -141,7 +177,7 @@ int main()
                         case sf::Keyboard::S:
                             sprite.setTextureRect(sf::IntRect(0*75, 0*75, 75, 75));
                             sprite.move(0,kVel); 
-                        break;     
+                        break;     */
                         
                         case sf::Keyboard::Num1:
                             miPistola = fabricaArmas->crearPistola();
@@ -195,6 +231,7 @@ int main()
         //Controlamos la frecuencia a la que se ejecuta el programa
         if(frecuencia.asSeconds()>0.05){  
             window.clear();
+            map->Draw(window);
             //Actualizamos la posicion de las balas
             hud.actualizarHUD(prota, 200);
             miPistola->updateProyectiles();
@@ -204,6 +241,7 @@ int main()
             
             //std::cout << miPistola->getSecundaria().size() << std::endl;
             //Pintamos los demas sprites
+            
             window.draw(sprite);
             hud.pintarHUD(window);
             apuntar.setPosition(posicionCursor(window).x, posicionCursor(window).y);

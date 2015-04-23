@@ -4,7 +4,7 @@
  *
  * Created on 21 de abril de 2015, 9:11
  */
-
+#include "MapLoader.h"
 #include "Oleada.h"
 #include "Proyectil.h"
 #include "PersonajeFactory.h"
@@ -33,13 +33,14 @@ public:
     void controlarRacha();
     void compruebaDanyoZombie();
     
-    
+    void Nivel::pintarMapa(sf::RenderWindow &w);
     void pintarNivel(sf::RenderWindow &w);//Pinta nivel, recursos y HUD
     
 private:
     int id;
     
     HUD* hud;
+    MapLoader* mapa;
     
     Oleada* oleada;
     int puntuacion;

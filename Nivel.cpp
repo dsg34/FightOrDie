@@ -4,7 +4,7 @@
  * 
  * Created on 21 de abril de 2015, 9:11
  */
-
+#include "MapLoader.h"
 #include "Nivel.h"
 
 Nivel::Nivel(int i, Protagonista* &p, sf::Vector2<int> v, std::vector<int> s) {
@@ -17,6 +17,16 @@ Nivel::Nivel(int i, Protagonista* &p, sf::Vector2<int> v, std::vector<int> s) {
     relojRecurso.restart();        
     
     spawnsZombies=s;
+    //mapa=new MapLoader();
+    std::string niv;
+    if(id==1)
+        niv = "resources/nivel1.tmx";
+    else if(id==2)
+        niv = "resources/nivel2.tmx";
+    else if(id==3)
+        niv = "resources/nivel3.tmx";
+    
+    mapa->LoadFromFile(niv);
 }
 
 Nivel::Nivel(const Nivel& orig) {
@@ -172,7 +182,10 @@ void Nivel::compruebaDanyoZombie(){
         zombies[i]->calcular
     }*/
 }
-
+//Separamos mapa y nivel porque lo primero que se ha de pintar es el mapa, luego el protagonista y luego el resto del nivel
+void Nivel::pintarMapa(sf::RenderWindow &w){
+    mapa->Draw(w);
+}
 
 void Nivel::pintarNivel(sf::RenderWindow &w){    
     /*for(int i=0; i<zombies.size(); i++)
