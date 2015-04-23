@@ -21,7 +21,11 @@ HUD::HUD(Protagonista* p, sf::Vector2<int> tam) {
     //sf::Vector2<int> tam = (sf::Vector2<int>) w.getSize();
     textura=new sf::Texture(tex);
     //***************************************************Inicializacion sprites        
-    RecursoHUD* pistola = new RecursoHUD(1);
+    //armas = std::vector<RecursoHUD*>();
+    //actualizarArrayArmas(p->getArmas());
+    //actualizarArmasHUD();
+    
+    /*RecursoHUD* pistola = new RecursoHUD(1);
     RecursoHUD* hacha = new RecursoHUD(4);
     RecursoHUD* metralleta = new RecursoHUD(3);
     RecursoHUD* escopeta = new RecursoHUD(2);
@@ -29,8 +33,9 @@ HUD::HUD(Protagonista* p, sf::Vector2<int> tam) {
     armas.push_back(pistola);
     armas.push_back(hacha);
     armas.push_back(metralleta);
-    armas.push_back(escopeta);
-    actualizarArmasHUD();
+    armas.push_back(escopeta);    
+    */    
+    
     //***************************************************Inicializacion sprite municion
     municion = new sf::Sprite(*textura);
     municion->setScale(0.8,0.8);
@@ -84,8 +89,11 @@ HUD::HUD(Protagonista* p, sf::Vector2<int> tam) {
     opacidadMunicion=1.0;
     opacidadPuntuacion=1.0;
     opacidadVidaBoss=0.0;
-    recursos = std::vector<RecursoHUD*>();    
-    RecursoHUD* recurso1 = new RecursoHUD(5);
+    recursos = std::vector<RecursoHUD*>(); 
+    //actualizarArrayRecursos(p->getRecursos());
+    //actualizarRecursosHUD();
+    
+    /*RecursoHUD* recurso1 = new RecursoHUD(5);
     RecursoHUD* recurso2 = new RecursoHUD(6);
     RecursoHUD* recurso3 = new RecursoHUD(7);
     RecursoHUD* recurso4 = new RecursoHUD(8);
@@ -93,7 +101,7 @@ HUD::HUD(Protagonista* p, sf::Vector2<int> tam) {
     recursos.push_back(recurso2);
     recursos.push_back(recurso3);
     recursos.push_back(recurso4);
-    actualizarRecursosHUD();
+    actualizarRecursosHUD();*/
         
     contMensaje=0;
     tiempoMensaje=50;
@@ -221,7 +229,7 @@ void HUD::actualizarHUD(Protagonista* p, int punt){
     //Actualizamos las opacidades
     sf::Vector2<float> pos = p->getSprite()->getPosition();
     actualizarOpacidades(pos);
-    
+    setPuntuacion(punt);
     actualizarArmasHUD();
 }
     
@@ -276,13 +284,13 @@ void HUD::actualizarArrayArmas(std::vector<Arma*> v){
     actualizarArmasHUD();
 } 
 
-/*void HUD::actualizarArrayRecursos(std::vector<Recurso*> v){
+void HUD::actualizarArrayRecursos(std::vector<Recurso*> v){
     for(int i=0; i<v.size();i++){
         Recurso* aux = v[i];
-        anyadirRecurso();
+        anyadirRecurso(aux);
     }
-    actualizarArmasHUD();
-}*/
+    actualizarRecursosHUD();
+}
 
 void HUD::anyadirArma(Arma* a){
     int tipo = a->getTipo();
@@ -315,8 +323,8 @@ void HUD::eliminarArma(Arma* a){
     }      
 }
 
-/*void HUD::anyadirRecurso(Recurso r){
-    int tipo = a->getTipo();
+void HUD::anyadirRecurso(Recurso* r){
+    int tipo = r->getTipo();
     bool esta=false;
     for(int i=0; i<recursos.size();i++){
         if(esta==false && recursos[i]->getTipo()==tipo){
@@ -328,13 +336,24 @@ void HUD::eliminarArma(Arma* a){
     if(esta==false){
         RecursoHUD* nuevoRecurso = new RecursoHUD(tipo);
         recursos.push_back(nuevoRecurso);
-        actualizarRecurosHUD();
+        actualizarRecursosHUD();
     }    
 }
 
-void HUD::eliminarRecurso(Recurso r){
-    
-}*/
+void HUD::eliminarRecurso(Recurso* r){
+    int tipo = r->getTipo();
+    bool esta=false;
+    for(int i=0; i<recursos.size();i++){
+        if(esta==false && recursos[i]->getTipo()==tipo){
+            recursos[i]->menosNum();
+            if(recursos[i]->getNum()<=0){
+                recursos.erase(recursos.begin()+i);
+                actualizarArmasHUD();
+            }
+            esta=true;
+        }            
+    } 
+}
 
 void HUD::actualizarOpacidades(sf::Vector2<float> pos){    
     float opacidad = 0.2;

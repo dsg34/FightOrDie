@@ -4,7 +4,7 @@
 #include "Protagonista.h"
 #include "HUD.h"
 #include "ArmaFactory.h"
-#include "MapLoader.h"
+#include "Nivel.h"
 #define kVel 5
 
 sf::Vector2<int> posicionCursor(sf::RenderWindow &window){
@@ -47,6 +47,9 @@ int main()
     
     /////////////////////////////////////////////////Pruebas ArmaFactory
     ArmaFactory* fabricaArmas = new ArmaFactory();
+    
+    
+    
     MapLoader* map = new MapLoader();
     map->LoadFromFile("resources/nivel1.tmx");
     Arma* miPistola = fabricaArmas->crearMetralleta();
@@ -80,6 +83,10 @@ int main()
     
     Protagonista* prota = new Protagonista(new sf::Sprite(sprite),new sf::Texture(tex),sprite.getPosition(), 20, 5, miPistola);
     sf::Vector2<int> vec = (sf::Vector2<int>) window.getSize();
+    std::vector<int> lados;
+    lados.push_back(1);
+    lados.push_back(2);
+    Nivel* niv = new Nivel(1, prota, vec, lados, 5.0);
     
     HUD hud = HUD(prota, vec);
     //Bucle del juego
@@ -227,11 +234,11 @@ int main()
             
         }
         frecuencia = reloj.getElapsedTime();
-
+        niv->actualizarNivel(prota, 0,0);
         //Controlamos la frecuencia a la que se ejecuta el programa
         if(frecuencia.asSeconds()>0.05){  
             window.clear();
-            map->Draw(window);
+            niv->pintarMapa(window);//map->Draw(window);
             //Actualizamos la posicion de las balas
             hud.actualizarHUD(prota, 200);
             miPistola->updateProyectiles();
@@ -243,7 +250,7 @@ int main()
             //Pintamos los demas sprites
             
             window.draw(sprite);
-            hud.pintarHUD(window);
+            niv->pintarNivel(window);//hud.pintarHUD(window);
             apuntar.setPosition(posicionCursor(window).x, posicionCursor(window).y);
             window.draw(apuntar);
             

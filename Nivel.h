@@ -6,6 +6,7 @@
  */
 #include "MapLoader.h"
 #include "Oleada.h"
+#include "RecursosFactory.h"
 #include "Proyectil.h"
 #include "PersonajeFactory.h"
 #ifndef NIVEL_H
@@ -13,10 +14,13 @@
 
 class Nivel {
 public:
-    Nivel(int i, Protagonista* &p, sf::Vector2<int> v, std::vector<int> s);
+    Nivel(int i, Protagonista* &p, sf::Vector2<int> v, std::vector<int> s, float f);
     Nivel(const Nivel& orig);
     virtual ~Nivel();
     
+    std::vector<Recurso*> getRecursos();
+    void addRecurso(Recurso* r);
+    void elimnarRecurso(int i);
     /*int calcularPuntuacionTotal();
     int calcularPuntuacionDinamica();    */
     
@@ -33,7 +37,7 @@ public:
     void controlarRacha();
     void compruebaDanyoZombie();
     
-    void Nivel::pintarMapa(sf::RenderWindow &w);
+    void pintarMapa(sf::RenderWindow &w);
     void pintarNivel(sf::RenderWindow &w);//Pinta nivel, recursos y HUD
     
 private:
@@ -46,6 +50,7 @@ private:
     int puntuacion;
     int racha;
     //std::vector<Zombie*> zombies;
+    std::vector<Recurso*> recursos;
     //Mapa* mapa;
     
     sf::Clock relojZombie;

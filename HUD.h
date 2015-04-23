@@ -7,6 +7,7 @@
 
 #include "Protagonista.h"
 #include "Arma.h"
+#include "Recurso.h"
 #include "RecursoHUD.h"
 #include <sstream>
 #ifndef HUD_H
@@ -50,14 +51,15 @@ public:
     void actualizarArmasHUD();
     void actualizarArrayArmas(std::vector<Arma*> v);
     void actualizarRecursosHUD();
+    void actualizarArrayRecursos(std::vector<Recurso*> v);
     void actualizarHUD(Protagonista* p, int punt);
     std::string intAString(int p);
     
     void anyadirArma(Arma* a);
     void eliminarArma(Arma* a);
     
-    /*void anyadirRecurso(Recurso r);
-    void eliminarRecurso(Recurso r);*/
+    void anyadirRecurso(Recurso* r);
+    void eliminarRecurso(Recurso* r);
     
     void actualizarOpacidades(sf::Vector2<float> v);
     void cambiarOpacidad(sf::Sprite* &s, float o);
