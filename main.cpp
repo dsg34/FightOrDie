@@ -3,6 +3,7 @@
 #include <vector>
 #include "Protagonista.h"
 #include "ArmaFactory.h"
+#include "RecursosFactory.h"
 #define kVel 5
 
 sf::Vector2<int> posicionCursor(sf::RenderWindow &window){
@@ -37,14 +38,19 @@ sf::Vector2<float> vectorDisparo(sf::Vector2<float> puntoPersonaje, sf::Vector2<
 int main()
 {
     //Creamos una ventana 
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Disparo de balas");
+    sf::RenderWindow window(sf::VideoMode(1300, 800), "Disparo de balas");
 
     sf::Clock reloj;
     reloj.restart();
     sf::Time frecuencia;    
     
+    std::vector<Recurso*> vectorRecursos;
+    
     /////////////////////////////////////////////////Pruebas ArmaFactory
     ArmaFactory* fabricaArmas = new ArmaFactory();
+    RecursosFactory* miRecurso = new RecursosFactory();
+    
+    vectorRecursos.push_back(miRecurso->crearRecurso(3));
     
     Arma* miPistola = fabricaArmas->crearPistola();
     miPistola->setMunicionSecundaria(20);
@@ -176,6 +182,15 @@ int main()
             window.clear();
             //Actualizamos la posicion de las balas
             miPistola->updateProyectiles();
+            
+            for(int i = 0; i < vectorRecursos.size(); i++)
+            {
+                vectorRecursos[i]->actualizarRecurso();
+                if(vectorRecursos[i]->getExiste())
+                    vectorRecursos[i]->pintarRecursos(window);
+                else
+                    vectorRecursos.erase(vectorRecursos.begin() + i);
+            }
             
             //Pintamos las balas
             miPistola->pintarProyectiles(window);

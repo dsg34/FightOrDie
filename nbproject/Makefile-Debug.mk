@@ -42,8 +42,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/PersonajeFactory.o \
 	${OBJECTDIR}/Protagonista.o \
 	${OBJECTDIR}/Proyectil.o \
-	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/ppp.o
+	${OBJECTDIR}/Recurso.o \
+	${OBJECTDIR}/RecursosFactory.o \
+	${OBJECTDIR}/main.o
 
 
 # C Compiler Flags
@@ -105,15 +106,20 @@ ${OBJECTDIR}/Proyectil.o: Proyectil.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I../../../Downloads/Programas/Netbeans/SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Proyectil.o Proyectil.cpp
 
+${OBJECTDIR}/Recurso.o: Recurso.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../../../Downloads/Programas/Netbeans/SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Recurso.o Recurso.cpp
+
+${OBJECTDIR}/RecursosFactory.o: RecursosFactory.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../../../Downloads/Programas/Netbeans/SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RecursosFactory.o RecursosFactory.cpp
+
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I../../../Downloads/Programas/Netbeans/SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
-
-${OBJECTDIR}/ppp.o: ppp.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../../../Downloads/Programas/Netbeans/SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ppp.o ppp.cpp
 
 # Subprojects
 .build-subprojects:

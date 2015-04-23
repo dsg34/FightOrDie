@@ -97,11 +97,17 @@
       </item>
       <item path="Proyectil.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Recurso.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Recurso.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RecursosFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RecursosFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="librerias.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="ppp.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -168,11 +174,17 @@
       </item>
       <item path="Proyectil.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Recurso.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Recurso.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RecursosFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RecursosFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="librerias.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="ppp.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>

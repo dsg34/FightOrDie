@@ -1,5 +1,5 @@
-build/Release/MinGW-Windows/main.o: main.cpp Protagonista.h Arma.h \
- Proyectil.h ../SFML-2.1/include/SFML/Graphics.hpp \
+build/Release/MinGW-Windows/Recurso.o: Recurso.cpp Recurso.h \
+ ../SFML-2.1/include/SFML/Graphics.hpp \
  ../SFML-2.1/include/SFML/Window.hpp ../SFML-2.1/include/SFML/System.hpp \
  ../SFML-2.1/include/SFML/Config.hpp \
  ../SFML-2.1/include/SFML/System/Clock.hpp \
@@ -61,14 +61,9 @@ build/Release/MinGW-Windows/main.o: main.cpp Protagonista.h Arma.h \
  ../SFML-2.1/include/SFML/Graphics/RectangleShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/ConvexShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
- ../SFML-2.1/include/SFML/Graphics/Text.hpp Granada.h Personaje.h \
- ArmaFactory.h RecursosFactory.h Recurso.h
+ ../SFML-2.1/include/SFML/Graphics/Text.hpp
 
-Protagonista.h:
-
-Arma.h:
-
-Proyectil.h:
+Recurso.h:
 
 ../SFML-2.1/include/SFML/Graphics.hpp:
 
@@ -197,13 +192,3 @@ Proyectil.h:
 ../SFML-2.1/include/SFML/Graphics/Sprite.hpp:
 
 ../SFML-2.1/include/SFML/Graphics/Text.hpp:
-
-Granada.h:
-
-Personaje.h:
-
-ArmaFactory.h:
-
-RecursosFactory.h:
-
-Recurso.h:
