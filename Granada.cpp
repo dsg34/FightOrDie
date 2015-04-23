@@ -6,6 +6,7 @@
  */
 #include <iostream>
 #include "Granada.h"
+#include "Arma.h"
 
 Granada::Granada(sf::Vector2<float> s, sf::Vector2<float> m, int d, sf::Vector2<int> pos) {
     
@@ -34,7 +35,7 @@ Granada::Granada(sf::Vector2<float> s, sf::Vector2<float> m, int d, sf::Vector2<
     mov=m;
     
     posicionFinal=pos;
-    
+    estado=0;
     posActual = s;
     posAnterior = s;
     
@@ -119,6 +120,10 @@ void Granada::setPosActual(sf::Vector2<float> v){
     posActual = v;
 }
 
+int Granada::getEstado(){
+    return estado;
+}
+
 /**********************************************MÉTODOS CUSTOM**********************************************************************/
 //Facilita el cambio de recorte del sprite
 void Granada::setRecorteSprite(int i, int j){
@@ -136,7 +141,7 @@ int Granada::updateGranada(){
         contador=rango-20;
         
     }
-    if(contador<rango-20){          
+    if(contador<rango-20){                  
         sprite->move(velocidad*mov.x,velocidad*mov.y); 
         sprite->rotate(10);
     }else if(contador<rango){//Cuando termino el rango de movimiento empiezo la animacion de explosion
@@ -166,6 +171,7 @@ int Granada::updateGranada(){
         setRecorteSprite(1,0);
     }
     contador++;
+    estado = devuelve;
     return devuelve;
 }
 

@@ -22,7 +22,7 @@ Oleada::~Oleada() {
     
 }
 
-bool Oleada::actualizarNumZombies(int i, HUD* &hud){//Actualiza el numero de zombies muertos. Autogestiona la creacion de oleadas hasta que acaba el nivel
+bool Oleada::actualizarZombiesMuertos(int i, HUD* &hud){//Actualiza el numero de zombies muertos. Autogestiona la creacion de oleadas hasta que acaba el nivel
     zombiesEliminados+=i;
     bool nivelFinalizado=false;
     if(zombiesEliminados==numZombies){

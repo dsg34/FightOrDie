@@ -28,6 +28,7 @@ public:
     float getOpacidadMunicion();
     float getOpacidadPuntuacion();
     float getOpacidadVidaBoss();
+    sf::Vector2<int>* getTamPantalla();
     
     void setTextura(sf::Texture* t);
     void setVida(sf::Sprite* v);

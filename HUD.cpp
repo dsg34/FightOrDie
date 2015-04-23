@@ -174,6 +174,10 @@ float HUD::getOpacidadVidaBoss(){
 void HUD::setOpacidadVidaBoss(float f){
     opacidadVidaBoss=f;
 }   
+
+sf::Vector2<int>* HUD::getTamPantalla(){
+    return tamPantalla;
+}
     
 /******************************************METODOS CUSTOM************************************************************/   
     

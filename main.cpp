@@ -42,7 +42,7 @@ int main()
 
     sf::Clock reloj;
     reloj.restart();
-    sf::Time frecuencia;    
+    sf::Time frecuencia;
     
     /////////////////////////////////////////////////Pruebas ArmaFactory
     ArmaFactory* fabricaArmas = new ArmaFactory();
