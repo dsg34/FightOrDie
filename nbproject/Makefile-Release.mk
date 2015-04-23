@@ -38,10 +38,14 @@ OBJECTFILES= \
 	${OBJECTDIR}/Arma.o \
 	${OBJECTDIR}/ArmaFactory.o \
 	${OBJECTDIR}/Granada.o \
+	${OBJECTDIR}/HUD.o \
+	${OBJECTDIR}/Nivel.o \
+	${OBJECTDIR}/Oleada.o \
 	${OBJECTDIR}/Personaje.o \
 	${OBJECTDIR}/PersonajeFactory.o \
 	${OBJECTDIR}/Protagonista.o \
 	${OBJECTDIR}/Proyectil.o \
+	${OBJECTDIR}/RecursoHUD.o \
 	${OBJECTDIR}/main.o
 
 
@@ -84,6 +88,21 @@ ${OBJECTDIR}/Granada.o: Granada.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Granada.o Granada.cpp
 
+${OBJECTDIR}/HUD.o: HUD.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/HUD.o HUD.cpp
+
+${OBJECTDIR}/Nivel.o: Nivel.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Nivel.o Nivel.cpp
+
+${OBJECTDIR}/Oleada.o: Oleada.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Oleada.o Oleada.cpp
+
 ${OBJECTDIR}/Personaje.o: Personaje.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -103,6 +122,11 @@ ${OBJECTDIR}/Proyectil.o: Proyectil.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Proyectil.o Proyectil.cpp
+
+${OBJECTDIR}/RecursoHUD.o: RecursoHUD.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RecursoHUD.o RecursoHUD.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}

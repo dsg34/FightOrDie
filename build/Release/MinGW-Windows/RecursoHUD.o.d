@@ -1,4 +1,4 @@
-build/Release/MinGW-Windows/Granada.o: Granada.cpp Granada.h \
+build/Release/MinGW-Windows/RecursoHUD.o: RecursoHUD.cpp RecursoHUD.h \
  ../SFML-2.1/include/SFML/Graphics.hpp \
  ../SFML-2.1/include/SFML/Window.hpp ../SFML-2.1/include/SFML/System.hpp \
  ../SFML-2.1/include/SFML/Config.hpp \
@@ -61,9 +61,9 @@ build/Release/MinGW-Windows/Granada.o: Granada.cpp Granada.h \
  ../SFML-2.1/include/SFML/Graphics/RectangleShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/ConvexShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
- ../SFML-2.1/include/SFML/Graphics/Text.hpp Arma.h Proyectil.h
+ ../SFML-2.1/include/SFML/Graphics/Text.hpp
 
-Granada.h:
+RecursoHUD.h:
 
 ../SFML-2.1/include/SFML/Graphics.hpp:
 
@@ -192,7 +192,3 @@ Granada.h:
 ../SFML-2.1/include/SFML/Graphics/Sprite.hpp:
 
 ../SFML-2.1/include/SFML/Graphics/Text.hpp:
-
-Arma.h:
-
-Proyectil.h:

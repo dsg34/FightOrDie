@@ -1,4 +1,4 @@
-build/Release/MinGW-Windows/Granada.o: Granada.cpp Granada.h \
+build/Release/MinGW-Windows/Nivel.o: Nivel.cpp Nivel.h Oleada.h \
  ../SFML-2.1/include/SFML/Graphics.hpp \
  ../SFML-2.1/include/SFML/Window.hpp ../SFML-2.1/include/SFML/System.hpp \
  ../SFML-2.1/include/SFML/Config.hpp \
@@ -61,9 +61,12 @@ build/Release/MinGW-Windows/Granada.o: Granada.cpp Granada.h \
  ../SFML-2.1/include/SFML/Graphics/RectangleShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/ConvexShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
- ../SFML-2.1/include/SFML/Graphics/Text.hpp Arma.h Proyectil.h
+ ../SFML-2.1/include/SFML/Graphics/Text.hpp HUD.h Protagonista.h Arma.h \
+ Proyectil.h Granada.h Personaje.h RecursoHUD.h PersonajeFactory.h
 
-Granada.h:
+Nivel.h:
+
+Oleada.h:
 
 ../SFML-2.1/include/SFML/Graphics.hpp:
 
@@ -193,6 +196,18 @@ Granada.h:
 
 ../SFML-2.1/include/SFML/Graphics/Text.hpp:
 
+HUD.h:
+
+Protagonista.h:
+
 Arma.h:
 
 Proyectil.h:
+
+Granada.h:
+
+Personaje.h:
+
+RecursoHUD.h:
+
+PersonajeFactory.h:

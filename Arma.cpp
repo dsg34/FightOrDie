@@ -95,11 +95,19 @@ void Arma::aumentarMunicion(){
 void Arma::setMunicionSecundaria(int i){
     municionSecundaria=i;
 }
+
+int Arma::getTipo(){
+    return tipo;
+}
+void Arma::setTipo(int i){
+    tipo=i;
+}
+
 /**************************************METODOS CUSTOM***********************************************************/
 
 sf::Vector2<float> Arma::vectorDisparo(sf::Vector2<float> puntoPersonaje, sf::Vector2<int> puntoCursor){
     static const float pi = 3.141592654f;        
-    
+    //std::cout<<puntoCursor.x<<" - "<< puntoCursor.y << std::endl;
     sf::Vector2<float> devuelve;
     
     float vecX = (float) puntoCursor.x - puntoPersonaje.x;
@@ -189,7 +197,7 @@ void Arma::dispararSecundaria(sf::Vector2<float> s, sf::Vector2<int> pos){
     tiempo=reloj.getElapsedTime();
     if(municionSecundaria>0){
         if(secundaria.size()<maxProyectiles){ //Controlamos que no se exceda un numero maximo de balas para que el programa no tenga problemas
-            auxGranada = new Granada(s, m, danyoSecundaria);//Control de velocidad y danyo
+            auxGranada = new Granada(s, m, danyoSecundaria, pos);//Control de velocidad y danyo
             secundaria.push_back(auxGranada);
             municionSecundaria--;        
         }

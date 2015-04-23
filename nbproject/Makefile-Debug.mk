@@ -38,10 +38,14 @@ OBJECTFILES= \
 	${OBJECTDIR}/Arma.o \
 	${OBJECTDIR}/ArmaFactory.o \
 	${OBJECTDIR}/Granada.o \
+	${OBJECTDIR}/HUD.o \
+	${OBJECTDIR}/Nivel.o \
+	${OBJECTDIR}/Oleada.o \
 	${OBJECTDIR}/Personaje.o \
 	${OBJECTDIR}/PersonajeFactory.o \
 	${OBJECTDIR}/Protagonista.o \
 	${OBJECTDIR}/Proyectil.o \
+	${OBJECTDIR}/RecursoHUD.o \
 	${OBJECTDIR}/main.o
 
 
@@ -59,7 +63,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L../../../Downloads/Programas/Netbeans/SFML-2.1/lib -lsfml-graphics-d -lsfml-window-d -lsfml-system-d -lsfml-audio-d -lsfml-main-d -lsfml-network-d
+LDLIBSOPTIONS=-L../SFML-2.1/lib -lsfml-graphics-d -lsfml-window-d -lsfml-system-d -lsfml-audio-d -lsfml-main-d -lsfml-network-d
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -72,42 +76,62 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fight_or_die.exe: ${OBJECTFILES}
 ${OBJECTDIR}/Arma.o: Arma.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../../../Downloads/Programas/Netbeans/SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Arma.o Arma.cpp
+	$(COMPILE.cc) -g -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Arma.o Arma.cpp
 
 ${OBJECTDIR}/ArmaFactory.o: ArmaFactory.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../../../Downloads/Programas/Netbeans/SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ArmaFactory.o ArmaFactory.cpp
+	$(COMPILE.cc) -g -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ArmaFactory.o ArmaFactory.cpp
 
 ${OBJECTDIR}/Granada.o: Granada.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../../../Downloads/Programas/Netbeans/SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Granada.o Granada.cpp
+	$(COMPILE.cc) -g -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Granada.o Granada.cpp
+
+${OBJECTDIR}/HUD.o: HUD.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/HUD.o HUD.cpp
+
+${OBJECTDIR}/Nivel.o: Nivel.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Nivel.o Nivel.cpp
+
+${OBJECTDIR}/Oleada.o: Oleada.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Oleada.o Oleada.cpp
 
 ${OBJECTDIR}/Personaje.o: Personaje.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../../../Downloads/Programas/Netbeans/SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Personaje.o Personaje.cpp
+	$(COMPILE.cc) -g -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Personaje.o Personaje.cpp
 
 ${OBJECTDIR}/PersonajeFactory.o: PersonajeFactory.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../../../Downloads/Programas/Netbeans/SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/PersonajeFactory.o PersonajeFactory.cpp
+	$(COMPILE.cc) -g -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/PersonajeFactory.o PersonajeFactory.cpp
 
 ${OBJECTDIR}/Protagonista.o: Protagonista.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../../../Downloads/Programas/Netbeans/SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Protagonista.o Protagonista.cpp
+	$(COMPILE.cc) -g -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Protagonista.o Protagonista.cpp
 
 ${OBJECTDIR}/Proyectil.o: Proyectil.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../../../Downloads/Programas/Netbeans/SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Proyectil.o Proyectil.cpp
+	$(COMPILE.cc) -g -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Proyectil.o Proyectil.cpp
+
+${OBJECTDIR}/RecursoHUD.o: RecursoHUD.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RecursoHUD.o RecursoHUD.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../../../Downloads/Programas/Netbeans/SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:
