@@ -36,6 +36,7 @@ public:
     void actualizarInfoBalas(int impactos, int fallos);//Debe actulizar la variable de impactos y fallos
     void controlarRacha();
     void compruebaDanyoZombie();
+    void crearMensaje(std::string s, int t, int i);
     
     void pintarMapa(sf::RenderWindow &w);
     void pintarNivel(sf::RenderWindow &w);//Pinta nivel, recursos y HUD

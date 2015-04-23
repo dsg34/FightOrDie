@@ -40,6 +40,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Granada.o \
 	${OBJECTDIR}/HUD.o \
 	${OBJECTDIR}/MapLoader.o \
+	${OBJECTDIR}/Mundo.o \
 	${OBJECTDIR}/Nivel.o \
 	${OBJECTDIR}/Oleada.o \
 	${OBJECTDIR}/Personaje.o \
@@ -104,6 +105,11 @@ ${OBJECTDIR}/MapLoader.o: MapLoader.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/MapLoader.o MapLoader.cpp
+
+${OBJECTDIR}/Mundo.o: Mundo.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Mundo.o Mundo.cpp
 
 ${OBJECTDIR}/Nivel.o: Nivel.cpp 
 	${MKDIR} -p ${OBJECTDIR}

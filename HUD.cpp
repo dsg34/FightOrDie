@@ -415,7 +415,6 @@ void HUD::crearMensaje(std::string s, int t, int cont){
         tiempoMensaje=cont;
     else
         tiempoMensaje=60;
-                
     contMensaje=1;
 }
     
@@ -456,7 +455,7 @@ void HUD::pintarHUD(sf::RenderWindow &window){
     puntuacion->setScale(1.0,1.0);
     window.draw(*puntuacion);
     
-    if(contMensaje>0 && contMensaje<60){
+    if(contMensaje>0 && contMensaje<60){        
         window.draw(*mensaje);
         contMensaje++;
     }else if(contMensaje>tiempoMensaje)

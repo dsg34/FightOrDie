@@ -82,6 +82,10 @@ void Nivel::actualizarNivel(Protagonista* p, int impactos, int fallos){
     }
 }
 
+void Nivel::crearMensaje(std::string s, int t, int i){
+    hud->crearMensaje(s, t, i);
+}
+
 void Nivel::actualizarRecursosExistentes(){
     int existe=1;
     for(int i=0; i<recursos.size(); i++){

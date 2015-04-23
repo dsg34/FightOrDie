@@ -9,6 +9,7 @@
       <itemPath>Granada.h</itemPath>
       <itemPath>HUD.h</itemPath>
       <itemPath>MapLoader.h</itemPath>
+      <itemPath>Mundo.h</itemPath>
       <itemPath>Nivel.h</itemPath>
       <itemPath>Oleada.h</itemPath>
       <itemPath>Personaje.h</itemPath>
@@ -32,6 +33,7 @@
       <itemPath>Granada.cpp</itemPath>
       <itemPath>HUD.cpp</itemPath>
       <itemPath>MapLoader.cpp</itemPath>
+      <itemPath>Mundo.cpp</itemPath>
       <itemPath>Nivel.cpp</itemPath>
       <itemPath>Oleada.cpp</itemPath>
       <itemPath>Personaje.cpp</itemPath>
@@ -108,6 +110,10 @@
       <item path="MapLoader.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="MapLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Mundo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Mundo.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Nivel.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -217,6 +223,10 @@
       <item path="MapLoader.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="MapLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Mundo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Mundo.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Nivel.cpp" ex="false" tool="1" flavor2="0">
       </item>
