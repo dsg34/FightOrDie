@@ -10,6 +10,9 @@
             <file>file:/C:/Users/Dani/Documents/NetBeansProjects/Fight_or_die/Proyectil.cpp</file>
             <file>file:/C:/Users/Dani/Documents/NetBeansProjects/Fight_or_die/Personaje.h</file>
             <file>file:/C:/Users/Dani/Documents/NetBeansProjects/Fight_or_die/main.cpp</file>
+            <file>file:/C:/Users/Dani/Documents/NetBeansProjects/Fight_or_die/Mundo.h</file>
+            <file>file:/C:/Users/Dani/Documents/NetBeansProjects/Fight_or_die/HUD.h</file>
+            <file>file:/C:/Users/Dani/Documents/NetBeansProjects/Fight_or_die/HUD.cpp</file>
             <file>file:/C:/Users/Dani/Documents/NetBeansProjects/Fight_or_die/Recurso.cpp</file>
             <file>file:/C:/Users/Dani/Documents/NetBeansProjects/Fight_or_die/Protagonista.h</file>
             <file>file:/C:/Users/Dani/Documents/NetBeansProjects/Fight_or_die/ArmaFactory.cpp</file>
@@ -17,7 +20,11 @@
             <file>file:/C:/Users/Dani/Documents/NetBeansProjects/Fight_or_die/Personaje.cpp</file>
             <file>file:/C:/Users/Dani/Documents/NetBeansProjects/Fight_or_die/Arma.cpp</file>
             <file>file:/C:/Users/Dani/Documents/NetBeansProjects/Fight_or_die/Protagonista.cpp</file>
+            <file>file:/C:/Users/Dani/Documents/NetBeansProjects/Fight_or_die/PersonajeFactory.cpp</file>
             <file>file:/C:/Users/Dani/Documents/NetBeansProjects/Fight_or_die/Recurso.h</file>
+            <file>file:/C:/Users/Dani/Documents/NetBeansProjects/Fight_or_die/RecursosFactory.cpp</file>
+            <file>file:/C:/Users/Dani/Documents/NetBeansProjects/Fight_or_die/Mundo.cpp</file>
+            <file>file:/C:/Users/Dani/Documents/NetBeansProjects/Fight_or_die/Nivel.h</file>
             <file>file:/C:/Users/Dani/Documents/NetBeansProjects/Fight_or_die/Nivel.cpp</file>
             <file>file:/C:/Users/Dani/Documents/NetBeansProjects/Fight_or_die/librerias.h</file>
         </group>

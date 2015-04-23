@@ -63,7 +63,7 @@ build/Release/MinGW-Windows/main.o: main.cpp Protagonista.h Arma.h \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
  ../SFML-2.1/include/SFML/Graphics/Text.hpp Granada.h Personaje.h HUD.h \
  Recurso.h RecursoHUD.h ArmaFactory.h Nivel.h MapLoader.h Oleada.h \
- RecursosFactory.h PersonajeFactory.h
+ RecursosFactory.h PersonajeFactory.h Mundo.h
 
 Protagonista.h:
 
@@ -220,3 +220,5 @@ Oleada.h:
 RecursosFactory.h:
 
 PersonajeFactory.h:
+
+Mundo.h:

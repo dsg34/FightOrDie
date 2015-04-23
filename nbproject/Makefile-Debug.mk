@@ -42,6 +42,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/MapLoader.o \
 	${OBJECTDIR}/Mundo.o \
 	${OBJECTDIR}/Nivel.o \
+	${OBJECTDIR}/NivelFactory.o \
 	${OBJECTDIR}/Oleada.o \
 	${OBJECTDIR}/Personaje.o \
 	${OBJECTDIR}/PersonajeFactory.o \
@@ -115,6 +116,11 @@ ${OBJECTDIR}/Nivel.o: Nivel.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Nivel.o Nivel.cpp
+
+${OBJECTDIR}/NivelFactory.o: NivelFactory.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/NivelFactory.o NivelFactory.cpp
 
 ${OBJECTDIR}/Oleada.o: Oleada.cpp 
 	${MKDIR} -p ${OBJECTDIR}

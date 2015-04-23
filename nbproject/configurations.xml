@@ -11,6 +11,7 @@
       <itemPath>MapLoader.h</itemPath>
       <itemPath>Mundo.h</itemPath>
       <itemPath>Nivel.h</itemPath>
+      <itemPath>NivelFactory.h</itemPath>
       <itemPath>Oleada.h</itemPath>
       <itemPath>Personaje.h</itemPath>
       <itemPath>PersonajeFactory.h</itemPath>
@@ -35,6 +36,7 @@
       <itemPath>MapLoader.cpp</itemPath>
       <itemPath>Mundo.cpp</itemPath>
       <itemPath>Nivel.cpp</itemPath>
+      <itemPath>NivelFactory.cpp</itemPath>
       <itemPath>Oleada.cpp</itemPath>
       <itemPath>Personaje.cpp</itemPath>
       <itemPath>PersonajeFactory.cpp</itemPath>
@@ -118,6 +120,10 @@
       <item path="Nivel.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Nivel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NivelFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="NivelFactory.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Oleada.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -231,6 +237,10 @@
       <item path="Nivel.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Nivel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NivelFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="NivelFactory.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Oleada.cpp" ex="false" tool="1" flavor2="0">
       </item>
