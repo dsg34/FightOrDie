@@ -46,7 +46,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/Protagonista.o \
 	${OBJECTDIR}/Proyectil.o \
 	${OBJECTDIR}/RecursoHUD.o \
-	${OBJECTDIR}/RecursosFactory.o \
 	${OBJECTDIR}/main.o
 
 
@@ -128,11 +127,6 @@ ${OBJECTDIR}/RecursoHUD.o: RecursoHUD.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RecursoHUD.o RecursoHUD.cpp
-
-${OBJECTDIR}/RecursosFactory.o: RecursosFactory.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RecursosFactory.o RecursosFactory.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}

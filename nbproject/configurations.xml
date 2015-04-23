@@ -93,6 +93,10 @@
       </item>
       <item path="HUD.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="MapLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MapLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Nivel.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Nivel.h" ex="false" tool="3" flavor2="0">
@@ -117,13 +121,13 @@
       </item>
       <item path="Proyectil.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Recurso.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Recurso.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="RecursoHUD.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="RecursoHUD.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="RecursosFactory.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="RecursosFactory.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="librerias.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -182,6 +186,10 @@
       </item>
       <item path="HUD.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="MapLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MapLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Nivel.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Nivel.h" ex="false" tool="3" flavor2="0">
@@ -206,13 +214,13 @@
       </item>
       <item path="Proyectil.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Recurso.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Recurso.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="RecursoHUD.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="RecursoHUD.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="RecursosFactory.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="RecursosFactory.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="librerias.h" ex="false" tool="3" flavor2="0">
       </item>

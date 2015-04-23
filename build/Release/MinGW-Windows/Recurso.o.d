@@ -1,4 +1,4 @@
-build/Release/MinGW-Windows/Mensaje.o: Mensaje.cpp Mensaje.h \
+build/Release/MinGW-Windows/Recurso.o: Recurso.cpp Recurso.h \
  ../SFML-2.1/include/SFML/Graphics.hpp \
  ../SFML-2.1/include/SFML/Window.hpp ../SFML-2.1/include/SFML/System.hpp \
  ../SFML-2.1/include/SFML/Config.hpp \
@@ -63,7 +63,7 @@ build/Release/MinGW-Windows/Mensaje.o: Mensaje.cpp Mensaje.h \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
  ../SFML-2.1/include/SFML/Graphics/Text.hpp
 
-Mensaje.h:
+Recurso.h:
 
 ../SFML-2.1/include/SFML/Graphics.hpp:
 
