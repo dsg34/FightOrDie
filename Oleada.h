@@ -17,7 +17,7 @@ public:
     virtual ~Oleada();
     
     //void crearNuevosZombies(std::vector<Zombie*> v);
-    bool actualizarNumZombies(int i, HUD* &hud);//Actualiza el numero de zombies muertos
+    bool actualizarZombiesMuertos(int i, HUD* &hud);//Actualiza el numero de zombies muertos
     bool terminarOleada();//Se llamará cuando el numero de zombies 
     
     Oleada* crearOleada(int i, int j);    

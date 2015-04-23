@@ -17,8 +17,8 @@ public:
     Nivel(const Nivel& orig);
     virtual ~Nivel();
     
-    int calcularPuntuacionTotal();
-    int calcularPuntuacionDinamica();    
+    /*int calcularPuntuacionTotal();
+    int calcularPuntuacionDinamica();    */
     
     int devuelveTipo();
     sf::Vector2<int> devuelvePos();
@@ -31,6 +31,7 @@ public:
     void actualizarNivel(Protagonista* p, int impactos, int fallos);
     void actualizarInfoBalas(int impactos, int fallos);//Debe actulizar la variable de impactos y fallos
     void controlarRacha();
+    void compruebaDanyoZombie();
     
     
     void pintarNivel(sf::RenderWindow &w);//Pinta nivel, recursos y HUD

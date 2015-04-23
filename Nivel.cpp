@@ -41,8 +41,8 @@ void Nivel::controlarRacha(){//
 
 void Nivel::actualizarNivel(Protagonista* p, int impactos, int fallos){
     hud->actualizarHUD(p, puntuacion);
-    calcularPuntuacionDinamica();
-    calcularPuntuacionDinamica();
+    /*calcularPuntuacionDinamica();
+    calcularPuntuacionDinamica();*/
     tiempo = relojZombie.getElapsedTime();
     if(tiempo.asSeconds()>tApareceZombie)
         generarZombies();
@@ -52,18 +52,18 @@ void Nivel::actualizarNivel(Protagonista* p, int impactos, int fallos){
     if(tiempo.asSeconds()>tApareceRecurso)
         generarRecurso();
 }
-/*
+
 void Nivel::actualizarRecursosExistentes(){
-    bool eliminar=false;
+    /*bool eliminar=false;
     for(int i=0; i<recursos.size(); i++){
         eliminar = recursos[i]->getExiste();
         if(eliminar==true){
             recursos.erase(recursos.begin()+i);
             i--;
         }
-    }
+    }*/
 } 
-*/
+
 int Nivel::devuelveTipo(){
     int tipo;
     double val = (double)rand() / 1;
@@ -78,7 +78,7 @@ int Nivel::devuelveTipo(){
 }
 
 sf::Vector2<int> Nivel::devuelvePos(){
-    sf::Vector2 pos;/*, tam=hud->getTamPantalla();
+    sf::Vector2<int> pos;/*, tam=hud->getTamPantalla();
     int lado = (int)rand() / spawnsZombies.size();//Genera aleatoriamente el lado en el que aparece el zombie
     switch(lado){
         //Por la izquierda
@@ -135,7 +135,8 @@ void Nivel::generarRecurso(){
     tApareceRecurso = 15 + (float)rand/15;*/
 }
 
-
+//ESTOS TRES METODOS SON INUTILES A PRIORI
+/*
 void Nivel::reducirSaludZombie(int i, Granada* g){
     int estado = g->getEstado();
     if(estado==1){
@@ -151,7 +152,7 @@ void Nivel::reducirSaludZombie(int i, Proyectil* p){
     bool muerto=false;
     int d = p->getDanyo();
     reducirSaludZombie(i, d);
-}
+}*/
 
 void Nivel::reducirSaludZombie(int i, int d){
     bool muerto=false;
