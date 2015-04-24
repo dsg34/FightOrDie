@@ -40,6 +40,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/Granada.o \
 	${OBJECTDIR}/HUD.o \
 	${OBJECTDIR}/MapLoader.o \
+	${OBJECTDIR}/Menu.o \
+	${OBJECTDIR}/MenuFactory.o \
 	${OBJECTDIR}/Mundo.o \
 	${OBJECTDIR}/Nivel.o \
 	${OBJECTDIR}/NivelFactory.o \
@@ -106,6 +108,16 @@ ${OBJECTDIR}/MapLoader.o: MapLoader.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/MapLoader.o MapLoader.cpp
+
+${OBJECTDIR}/Menu.o: Menu.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Menu.o Menu.cpp
+
+${OBJECTDIR}/MenuFactory.o: MenuFactory.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/MenuFactory.o MenuFactory.cpp
 
 ${OBJECTDIR}/Mundo.o: Mundo.cpp 
 	${MKDIR} -p ${OBJECTDIR}

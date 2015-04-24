@@ -133,7 +133,7 @@ void Mundo::interpolarMundo(){
         bal[i]->getSprite()->setPosition(bal[i]->getVectorActual().x+mov.x, bal[i]->getVectorActual().y+mov.y);
     }
     
-    std::vector<Proyectil*> gra = protagonista->getArma()->getSecundaria();
+    std::vector<Granada*> gra = protagonista->getArma()->getSecundaria();
     for(int i=0; i<gra.size(); i++){
         mov = gra[i]->getVectorAnterior()-gra[i]->getVectorActual();
         mov.x = mov.x*contInterpolacion*0.25;
