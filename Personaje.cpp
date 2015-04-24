@@ -9,7 +9,7 @@
 
 Personaje::Personaje(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int ve){
     
-    tex=new sf::Texture(*t);
+    tex=t;
     sprite=new sf::Sprite(*s);
     sprite->setPosition(p);
     
@@ -31,9 +31,7 @@ Personaje::~Personaje() {
 }
 
 void Personaje::render(sf::RenderWindow &window){
-    std::cout<<"holi"<<std::endl;
     sf::Sprite aux = *sprite;
-    aux.setTexture(*tex);
     window.draw(aux);
 }
 
