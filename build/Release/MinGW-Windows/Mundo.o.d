@@ -1,5 +1,5 @@
-build/Release/MinGW-Windows/main.o: main.cpp Protagonista.h Arma.h \
- Proyectil.h ../SFML-2.1/include/SFML/Graphics.hpp \
+build/Release/MinGW-Windows/Mundo.o: Mundo.cpp Mundo.h Protagonista.h \
+ Arma.h Proyectil.h ../SFML-2.1/include/SFML/Graphics.hpp \
  ../SFML-2.1/include/SFML/Window.hpp ../SFML-2.1/include/SFML/System.hpp \
  ../SFML-2.1/include/SFML/Config.hpp \
  ../SFML-2.1/include/SFML/System/Clock.hpp \
@@ -62,8 +62,10 @@ build/Release/MinGW-Windows/main.o: main.cpp Protagonista.h Arma.h \
  ../SFML-2.1/include/SFML/Graphics/ConvexShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
  ../SFML-2.1/include/SFML/Graphics/Text.hpp Granada.h Personaje.h HUD.h \
- Recurso.h RecursoHUD.h ArmaFactory.h Nivel.h MapLoader.h Oleada.h \
- RecursosFactory.h PersonajeFactory.h Zombie.h
+ Recurso.h RecursoHUD.h NivelFactory.h Nivel.h MapLoader.h Oleada.h \
+ RecursosFactory.h PersonajeFactory.h Zombie.h ArmaFactory.h
+
+Mundo.h:
 
 Protagonista.h:
 
@@ -209,7 +211,7 @@ Recurso.h:
 
 RecursoHUD.h:
 
-ArmaFactory.h:
+NivelFactory.h:
 
 Nivel.h:
 
@@ -222,3 +224,5 @@ RecursosFactory.h:
 PersonajeFactory.h:
 
 Zombie.h:
+
+ArmaFactory.h:

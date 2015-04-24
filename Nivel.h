@@ -1,5 +1,3 @@
-#endif	/* NIVEL_H */
-
 /**************************************************************************************************************/
 /* 
  * File:   Nivel.h
@@ -12,6 +10,7 @@
 #include "RecursosFactory.h"
 #include "Proyectil.h"
 #include "PersonajeFactory.h"
+#include "Zombie.h"
 #ifndef NIVEL_H
 #define	NIVEL_H
 
@@ -22,7 +21,7 @@ public:
     virtual ~Nivel();
     
     std::vector<Recurso*> getRecursos();
-    //std::vector<Zombie*> getZombies();
+    std::vector<Zombie*> getZombies();
     void addRecurso(Recurso* r);
     void elimnarRecurso(int i);
     int calcularPuntuacionTotal();
@@ -33,7 +32,7 @@ public:
     
     void crearZombies(int num);
     void generarZombies();
-    void actualizarZombiesExistentes();
+    bool actualizarZombiesExistentes();
     /*void reducirSaludZombie(int i, Proyectil* p);
     void reducirSaludZombie(int i, int d);*/
     void generarRecurso();
@@ -41,10 +40,10 @@ public:
     bool actualizarNivel(Protagonista* p, int impactos, int fallos);
     void actualizarInfoBalas(int impactos, int fallos);//Debe actulizar la variable de impactos y fallos
     
-    void compruebaDanyoZombie();
+    void compruebaDanyoZombie(std::vector<Proyectil*> &v);
     void crearMensaje(std::string s, int t, int i);
     
-    void pintarMapa(sf::RenderWindow &w);
+    void pintarMapa(sf::RenderWindow &w, int i);
     void pintarNivel(sf::RenderWindow &w);//Pinta nivel, recursos y HUD
     
 private:
@@ -59,13 +58,12 @@ private:
     Oleada* oleada;
     int puntuacion;
     int racha;
-    //std::vector<Zombie*> zombies;
+    std::vector<Zombie*> zombies;
     std::vector<Recurso*> recursos;
-    //Mapa* mapa;
     
-    sf::Clock* relojZombie;
-    sf::Clock* relojRecurso;
-    sf::Clock* relojRacha;
+    sf::Clock relojZombie;
+    sf::Clock relojRecurso;
+    sf::Clock relojRacha;
     sf::Time tiempo;
     
     float tApareceZombie;

@@ -17,7 +17,7 @@ NivelFactory::~NivelFactory() {
 }
 
 
-Nivel* crearNivel(int i, Protagonista* p, sf::Vector2<int> t){
+Nivel* NivelFactory::crearNivel(int i, Protagonista* p, sf::Vector2<int> t){
     switch(i){
         case 1: crearNivel1(p, t);break;
         case 2: crearNivel2(p, t);break;
@@ -25,7 +25,7 @@ Nivel* crearNivel(int i, Protagonista* p, sf::Vector2<int> t){
     }
 }
     
-Nivel* crearNivel1(Protagonista* p, sf::Vector2<int> t){
+Nivel* NivelFactory::crearNivel1(Protagonista* p, sf::Vector2<int> t){
     std::vector<int> s;
     s.push_back(1);
     s.push_back(2);
@@ -39,7 +39,7 @@ Nivel* crearNivel1(Protagonista* p, sf::Vector2<int> t){
     return n;
 }
 
-Nivel* crearNivel2(Protagonista* p, sf::Vector2<int> t){
+Nivel* NivelFactory::crearNivel2(Protagonista* p, sf::Vector2<int> t){
     std::vector<int> s;
     s.push_back(1);
     s.push_back(2);
@@ -53,7 +53,7 @@ Nivel* crearNivel2(Protagonista* p, sf::Vector2<int> t){
     return n;
 }
 
-Nivel* crearNivel3(Protagonista* p, sf::Vector2<int> t){
+Nivel* NivelFactory::crearNivel3(Protagonista* p, sf::Vector2<int> t){
     std::vector<int> s;
     s.push_back(3);
     s.push_back(4);

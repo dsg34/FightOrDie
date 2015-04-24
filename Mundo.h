@@ -9,8 +9,8 @@
 #include <vector>
 #include "Protagonista.h"
 #include "HUD.h"
-#include "ArmaFactory.h"
 #include "NivelFactory.h"
+#include "ArmaFactory.h"
 #define kVel 5
 
 #ifndef MUNDO_H

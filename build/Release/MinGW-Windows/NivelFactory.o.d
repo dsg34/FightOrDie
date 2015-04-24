@@ -1,6 +1,5 @@
-build/Release/MinGW-Windows/main.o: main.cpp Protagonista.h Arma.h \
- Proyectil.h ../SFML-2.1/include/SFML/Graphics.hpp \
- ../SFML-2.1/include/SFML/Window.hpp ../SFML-2.1/include/SFML/System.hpp \
+build/Release/MinGW-Windows/NivelFactory.o: NivelFactory.cpp \
+ NivelFactory.h Nivel.h MapLoader.h ../SFML-2.1/include/SFML/System.hpp \
  ../SFML-2.1/include/SFML/Config.hpp \
  ../SFML-2.1/include/SFML/System/Clock.hpp \
  ../SFML-2.1/include/SFML/System/Export.hpp \
@@ -23,6 +22,8 @@ build/Release/MinGW-Windows/main.o: main.cpp Protagonista.h Arma.h \
  ../SFML-2.1/include/SFML/System/Vector2.inl \
  ../SFML-2.1/include/SFML/System/Vector3.hpp \
  ../SFML-2.1/include/SFML/System/Vector3.inl \
+ ../SFML-2.1/include/SFML/Graphics.hpp \
+ ../SFML-2.1/include/SFML/Window.hpp \
  ../SFML-2.1/include/SFML/Window/Context.hpp \
  ../SFML-2.1/include/SFML/Window/Export.hpp \
  ../SFML-2.1/include/SFML/Window/GlResource.hpp \
@@ -61,19 +62,15 @@ build/Release/MinGW-Windows/main.o: main.cpp Protagonista.h Arma.h \
  ../SFML-2.1/include/SFML/Graphics/RectangleShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/ConvexShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
- ../SFML-2.1/include/SFML/Graphics/Text.hpp Granada.h Personaje.h HUD.h \
- Recurso.h RecursoHUD.h ArmaFactory.h Nivel.h MapLoader.h Oleada.h \
+ ../SFML-2.1/include/SFML/Graphics/Text.hpp Oleada.h HUD.h Protagonista.h \
+ Arma.h Proyectil.h Granada.h Personaje.h Recurso.h RecursoHUD.h \
  RecursosFactory.h PersonajeFactory.h Zombie.h
 
-Protagonista.h:
+NivelFactory.h:
 
-Arma.h:
+Nivel.h:
 
-Proyectil.h:
-
-../SFML-2.1/include/SFML/Graphics.hpp:
-
-../SFML-2.1/include/SFML/Window.hpp:
+MapLoader.h:
 
 ../SFML-2.1/include/SFML/System.hpp:
 
@@ -120,6 +117,10 @@ Proyectil.h:
 ../SFML-2.1/include/SFML/System/Vector3.hpp:
 
 ../SFML-2.1/include/SFML/System/Vector3.inl:
+
+../SFML-2.1/include/SFML/Graphics.hpp:
+
+../SFML-2.1/include/SFML/Window.hpp:
 
 ../SFML-2.1/include/SFML/Window/Context.hpp:
 
@@ -199,23 +200,23 @@ Proyectil.h:
 
 ../SFML-2.1/include/SFML/Graphics/Text.hpp:
 
+Oleada.h:
+
+HUD.h:
+
+Protagonista.h:
+
+Arma.h:
+
+Proyectil.h:
+
 Granada.h:
 
 Personaje.h:
 
-HUD.h:
-
 Recurso.h:
 
 RecursoHUD.h:
-
-ArmaFactory.h:
-
-Nivel.h:
-
-MapLoader.h:
-
-Oleada.h:
 
 RecursosFactory.h:
 

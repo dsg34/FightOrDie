@@ -19,7 +19,7 @@ Mundo::Mundo(sf::RenderWindow &w) {
     sf::Vector2<int> pos;
     pos.x=tamPantalla.x;
     pos.y=tamPantalla.y;
-    protagonista=fabricaPersonaje->crearProtagonista(pos);
+    //protagonista=fabricaPersonaje->crearProtagonista(pos);
        
     fabricaNivel=new NivelFactory();
     nivel = fabricaNivel->crearNivel(1, protagonista, tamPantalla);
@@ -37,11 +37,12 @@ Mundo::Mundo(sf::RenderWindow &w) {
     
     tex = new sf::Texture(texAux);
     //Y creo el spritesheet a partir de la imagen anterior    
-    apuntar(*tex);    
+    apuntar->setTexture(*tex);    
     
     apuntar->setOrigin(75/2,75/2);
     apuntar->setTextureRect(sf::IntRect(1*75, 4*75, 75, 75));
-    apuntar->setPosition(posicionCursor(window));
+    apuntar->setPosition((sf::Vector2f)posicionCursor(*window));
+    
     /***************************************************
      
      
@@ -72,6 +73,7 @@ int Mundo::ejecutarMundo(){
     bool nivelAcabado=false;  
     bool estadoMuerto=false;
     //Bucle del juego
+    /*
     while (window->isOpen() && estado==0)
     {
         //Controlamos la frecuencia a la que se ejecuta el programa
@@ -103,13 +105,13 @@ int Mundo::ejecutarMundo(){
             pintarMundo();
             relojRender->restart();
         }
-    }
+    }*/
     return estado;
 }
 
 void Mundo::interpolarMundo(){
     //SE INTERPOLA: PERSONAJE - ZOMBIES - GRANADAS - PROYECTILES
-    if(contInterpolacion==4)
+    /*if(contInterpolacion==4)
         contInterpolacion=0;
     
     sf::Vector2<int> mov = protagonista->getVectorAnterior()-protagonista->getVectorActual();
@@ -139,11 +141,11 @@ void Mundo::interpolarMundo(){
         mov.x = mov.x*contInterpolacion*0.25;
         mov.y = mov.y*contInterpolacion*0.25;
         gra[i]->getSprite()->setPosition(gra[i]->getVectorActual().x+mov.x, gra[i]->getVectorActual().y+mov.y);
-    }
+    }*/
 }
 
 void Mundo::pintarMundo(){
-    window->clear();
+    /*window->clear();
     nivel->pintarMapa(*window);//map->Draw(window);
     //Actualizamos la posicion de las balas
     protagonista->pintarProtagonista();                                    
@@ -151,5 +153,5 @@ void Mundo::pintarMundo(){
     nivel->pintarNivel(*window);//hud.pintarHUD(window);
     apuntar->setPosition(posicionCursor(*window).x, posicionCursor(*window).y);
     window->draw(*apuntar);                                    
-    window->display();
+    window->display();*/
 }

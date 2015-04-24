@@ -9,7 +9,7 @@
 
 Personaje::Personaje(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int ve){
     
-    tex=t;
+    tex=new sf::Texture(*t);
     sprite=new sf::Sprite(*s);
     sprite->setPosition(p);
     
@@ -31,7 +31,9 @@ Personaje::~Personaje() {
 }
 
 void Personaje::render(sf::RenderWindow &window){
+    std::cout<<"holi"<<std::endl;
     sf::Sprite aux = *sprite;
+    aux.setTexture(*tex);
     window.draw(aux);
 }
 
@@ -53,6 +55,9 @@ void Personaje::setPosActual(sf::Vector2<float> v){
     posActual = v;
 }
 
+sf::FloatRect* Personaje::getBoundingBox(){
+       return boundingBox;
+}
 sf::Sprite* Personaje::getSprite(){
     return sprite;
 }

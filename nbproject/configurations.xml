@@ -22,6 +22,7 @@
       <itemPath>Recurso.h</itemPath>
       <itemPath>RecursoHUD.h</itemPath>
       <itemPath>RecursosFactory.h</itemPath>
+      <itemPath>Zombie.h</itemPath>
       <itemPath>librerias.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -49,6 +50,7 @@
       <itemPath>Recurso.cpp</itemPath>
       <itemPath>RecursoHUD.cpp</itemPath>
       <itemPath>RecursosFactory.cpp</itemPath>
+      <itemPath>Zombie.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -168,6 +170,10 @@
       <item path="RecursosFactory.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="RecursosFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Zombie.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Zombie.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="lib/tinyxml/tinystr.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -293,6 +299,10 @@
       <item path="RecursosFactory.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="RecursosFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Zombie.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Zombie.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="lib/tinyxml/tinystr.cpp" ex="false" tool="1" flavor2="0">
       </item>
