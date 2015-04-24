@@ -1,3 +1,6 @@
+#endif	/* NIVEL_H */
+
+/**************************************************************************************************************/
 /* 
  * File:   Nivel.h
  * Author: Dani
@@ -19,22 +22,25 @@ public:
     virtual ~Nivel();
     
     std::vector<Recurso*> getRecursos();
+    //std::vector<Zombie*> getZombies();
     void addRecurso(Recurso* r);
     void elimnarRecurso(int i);
-    /*int calcularPuntuacionTotal();
-    int calcularPuntuacionDinamica();    */
+    int calcularPuntuacionTotal();
+    int calcularPuntuacionDinamica();    
     
     int devuelveTipo();
     sf::Vector2<int> devuelvePos();
+    
     void crearZombies(int num);
     void generarZombies();
-    void reducirSaludZombie(int i, Proyectil* p);
-    void reducirSaludZombie(int i, int d);
+    void actualizarZombiesExistentes();
+    /*void reducirSaludZombie(int i, Proyectil* p);
+    void reducirSaludZombie(int i, int d);*/
     void generarRecurso();
     void actualizarRecursosExistentes();
-    void actualizarNivel(Protagonista* p, int impactos, int fallos);
+    bool actualizarNivel(Protagonista* p, int impactos, int fallos);
     void actualizarInfoBalas(int impactos, int fallos);//Debe actulizar la variable de impactos y fallos
-    void controlarRacha();
+    
     void compruebaDanyoZombie();
     void crearMensaje(std::string s, int t, int i);
     
@@ -42,6 +48,9 @@ public:
     void pintarNivel(sf::RenderWindow &w);//Pinta nivel, recursos y HUD
     
 private:
+
+    void controlarRacha(int imp);
+    
     int id;
     
     HUD* hud;
@@ -54,8 +63,9 @@ private:
     std::vector<Recurso*> recursos;
     //Mapa* mapa;
     
-    sf::Clock relojZombie;
-    sf::Clock relojRecurso;
+    sf::Clock* relojZombie;
+    sf::Clock* relojRecurso;
+    sf::Clock* relojRacha;
     sf::Time tiempo;
     
     float tApareceZombie;
@@ -68,4 +78,3 @@ private:
 };
 
 #endif	/* NIVEL_H */
-

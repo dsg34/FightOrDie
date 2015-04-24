@@ -23,8 +23,9 @@ public:
     virtual ~Mundo();
     
     sf::Vector2<int> posicionCursor(sf::RenderWindow &window);
-    void ejecutarMundo();
+    int ejecutarMundo();
     
+    void interpolarMundo();
     void pintarMundo();
 private:
     sf::RenderWindow* window;    
@@ -36,11 +37,15 @@ private:
     NivelFactory* fabricaNivel;
     
     sf::Vector2<int> tamPantalla;  
-    sf::Clock* reloj;
-    sf::Time* frecuencia;
     
     sf::Texture* tex;
     sf::Sprite* apuntar;
+    
+    sf::Clock* relojUpdate;
+    sf::Clock* relojRender;
+    
+    sf::Time* frecuencia;
+    int contInterpolacion;
 };
 
 #endif	/* MUNDO_H */
