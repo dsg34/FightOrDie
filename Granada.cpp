@@ -6,8 +6,9 @@
  */
 #include <iostream>
 #include "Granada.h"
+#include "Arma.h"
 
-Granada::Granada(sf::Vector2<float> s, sf::Vector2<float> m, int d) {
+Granada::Granada(sf::Vector2<float> s, sf::Vector2<float> m, int d, sf::Vector2<int> pos) {
     
     sf::Texture tex;
     if (!tex.loadFromFile("resources/sprite_general.png"))
@@ -33,6 +34,8 @@ Granada::Granada(sf::Vector2<float> s, sf::Vector2<float> m, int d) {
     
     mov=m;
     
+    posicionFinal=pos;
+    estado=0;
     posActual = s;
     posAnterior = s;
     
@@ -117,6 +120,10 @@ void Granada::setPosActual(sf::Vector2<float> v){
     posActual = v;
 }
 
+int Granada::getEstado(){
+    return estado;
+}
+
 /**********************************************MÉTODOS CUSTOM**********************************************************************/
 //Facilita el cambio de recorte del sprite
 void Granada::setRecorteSprite(int i, int j){
@@ -129,8 +136,14 @@ int Granada::updateGranada(){
     //Posicion inicial de las imagenes de explosion
     double cont = 1.0;   
             
-    
-    if(contador<rango-20){          
+    sf::Vector2<int> pos = (sf::Vector2<int>) sprite->getPosition();
+    if(abs(posicionFinal.x-pos.x)<10 && abs(posicionFinal.y-pos.y)<10){ //&& posicionFinal.y=pos.y)
+        contador=rango-20;
+        
+    }
+    if(contador==0)
+        sprite->setScale(0.6,0.6);
+    if(contador<rango-20){                  
         sprite->move(velocidad*mov.x,velocidad*mov.y); 
         sprite->rotate(10);
     }else if(contador<rango){//Cuando termino el rango de movimiento empiezo la animacion de explosion
@@ -160,6 +173,7 @@ int Granada::updateGranada(){
         setRecorteSprite(1,0);
     }
     contador++;
+    estado = devuelve;
     return devuelve;
 }
 

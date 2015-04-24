@@ -13,7 +13,7 @@
 
 class Protagonista: public Personaje {
 public:
-    Protagonista(sf::Sprite* s, sf::Texture* t, Arma* a, sf::Vector2<float> p, int mV, int ve);
+    Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int ve, Arma* a);
     Protagonista(const Protagonista& orig2);
     virtual ~Protagonista();
     

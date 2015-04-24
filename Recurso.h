@@ -7,21 +7,13 @@
 
 /*
 int bloqueante;
-
 1 bloquea, 0 no
-
 int danyo;
-
 1 causa daño a enemigos, 0 no
-
 int inventario;
-
 1 se guarda en el inventario, 0 no
-
 int recogida;
-
 1 se recoge pulsando una tecla, 0 al pasar por encima
-
  */
 #include <SFML/Graphics.hpp>
 #include <iostream>

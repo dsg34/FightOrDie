@@ -113,8 +113,7 @@ void Recurso::pintarRecursos(sf::RenderWindow &window)
 {
     sf::Sprite* aux = spriteRecurso;
     aux->setTexture(*tex);
-    window.draw(*aux);
-    
+    window.draw(*aux);    
 }
 
 void Recurso::actualizarRecurso()
@@ -126,4 +125,3 @@ void Recurso::actualizarRecurso()
         existe = 0;
     }
 }
-

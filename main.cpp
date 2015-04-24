@@ -2,8 +2,9 @@
 #include <math.h> 
 #include <vector>
 #include "Protagonista.h"
+#include "HUD.h"
 #include "ArmaFactory.h"
-#include "RecursosFactory.h"
+#include "Nivel.h"
 #define kVel 5
 
 sf::Vector2<int> posicionCursor(sf::RenderWindow &window){
@@ -38,26 +39,25 @@ sf::Vector2<float> vectorDisparo(sf::Vector2<float> puntoPersonaje, sf::Vector2<
 int main()
 {
     //Creamos una ventana 
-    sf::RenderWindow window(sf::VideoMode(1300, 800), "Disparo de balas");
+    sf::RenderWindow window(sf::VideoMode(1300, 750), "Fight or Die");
 
     sf::Clock reloj;
     reloj.restart();
-    sf::Time frecuencia;    
-    
-    std::vector<Recurso*> vectorRecursos;
+    sf::Time frecuencia;
     
     /////////////////////////////////////////////////Pruebas ArmaFactory
     ArmaFactory* fabricaArmas = new ArmaFactory();
-    RecursosFactory* miRecurso = new RecursosFactory();
     
-    vectorRecursos.push_back(miRecurso->crearRecurso(3));
     
-    Arma* miPistola = fabricaArmas->crearPistola();
+    
+    MapLoader* map = new MapLoader();
+    map->LoadFromFile("resources/nivel1.tmx");
+    Arma* miPistola = fabricaArmas->crearMetralleta();
     miPistola->setMunicionSecundaria(20);
     //Arma* miSecundaria = fabricaArmas->crearGranada();
     int balas=0;
     bool existePersonaje=true;
-        
+    
     /***********************************************************CARGA DE SPRITES****************************************************************************/
     sf::Texture tex;
     if (!tex.loadFromFile("resources/sprite_general.png"))
@@ -80,7 +80,15 @@ int main()
    
     // Lo dispongo en el centro de la pantalla
     sprite.setPosition(320, 240);
-
+    
+    Protagonista* prota = new Protagonista(new sf::Sprite(sprite),new sf::Texture(tex),sprite.getPosition(), 20, 5, miPistola);
+    sf::Vector2<int> vec = (sf::Vector2<int>) window.getSize();
+    std::vector<int> lados;
+    lados.push_back(1);
+    lados.push_back(2);
+    Nivel* niv = new Nivel(1, prota, vec, lados, 5.0);
+    
+    HUD hud = HUD(prota, vec);
     //Bucle del juego
     while (window.isOpen())
     {
@@ -111,12 +119,54 @@ int main()
                     //Verifico si se pulsa alguna tecla de movimiento
                     switch(event.key.code) {
                         
+                        case sf::Keyboard::Z:
+                            prota->setVida(prota->getVida()-1);                             
+                        break;
+                        
+                        case sf::Keyboard::X:
+                            prota->setVida(prota->getVida()+1);                            
+                        break;
+                        
                         //Mapeo del cursor
                         case sf::Keyboard::D:
                             sprite.setTextureRect(sf::IntRect(0*75, 2*75, 75, 75));
                             //Escala por defecto
                             sprite.setScale(1,1);
-                            sprite.move(kVel,0);
+                            if(map->Colision((sprite.getPosition().x + kVel),(sprite.getPosition().y + 75/2))){                                
+                                sprite.move(kVel,0);
+                            }
+                        break;
+
+                        case sf::Keyboard::A:
+                            sprite.setTextureRect(sf::IntRect(0*75, 2*75, 75, 75));
+                            //Reflejo vertical
+                            sprite.setScale(-1,1);
+                            if(map->Colision((sprite.getPosition().x-kVel),sprite.getPosition().y + 75/2)){                                
+                                sprite.move(-kVel,0); 
+                            }
+                        break;
+                        
+                        case sf::Keyboard::W:
+                            sprite.setTextureRect(sf::IntRect(0*75, 3*75, 75, 75));
+                            if(map->Colision(sprite.getPosition().x,(sprite.getPosition().y - kVel + 75/2))){
+                                sprite.move(0,-kVel);  
+                            }
+                                                         
+                        break;
+                        
+                        case sf::Keyboard::S:
+                            sprite.setTextureRect(sf::IntRect(0*75, 0*75, 75, 75));
+                            if(map->Colision(sprite.getPosition().x,(sprite.getPosition().y + kVel + 75/2))){
+                                sprite.move(0,kVel);
+                            }
+                        break;  
+                        /*
+                        //Mapeo del cursor
+                        case sf::Keyboard::D:
+                            sprite.setTextureRect(sf::IntRect(0*75, 2*75, 75, 75));
+                            //Escala por defecto
+                            sprite.setScale(1,1);
+                            sprite.move(kVel,0);                            
                         break;
 
                         case sf::Keyboard::A:
@@ -134,24 +184,32 @@ int main()
                         case sf::Keyboard::S:
                             sprite.setTextureRect(sf::IntRect(0*75, 0*75, 75, 75));
                             sprite.move(0,kVel); 
-                        break;     
+                        break;     */
                         
                         case sf::Keyboard::Num1:
                             miPistola = fabricaArmas->crearPistola();
+                            prota->setArma(miPistola);
                         break;
                         
                         case sf::Keyboard::Num2:
                             miPistola = fabricaArmas->crearMetralleta();
+                            prota->setArma(miPistola);
                         break;
                         
                         case sf::Keyboard::Num3:
                             miPistola = fabricaArmas->crearEscopeta();
+                            prota->setArma(miPistola);
                         break;
                         
                         case sf::Keyboard::Num4:
                             miPistola = fabricaArmas->crearHacha();
+                            prota->setArma(miPistola);
                         break;
                         
+                        case sf::Keyboard::M:
+                            hud.crearMensaje("Has pulsado la M \nENHORABUENA", -1, 30);
+                            
+                        break;
                         
                         //Pulsar R para reiniciar partida
                         case sf::Keyboard::R:
@@ -171,33 +229,28 @@ int main()
                         break;
                               
                     }
-
+                    prota->setSprite(new sf::Sprite(sprite));
             }
             
         }
         frecuencia = reloj.getElapsedTime();
-
+        niv->actualizarNivel(prota, 0,0);
         //Controlamos la frecuencia a la que se ejecuta el programa
         if(frecuencia.asSeconds()>0.05){  
             window.clear();
+            niv->pintarMapa(window);//map->Draw(window);
             //Actualizamos la posicion de las balas
+            hud.actualizarHUD(prota, 200);
             miPistola->updateProyectiles();
-            
-            for(int i = 0; i < vectorRecursos.size(); i++)
-            {
-                vectorRecursos[i]->actualizarRecurso();
-                if(vectorRecursos[i]->getExiste())
-                    vectorRecursos[i]->pintarRecursos(window);
-                else
-                    vectorRecursos.erase(vectorRecursos.begin() + i);
-            }
             
             //Pintamos las balas
             miPistola->pintarProyectiles(window);
+            
             //std::cout << miPistola->getSecundaria().size() << std::endl;
             //Pintamos los demas sprites
+            
             window.draw(sprite);
-                
+            niv->pintarNivel(window);//hud.pintarHUD(window);
             apuntar.setPosition(posicionCursor(window).x, posicionCursor(window).y);
             window.draw(apuntar);
             
