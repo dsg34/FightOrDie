@@ -159,11 +159,11 @@ sf::Vector2<int> Nivel::devuelvePos(){
     int lado = (int)rand() % spawnsZombies.size();//Genera aleatoriamente el lado en el que aparece el zombie
     switch(lado){
         //Por la izquierda
-        case 1:     pos.x=0-tam.x/15;
+        case 1:     pos.x=0-tam.x/50;
                     pos.y=(int)rand()%tam.y;    //Genera un numero aleatorio entre la posicion 0 y la maxima altura de la pantalla
                     break;
         //Por la derecha
-        case 2:     pos.x=tam.x+tam.x%15;
+        case 2:     pos.x=tam.x+tam.x/50;
                     pos.y=(int)rand()%tam.y;
                     break; 
         //Por arriba
@@ -172,10 +172,10 @@ sf::Vector2<int> Nivel::devuelvePos(){
                     break;             
         //Por abajo
         case 4:     pos.x=(int)rand()%tam.x;
-                    pos.y=tam.y+tam.y/15;                    
+                    pos.y=tam.y+tam.y/50;                    
                     break;
         //Por defecto, por la derecha            
-        default:    pos.x=tam.x+tam.x%15;
+        default:    pos.x=tam.x+tam.x/50;
                     pos.y=(int)rand()%tam.y;
                     break;
     }
@@ -205,10 +205,11 @@ void Nivel::crearZombies(int num){
 //Controlamos el numero de zombies que generamos, dependiendo de los que ya hay en pantalla
 
 void Nivel::generarZombies(){
-    if(zombies.size()>20)
-        crearZombies(5);
-    else
+    if(zombies.size()<20)
         crearZombies(10);
+    else if(zombies.size()<75)
+        crearZombies(10);
+    else{}
 }
 
 
@@ -271,7 +272,7 @@ void Nivel::pintarMapa(sf::RenderWindow &w, int i){
 void Nivel::pintarNivel(sf::RenderWindow &w){ 
     for(int i=0; i<zombies.size(); i++){
         sf::Vector2<float> v = zombies[i]->getSprite()->getPosition();
-        cout<<"Zombie "<< i << ": Pos en x: " <<v.x <<" - Pos en y: "<<v.y<<endl;
+        //cout<<"Zombie "<< i << ": Pos en x: " <<v.x <<" - Pos en y: "<<v.y<<endl;
         zombies[i]->render(w);
     }
     for(int j=0; j<recursos.size(); j++){

@@ -204,7 +204,7 @@ void Protagonista::update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos){
         teclaX=-1;
     }else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
         teclaX=1;
-    } 
+    }
     actualizaPerso(teclaX,teclaY, enemigos);  //por aqui no deberiamos pasar enemigos
     
 }
@@ -252,7 +252,6 @@ void Protagonista::actualizaDireccion(){
 }
 
 void Protagonista::actualizaPerso(int teclaX, int teclaY, std::vector<Zombie*> enemigos){
-
         
     if (teclaY==-1){
         if(direc==0 || direc==1 || direc==5 || direc==6 || direc==7){
@@ -310,6 +309,8 @@ void Protagonista::actualizaPerso(int teclaX, int teclaY, std::vector<Zombie*> e
         }
         if(Colision(enemigos, 'D')==0){
             sprite->move(velocidad,0);   
+        }else{
+            std::cout<<"Dios mio, no"<<std::endl;
         }
     }
         

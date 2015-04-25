@@ -119,7 +119,9 @@ bool Personaje::Existe(){
         return true;
 }
 
-
+void Personaje::mover(float x, float y){
+    sprite->move(x,y);
+}
 
 
 

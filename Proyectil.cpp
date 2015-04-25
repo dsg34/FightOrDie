@@ -118,3 +118,7 @@ bool Proyectil::updatePosition(){
 void Proyectil::setPositionSprite(sf::Vector2<float> v){
     sprite->setPosition(v.x, v.y);
 }
+
+void Proyectil::mover(float x, float y){
+    sprite->move(x,y);
+}

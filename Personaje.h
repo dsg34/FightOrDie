@@ -43,6 +43,7 @@ public:
     void setDirec(int d);//Direccion del personaje
     void setMuriendo(bool m);
 
+    void mover(float x, float y);
 protected:
     sf::Sprite* sprite;
     sf::Texture* tex;

@@ -23,6 +23,7 @@ public:
     virtual ~Mundo();
     
     sf::Vector2<int> posicionCursor();
+    void capturarCierre();
     int ejecutarMundo();
     
     void interpolarMundo();

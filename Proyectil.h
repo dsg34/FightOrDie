@@ -40,6 +40,7 @@ public:
     
     bool updatePosition();
     void setPositionSprite(sf::Vector2<float> v);
+    void mover(float x, float y);
 private:
 
 protected:

@@ -40,6 +40,8 @@ public:
     
     int updateGranada();
     void pintarGranada(sf::RenderWindow &window);
+    
+    void mover(float x, float y);
 protected:    
     int contador;
     int velocidad;
