@@ -32,7 +32,7 @@ public:
     
     void crearZombies(int num);
     void generarZombies();
-    bool actualizarZombiesExistentes();
+    bool actualizarZombiesExistentes(Protagonista* p);
     /*void reducirSaludZombie(int i, Proyectil* p);
     void reducirSaludZombie(int i, int d);*/
     void generarRecurso();

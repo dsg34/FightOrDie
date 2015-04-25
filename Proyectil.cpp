@@ -8,7 +8,7 @@
 
 #include "Proyectil.h"
 
-Proyectil::Proyectil(sf::Sprite* spriteProyectil, sf::Texture* t, sf::Vector2<float> s, sf::Vector2<float> m, int d, int v, int r) {
+Proyectil::Proyectil(sf::Sprite* spriteProyectil, sf::Texture* t, sf::Vector2<int> s, sf::Vector2<float> m, int d, int v, int r) {
     
     spriteProyectil->setPosition(s);
     sprite= new sf::Sprite(*spriteProyectil);
@@ -82,19 +82,19 @@ void Proyectil::setDanyo(int i){
     danyo=i;
 }
 
-sf::Vector2<float> Proyectil::getPosAnterior(){
+sf::Vector2<int> Proyectil::getPosAnterior(){
     return posAnterior;
 }
 
-void Proyectil::setPosAnterior(sf::Vector2<float> v){
+void Proyectil::setPosAnterior(sf::Vector2<int> v){
     posAnterior= v;
 }
 
-sf::Vector2<float> Proyectil::getPosActual(){
+sf::Vector2<int> Proyectil::getPosActual(){
     return posActual;
 }
 
-void Proyectil::setPosActual(sf::Vector2<float> v){
+void Proyectil::setPosActual(sf::Vector2<int> v){
     posActual = v;
 }
 
@@ -103,14 +103,15 @@ void Proyectil::setPosActual(sf::Vector2<float> v){
 //Actualiza la posicion de la Proyectil en funcion del vector mov de la propia Proyectil, que almacena el incremento en x e y que debe realizar la Proyectil en cada iteracion
 bool Proyectil::updatePosition(){
     bool devuelve = false;    
-
+    posAnterior = (sf::Vector2<int>) sprite->getPosition();
     if(contador<rango){        
         sprite->move(2*velocidad*mov.x, 2*velocidad*mov.y);
         contador++;
     }else{
         devuelve=true;
     }
-    
+    posActual = (sf::Vector2<int>) sprite->getPosition();
+        
     return devuelve;
 }
 

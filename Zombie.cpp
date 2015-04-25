@@ -8,9 +8,10 @@
 #include "Zombie.h"
 
 Zombie::Zombie(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int ve) :Personaje(s,t,p,mV,ve) {
-    /*sprite = new sf::Sprite(*s);    
+    sprite = new sf::Sprite(*s);    
     tex = new sf::Texture(*t);
     sprite->setTexture(*tex);
+    sprite->setPosition(p);
     
     posActual = p;
     posAnterior = p;
@@ -20,22 +21,20 @@ Zombie::Zombie(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int 
     vida = maxVida;
     cont = 0;
     direc = 0;
-    muriendo = false;*/
+    muriendo = false;
     boundingBox = new sf::FloatRect((*sprite).getGlobalBounds());
     boundingBox->width -= 70;
     boundingBox->left += 35;
-    std::cout<<boundingBox->width<<std::endl;
 }
 Zombie::Zombie(const Zombie& orig) : Personaje(orig){
 }
 
 Zombie::~Zombie() {
 }
-void Zombie::update(sf::Sprite protagonista){
+void Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies){
     *boundingBox = sprite->getGlobalBounds();
     boundingBox->width -= 70;
     boundingBox->left += 30;
-    
     
     bool ejey = false;
     bool ejex = true;
@@ -182,7 +181,7 @@ void Zombie::update(sf::Sprite protagonista){
     else
         direccion = 'W';
     
-    if(colisionConProta(protagonista, direccion)==false)
+    if(colisionConProta(protagonista, direccion)==false && colisionConZombies(zombies, direccion)==false)
         sprite->move(equis,y);
 }
 bool Zombie::colisionConProta(sf::Sprite spriteProta, char direccion){
@@ -204,6 +203,29 @@ bool Zombie::colisionConProta(sf::Sprite spriteProta, char direccion){
         if(box->intersects(cajaProta)){
             return true;
         }        
+        return false;
+}
+bool Zombie::colisionConZombies(std::vector<Zombie*> zombies, char direccion){
+    sf::Sprite* spriteCopia = new sf::Sprite(*sprite);
+        spriteCopia->setTexture(*tex);
+        if(direccion == 'S')
+            spriteCopia->move(0, 3.0f);
+        else if(direccion == 'W')
+            spriteCopia->move(0,-3.0f);
+        else if(direccion == 'D')
+            spriteCopia->move(3.0f, 0);
+        else
+            spriteCopia->move(-3.0f, 0);
+        
+        sf::FloatRect* box = new sf::FloatRect(spriteCopia->getGlobalBounds());
+
+        sf::FloatRect* cajaZ;
+        for(int i=0; i<zombies.size(); i++){
+           cajaZ = zombies[i]->getBoundingBox();
+           if(box->intersects(*cajaZ) && sprite->getPosition()!=zombies[i]->getSprite()->getPosition()){
+               return true; 
+           }
+        }
         return false;
 }
 

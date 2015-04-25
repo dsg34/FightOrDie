@@ -17,9 +17,9 @@ public:
     Zombie(const Zombie& orig);
     virtual ~Zombie();
     
-    void update(sf::Sprite protagonista);
+    void update(sf::Sprite protagonista, std::vector<Zombie*> zombies);
     bool colisionConProta(sf::Sprite protagonista, char direccion);
-    bool colisionConZombies(std::vector<Zombie> zombies, char direccion);
+    bool colisionConZombies(std::vector<Zombie*> zombies, char direccion);
     
     //bool Colision(Protagonista player);
 private:

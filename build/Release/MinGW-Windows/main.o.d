@@ -1,5 +1,5 @@
-build/Release/MinGW-Windows/main.o: main.cpp Protagonista.h Arma.h \
- Proyectil.h ../SFML-2.1/include/SFML/Graphics.hpp \
+build/Release/MinGW-Windows/main.o: main.cpp PersonajeFactory.h \
+ Personaje.h ../SFML-2.1/include/SFML/Graphics.hpp \
  ../SFML-2.1/include/SFML/Window.hpp ../SFML-2.1/include/SFML/System.hpp \
  ../SFML-2.1/include/SFML/Config.hpp \
  ../SFML-2.1/include/SFML/System/Clock.hpp \
@@ -61,15 +61,13 @@ build/Release/MinGW-Windows/main.o: main.cpp Protagonista.h Arma.h \
  ../SFML-2.1/include/SFML/Graphics/RectangleShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/ConvexShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
- ../SFML-2.1/include/SFML/Graphics/Text.hpp Granada.h Personaje.h HUD.h \
- Recurso.h RecursoHUD.h ArmaFactory.h Nivel.h MapLoader.h Oleada.h \
- RecursosFactory.h PersonajeFactory.h Zombie.h
+ ../SFML-2.1/include/SFML/Graphics/Text.hpp Protagonista.h Arma.h \
+ Proyectil.h Granada.h Zombie.h HUD.h Recurso.h RecursoHUD.h \
+ ArmaFactory.h Nivel.h MapLoader.h Oleada.h RecursosFactory.h
 
-Protagonista.h:
+PersonajeFactory.h:
 
-Arma.h:
-
-Proyectil.h:
+Personaje.h:
 
 ../SFML-2.1/include/SFML/Graphics.hpp:
 
@@ -199,9 +197,15 @@ Proyectil.h:
 
 ../SFML-2.1/include/SFML/Graphics/Text.hpp:
 
+Protagonista.h:
+
+Arma.h:
+
+Proyectil.h:
+
 Granada.h:
 
-Personaje.h:
+Zombie.h:
 
 HUD.h:
 
@@ -218,7 +222,3 @@ MapLoader.h:
 Oleada.h:
 
 RecursosFactory.h:
-
-PersonajeFactory.h:
-
-Zombie.h:

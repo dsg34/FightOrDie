@@ -73,13 +73,13 @@ int Mundo::ejecutarMundo(){
     bool nivelAcabado=false;  
     bool estadoMuerto=false;
     //Bucle del juego
-    /*
+    
     while (window->isOpen() && estado==0)
     {
         //Controlamos la frecuencia a la que se ejecuta el programa
-        frecuencia = relojUpdate->getElapsedTime();
+        frecuencia = *(relojUpdate->getElapsedTime());
         //Actualizamos 15 veces por segundo
-        if(frecuencia.asSeconds()>UPDATE_TIME){ 
+        if(frecuencia->asSeconds()>UPDATE_TIME){ 
             
             //Bucle de obtención de eventos
             sf::Event event;
@@ -98,20 +98,20 @@ int Mundo::ejecutarMundo(){
                 estado=3                                   
             relojUpdate->restart();
         }
-        frecuencia = relojRender->getElapsedTime();
+        frecuencia = *(relojRender->getElapsedTime());
         //Pintamos e interpolamos 60 veces por segundo
-        if(frecuencia.asSeconds()>RENDER_TIME){
+        if(frecuencia->asSeconds()>RENDER_TIME){
             interpolarMundo();
             pintarMundo();
             relojRender->restart();
         }
-    }*/
+    }
     return estado;
 }
 
 void Mundo::interpolarMundo(){
     //SE INTERPOLA: PERSONAJE - ZOMBIES - GRANADAS - PROYECTILES
-    /*if(contInterpolacion==4)
+    if(contInterpolacion==4)
         contInterpolacion=0;
     
     sf::Vector2<int> mov = protagonista->getVectorAnterior()-protagonista->getVectorActual();
@@ -141,17 +141,17 @@ void Mundo::interpolarMundo(){
         mov.x = mov.x*contInterpolacion*0.25;
         mov.y = mov.y*contInterpolacion*0.25;
         gra[i]->getSprite()->setPosition(gra[i]->getVectorActual().x+mov.x, gra[i]->getVectorActual().y+mov.y);
-    }*/
+    }
 }
 
 void Mundo::pintarMundo(){
-    /*window->clear();
+    window->clear();
     nivel->pintarMapa(*window);//map->Draw(window);
     //Actualizamos la posicion de las balas
-    protagonista->pintarProtagonista();                                    
+    window.draw(*(protagonista->getSprite()));
     
     nivel->pintarNivel(*window);//hud.pintarHUD(window);
     apuntar->setPosition(posicionCursor(*window).x, posicionCursor(*window).y);
     window->draw(*apuntar);                                    
-    window->display();*/
+    window->display();
 }

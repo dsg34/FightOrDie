@@ -9,8 +9,9 @@
 
 Personaje::Personaje(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int ve){
     
-    tex=t;
+    tex=new sf::Texture(*t);
     sprite=new sf::Sprite(*s);
+    sprite->setTexture(*tex);
     sprite->setPosition(p);
     
     posActual=p;

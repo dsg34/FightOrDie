@@ -4,7 +4,7 @@
  * 
  * Created on 21 de abril de 2015, 9:11
  */
-
+using namespace std;
 #include "Nivel.h"
 
 Nivel::Nivel(int i, Protagonista* &p, sf::Vector2<int> t, std::vector<int> s, float tZ) {
@@ -44,9 +44,9 @@ std::vector<Recurso*> Nivel::getRecursos(){
     return recursos;
 }
 
-/*std::vector<Zombie*> Nivel::getZombies(){
+std::vector<Zombie*> Nivel::getZombies(){
     return zombies;
-}*/
+}
     
 void Nivel::addRecurso(Recurso* r){
     recursos.push_back(r);
@@ -97,7 +97,7 @@ bool Nivel::actualizarNivel(Protagonista* p, int impac, int fall)
     }
     tiempo = relojRecurso.getElapsedTime();
     actualizarRecursosExistentes();
-    bool terminado = actualizarZombiesExistentes();
+    bool terminado = actualizarZombiesExistentes(p);
     //std::cout << "Segundos: " << tiempo.asSeconds()<< " - ApareceRecurso: " << tApareceRecurso << std::endl;
     if(tiempo.asSeconds()>tApareceRecurso){
         generarRecurso();
@@ -123,10 +123,11 @@ void Nivel::actualizarRecursosExistentes(){
     }
 } 
 
-bool Nivel::actualizarZombiesExistentes(){
+bool Nivel::actualizarZombiesExistentes(Protagonista* p){
     bool nivelTerminado=false;
     int existe=true;
-    for(int i=0; i<zombies.size(); i++){
+    for(int i=0; i<zombies.size(); i++){ 
+        zombies[i]->update(*(p->getSprite()), zombies);
         //existe = zombies[i]->getExiste();
         if(existe==false){
             zombies.erase(zombies.begin()+i);
@@ -139,13 +140,15 @@ bool Nivel::actualizarZombiesExistentes(){
 
 int Nivel::devuelveTipo(){
     int tipo;
-    double val = rand() % 1;
-    if (val < 0.1)       //  10% de posibilidades
+    int val =  rand()% 100;
+    if (val < 10)       //  10% de posibilidades
         tipo = 3;//Zombie gordo
-    else if (val < 0.3)  //  20% de posibilidades
+    else if (val < 30)  //  20% de posibilidades
         tipo = 2;//Zombie rapido
     else  //  70% de posibilidades
-        tipo = 1;//Zombie delgado  
+        tipo = 1;//Zombie normal  
+    
+    tipo = 1;
     
     return tipo;
 }
@@ -170,6 +173,10 @@ sf::Vector2<int> Nivel::devuelvePos(){
         case 4:     pos.x=(int)rand()%tam.x;
                     pos.y=tam.y+tam.y/15;                    
                     break;
+        //Por defecto, por la derecha            
+        default:    pos.x=tam.x+tam.x%15;
+                    pos.y=(int)rand()%tam.y;
+                    break;
     }
     
     
@@ -184,8 +191,12 @@ void Nivel::crearZombies(int num){
     PersonajeFactory* fab = new PersonajeFactory();
     for(int i=0; i<num; i++){
         pos=devuelvePos();
+        sf::Vector2<float> v;
+        v.x = (float) pos.x;
+        v.y = (float) pos.y;
+        cout<<"Pos en x: "<<v.x <<" - Pos en y: "<<v.y<<endl;
         tipo=devuelveTipo();
-        aux = fab->crearZombie(tipo, (sf::Vector2<float>)pos);
+        aux = fab->crearZombie(tipo, v);
         zombies.push_back(aux);
     }
 }
@@ -257,9 +268,11 @@ void Nivel::pintarMapa(sf::RenderWindow &w, int i){
 }
 
 void Nivel::pintarNivel(sf::RenderWindow &w){ 
-    std::cout<<zombies.size()<<std::endl;
-    for(int i=0; i<zombies.size(); i++)
-        zombies[i]->render(w);   
+    for(int i=0; i<zombies.size(); i++){
+        sf::Vector2<float> v = zombies[i]->getSprite()->getPosition();
+        cout<<"Zombie "<< i << ": Pos en x: " <<v.x <<" - Pos en y: "<<v.y<<endl;
+        zombies[i]->render(w);
+    }
     for(int j=0; j<recursos.size(); j++){
         recursos[j]->pintarRecursos(w);        
     }

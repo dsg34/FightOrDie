@@ -16,7 +16,7 @@
 class Proyectil {
 public:
     Proyectil();
-    Proyectil(sf::Sprite* spriteProyectil, sf::Texture* t, sf::Vector2<float> s, sf::Vector2<float> m, int d, int v, int r);
+    Proyectil(sf::Sprite* spriteProyectil, sf::Texture* t, sf::Vector2<int> s, sf::Vector2<float> m, int d, int v, int r);
     Proyectil(const Proyectil& orig);
     virtual ~Proyectil();
     
@@ -26,8 +26,8 @@ public:
     int getVelocidad();
     int getDanyo();
     int getRango();
-    sf::Vector2<float> getPosAnterior();
-    sf::Vector2<float> getPosActual();
+    sf::Vector2<int> getPosAnterior();
+    sf::Vector2<int> getPosActual();
     
     void setSprite(sf::Sprite s);
     void setContador(int i);
@@ -35,8 +35,8 @@ public:
     void setVelocidad(int i);
     void setDanyo(int d);
     void setRango(int r);
-    void setPosAnterior(sf::Vector2<float> v);
-    void setPosActual(sf::Vector2<float> v);
+    void setPosAnterior(sf::Vector2<int> v);
+    void setPosActual(sf::Vector2<int> v);
     
     bool updatePosition();
     void setPositionSprite(sf::Vector2<float> v);
@@ -52,8 +52,8 @@ protected:
     int danyo;
     int rango;
     
-    sf::Vector2<float> posAnterior;
-    sf::Vector2<float> posActual;
+    sf::Vector2<int> posAnterior;
+    sf::Vector2<int> posActual;
 };
 
 #endif	/* PROYECTIL_H */
