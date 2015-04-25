@@ -14,6 +14,7 @@ Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, Arma* a, sf::Vector2<f
     tex = new sf::Texture(*t);
     sprite = new sf::Sprite(*s);
     sprite->setTexture(*tex);
+    sprite->setPosition(p);
     posActual = p;
     posAnterior = p;
     maxVida = mV;

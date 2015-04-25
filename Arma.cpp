@@ -126,7 +126,7 @@ sf::Vector2<float> Arma::vectorDisparo(sf::Vector2<float> puntoPersonaje, sf::Ve
 }
 
 //El metodo disparar crea una nueva Proyectil de las disparadas por la Arma a no ser que se haya alcanzado el maximo de Proyectiles simultaneas disponible
-bool Arma::disparar(sf::Vector2<int> s, sf::Vector2<int> pos){
+bool Arma::disparar(sf::Vector2<float> s, sf::Vector2<int> pos){
     bool agotadas=false;    
     sf::Vector2<int> aux;
     sf::Vector2<float> m = vectorDisparo(s, pos);
@@ -191,7 +191,7 @@ bool Arma::disparar(sf::Vector2<int> s, sf::Vector2<int> pos){
     return agotadas;
 }
 //Lanzara las granadas
-void Arma::dispararSecundaria(sf::Vector2<int> s, sf::Vector2<int> pos){
+void Arma::dispararSecundaria(sf::Vector2<float> s, sf::Vector2<int> pos){
     Granada* auxGranada;
     sf::Vector2<float> m = vectorDisparo(s, pos);
     tiempo=reloj.getElapsedTime();

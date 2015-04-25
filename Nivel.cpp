@@ -8,6 +8,7 @@ using namespace std;
 #include "Nivel.h"
 
 Nivel::Nivel(int i, Protagonista* &p, sf::Vector2<int> t, std::vector<int> s, float tZ) {
+
     id=i;
     puntuacion=0;
     racha = 0;
@@ -128,7 +129,7 @@ bool Nivel::actualizarZombiesExistentes(Protagonista* p){
     int existe=true;
     for(int i=0; i<zombies.size(); i++){ 
         zombies[i]->update(*(p->getSprite()), zombies);
-        //existe = zombies[i]->getExiste();
+        existe = zombies[i]->Existe();
         if(existe==false){
             zombies.erase(zombies.begin()+i);
             i--;
@@ -194,7 +195,7 @@ void Nivel::crearZombies(int num){
         sf::Vector2<float> v;
         v.x = (float) pos.x;
         v.y = (float) pos.y;
-        cout<<"Pos en x: "<<v.x <<" - Pos en y: "<<v.y<<endl;
+        //cout<<"Pos en x: "<<v.x <<" - Pos en y: "<<v.y<<endl;
         tipo=devuelveTipo();
         aux = fab->crearZombie(tipo, v);
         zombies.push_back(aux);

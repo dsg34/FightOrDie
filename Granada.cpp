@@ -8,7 +8,7 @@
 #include "Granada.h"
 #include "Arma.h"
 
-Granada::Granada(sf::Vector2<int> s, sf::Vector2<int> m, int d, sf::Vector2<int> pos) {
+Granada::Granada(sf::Vector2<float> s, sf::Vector2<float> m, int d, sf::Vector2<int> pos) {
     
     sf::Texture tex;
     if (!tex.loadFromFile("resources/sprite_general.png"))
@@ -104,19 +104,19 @@ void Granada::setDanyo(int d){
     danyo=d;
 }
 
-sf::Vector2<int> Granada::getPosAnterior(){
+sf::Vector2<float> Granada::getPosAnterior(){
     return posAnterior;
 }
 
-void Granada::setPosAnterior(sf::Vector2<int> v){
+void Granada::setPosAnterior(sf::Vector2<float> v){
     posAnterior= v;
 }
 
-sf::Vector2<int> Granada::getPosActual(){
+sf::Vector2<float> Granada::getPosActual(){
     return posActual;
 }
 
-void Granada::setPosActual(sf::Vector2<int> v){
+void Granada::setPosActual(sf::Vector2<float> v){
     posActual = v;
 }
 
@@ -136,8 +136,8 @@ int Granada::updateGranada(){
     //Posicion inicial de las imagenes de explosion
     double cont = 1.0;   
             
-    sf::Vector2<int> pos = (sf::Vector2<int>) sprite->getPosition();
-    posAnterior = pos;
+    sf::Vector2<int> pos = (sf::Vector2<int>)sprite->getPosition() ;
+    posAnterior = sprite->getPosition();
     if(abs(posicionFinal.x-pos.x)<10 && abs(posicionFinal.y-pos.y)<10){ //&& posicionFinal.y=pos.y)
         contador=rango-20;
         
@@ -174,9 +174,8 @@ int Granada::updateGranada(){
         setRecorteSprite(1,0);
     }
     contador++;
-    
-    posActual = (sf::Vector2<int>) sprite->getPosition();
     estado = devuelve;
+    posActual = sprite->getPosition();
     return devuelve;
 }
 

@@ -22,7 +22,7 @@ public:
     Mundo(const Mundo& orig);
     virtual ~Mundo();
     
-    sf::Vector2<int> posicionCursor(sf::RenderWindow &window);
+    sf::Vector2<int> posicionCursor();
     int ejecutarMundo();
     
     void interpolarMundo();
@@ -41,10 +41,10 @@ private:
     sf::Texture* tex;
     sf::Sprite* apuntar;
     
-    sf::Clock* relojUpdate;
-    sf::Clock* relojRender;
+    sf::Clock relojUpdate;
+    sf::Clock relojRender;
     
-    sf::Time* frecuencia;
+    float frecuencia;
     int contInterpolacion;
 };
 

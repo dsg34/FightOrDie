@@ -32,8 +32,7 @@ Nivel* NivelFactory::crearNivel1(Protagonista* p, sf::Vector2<int> t){
     s.push_back(3);
     s.push_back(4);
     
-    float tz=4.0;
-    
+    float tz=4.0;    
     Nivel* n = new Nivel(1, p, t, s, tz);
     
     return n;

@@ -40,8 +40,8 @@ public:
     void aumentarMunicion();
     
     sf::Vector2<float> vectorDisparo(sf::Vector2<float> puntoPersonaje, sf::Vector2<int> puntoCursor);
-    bool disparar(sf::Vector2<int> s, sf::Vector2<int> pos);
-    void dispararSecundaria(sf::Vector2<int> s, sf::Vector2<int> pos);
+    bool disparar(sf::Vector2<float> s, sf::Vector2<int> pos);
+    void dispararSecundaria(sf::Vector2<float> s, sf::Vector2<int> pos);
     void updateProyectiles();
     void pintarProyectiles(sf::RenderWindow &window);
     void eliminarProyectil(int i);

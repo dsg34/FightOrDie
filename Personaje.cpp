@@ -9,9 +9,8 @@
 
 Personaje::Personaje(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int ve){
     
-    tex=new sf::Texture(*t);
+    tex=t;
     sprite=new sf::Sprite(*s);
-    sprite->setTexture(*tex);
     sprite->setPosition(p);
     
     posActual=p;
@@ -113,6 +112,12 @@ bool Personaje::getMuriendo(){
 void Personaje::setMuriendo(bool m){
     muriendo=m;
 }
+bool Personaje::Existe(){
+    if(vida==0)
+        return false;
+    else
+        return true;
+}
 
 
 
@@ -125,4 +130,3 @@ void Personaje::setMuriendo(bool m){
 
 //Contador de la posicion del sprite en la que se esta
     //Direccion del personaje
-    
