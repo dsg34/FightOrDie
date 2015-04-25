@@ -144,7 +144,7 @@ int Nivel::calcularPuntuacionTotal()
     
     puntuacion += puntuacion2;
     
-    
+    crearMensaje('Puntuacion total: ' + puntuacion, -1,-1);
 }
 
 void Nivel::crearMensaje(std::string s, int t, int i){
