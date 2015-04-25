@@ -17,6 +17,7 @@ Nivel::Nivel(int i, Protagonista* &p, sf::Vector2<int> t, std::vector<int> s, fl
     relojZombie.restart();
     relojRecurso.restart();   
     relojRacha.restart();
+    tiempoPartida.restart();
     
     tApareceZombie=tZ;
     tApareceRecurso=15.0+rand()%15;
@@ -106,6 +107,63 @@ bool Nivel::actualizarNivel(Protagonista* p, int impac, int fall)
     }
     
     return terminado;
+}
+
+std::string floatAString(float f){
+    std::string devuelve;
+    
+    std::stringstream aux;
+    aux << f;
+
+    aux >> devuelve;
+    
+    return devuelve;
+}
+
+int Nivel::calcularPuntuacionTotal()
+{
+    int tirosTotales = impactos + fallos;
+    float porcentajeAcierto = (impactos/tirosTotales) * 100;
+    int puntuacion1 = 100 * porcentajeAcierto;
+    std::string mensaje = "Porcentaje de acierto de tiros: " + floatAString(porcentajeAcierto) + "%";
+    
+    mensaje = mensaje+"\n"+"Puntuacion por aciertos: " + hud->intAString(puntuacion1);
+    
+//    crearMensaje("Porcentaje de acierto de tiros: " + floatAString(porcentajeAcierto) + "%", -1,-1);
+//    crearMensaje('Puntuacion por aciertos: ' + hud->intAString(puntuacion1), -1,-1);
+    puntuacion += puntuacion1;
+    
+    tiempo = tiempoPartida.getElapsedTime();
+    
+    int tiempoP = tiempo.asSeconds();
+    int minutos;
+    int segundos;
+    
+    if(tiempoP > 60)
+    {
+        minutos = tiempoP / 60;
+        segundos = tiempoP % 60;
+    }
+    else
+    {
+        minutos = 0;
+        segundos = tiempoP;
+    }
+    
+    int puntuacion2 = 2000 - tiempoP;
+    if(puntuacion2 < 0)
+        puntuacion2 = 0;
+    
+//    crearMensaje('Tiempo de la partida: ' + hud->intAString(minutos) + ':' + hud->intAString(segundos), -1,-1);
+//    crearMensaje('Puntuacion por tiempo: ' + hud->intAString(puntuacion2), -1,-1);
+    
+    mensaje = mensaje+"\n"+"Tiempo de la partida: " + hud->intAString(minutos) + ":" + hud->intAString(segundos);
+    mensaje = mensaje+"\n"+"Puntuacion por tiempo: " + hud->intAString(puntuacion2);
+    
+    puntuacion += puntuacion2;
+    mensaje = mensaje+"\n"+"Puntuacion total: " + hud->intAString(puntuacion1);
+    //crearMensaje('Puntuacion total: ' + hud->intAString(puntuacion1), -1,-1);
+    crearMensaje(mensaje, -1, -1);
 }
 
 void Nivel::crearMensaje(std::string s, int t, int i){

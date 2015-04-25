@@ -64,6 +64,7 @@ private:
     sf::Clock relojZombie;
     sf::Clock relojRecurso;
     sf::Clock relojRacha;
+    sf::Clock tiempoPartida;
     sf::Time tiempo;
     
     float tApareceZombie;
