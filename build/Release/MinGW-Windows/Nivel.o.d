@@ -1,4 +1,4 @@
-build/Release/MinGW-Windows/Nivel.o: Nivel.cpp MapLoader.h \
+build/Release/MinGW-Windows/Nivel.o: Nivel.cpp Nivel.h MapLoader.h \
  ../SFML-2.1/include/SFML/System.hpp ../SFML-2.1/include/SFML/Config.hpp \
  ../SFML-2.1/include/SFML/System/Clock.hpp \
  ../SFML-2.1/include/SFML/System/Export.hpp \
@@ -61,9 +61,11 @@ build/Release/MinGW-Windows/Nivel.o: Nivel.cpp MapLoader.h \
  ../SFML-2.1/include/SFML/Graphics/RectangleShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/ConvexShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
- ../SFML-2.1/include/SFML/Graphics/Text.hpp Nivel.h Oleada.h HUD.h \
- Protagonista.h Arma.h Proyectil.h Granada.h Personaje.h Recurso.h \
- RecursoHUD.h RecursosFactory.h PersonajeFactory.h
+ ../SFML-2.1/include/SFML/Graphics/Text.hpp Oleada.h HUD.h Protagonista.h \
+ Arma.h Proyectil.h Granada.h Personaje.h Zombie.h Recurso.h RecursoHUD.h \
+ RecursosFactory.h PersonajeFactory.h
+
+Nivel.h:
 
 MapLoader.h:
 
@@ -195,8 +197,6 @@ MapLoader.h:
 
 ../SFML-2.1/include/SFML/Graphics/Text.hpp:
 
-Nivel.h:
-
 Oleada.h:
 
 HUD.h:
@@ -210,6 +210,8 @@ Proyectil.h:
 Granada.h:
 
 Personaje.h:
+
+Zombie.h:
 
 Recurso.h:
 

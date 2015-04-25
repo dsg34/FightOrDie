@@ -103,14 +103,15 @@ void Proyectil::setPosActual(sf::Vector2<float> v){
 //Actualiza la posicion de la Proyectil en funcion del vector mov de la propia Proyectil, que almacena el incremento en x e y que debe realizar la Proyectil en cada iteracion
 bool Proyectil::updatePosition(){
     bool devuelve = false;    
-
+    posAnterior = sprite->getPosition();
     if(contador<rango){        
         sprite->move(2*velocidad*mov.x, 2*velocidad*mov.y);
         contador++;
     }else{
         devuelve=true;
     }
-    
+    posActual = sprite->getPosition();
+        
     return devuelve;
 }
 

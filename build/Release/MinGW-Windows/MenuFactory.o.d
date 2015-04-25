@@ -1,5 +1,5 @@
-build/Release/MinGW-Windows/PersonajeFactory.o: PersonajeFactory.cpp \
- PersonajeFactory.h Personaje.h ../SFML-2.1/include/SFML/Graphics.hpp \
+build/Release/MinGW-Windows/MenuFactory.o: MenuFactory.cpp MenuFactory.h \
+ Menu.h ../SFML-2.1/include/SFML/Graphics.hpp \
  ../SFML-2.1/include/SFML/Window.hpp ../SFML-2.1/include/SFML/System.hpp \
  ../SFML-2.1/include/SFML/Config.hpp \
  ../SFML-2.1/include/SFML/System/Clock.hpp \
@@ -61,12 +61,11 @@ build/Release/MinGW-Windows/PersonajeFactory.o: PersonajeFactory.cpp \
  ../SFML-2.1/include/SFML/Graphics/RectangleShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/ConvexShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
- ../SFML-2.1/include/SFML/Graphics/Text.hpp Protagonista.h Arma.h \
- Proyectil.h Granada.h Zombie.h
+ ../SFML-2.1/include/SFML/Graphics/Text.hpp
 
-PersonajeFactory.h:
+MenuFactory.h:
 
-Personaje.h:
+Menu.h:
 
 ../SFML-2.1/include/SFML/Graphics.hpp:
 
@@ -195,13 +194,3 @@ Personaje.h:
 ../SFML-2.1/include/SFML/Graphics/Sprite.hpp:
 
 ../SFML-2.1/include/SFML/Graphics/Text.hpp:
-
-Protagonista.h:
-
-Arma.h:
-
-Proyectil.h:
-
-Granada.h:
-
-Zombie.h:

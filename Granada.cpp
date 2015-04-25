@@ -136,7 +136,8 @@ int Granada::updateGranada(){
     //Posicion inicial de las imagenes de explosion
     double cont = 1.0;   
             
-    sf::Vector2<int> pos = (sf::Vector2<int>) sprite->getPosition();
+    sf::Vector2<int> pos = (sf::Vector2<int>)sprite->getPosition() ;
+    posAnterior = sprite->getPosition();
     if(abs(posicionFinal.x-pos.x)<10 && abs(posicionFinal.y-pos.y)<10){ //&& posicionFinal.y=pos.y)
         contador=rango-20;
         
@@ -174,6 +175,7 @@ int Granada::updateGranada(){
     }
     contador++;
     estado = devuelve;
+    posActual = sprite->getPosition();
     return devuelve;
 }
 

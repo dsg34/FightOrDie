@@ -15,7 +15,7 @@ public:
     Personaje(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int ve);
     Personaje(const Personaje& orig);
     virtual ~Personaje();
-    void update(); //Se emplea virtual para que, si se crea una instancia de una clase hija de personaje, se llame a los métodos de dicha clase y no a los genericos
+    //Se emplea virtual para que, si se crea una instancia de una clase hija de personaje, se llame a los métodos de dicha clase y no a los genericos
     void render(sf::RenderWindow &window);
     
     sf::Vector2<float> getPosAnterior();
@@ -28,6 +28,9 @@ public:
     int getCont();//Contador de la posicion del sprite en la que se esta
     int getDirec();//Direccion del personaje
     bool getMuriendo();
+    sf::FloatRect* getBoundingBox();
+    bool Existe();
+    //sf::FloatRect getBoundingBox();
     
     void setPosAnterior(sf::Vector2<float> v);
     void setPosActual(sf::Vector2<float> v);
@@ -49,6 +52,7 @@ protected:
     int cont;//Contador de la posicion del sprite en la que se esta
     int direc;//Direccion del personaje
     bool muriendo;//Booleano para determinar si el personaje esta en animacion de muerte
+    sf::FloatRect* boundingBox;
     
     sf::Vector2<float> posAnterior;
     sf::Vector2<float> posActual;

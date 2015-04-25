@@ -53,6 +53,9 @@ void Personaje::setPosActual(sf::Vector2<float> v){
     posActual = v;
 }
 
+sf::FloatRect* Personaje::getBoundingBox(){
+       return boundingBox;
+}
 sf::Sprite* Personaje::getSprite(){
     return sprite;
 }
@@ -109,6 +112,12 @@ bool Personaje::getMuriendo(){
 void Personaje::setMuriendo(bool m){
     muriendo=m;
 }
+bool Personaje::Existe(){
+    if(vida==0)
+        return false;
+    else
+        return true;
+}
 
 
 
@@ -121,4 +130,3 @@ void Personaje::setMuriendo(bool m){
 
 //Contador de la posicion del sprite en la que se esta
     //Direccion del personaje
-    

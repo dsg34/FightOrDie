@@ -44,7 +44,7 @@ public:
     void dispararSecundaria(sf::Vector2<float> s, sf::Vector2<int> pos);
     void updateProyectiles();
     void pintarProyectiles(sf::RenderWindow &window);
-    void eliminarProyectil(int i);    
+    void eliminarProyectil(int i);
 protected:
     std::vector<Proyectil*> cargador;
     std::vector<Granada*> secundaria;

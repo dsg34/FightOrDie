@@ -40,8 +40,11 @@ OBJECTFILES= \
 	${OBJECTDIR}/Granada.o \
 	${OBJECTDIR}/HUD.o \
 	${OBJECTDIR}/MapLoader.o \
+	${OBJECTDIR}/Menu.o \
+	${OBJECTDIR}/MenuFactory.o \
 	${OBJECTDIR}/Mundo.o \
 	${OBJECTDIR}/Nivel.o \
+	${OBJECTDIR}/NivelFactory.o \
 	${OBJECTDIR}/Oleada.o \
 	${OBJECTDIR}/Personaje.o \
 	${OBJECTDIR}/PersonajeFactory.o \
@@ -50,6 +53,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Recurso.o \
 	${OBJECTDIR}/RecursoHUD.o \
 	${OBJECTDIR}/RecursosFactory.o \
+	${OBJECTDIR}/Zombie.o \
 	${OBJECTDIR}/lib/tinyxml/tinystr.o \
 	${OBJECTDIR}/lib/tinyxml/tinyxml.o \
 	${OBJECTDIR}/lib/tinyxml/tinyxmlerror.o \
@@ -106,6 +110,16 @@ ${OBJECTDIR}/MapLoader.o: MapLoader.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/MapLoader.o MapLoader.cpp
 
+${OBJECTDIR}/Menu.o: Menu.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Menu.o Menu.cpp
+
+${OBJECTDIR}/MenuFactory.o: MenuFactory.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/MenuFactory.o MenuFactory.cpp
+
 ${OBJECTDIR}/Mundo.o: Mundo.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -115,6 +129,11 @@ ${OBJECTDIR}/Nivel.o: Nivel.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Nivel.o Nivel.cpp
+
+${OBJECTDIR}/NivelFactory.o: NivelFactory.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/NivelFactory.o NivelFactory.cpp
 
 ${OBJECTDIR}/Oleada.o: Oleada.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -155,6 +174,11 @@ ${OBJECTDIR}/RecursosFactory.o: RecursosFactory.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RecursosFactory.o RecursosFactory.cpp
+
+${OBJECTDIR}/Zombie.o: Zombie.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Zombie.o Zombie.cpp
 
 ${OBJECTDIR}/lib/tinyxml/tinystr.o: lib/tinyxml/tinystr.cpp 
 	${MKDIR} -p ${OBJECTDIR}/lib/tinyxml

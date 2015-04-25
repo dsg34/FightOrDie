@@ -9,6 +9,7 @@
 #define	PERSONAJEFACTORY_H
 #include "Personaje.h"
 #include "Protagonista.h"
+#include "Zombie.h"
 
 class PersonajeFactory {
 public:
@@ -17,6 +18,10 @@ public:
     virtual ~PersonajeFactory();
     
     Protagonista* crearProtagonista(Arma* a, sf::Vector2<float> p);
+    Zombie* crearZombie(int tipoZombie, sf::Vector2<float> p);
+    Zombie* crearZombieNormal(sf::Vector2<float> p);
+    Zombie* crearZombieRapido(sf::Vector2<float> p);
+    Zombie* crearZombieGordo(sf::Vector2<float> p);
     /*
     Zombie crearZombieNormal(sf::Vector2 p);
     Zombie* crearZombieRapido(sf::Vector2 p);
@@ -27,6 +32,7 @@ public:
 private:
     bool protagonistaCreado;
     Protagonista* protagonista;
+    Zombie* zombie;
 };
 
 #endif	/* PERSONAJEFACTORY_H */

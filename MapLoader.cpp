@@ -152,25 +152,34 @@ bool MapLoader::LoadFromFile(std::string filename)
 
     return true;
 }
-void MapLoader::Draw(sf::RenderWindow &window)
+void MapLoader::Draw(sf::RenderWindow &window,int capa)
 {
 
     for (int layer = 0; layer < layers.size(); layer++)
     {
         for (int tile = 0; tile < layers[layer].tiles.size(); tile++)
         {
+            if(layer == capa){
                 window.draw(layers[layer].tiles[tile]); 
+            }
         }
     }
 }
-
-bool MapLoader::Colision(int x,int y){//devuelve true si hay colision para esa posicion
+// en tipo 0 es para personaje y recurso y 1 para zombie
+//devuelve true si el personaje puede avanzar a esa posicion
+bool MapLoader::Colision(int x,int y, int tipo){
     int tile_x = x/25;
     int tile_y = y/25;
     int pos = tile_x + 52*tile_y;
     std::cout << pos << std::endl;
-    if(gids[pos] != 0){
-        return false;
+    if(tipo == 0){
+        if(gids[pos] != 0){
+            return false;
+        }
+    }else{
+        if(gids[pos] != 1264 && gids[pos] != 0){
+            return false;
+        }
     }
     return true;
 }

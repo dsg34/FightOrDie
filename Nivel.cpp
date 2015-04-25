@@ -4,10 +4,11 @@
  * 
  * Created on 21 de abril de 2015, 9:11
  */
-#include "MapLoader.h"
+using namespace std;
 #include "Nivel.h"
 
 Nivel::Nivel(int i, Protagonista* &p, sf::Vector2<int> t, std::vector<int> s, float tZ) {
+
     id=i;
     puntuacion=0;
     racha = 0;
@@ -16,6 +17,7 @@ Nivel::Nivel(int i, Protagonista* &p, sf::Vector2<int> t, std::vector<int> s, fl
     relojZombie.restart();
     relojRecurso.restart();   
     relojRacha.restart();
+    tiempoPartida.restart();
     
     tApareceZombie=tZ;
     tApareceRecurso=15.0+rand()%15;
@@ -42,6 +44,10 @@ Nivel::~Nivel() {
 
 std::vector<Recurso*> Nivel::getRecursos(){
     return recursos;
+}
+
+std::vector<Zombie*> Nivel::getZombies(){
+    return zombies;
 }
     
 void Nivel::addRecurso(Recurso* r){
@@ -80,8 +86,8 @@ void Nivel::controlarRacha(int imp){//
     
 }
 
-void Nivel::actualizarNivel(Protagonista* p, int impac, int fall)
-{
+bool Nivel::actualizarNivel(Protagonista* p, int impac, int fall)
+{   
     impactos = impac;
     fallos = fall;
     hud->actualizarHUD(p, puntuacion);
@@ -93,11 +99,52 @@ void Nivel::actualizarNivel(Protagonista* p, int impac, int fall)
     }
     tiempo = relojRecurso.getElapsedTime();
     actualizarRecursosExistentes();
+    bool terminado = actualizarZombiesExistentes(p);
     //std::cout << "Segundos: " << tiempo.asSeconds()<< " - ApareceRecurso: " << tApareceRecurso << std::endl;
     if(tiempo.asSeconds()>tApareceRecurso){
         generarRecurso();
         relojRecurso.restart();
     }
+    
+    return terminado;
+}
+
+int Nivel::calcularPuntuacionTotal()
+{
+    int tirosTotales = impactos + fallos;
+    float porcentajeAcierto = (impactos/tirosTotales) * 100;
+    int puntuacion1 = 100 * porcentajeAcierto;
+    crearMensaje('Porcentaje de acierto de tiros: ' + porcentajeAcierto + '%', -1,-1);
+    crearMensaje('Puntuacion por aciertos: ' + puntuacion1, -1,-1);
+    puntuacion += puntuacion1;
+    
+    tiempo = tiempoPartida.getElapsedTime();
+    
+    int tiempoP = tiempo.asSeconds();
+    int minutos;
+    int segundos;
+    
+    if(tiempoP > 60)
+    {
+        minutos = tiempoP / 60;
+        segundos = tiempoP % 60;
+    }
+    else
+    {
+        minutos = 0;
+        segundos = tiempoP;
+    }
+    
+    int puntuacion2 = 2000 - tiempoP;
+    if(puntuacion2 < 0)
+        puntuacion2 = 0;
+    
+    crearMensaje('Tiempo de la partida: ' + minutos + ':' + segundos, -1,-1);
+    crearMensaje('Puntuacion por tiempo: ' + puntuacion2, -1,-1);
+    
+    puntuacion += puntuacion2;
+    
+    
 }
 
 void Nivel::crearMensaje(std::string s, int t, int i){
@@ -116,21 +163,38 @@ void Nivel::actualizarRecursosExistentes(){
     }
 } 
 
+bool Nivel::actualizarZombiesExistentes(Protagonista* p){
+    bool nivelTerminado=false;
+    int existe=true;
+    for(int i=0; i<zombies.size(); i++){ 
+        zombies[i]->update(*(p->getSprite()), zombies);
+        existe = zombies[i]->Existe();
+        if(existe==false){
+            zombies.erase(zombies.begin()+i);
+            i--;
+            nivelTerminado=oleada->actualizarZombiesMuertos(1,hud);
+        }
+    }    
+    return nivelTerminado;
+} 
+
 int Nivel::devuelveTipo(){
     int tipo;
-    double val = rand() % 1;
-    if (val < 0.1)       //  10% de posibilidades
+    int val =  rand()% 100;
+    if (val < 10)       //  10% de posibilidades
         tipo = 3;//Zombie gordo
-    else if (val < 0.3)  //  20% de posibilidades
+    else if (val < 30)  //  20% de posibilidades
         tipo = 2;//Zombie rapido
     else  //  70% de posibilidades
-        tipo = 1;//Zombie delgado  
+        tipo = 1;//Zombie normal  
+    
+    tipo = 1;
     
     return tipo;
 }
 
 sf::Vector2<int> Nivel::devuelvePos(){
-    sf::Vector2<int> pos;/*, tam=hud->getTamPantalla();
+    sf::Vector2<int> pos, tam=*hud->getTamPantalla();
     int lado = (int)rand() % spawnsZombies.size();//Genera aleatoriamente el lado en el que aparece el zombie
     switch(lado){
         //Por la izquierda
@@ -149,8 +213,12 @@ sf::Vector2<int> Nivel::devuelvePos(){
         case 4:     pos.x=(int)rand()%tam.x;
                     pos.y=tam.y+tam.y/15;                    
                     break;
+        //Por defecto, por la derecha            
+        default:    pos.x=tam.x+tam.x%15;
+                    pos.y=(int)rand()%tam.y;
+                    break;
     }
-    */
+    
     
     
     return pos;
@@ -159,23 +227,27 @@ sf::Vector2<int> Nivel::devuelvePos(){
 void Nivel::crearZombies(int num){
     sf::Vector2<int> pos;
     int tipo;
-    /*Zombie* aux;
+    Zombie* aux;
     PersonajeFactory* fab = new PersonajeFactory();
     for(int i=0; i<num; i++){
         pos=devuelvePos();
+        sf::Vector2<float> v;
+        v.x = (float) pos.x;
+        v.y = (float) pos.y;
+        //cout<<"Pos en x: "<<v.x <<" - Pos en y: "<<v.y<<endl;
         tipo=devuelveTipo();
-        aux = fab.crearZombie(tipo, pos);
+        aux = fab->crearZombie(tipo, v);
         zombies.push_back(aux);
-    }*/
+    }
 }
 
 //Controlamos el numero de zombies que generamos, dependiendo de los que ya hay en pantalla
 
 void Nivel::generarZombies(){
-    /*if(zombies.size()>20)
+    if(zombies.size()>20)
         crearZombies(5);
     else
-        crearZombies(10);*/
+        crearZombies(10);
 }
 
 
@@ -184,7 +256,7 @@ void Nivel::generarRecurso(){
     RecursosFactory* fab = new RecursosFactory();
     
     Recurso* r = fab->crearRecurso(tipo);
-    while(mapa->Colision(r->getVectorActual().x, r->getVectorActual().y)==false)
+    while(mapa->Colision((int)r->getVectorActual().x, (int)r->getVectorActual().y, 0)==false)
         r = fab->crearRecurso(tipo);
     //if(map->Colision(sprite.getPosition().x,(sprite.getPosition().y - kVel + 75/2))){    
     recursos.push_back(r);
@@ -211,33 +283,36 @@ void Nivel::reducirSaludZombie(int i, Proyectil* p){
     reducirSaludZombie(i, d);
 }*/
 
+/*
 void Nivel::reducirSaludZombie(int i, int d){
     bool muerto=false;
-    /*if(i>0 && i<zombies.size()){
+    if(i>0 && i<zombies.size()){
         muerto = zombies[i]->reducirSalud(d);
         if(muerto==true){
             zombies.erase(zombies.begin()+i);
             oleada->actualizarNumZombies(1, hud);//Actualizamos el numero de zombies muertos en la oleada
         }
-    }*/
-}
+    }
+}*/
 
 /*METODO QUE RECIBA ARRAY DE BALAS Y COMPRUEBE PARA CADA ZOMBIE SI SE PRODUCE DANYO*/
 
-void Nivel::compruebaDanyoZombie(){
-    /*for(int i=0; i<zombies.size(); i++){
-        zombies[i]->calcular
-    }*/
-}
+/*void Nivel::compruebaDanyoZombie(std::vector<Proyectil*> &v,){
+    for(int i=0; i<zombies.size(); i++){
+        zombies[i]->calcularColisionBalas(v);
+    }
+}*/
 //Separamos mapa y nivel porque lo primero que se ha de pintar es el mapa, luego el protagonista y luego el resto del nivel
-void Nivel::pintarMapa(sf::RenderWindow &w){
-    mapa->Draw(w);
+void Nivel::pintarMapa(sf::RenderWindow &w, int i){
+    mapa->Draw(w,i);
 }
 
-void Nivel::pintarNivel(sf::RenderWindow &w){    
-    /*for(int i=0; i<zombies.size(); i++)
-        w.draw(zombies[i]);
-    */
+void Nivel::pintarNivel(sf::RenderWindow &w){ 
+    for(int i=0; i<zombies.size(); i++){
+        sf::Vector2<float> v = zombies[i]->getSprite()->getPosition();
+        cout<<"Zombie "<< i << ": Pos en x: " <<v.x <<" - Pos en y: "<<v.y<<endl;
+        zombies[i]->render(w);
+    }
     for(int j=0; j<recursos.size(); j++){
         recursos[j]->pintarRecursos(w);        
     }

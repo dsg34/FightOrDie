@@ -61,9 +61,9 @@ build/Release/MinGW-Windows/Mundo.o: Mundo.cpp Mundo.h Protagonista.h \
  ../SFML-2.1/include/SFML/Graphics/RectangleShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/ConvexShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
- ../SFML-2.1/include/SFML/Graphics/Text.hpp Granada.h Personaje.h HUD.h \
- Recurso.h RecursoHUD.h ArmaFactory.h Nivel.h MapLoader.h Oleada.h \
- RecursosFactory.h PersonajeFactory.h
+ ../SFML-2.1/include/SFML/Graphics/Text.hpp Granada.h Personaje.h \
+ Zombie.h HUD.h Recurso.h RecursoHUD.h NivelFactory.h Nivel.h MapLoader.h \
+ Oleada.h RecursosFactory.h PersonajeFactory.h ArmaFactory.h
 
 Mundo.h:
 
@@ -205,13 +205,15 @@ Granada.h:
 
 Personaje.h:
 
+Zombie.h:
+
 HUD.h:
 
 Recurso.h:
 
 RecursoHUD.h:
 
-ArmaFactory.h:
+NivelFactory.h:
 
 Nivel.h:
 
@@ -222,3 +224,5 @@ Oleada.h:
 RecursosFactory.h:
 
 PersonajeFactory.h:
+
+ArmaFactory.h:
