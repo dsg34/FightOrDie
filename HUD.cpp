@@ -21,9 +21,9 @@ HUD::HUD(Protagonista* p, sf::Vector2<int> tam) {
     //sf::Vector2<int> tam = (sf::Vector2<int>) w.getSize();
     textura=new sf::Texture(tex);
     //***************************************************Inicializacion sprites        
-    //armas = std::vector<RecursoHUD*>();
-    //actualizarArrayArmas(p->getArmas());
-    //actualizarArmasHUD();
+    armas = std::vector<RecursoHUD*>();
+    actualizarArrayArmas(p->getArmas());
+    actualizarArmasHUD();
     
     /*RecursoHUD* pistola = new RecursoHUD(1);
     RecursoHUD* hacha = new RecursoHUD(4);
@@ -52,6 +52,7 @@ HUD::HUD(Protagonista* p, sf::Vector2<int> tam) {
     spriteVida->setPosition(tam.x/10*2, tam.y/8*7.4);
     //spriteVida->setPosition(133, 500);
     vida=p->getVida();
+    std::cout<<vida<<std::endl;
     cargarSpriteVida();
     boss=false;
 
@@ -90,8 +91,8 @@ HUD::HUD(Protagonista* p, sf::Vector2<int> tam) {
     opacidadPuntuacion=1.0;
     opacidadVidaBoss=0.0;
     recursos = std::vector<RecursoHUD*>(); 
-    //actualizarArrayRecursos(p->getRecursos());
-    //actualizarRecursosHUD();
+    actualizarArrayRecursos(p->getInventario());
+    actualizarRecursosHUD();
     
     /*RecursoHUD* recurso1 = new RecursoHUD(5);
     RecursoHUD* recurso2 = new RecursoHUD(6);

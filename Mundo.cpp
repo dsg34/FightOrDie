@@ -91,7 +91,7 @@ int Mundo::ejecutarMundo(){
             sf::Event event;
                                              
                         
-            protagonista->update(posicionCursor(),nivel->getZombies());
+            protagonista->update(posicionCursor(),nivel->getZombies(), nivel->getMapa());
             existePersonaje=protagonista->Existe();
             if(existePersonaje==false)
                 estado=2;

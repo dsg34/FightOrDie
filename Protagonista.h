@@ -12,6 +12,7 @@
 #include "Recurso.h"
 #include "Personaje.h"
 #include "Zombie.h"
+#include "MapLoader.h"
 
 class Protagonista: public Personaje {
 public:
@@ -20,7 +21,7 @@ public:
     virtual ~Protagonista();
     
     Arma* getArma();
-    //std::Vector<Recurso*> getInventario();
+    std::vector<Arma*> getArmas();
     
     void setArma(Arma* a);
     void siguienteArma();
@@ -32,8 +33,8 @@ public:
     void movimientoCerebro(std::vector<Zombie*> enemigos);
     int Colision(std::vector<Zombie*> zombies, char direccion);
     void actualizaDireccion();
-    void actualizaPerso(int teclaX, int teclaY, std::vector<Zombie*> enemigos);
-    void update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos);
+    void actualizaPerso(int teclaX, int teclaY, std::vector<Zombie*> enemigos, MapLoader* m);
+    void update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, MapLoader* m);
     void setPosMira(sf::Vector2<int>);
     void pintarProtagonista(sf::RenderWindow &w);
     std::vector<Recurso*> getInventario();

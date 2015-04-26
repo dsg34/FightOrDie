@@ -58,6 +58,10 @@ void Nivel::elimnarRecurso(int i){
     recursos.erase(recursos.begin()+i);
 }
 
+MapLoader* Nivel::getMapa(){
+    return mapa;
+}
+
 
 void Nivel::controlarRacha(int imp){//
     /*
