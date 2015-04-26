@@ -18,9 +18,8 @@ Mundo::Mundo(sf::RenderWindow &w) {
     sf::Vector2<float> pos;
     pos.x=tamPantalla.x/2;
     pos.y=tamPantalla.y/2;
-    ArmaFactory* fab = new ArmaFactory();
-    Arma* a = fab->crearPistola();
-    protagonista=fabricaPersonaje->crearProtagonista(a,pos);//CAMBIAAAAAAAAAAAAAAAAAAR EEEEEEEEEEEEEEEEEEEEEESTOOOOOOOOOOOOOOOOOOOOOOOOOOO
+
+    protagonista=fabricaPersonaje->crearProtagonista(pos);//CAMBIAAAAAAAAAAAAAAAAAAR EEEEEEEEEEEEEEEEEEEEEESTOOOOOOOOOOOOOOOOOOOOOOOOOOO
        
     fabricaNivel=new NivelFactory();
     nivel = fabricaNivel->crearNivel(1, protagonista, tamPantalla);
@@ -92,7 +91,7 @@ int Mundo::ejecutarMundo(){
             sf::Event event;
                                              
                         
-            protagonista->update(posicionCursor(),nivel->getZombies());
+            protagonista->update(nivel->getZombies());
             existePersonaje=protagonista->Existe();
             if(existePersonaje==false)
                 estado=2;

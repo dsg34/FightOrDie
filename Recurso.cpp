@@ -33,7 +33,7 @@ Recurso::Recurso(sf::Sprite* s, sf::Texture* te, int bloq, int dan, int inv, int
     spriteRecurso->setPosition(num, num2);
     
     vectorActual = spriteRecurso->getPosition();
-    boundingBox = new sf::FloatRect((*sprite).getGlobalBounds());
+    boundingBox = new sf::FloatRect((*spriteRecurso).getGlobalBounds());
 }
 
 Recurso::Recurso(const Recurso& orig) {

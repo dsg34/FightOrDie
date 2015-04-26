@@ -13,7 +13,7 @@ Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, 
     //this->Personaje(sf::Sprite* s, p, mV, ve);
     ArmaFactory* fab = new ArmaFactory();    
     armas.push_back(fab->crearPistola());
-    arma=&armas[0];
+    arma=armas[0];
     armas.push_back(fab->crearHacha());
     armas.push_back(fab->crearEscopeta());
     armas.push_back(fab->crearMetralleta());
