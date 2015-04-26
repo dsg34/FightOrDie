@@ -12,6 +12,7 @@ Oleada::Oleada(int i, int niv, int numZ, float tiempo) {
     nivel=niv;
     numZombies=numZ;
     tiempoBonificacion=tiempo;
+    zombiesEliminados=0;
 }
 
 Oleada::Oleada(const Oleada& orig) {
@@ -20,6 +21,10 @@ Oleada::Oleada(const Oleada& orig) {
 Oleada::~Oleada() {
     
     
+}
+
+int Oleada::getNumZombies(){
+    return numZombies;
 }
 
 bool Oleada::actualizarZombiesMuertos(int i, HUD* &hud){//Actualiza el numero de zombies muertos. Autogestiona la creacion de oleadas hasta que acaba el nivel

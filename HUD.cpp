@@ -52,7 +52,6 @@ HUD::HUD(Protagonista* p, sf::Vector2<int> tam) {
     spriteVida->setPosition(tam.x/10*2, tam.y/8*7.4);
     //spriteVida->setPosition(133, 500);
     vida=p->getVida();
-    std::cout<<vida<<std::endl;
     cargarSpriteVida();
     boss=false;
 

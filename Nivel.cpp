@@ -19,11 +19,14 @@ Nivel::Nivel(int i, Protagonista* &p, sf::Vector2<int> t, std::vector<int> s, fl
     relojRacha.restart();
     tiempoPartida.restart();
     
+    numZombies=0;
+    
     tApareceZombie=tZ;
     tApareceRecurso=15.0+rand()%15;
     
     spawnsZombies=s;
     mapa=new MapLoader();
+    oleada = new Oleada(1,id,10,5);
     std::string niv;
     if(id==1)
         niv = "resources/nivel1.tmx";
@@ -57,11 +60,9 @@ void Nivel::addRecurso(Recurso* r){
 void Nivel::elimnarRecurso(int i){
     recursos.erase(recursos.begin()+i);
 }
-
 MapLoader* Nivel::getMapa(){
     return mapa;
 }
-
 
 void Nivel::controlarRacha(int imp){//
     /*
@@ -190,12 +191,13 @@ bool Nivel::actualizarZombiesExistentes(Protagonista* p){
     bool nivelTerminado=false;
     int existe=true;
     for(int i=0; i<zombies.size(); i++){ 
-        zombies[i]->update(*(p->getSprite()), zombies);
+        zombies[i]->update(*(p->getSprite()), zombies, p->getArmas());
         existe = zombies[i]->Existe();
         if(existe==false){
             zombies.erase(zombies.begin()+i);
             i--;
             nivelTerminado=oleada->actualizarZombiesMuertos(1,hud);
+            numZombies++;
         }
     }    
     return nivelTerminado;
@@ -267,11 +269,19 @@ void Nivel::crearZombies(int num){
 //Controlamos el numero de zombies que generamos, dependiendo de los que ya hay en pantalla
 
 void Nivel::generarZombies(){
-    if(zombies.size()<20)
-        crearZombies(10);
-    else if(zombies.size()<75)
-        crearZombies(10);
-    else{}
+    if(numZombies<oleada->getNumZombies()){
+        if(zombies.size()<20){
+            if(oleada->getNumZombies()-numZombies>=10)
+                crearZombies(10);
+            else
+                crearZombies(oleada->getNumZombies()-numZombies);
+        }else if(zombies.size()<75){
+            if(oleada->getNumZombies()-numZombies>=10)
+                crearZombies(5);
+            else
+                crearZombies(oleada->getNumZombies()-numZombies);
+        }else{}
+    }
 }
 
 
