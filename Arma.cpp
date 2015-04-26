@@ -15,7 +15,7 @@ Arma::Arma(sf::Sprite* s, sf::Texture* te, int t, int d, int v, int mB, int m, f
     danyoSecundaria=0;
     velocidad=v;
     maxProyectiles=mB;
-    municion=m;
+    municion=0;
     municionSecundaria=0;
     cadencia=c;
     rango = r;

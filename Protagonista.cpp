@@ -7,6 +7,7 @@
 
 #include "Protagonista.h"
 #include "ArmaFactory.h"
+#include "Recurso.h"
 
 Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int ve) :Personaje(s,t,p,mV,ve) {
 
@@ -38,6 +39,7 @@ Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, 
     boundingBox->width -= 70;
     boundingBox->left += 30;
     delete fab;
+    inventario = std::vector<Recurso*>();
 }
 
 Protagonista::Protagonista(const Protagonista& orig) : Personaje(orig) {
@@ -91,6 +93,22 @@ void Protagonista::disparar(sf::Vector2<int> posicionCursor){
 }
 void Protagonista::dispararSecundaria(sf::Vector2<int> posicionCursor){
     arma->dispararSecundaria(sprite->getPosition(), posicionCursor);
+}
+
+void Protagonista::recibirRecurso(Recurso* r){
+    // Escopeta=2; Botiquin=3; Metralleta=4; Barril=5; Madera=6; Granada=7; Valla=8;
+    int tipo = r->getTipo();
+    if(tipo!=2 && tipo!=4){
+        inventario.push_back(r);
+    }else{
+        //Pistola: 1; Metralleta: 2; Escopeta: 3; Hacha: 4;
+        for(int i=0; i<armas.size(); i++){
+            if(tipo==2 && armas[i]->getTipo()==3)//Metralleta
+                armas[i]->aumentarMunicion(200);
+            else if(tipo==4 && armas[i]->getTipo()==2)//Escopeta
+                armas[i]->aumentarMunicion(50);
+        }
+    }
 }
 
 void Protagonista::siguienteArma(){
@@ -223,8 +241,9 @@ int Protagonista::Colision(std::vector<Zombie*> zombies, char direccion){
         return 0;
  }
 ////////////////////////////////////////////////////////////////////////////////METODOS DE MANU
-void Protagonista::update(std::vector<Zombie*> enemigos){
-
+void Protagonista::update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos){
+    posmira.x = pos.x;
+    posmira.y = pos.y;
     posAnterior = sprite->getPosition();
     *boundingBox = sprite->getGlobalBounds();
     boundingBox->width -= 70;
