@@ -35,6 +35,7 @@ public:
     void actualizaPerso(int teclaX, int teclaY, std::vector<Zombie*> enemigos);
     void update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos);
     void setPosMira(sf::Vector2<int>);
+    void pintarProtagonista(sf::RenderWindow &w);
     //void setInventario(std::Vector<Recurso*> i);
     //sf::RectangleShape* getRectangle();
 private:

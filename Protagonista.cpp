@@ -272,6 +272,11 @@ void Protagonista::update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos){
                         //miPistola->dispararSecundaria(sprite.getPosition(), posicionCursor(window));
         dispararSecundaria(posmira);
     }
+    
+    //if(sf::Mouse::)
+    
+    for(int i=0; i<armas.size(); i++)
+        armas[i]->updateProyectiles();
 }
 
 void Protagonista::actualizaDireccion(){
@@ -378,6 +383,12 @@ void Protagonista::actualizaPerso(int teclaX, int teclaY, std::vector<Zombie*> e
         }
     }
     posActual = sprite->getPosition();    
+}
+
+void Protagonista::pintarProtagonista(sf::RenderWindow &w){
+    w.draw(*sprite);
+    for(int i=0; i<armas.size(); i++)
+        armas[i]->pintarProyectiles(w);
 }
 /*void render(sf::RenderWindow &window){
     

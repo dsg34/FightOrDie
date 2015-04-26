@@ -162,7 +162,8 @@ void Mundo::pintarMundo(){
     window->clear();
     nivel->pintarMapa(*window,0);//map->Draw(window);
     //Actualizamos la posicion de las balas
-    window->draw(*(protagonista->getSprite()));
+    protagonista->pintarProtagonista(*window);
+    //window->draw(*(protagonista->getSprite()));
     nivel->pintarMapa(*window,2);//map->Draw(window);
     nivel->pintarNivel(*window);//hud.pintarHUD(window);
     apuntar->setPosition(posicionCursor().x, posicionCursor().y);
