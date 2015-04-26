@@ -36,13 +36,15 @@ public:
     void update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos);
     void setPosMira(sf::Vector2<int>);
     void pintarProtagonista(sf::RenderWindow &w);
-    //void setInventario(std::Vector<Recurso*> i);
+    std::vector<Recurso*> getInventario();
+    void setInventario(std::vector<Recurso*> i);
     //sf::RectangleShape* getRectangle();
 private:
 
     Arma* arma;
     std::vector<Arma*> armas;
     sf::Vector2<int> posmira;
+    sf::Clock relojCambioArma;
     //sf::RectangleShape* rectangle;
     
     std::vector<Recurso*> inventario;

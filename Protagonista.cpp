@@ -40,6 +40,8 @@ Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, 
     boundingBox->left += 30;
     delete fab;
     inventario = std::vector<Recurso*>();
+    
+    relojCambioArma.restart();
 }
 
 Protagonista::Protagonista(const Protagonista& orig) : Personaje(orig) {
@@ -110,18 +112,23 @@ void Protagonista::recibirRecurso(Recurso* r){
         }
     }
 }
-
+//EN ESTOS DOS METODOS SE DEBE CONTROLAR EL CAMBIO DE SPRITESHEET
 void Protagonista::siguienteArma(){
     bool encontrado=false;
     for(int i=0; i<armas.size(); i++){
         if((armas[i]->getTipo()==arma->getTipo()) && encontrado==false){
-            encontrado=true;
-            if(i<armas.size()-1)
-                arma=&arma[i++];
-            else
-                arma=&arma[0];
+            encontrado=true;   
+            if(i<armas.size()-1){
+                arma=armas[i++];
+            }else
+                arma=armas[0];
         }
-    }       
+    }
+    if(arma->getMunicion()<=0)
+        siguienteArma();
+    else{
+        //sprite->setTexture(); //Declaramos y cambiamos la textura
+    }
 }
 
 void Protagonista::anteriorArma(){
@@ -134,7 +141,12 @@ void Protagonista::anteriorArma(){
             else
                 arma=&arma[armas.size()-1];
         }
-    }     
+    }
+    if(arma->getMunicion()<=0)
+        anteriorArma();
+    else{
+        //sprite->setTexture(); //Declaramos y cambiamos la textura
+    }
 }
 
 /*void Protagonista::movimientoCerebro(std::vector<Zombie*> enemigos)
@@ -272,9 +284,15 @@ void Protagonista::update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos){
                         //miPistola->dispararSecundaria(sprite.getPosition(), posicionCursor(window));
         dispararSecundaria(posmira);
     }
-    
-    //if(sf::Mouse::)
-    
+    if(relojCambioArma.getElapsedTime().asSeconds()>0.4){//Controlamos que reciba solamente un evento cada 0.5 segundos
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)){//Opcional CAMBIO DE ARMA CON RUEDA DE RATON
+            siguienteArma();
+            relojCambioArma.restart();
+        }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)){
+            anteriorArma();
+            relojCambioArma.restart();
+        }        
+    }
     for(int i=0; i<armas.size(); i++)
         armas[i]->updateProyectiles();
 }
@@ -394,16 +412,13 @@ void Protagonista::pintarProtagonista(sf::RenderWindow &w){
     
 }*/ 
 
-/*std::Vector<Recurso*> Protagonista::getInventario(){
+std::vector<Recurso*> Protagonista::getInventario(){
     return inventario;
-    
-1}    
-void Protagonista::setInventario(std::Vector<Recurso*> i){
+}    
+void Protagonista::setInventario(std::vector<Recurso*> i){
     inventario=i;
 }
-void Protagonista::anyadirAlInventario(Recurso* r){
-    inventario.push_back(r);
-}*
+
 /**************************************CODIGO MANU********************************************************/
 /*
 bool Protagonista::actualizaMuerte(){
@@ -425,58 +440,4 @@ void zombie::muere(){
     sprite.setTextureRect(sf::IntRect(325+direc*125,0*74,125,74));
     cont=1;
 }
-
-void zombie::actualizaSprite(int tecla){
-    if(tecla==1){
-        if(direc==0){
-            cont++;
-            sprite.setTextureRect(sf::IntRect(cont*53,0,53,80));
-            if(cont==5)
-                cont=0;
-        }else{
-            cont=0;
-            direc=0;
-            sprite.setTextureRect(sf::IntRect(0,0,53,80));
-        }
-        sprite.move(-velocidad,0);
-    }else if(tecla==2){
-        if(direc==3){
-            cont++;
-            sprite.setTextureRect(sf::IntRect(cont*53,240,53,80));
-            if(cont==5)
-                cont=0;
-        }else{
-            cont=0;
-            direc=3;
-            sprite.setTextureRect(sf::IntRect(cont*53,240,53,80));
-        }
-        sprite.move(velocidad,0);
-    }else if(tecla==3){
-        if(direc==1){
-            cont++;
-            sprite.setTextureRect(sf::IntRect(cont*53,80,53,80));
-            if(cont==5)
-                cont=0;
-        }else{
-            cont=0;
-            direc=1;
-            sprite.setTextureRect(sf::IntRect(cont*53,80,53,80));
-        }
-        sprite.move(0,velocidad);
-    }else if(tecla==4){
-        if(direc==2){
-            cont++;
-            sprite.setTextureRect(sf::IntRect(cont*53,162,53,79));
-            if(cont==5)
-                cont=0;
-        }else{
-            cont=0;
-            direc=2;
-            sprite.setTextureRect(sf::IntRect(cont*53,162,53,79));
-        }
-        sprite.move(0,-velocidad);
-    }
-}
-sf::Sprite zombie::getSprite(){
-    return sprite;
-}*/
+*/
