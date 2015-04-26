@@ -26,6 +26,7 @@ public:
     int getMaxProyectiles();
     int getTipo();
     
+    void aumentarMunicion(int i);
     void setCargador(std::vector<Proyectil*> v); 
     void setSecundaria(std::vector<Granada*> g);
     void setDanyo(int d);

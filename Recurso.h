@@ -63,6 +63,7 @@ protected:
     sf::Time tiempo;
     sf::Sprite* spriteRecurso;
     sf::Texture* tex;       
+    sf::FloatRect* boundingBox;
 };
 
 #endif	/* RECURSO_H */

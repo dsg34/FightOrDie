@@ -103,6 +103,13 @@ void Arma::setTipo(int i){
     tipo=i;
 }
 
+void Arma::aumentarMunicion(int i){
+    if(municion+i<maxProyectiles)
+        municion=municion+i;
+    else
+        municion=maxProyectiles;
+}
+
 /**************************************METODOS CUSTOM***********************************************************/
 
 sf::Vector2<float> Arma::vectorDisparo(sf::Vector2<float> puntoPersonaje, sf::Vector2<int> puntoCursor){

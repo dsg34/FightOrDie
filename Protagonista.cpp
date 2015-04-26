@@ -6,19 +6,28 @@
  */
 
 #include "Protagonista.h"
+#include "ArmaFactory.h"
 
-Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, Arma* a, sf::Vector2<float> p, int mV, int ve) :Personaje(s,t,p,mV,ve) {
+Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int ve) :Personaje(s,t,p,mV,ve) {
 
     //this->Personaje(sf::Sprite* s, p, mV, ve);
-    arma=a;
+    ArmaFactory* fab = new ArmaFactory();    
+    armas.push_back(fab->crearPistola());
+    arma=&armas[0];
+    armas.push_back(fab->crearHacha());
+    armas.push_back(fab->crearEscopeta());
+    armas.push_back(fab->crearMetralleta());
+    
     tex = new sf::Texture(*t);
     sprite = new sf::Sprite(*s);
     sprite->setTexture(*tex);
     sprite->setPosition(p);
+    
     posActual = p;
     posAnterior = p;
     maxVida = mV;
     velocidad = ve;
+    estaVivo = true;
     //sprite->getTe
     
     vida = maxVida;
@@ -28,6 +37,7 @@ Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, Arma* a, sf::Vector2<f
     boundingBox = new sf::FloatRect((*sprite).getGlobalBounds());
     boundingBox->width -= 70;
     boundingBox->left += 30;
+    delete fab;
 }
 
 Protagonista::Protagonista(const Protagonista& orig) : Personaje(orig) {
@@ -35,12 +45,15 @@ Protagonista::Protagonista(const Protagonista& orig) : Personaje(orig) {
 
 Protagonista::~Protagonista() {
 }
-
-/**************************************************METODOS GET Y SET***************************************************************/
-
+void Protagonista::setPosMira(sf::Vector2<int> pos){
+    posmira = pos;
+}
 Arma* Protagonista::getArma(){
     return arma;
 }
+/**************************************************METODOS GET Y SET**************************************************************+*
+
+
 void Protagonista::setArma(Arma* a){
     arma=a;
 }
@@ -78,6 +91,32 @@ void Protagonista::disparar(sf::Vector2<int> posicionCursor){
 }
 void Protagonista::dispararSecundaria(sf::Vector2<int> posicionCursor){
     arma->dispararSecundaria(sprite->getPosition(), posicionCursor);
+}
+
+void Protagonista::siguienteArma(){
+    bool encontrado=false;
+    for(int i=0; i<armas.size(); i++){
+        if((armas[i]->getTipo()==arma->getTipo()) && encontrado==false){
+            encontrado=true;
+            if(i<armas.size()-1)
+                arma=&arma[i++];
+            else
+                arma=&arma[0];
+        }
+    }       
+}
+
+void Protagonista::anteriorArma(){
+    bool encontrado=false;
+    for(int i=0; i<armas.size(); i++){
+        if(armas[i]->getTipo()==arma->getTipo() && encontrado==false){
+            encontrado=true;
+            if(i>0)
+                arma=&arma[i--];
+            else
+                arma=&arma[armas.size()-1];
+        }
+    }     
 }
 
 /*void Protagonista::movimientoCerebro(std::vector<Zombie*> enemigos)
@@ -184,14 +223,14 @@ int Protagonista::Colision(std::vector<Zombie*> zombies, char direccion){
         return 0;
  }
 ////////////////////////////////////////////////////////////////////////////////METODOS DE MANU
-void Protagonista::update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos){
+void Protagonista::update(std::vector<Zombie*> enemigos){
 
-    
+    posAnterior = sprite->getPosition();
     *boundingBox = sprite->getGlobalBounds();
     boundingBox->width -= 70;
     boundingBox->left += 30;
-    posmira.x = pos.x;
-    posmira.y = pos.y;
+    //posmira.x = pos.x;
+    //posmira.y = pos.y;
     actualizaDireccion();
     int teclaX=0;
     int teclaY=0;
@@ -206,7 +245,14 @@ void Protagonista::update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos){
         teclaX=1;
     }
     actualizaPerso(teclaX,teclaY, enemigos);  //por aqui no deberiamos pasar enemigos
-    
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                        //miPistola->disparar(sprite.getPosition(), posicionCursor(window));
+        disparar(posmira);
+                        //miProtagonista->getArma()->disparar(*miProtagonista->getSprite()->getPosition(), posicionCursor(window));
+    }else if (sf::Mouse::isButtonPressed((sf::Mouse::Right))){
+                        //miPistola->dispararSecundaria(sprite.getPosition(), posicionCursor(window));
+        dispararSecundaria(posmira);
+    }
 }
 
 void Protagonista::actualizaDireccion(){
@@ -252,6 +298,7 @@ void Protagonista::actualizaDireccion(){
 }
 
 void Protagonista::actualizaPerso(int teclaX, int teclaY, std::vector<Zombie*> enemigos){
+
         
     if (teclaY==-1){
         if(direc==0 || direc==1 || direc==5 || direc==6 || direc==7){
@@ -309,11 +356,9 @@ void Protagonista::actualizaPerso(int teclaX, int teclaY, std::vector<Zombie*> e
         }
         if(Colision(enemigos, 'D')==0){
             sprite->move(velocidad,0);   
-        }else{
-            std::cout<<"Dios mio, no"<<std::endl;
         }
     }
-        
+    posActual = sprite->getPosition();    
 }
 /*void render(sf::RenderWindow &window){
     

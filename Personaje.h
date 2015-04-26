@@ -30,6 +30,7 @@ public:
     bool getMuriendo();
     sf::FloatRect* getBoundingBox();
     bool Existe();
+    void mover(float x, float y);
     //sf::FloatRect getBoundingBox();
     
     void setPosAnterior(sf::Vector2<float> v);
@@ -43,7 +44,6 @@ public:
     void setDirec(int d);//Direccion del personaje
     void setMuriendo(bool m);
 
-    void mover(float x, float y);
 protected:
     sf::Sprite* sprite;
     sf::Texture* tex;
@@ -53,6 +53,7 @@ protected:
     int cont;//Contador de la posicion del sprite en la que se esta
     int direc;//Direccion del personaje
     bool muriendo;//Booleano para determinar si el personaje esta en animacion de muerte
+    bool estaVivo;//Booleano para determinar si el personaje esta vivo o no
     sf::FloatRect* boundingBox;
     
     sf::Vector2<float> posAnterior;
@@ -60,4 +61,5 @@ protected:
 };
 
 #endif	/* PERSONAJE_H */
+
 
