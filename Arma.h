@@ -39,6 +39,7 @@ public:
     
     void aumentarDanyo();
     void aumentarMunicion();
+    void aumentarMunicionSecundaria(int i);
     
     sf::Vector2<float> vectorDisparo(sf::Vector2<float> puntoPersonaje, sf::Vector2<int> puntoCursor);
     bool disparar(sf::Vector2<float> s, sf::Vector2<int> pos);

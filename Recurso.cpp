@@ -19,6 +19,7 @@ Recurso::Recurso(sf::Sprite* s, sf::Texture* te, int bloq, int dan, int inv, int
     tipo = tip;
     existe = 1;
     reloj.restart();
+    estaEnInventario = false;
     
     srand(time(NULL));
     
@@ -106,8 +107,18 @@ int Recurso::getRecogida(){
 void Recurso::setRecogida(int r){
     recogida=r;
 } 
-
-
+sf::FloatRect* Recurso::getBoundingBox(){
+    return boundingBox;
+}
+sf::Sprite* Recurso::getSprite(){
+    return spriteRecurso;
+}
+bool Recurso::getEstaEnInventario(){
+    return estaEnInventario;
+}
+void Recurso::setEstaEnInventario(bool b){
+    estaEnInventario = b;
+}
 
 void Recurso::pintarRecursos(sf::RenderWindow &window)
 {

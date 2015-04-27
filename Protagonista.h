@@ -32,9 +32,10 @@ public:
     void dispararSecundaria(sf::Vector2<int> posicionCursor);
     void movimientoCerebro(std::vector<Zombie*> enemigos);
     int Colision(std::vector<Zombie*> zombies, char direccion);
+    void colisionConRecursos(std::vector<Recurso*> &recursos);
     void actualizaDireccion();
     void actualizaPerso(int teclaX, int teclaY, std::vector<Zombie*> enemigos, MapLoader* m);
-    void update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, MapLoader* m);
+    void update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, MapLoader* m,std::vector<Recurso*> recursos);
     void setPosMira(sf::Vector2<int>);
     void pintarProtagonista(sf::RenderWindow &w);
     std::vector<Recurso*> getInventario();
@@ -46,6 +47,7 @@ private:
     std::vector<Arma*> armas;
     sf::Vector2<int> posmira;
     sf::Clock relojCambioArma;
+    int municionSecundaria;
     //sf::RectangleShape* rectangle;
     
     std::vector<Recurso*> inventario;
@@ -53,4 +55,3 @@ private:
 };
 
 #endif	/* PROTAGONISTA_H */
-

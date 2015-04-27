@@ -8,6 +8,7 @@
 #include "Protagonista.h"
 #include "ArmaFactory.h"
 #include "Recurso.h"
+#include "RecursosFactory.h"
 
 Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int ve) :Personaje(s,t,p,mV,ve) {
 
@@ -29,6 +30,7 @@ Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, 
     maxVida = mV;
     velocidad = ve;
     estaVivo = true;
+    municionSecundaria = 0;
     //sprite->getTe
     
     vida = maxVida;
@@ -56,12 +58,9 @@ Arma* Protagonista::getArma(){
     return arma;
 }
 /**************************************************METODOS GET Y SET**************************************************************+*
-
-
 void Protagonista::setArma(Arma* a){
     arma=a;
 }
-
 /***************************************************METODOS CUSTOM*************************************************************+*/
 
 /*void Protagonista::update(char direccion){
@@ -100,22 +99,40 @@ void Protagonista::disparar(sf::Vector2<int> posicionCursor){
         arma->disparar(sprite->getPosition(), posicionCursor);
 }
 void Protagonista::dispararSecundaria(sf::Vector2<int> posicionCursor){
-    arma->dispararSecundaria(sprite->getPosition(), posicionCursor);
+    if(municionSecundaria>0){
+        arma->dispararSecundaria(sprite->getPosition(), posicionCursor);
+        municionSecundaria--;
+    }
 }
 
 void Protagonista::recibirRecurso(Recurso* r){
     // Escopeta=2; Botiquin=3; Metralleta=4; Barril=5; Madera=6; Granada=7; Valla=8;
     int tipo = r->getTipo();
-    if(tipo!=2 && tipo!=4){
-        inventario.push_back(r);
-    }else{
+    if(tipo!=2 && tipo!=4 && tipo!=3 && tipo!=7){
+        inventario.push_back(r);  
+    }else if(tipo==2 || tipo==4 || tipo==7){ 
         //Pistola: 1; Metralleta: 2; Escopeta: 3; Hacha: 4;
         for(int i=0; i<armas.size(); i++){
             if(tipo==2 && armas[i]->getTipo()==3)//Metralleta
                 armas[i]->aumentarMunicion(200);
             else if(tipo==4 && armas[i]->getTipo()==2)//Escopeta
                 armas[i]->aumentarMunicion(50);
+            else if(tipo==7){
+                armas[i]->aumentarMunicionSecundaria(3);
+            }      
         }
+        if(tipo==7){
+            inventario.push_back(r);
+            RecursosFactory* fav = new RecursosFactory();
+            inventario.push_back(fav->crearRecurso(7));
+            inventario.push_back(fav->crearRecurso(7));
+            municionSecundaria += 3;
+        }
+    }else if(tipo ==3){
+        if(vida+3>maxVida)
+            vida=maxVida;
+        else
+            vida+=3;
     }
 }
 std::vector<Arma*> Protagonista::getArmas(){
@@ -267,8 +284,16 @@ int Protagonista::Colision(std::vector<Zombie*> zombies, char direccion){
         }
         return 0;
  }
+void Protagonista::colisionConRecursos(std::vector<Recurso*> &recursos){
+        for(int i=0;i<recursos.size();i++){
+            if(boundingBox->intersects(*recursos[i]->getBoundingBox())){
+                recibirRecurso(recursos[i]);
+                recursos.erase(recursos.begin()+i);
+            }
+        }
+}
 ////////////////////////////////////////////////////////////////////////////////METODOS DE MANU
-void Protagonista::update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, MapLoader* m){
+void Protagonista::update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, MapLoader* m,std::vector<Recurso*> recursos){
     posmira.x = pos.x;
     posmira.y = pos.y;
     posAnterior = sprite->getPosition();
@@ -278,6 +303,7 @@ void Protagonista::update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, M
     //posmira.x = pos.x;
     //posmira.y = pos.y;
     actualizaDireccion();
+    colisionConRecursos(recursos);
     int teclaX=0;
     int teclaY=0;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
@@ -442,7 +468,6 @@ bool Protagonista::actualizaMuerte(){
     if(cont==5){
         cont=0;
         muerte=false;
-
         sprite.setOrigin(53/2,80/2);
         sprite.setTextureRect(sf::IntRect(0,direc*80,53,80));
         sprite.setPosition(256,256);

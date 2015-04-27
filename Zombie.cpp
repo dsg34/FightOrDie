@@ -244,7 +244,7 @@ bool Zombie::colisionConBalas(std::vector<Arma*> armas){
                 //std::cout<<"Impacto!"<<std::endl;
                 armas[j]->eliminarProyectil(i);
                 recibirDanyo(armas[j]->getDanyo());
-                if(vida==0){
+                if(vida<0){
                     muriendo=true;
                     muere();
                     std::cout<<"Palmé"<<std::endl;
@@ -261,7 +261,7 @@ bool Zombie::colisionConGranadas(Arma* armaActual){
     for(int i=0; i<granadas.size(); i++){
         if(boundingBox->intersects(granadas[i]->getSprite()->getGlobalBounds())/*&&granadas[i]->estaExplotando()*/){
             recibirDanyo(granadas[i]->getDanyo());
-            if(vida==0){
+            if(vida<0){
                 muriendo=true;
                 muere();
                 std::cout<<"Palmé"<<std::endl;

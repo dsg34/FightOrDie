@@ -39,8 +39,8 @@ RecursoHUD::RecursoHUD(int ti) {
         case 5: i=9; j=0;                 
                 break;
         case 6: i=11; j=0; break;
-        case 7: i=10; j=0; break;
-        case 8: i=12; j=0; break;
+        case 7: i=12; j=0; break;
+        case 8: i=10; j=0; break;
         default: i=11; j=2; break;
     }
     

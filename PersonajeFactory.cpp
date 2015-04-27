@@ -21,7 +21,7 @@ Protagonista* PersonajeFactory::crearProtagonista(sf::Vector2<float> p){
     
     if(protagonistaCreado==false){
         sf::Texture texAux;
-        if (!texAux.loadFromFile("resources/protagonista.png"))
+        if (!texAux.loadFromFile("resources/protagonistaCabezon.png"))
         {
             std::cerr << "Error cargando la imagen sprites.png";
             exit(0);

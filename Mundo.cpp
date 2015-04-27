@@ -19,7 +19,7 @@ Mundo::Mundo(sf::RenderWindow &w) {
     pos.x=tamPantalla.x/2;
     pos.y=tamPantalla.y/2;
 
-    protagonista=fabricaPersonaje->crearProtagonista(pos);//CAMBIAAAAAAAAAAAAAAAAAAR EEEEEEEEEEEEEEEEEEEEEESTOOOOOOOOOOOOOOOOOOOOOOOOOOO
+    protagonista=fabricaPersonaje->crearProtagonista(pos);
        
     fabricaNivel=new NivelFactory();
     nivel = fabricaNivel->crearNivel(1, protagonista, tamPantalla);
@@ -48,7 +48,7 @@ Mundo::Mundo(sf::RenderWindow &w) {
 
 void Mundo::capturarCierre()
 {
-    //Bucle de obtenciÃ³n de eventos
+    //Bucle de obtenciÃƒÂ³n de eventos
     sf::Event event;
     while(window->pollEvent(event))
     {
@@ -87,11 +87,11 @@ int Mundo::ejecutarMundo(){
         //Actualizamos 15 veces por segundo
         if(frecuencia>UPDATE_TIME){ 
             
-            //Bucle de obtención de eventos
+            //Bucle de obtenciÃ³n de eventos
             sf::Event event;
                                              
                         
-            protagonista->update(posicionCursor(),nivel->getZombies(), nivel->getMapa());
+            protagonista->update(posicionCursor(),nivel->getZombies(), nivel->getMapa(), nivel->getRecursos());
             existePersonaje=protagonista->Existe();
             if(existePersonaje==false)
                 estado=2;
@@ -163,6 +163,7 @@ void Mundo::pintarMundo(){
     nivel->pintarMapa(*window,0);//map->Draw(window);
     //Actualizamos la posicion de las balas
     protagonista->pintarProtagonista(*window);
+    protagonista->getArma()->pintarProyectiles(*window);
     //window->draw(*(protagonista->getSprite()));
     nivel->pintarMapa(*window,2);//map->Draw(window);
     nivel->pintarNivel(*window);//hud.pintarHUD(window);
