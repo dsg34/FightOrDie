@@ -230,7 +230,10 @@ bool Zombie::colisionConZombies(std::vector<Zombie*> zombies, char direccion)
         sf::FloatRect* cajaZ;
         for(int i=0; i<zombies.size(); i++){
            cajaZ = zombies[i]->getBoundingBox();
-           if(box->intersects(*cajaZ) && sprite->getPosition()!=zombies[i]->getSprite()->getPosition()){
+           if(box->intersects(*cajaZ) && sprite->getPosition()!=zombies[i]->getSprite()->getPosition())
+           {
+               //sprite->move(1.0f, 0);
+               //zombies[i]->mover(-1, 0);
                return true; 
            }
         }
