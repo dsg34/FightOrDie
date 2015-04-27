@@ -6,8 +6,8 @@
  */
 
 #include "Mundo.h"
-#define UPDATE_TIME 1/15
-#define RENDER_TIME 1/60
+#define UPDATE_TIME 1000/15
+#define RENDER_TIME 1000/60
 
 Mundo::Mundo(sf::RenderWindow &w) {
     window=&w;
@@ -18,9 +18,8 @@ Mundo::Mundo(sf::RenderWindow &w) {
     sf::Vector2<float> pos;
     pos.x=tamPantalla.x/2;
     pos.y=tamPantalla.y/2;
-    ArmaFactory* fab = new ArmaFactory();
-    Arma* a = fab->crearPistola();
-    protagonista=fabricaPersonaje->crearProtagonista(a,pos);//CAMBIAAAAAAAAAAAAAAAAAAR EEEEEEEEEEEEEEEEEEEEEESTOOOOOOOOOOOOOOOOOOOOOOOOOOO
+
+    protagonista=fabricaPersonaje->crearProtagonista(pos);
        
     fabricaNivel=new NivelFactory();
     nivel = fabricaNivel->crearNivel(1, protagonista, tamPantalla);
@@ -45,14 +44,19 @@ Mundo::Mundo(sf::RenderWindow &w) {
     apuntar->setTextureRect(sf::IntRect(1*75, 4*75, 75, 75));
     apuntar->setPosition((sf::Vector2f)posicionCursor());
     
-    /***************************************************
-     
-     
-     
-     INICIALIZAR SPRITE APUNTAR
-     
-     
-     */
+}
+
+void Mundo::capturarCierre()
+{
+    //Bucle de obtenciÃƒÂ³n de eventos
+    sf::Event event;
+    while(window->pollEvent(event))
+    {
+        if(event.type == sf::Event::Closed)
+        {
+            window->close();
+        }
+    }
 }
 
 Mundo::Mundo(const Mundo& orig) {
@@ -73,43 +77,50 @@ sf::Vector2<int> Mundo::posicionCursor(){
 int Mundo::ejecutarMundo(){    
     int estado=0;   //estado 0: Sigue en juego; estado 1: Menu de pausa; estado 2: Menu de "Has muerto"; estado 3: Nivel finalizado; estado 4: Juego finalizado
     bool nivelAcabado=false;  
-    bool existePersonaje=false;
-    sf::Clock relojGeneral;
-    relojGeneral.restart();
-    //Bucle del juego
+    bool existePersonaje=false;    
     
+    //Bucle del juego    
     while (window->isOpen() && estado==0)
     {
-        
         //Controlamos la frecuencia a la que se ejecuta el programa
-        frecuencia = relojUpdate.getElapsedTime().asSeconds();
+        frecuencia = relojUpdate.getElapsedTime().asMilliseconds();
         //Actualizamos 15 veces por segundo
         if(frecuencia>UPDATE_TIME){ 
             
-            //Bucle de obtención de eventos
+            //Bucle de obtenciÃ³n de eventos
             sf::Event event;
-            window->pollEvent(event);
-            if(event.type==sf::Event::Closed){
-                window->close();
-            }                                       
+                                             
                         
-            protagonista->update(posicionCursor(),nivel->getZombies());
+            protagonista->update(posicionCursor(),nivel->getZombies(), nivel->getMapa(), nivel->getRecursos());
             existePersonaje=protagonista->Existe();
             if(existePersonaje==false)
                 estado=2;
-            nivelAcabado = nivel->actualizarNivel(protagonista, 0,0);
+            
+            int impactos = 0;
+            std::vector<Arma*> arm = protagonista->getArmas();
+            std::vector<Zombie*> zombies = nivel->getZombies();
+            for(int j = 0; j < zombies.size(); j++)
+            {
+                if(zombies[j]->colisionConBalas(arm))
+                {
+                    impactos++;
+                }
+            }
+            
+            nivelAcabado = nivel->actualizarNivel(protagonista, impactos,0);
             if(nivelAcabado==true)//Nivel finalizado
                 estado=3;
             relojUpdate.restart();
         }
         
-        frecuencia = relojRender.getElapsedTime().asSeconds();
+        frecuencia = relojRender.getElapsedTime().asMilliseconds();
         //Pintamos e interpolamos 60 veces por segundo
         if(frecuencia>RENDER_TIME){
             interpolarMundo();
             pintarMundo();
             relojRender.restart();
         }
+        capturarCierre(); 
     }
     return estado;
 }
@@ -119,33 +130,43 @@ void Mundo::interpolarMundo(){
     if(contInterpolacion==4)
         contInterpolacion=0;
     
-    sf::Vector2<float> mov = protagonista->getPosAnterior()-protagonista->getPosActual();
+    sf::Vector2<float> mov;
+    mov.x= protagonista->getPosActual().x-protagonista->getPosAnterior().x;
+    mov.y= protagonista->getPosActual().y-protagonista->getPosAnterior().y;
+    
     mov.x = mov.x*contInterpolacion*0.25;
     mov.y = mov.y*contInterpolacion*0.25;
-    protagonista->getSprite()->setPosition(protagonista->getPosActual().x+mov.x, protagonista->getPosActual().y+mov.y);
+    //protagonista->getSprite()->setPosition(protagonista->getPosActual().x+mov.x, protagonista->getPosActual().y+mov.y);
+    protagonista->mover(mov.x, mov.y);
     
     std::vector<Zombie*> zom = nivel->getZombies();
     for(int i=0; i<zom.size(); i++){
-        mov = zom[i]->getPosAnterior()-zom[i]->getPosActual();
+        mov.x= zom[i]->getPosActual().x-zom[i]->getPosAnterior().x;
+        mov.y= zom[i]->getPosActual().y-zom[i]->getPosAnterior().y;
+        
         mov.x = mov.x*contInterpolacion*0.25;
         mov.y = mov.y*contInterpolacion*0.25;
-        zom[i]->getSprite()->setPosition(zom[i]->getPosActual().x+mov.x, zom[i]->getPosActual().y+mov.y);
+        zom[i]->mover(mov.x, mov.y);
     }
     
     std::vector<Proyectil*> bal = protagonista->getArma()->getCargador();
     for(int i=0; i<bal.size(); i++){
-        mov = bal[i]->getPosAnterior()-bal[i]->getPosActual();
+        mov.x= bal[i]->getPosActual().x-bal[i]->getPosActual().x;
+        mov.y= bal[i]->getPosActual().y-bal[i]->getPosActual().y;
+        
         mov.x = mov.x*contInterpolacion*0.25;
         mov.y = mov.y*contInterpolacion*0.25;
-        bal[i]->getSprite()->setPosition(bal[i]->getPosActual().x+mov.x, bal[i]->getPosActual().y+mov.y);
+        bal[i]->mover(mov.x, mov.y);
     }
     
     std::vector<Granada*> gra = protagonista->getArma()->getSecundaria();
     for(int i=0; i<gra.size(); i++){
-        mov = gra[i]->getPosAnterior()-gra[i]->getPosActual();
+        mov.x= gra[i]->getPosActual().x-gra[i]->getPosAnterior().x;
+        mov.y= gra[i]->getPosActual().y-gra[i]->getPosAnterior().y;
+        
         mov.x = mov.x*contInterpolacion*0.25;
         mov.y = mov.y*contInterpolacion*0.25;
-        gra[i]->getSprite()->setPosition(gra[i]->getPosActual().x+mov.x, gra[i]->getPosActual().y+mov.y);
+        gra[i]->mover(mov.x, mov.y);
     }
 }
 
@@ -153,8 +174,10 @@ void Mundo::pintarMundo(){
     window->clear();
     nivel->pintarMapa(*window,0);//map->Draw(window);
     //Actualizamos la posicion de las balas
-    window->draw(*(protagonista->getSprite()));
-    nivel->pintarMapa(*window,1);//map->Draw(window);
+    protagonista->pintarProtagonista(*window);
+    protagonista->getArma()->pintarProyectiles(*window);
+    //window->draw(*(protagonista->getSprite()));
+    nivel->pintarMapa(*window,2);//map->Draw(window);
     nivel->pintarNivel(*window);//hud.pintarHUD(window);
     apuntar->setPosition(posicionCursor().x, posicionCursor().y);
     window->draw(*apuntar);                                    

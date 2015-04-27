@@ -36,6 +36,9 @@ public:
     int getTipo();
     int getExiste();
     sf::Vector2<float> getVectorActual();
+    sf::FloatRect* getBoundingBox();
+    sf::Sprite* getSprite();
+    bool getEstaEnInventario();
     
     void setBloqueante(int bloq);
     void setResistencia(int res);
@@ -48,6 +51,7 @@ public:
     void pintarRecursos(sf::RenderWindow &window);
     void setVectorActual(sf::Vector2<float> v);
     void actualizarRecurso();
+    void setEstaEnInventario(bool b);
     
     
 protected:
@@ -59,10 +63,12 @@ protected:
     int resistencia;
     int tipo;
     int existe;
+    bool estaEnInventario;
     sf::Clock reloj;
     sf::Time tiempo;
     sf::Sprite* spriteRecurso;
     sf::Texture* tex;       
+    sf::FloatRect* boundingBox;
 };
 
 #endif	/* RECURSO_H */

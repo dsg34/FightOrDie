@@ -183,3 +183,7 @@ int Granada::updateGranada(){
 void Granada::pintarGranada(sf::RenderWindow &window){
     window.draw(*sprite);
 }
+
+void Granada::mover(float x, float y){
+    sprite->move(x,y);
+}

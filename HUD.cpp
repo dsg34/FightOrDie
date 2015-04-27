@@ -21,9 +21,9 @@ HUD::HUD(Protagonista* p, sf::Vector2<int> tam) {
     //sf::Vector2<int> tam = (sf::Vector2<int>) w.getSize();
     textura=new sf::Texture(tex);
     //***************************************************Inicializacion sprites        
-    //armas = std::vector<RecursoHUD*>();
-    //actualizarArrayArmas(p->getArmas());
-    //actualizarArmasHUD();
+    armas = std::vector<RecursoHUD*>();
+    actualizarArrayArmas(p->getArmas());
+    actualizarArmasHUD();
     
     /*RecursoHUD* pistola = new RecursoHUD(1);
     RecursoHUD* hacha = new RecursoHUD(4);
@@ -90,8 +90,8 @@ HUD::HUD(Protagonista* p, sf::Vector2<int> tam) {
     opacidadPuntuacion=1.0;
     opacidadVidaBoss=0.0;
     recursos = std::vector<RecursoHUD*>(); 
-    //actualizarArrayRecursos(p->getRecursos());
-    //actualizarRecursosHUD();
+    actualizarArrayRecursos(p->getInventario());
+    actualizarRecursosHUD();
     
     /*RecursoHUD* recurso1 = new RecursoHUD(5);
     RecursoHUD* recurso2 = new RecursoHUD(6);
@@ -230,7 +230,8 @@ void HUD::actualizarHUD(Protagonista* p, int punt){
     sf::Vector2<float> pos = p->getSprite()->getPosition();
     actualizarOpacidades(pos);
     setPuntuacion(punt);
-    actualizarArmasHUD();
+    actualizarArrayArmas(p->getArmas());
+    actualizarArrayRecursos(p->getInventario());
 }
     
 void HUD::actualizarArmasHUD(){    
@@ -287,7 +288,10 @@ void HUD::actualizarArrayArmas(std::vector<Arma*> v){
 void HUD::actualizarArrayRecursos(std::vector<Recurso*> v){
     for(int i=0; i<v.size();i++){
         Recurso* aux = v[i];
-        anyadirRecurso(aux);
+        if(aux->getEstaEnInventario()==false){
+            aux->setEstaEnInventario(true);   
+            anyadirRecurso(aux);
+        }
     }
     actualizarRecursosHUD();
 }
@@ -335,6 +339,7 @@ void HUD::anyadirRecurso(Recurso* r){
     
     if(esta==false){
         RecursoHUD* nuevoRecurso = new RecursoHUD(tipo);
+        nuevoRecurso->masNum();
         recursos.push_back(nuevoRecurso);
         actualizarRecursosHUD();
     }    
@@ -356,7 +361,7 @@ void HUD::eliminarRecurso(Recurso* r){
 }
 
 void HUD::actualizarOpacidades(sf::Vector2<float> pos){    
-    float opacidad = 0.2;
+    float opacidad = 0.4;
     if(pos.x<tamPantalla->x/4 && pos.y<tamPantalla->y/4){//Cerca de puntuacion
         opacidadPuntuacion = opacidad;
         opacidadMunicion = 1.0; 

@@ -20,6 +20,7 @@ public:
     Nivel(const Nivel& orig);
     virtual ~Nivel();
     
+    MapLoader* getMapa();
     std::vector<Recurso*> getRecursos();
     std::vector<Zombie*> getZombies();
     void addRecurso(Recurso* r);

@@ -17,11 +17,11 @@ PersonajeFactory::PersonajeFactory(const PersonajeFactory& orig) {
 PersonajeFactory::~PersonajeFactory() {
 }
 
-Protagonista* PersonajeFactory::crearProtagonista(Arma* a, sf::Vector2<float> p){
+Protagonista* PersonajeFactory::crearProtagonista(sf::Vector2<float> p){
     
     if(protagonistaCreado==false){
         sf::Texture texAux;
-        if (!texAux.loadFromFile("resources/protagonista.png"))
+        if (!texAux.loadFromFile("resources/protagonistaCabezon.png"))
         {
             std::cerr << "Error cargando la imagen sprites.png";
             exit(0);
@@ -35,7 +35,7 @@ Protagonista* PersonajeFactory::crearProtagonista(Arma* a, sf::Vector2<float> p)
         sprite.setTextureRect(sf::IntRect(0*75, 0*75, 75, 75));
 
         sf::Sprite* aux = new sf::Sprite(sprite);
-        protagonista = new Protagonista(aux, tex, p, 30, 5, a);
+        protagonista = new Protagonista(aux, tex, p, 20, 5);
     }
     return protagonista;
 }
@@ -65,7 +65,7 @@ Zombie* PersonajeFactory::crearZombieNormal(sf::Vector2<float> p){
     
     sf::Sprite* aux = new sf::Sprite(sprite);
     //Zombie(sprite, textura, posicion, maxVida, velocidad)
-    zombie = new Zombie(aux, tex, p, 20, 1);
+    zombie = new Zombie(aux, tex, p, 20, 2.2);
     
     return zombie;
 }

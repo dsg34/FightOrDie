@@ -15,7 +15,7 @@ ArmaFactory::ArmaFactory(const ArmaFactory& orig) {
 
 ArmaFactory::~ArmaFactory() {
 }
-
+//Pistola: 1; Metralleta: 2; Escopeta: 3; Hacha: 4;  
 Arma* ArmaFactory::crearPistola(){//Se debe controlar que, al acabarse la municion de la pistola, se proporcione al usuario mas, ya que esta es infinita
     sf::Texture tex;
     if (!tex.loadFromFile("resources/sprite_general.png"))
@@ -33,7 +33,7 @@ Arma* ArmaFactory::crearPistola(){//Se debe controlar que, al acabarse la munici
     sf::Sprite* aux = new sf::Sprite(spriteBala);
     
     Arma* p = new Arma(aux, new sf::Texture(tex), 1, 2, 20, 150, 2000, 0.3, 25);
-    
+    p->setMunicion(5000);
     return p;
 }
 
@@ -95,6 +95,6 @@ Arma* ArmaFactory::crearHacha(){//Se debe controlar que, al acabarse la municion
     sf::Sprite* aux = new sf::Sprite(spriteBala);
     
     Arma* h = new Arma(aux, new sf::Texture(tex), 4, 4, 7, 1, 2000, 0.1, 2);
-   
+    h->setMunicion(5000);
     return h;
 }

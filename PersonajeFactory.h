@@ -17,7 +17,7 @@ public:
     PersonajeFactory(const PersonajeFactory& orig);
     virtual ~PersonajeFactory();
     
-    Protagonista* crearProtagonista(Arma* a, sf::Vector2<float> p);
+    Protagonista* crearProtagonista(sf::Vector2<float> p);
     Zombie* crearZombie(int tipoZombie, sf::Vector2<float> p);
     Zombie* crearZombieNormal(sf::Vector2<float> p);
     Zombie* crearZombieRapido(sf::Vector2<float> p);

@@ -18,7 +18,7 @@ bool MapLoader::LoadFromFile(std::string filename)
     
     if (!mapFile.LoadFile())
     {
-        std::cout << "Loading level \"" << filename << "\" failed." << std::endl;
+        //std::cout << "Loading level \"" << filename << "\" failed." << std::endl;
         return false;
     }
     
@@ -93,7 +93,7 @@ bool MapLoader::LoadFromFile(std::string filename)
 
         if (layerDataElement == NULL)
         {
-            std::cout << "Bad map. No layer information found." << std::endl;
+            //std::cout << "Bad map. No layer information found." << std::endl;
         }
 
         TiXmlElement *tileElement;
@@ -101,7 +101,7 @@ bool MapLoader::LoadFromFile(std::string filename)
 
         if (tileElement == NULL)
         {
-            std::cout << "Bad map. No tile information found." << std::endl;
+            //std::cout << "Bad map. No tile information found." << std::endl;
             return false;
         }
 
@@ -171,7 +171,7 @@ bool MapLoader::Colision(int x,int y, int tipo){
     int tile_x = x/25;
     int tile_y = y/25;
     int pos = tile_x + 52*tile_y;
-    std::cout << pos << std::endl;
+    //std::cout << pos << std::endl;
     if(tipo == 0){
         if(gids[pos] != 0){
             return false;

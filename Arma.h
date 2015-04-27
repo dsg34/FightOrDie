@@ -26,6 +26,7 @@ public:
     int getMaxProyectiles();
     int getTipo();
     
+    void aumentarMunicion(int i);
     void setCargador(std::vector<Proyectil*> v); 
     void setSecundaria(std::vector<Granada*> g);
     void setDanyo(int d);
@@ -38,6 +39,7 @@ public:
     
     void aumentarDanyo();
     void aumentarMunicion();
+    void aumentarMunicionSecundaria(int i);
     
     sf::Vector2<float> vectorDisparo(sf::Vector2<float> puntoPersonaje, sf::Vector2<int> puntoCursor);
     bool disparar(sf::Vector2<float> s, sf::Vector2<int> pos);

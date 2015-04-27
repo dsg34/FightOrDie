@@ -11,6 +11,7 @@
 #include "HUD.h"
 #include "NivelFactory.h"
 #include "ArmaFactory.h"
+#include "Zombie.h"
 #define kVel 5
 
 #ifndef MUNDO_H
@@ -23,6 +24,7 @@ public:
     virtual ~Mundo();
     
     sf::Vector2<int> posicionCursor();
+    void capturarCierre();
     int ejecutarMundo();
     
     void interpolarMundo();

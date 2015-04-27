@@ -15,7 +15,7 @@ Arma::Arma(sf::Sprite* s, sf::Texture* te, int t, int d, int v, int mB, int m, f
     danyoSecundaria=0;
     velocidad=v;
     maxProyectiles=mB;
-    municion=m;
+    municion=0;
     municionSecundaria=0;
     cadencia=c;
     rango = r;
@@ -103,6 +103,15 @@ void Arma::setTipo(int i){
     tipo=i;
 }
 
+void Arma::aumentarMunicion(int i){
+    if(municion+i<maxProyectiles)
+        municion=municion+i;
+    else
+        municion=maxProyectiles;
+}
+void Arma::aumentarMunicionSecundaria(int i){
+    municionSecundaria+=i;
+}
 /**************************************METODOS CUSTOM***********************************************************/
 
 sf::Vector2<float> Arma::vectorDisparo(sf::Vector2<float> puntoPersonaje, sf::Vector2<int> puntoCursor){
@@ -195,12 +204,10 @@ void Arma::dispararSecundaria(sf::Vector2<float> s, sf::Vector2<int> pos){
     Granada* auxGranada;
     sf::Vector2<float> m = vectorDisparo(s, pos);
     tiempo=reloj.getElapsedTime();
-    if(municionSecundaria>0){
-        if(secundaria.size()<maxProyectiles){ //Controlamos que no se exceda un numero maximo de balas para que el programa no tenga problemas
-            auxGranada = new Granada(s, m, danyoSecundaria, pos);//Control de velocidad y danyo
-            secundaria.push_back(auxGranada);
-            municionSecundaria--;        
-        }
+    if(secundaria.size()<maxProyectiles){ //Controlamos que no se exceda un numero maximo de balas para que el programa no tenga problemas
+        auxGranada = new Granada(s, m, danyoSecundaria, pos);//Control de velocidad y danyo
+        secundaria.push_back(auxGranada);
+        municionSecundaria--;        
     }
 }
 

@@ -61,8 +61,8 @@ build/Release/MinGW-Windows/HUD.o: HUD.cpp HUD.h Protagonista.h Arma.h \
  ../SFML-2.1/include/SFML/Graphics/RectangleShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/ConvexShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
- ../SFML-2.1/include/SFML/Graphics/Text.hpp Granada.h Personaje.h \
- Zombie.h Recurso.h RecursoHUD.h
+ ../SFML-2.1/include/SFML/Graphics/Text.hpp Granada.h Recurso.h \
+ Personaje.h Zombie.h MapLoader.h RecursoHUD.h
 
 HUD.h:
 
@@ -202,10 +202,12 @@ Proyectil.h:
 
 Granada.h:
 
+Recurso.h:
+
 Personaje.h:
 
 Zombie.h:
 
-Recurso.h:
+MapLoader.h:
 
 RecursoHUD.h:

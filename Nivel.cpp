@@ -19,11 +19,14 @@ Nivel::Nivel(int i, Protagonista* &p, sf::Vector2<int> t, std::vector<int> s, fl
     relojRacha.restart();
     tiempoPartida.restart();
     
+    numZombies=0;
+    
     tApareceZombie=tZ;
     tApareceRecurso=15.0+rand()%15;
     
     spawnsZombies=s;
     mapa=new MapLoader();
+    oleada = new Oleada(1,id,10,5);
     std::string niv;
     if(id==1)
         niv = "resources/nivel1.tmx";
@@ -57,32 +60,25 @@ void Nivel::addRecurso(Recurso* r){
 void Nivel::elimnarRecurso(int i){
     recursos.erase(recursos.begin()+i);
 }
-
+MapLoader* Nivel::getMapa(){
+    return mapa;
+}
 
 void Nivel::controlarRacha(int imp){//
-    /*
-     Si hay impacto
-     *  racha++;
-     *  tiempo.restart();
-     else
-     * if tiempo>1.5;
-            reset racha;
-            sumar puntuacion
-     *      calcularPuntuacionDinamica();//Anyade a la puntuacion la puntuacion producida por la racha
-     */
+    
     tiempo = relojRacha.getElapsedTime();
-    if(imp > 0)
+    if(imp > 0 && racha <= 20)
     {
         racha += imp;
         relojRacha.restart();
+        puntuacion += 5 * racha;
     }
-    else if(tiempo.asSeconds() > 3)
+    else if(tiempo.asSeconds() > 1)
     {
         relojRacha.restart();
         racha = 0;
     }
     
-    puntuacion += 10 * racha;
     
 }
 
@@ -91,8 +87,10 @@ bool Nivel::actualizarNivel(Protagonista* p, int impac, int fall)
     impactos = impac;
     fallos = fall;
     hud->actualizarHUD(p, puntuacion);
+    
     controlarRacha(impac);
     tiempo = relojZombie.getElapsedTime();
+    
     if(tiempo.asSeconds()>tApareceZombie){
         generarZombies();
         relojZombie.restart();
@@ -109,13 +107,28 @@ bool Nivel::actualizarNivel(Protagonista* p, int impac, int fall)
     return terminado;
 }
 
+std::string floatAString(float f){
+    std::string devuelve;
+    
+    std::stringstream aux;
+    aux << f;
+
+    aux >> devuelve;
+    
+    return devuelve;
+}
+
 int Nivel::calcularPuntuacionTotal()
 {
     int tirosTotales = impactos + fallos;
     float porcentajeAcierto = (impactos/tirosTotales) * 100;
     int puntuacion1 = 100 * porcentajeAcierto;
-    crearMensaje('Porcentaje de acierto de tiros: ' + std::string(porcentajeAcierto) + '%', -1,-1);
-    crearMensaje('Puntuacion por aciertos: ' + std::string(puntuacion1), -1,-1);
+    std::string mensaje = "Porcentaje de acierto de tiros: " + floatAString(porcentajeAcierto) + "%";
+    
+    mensaje = mensaje+"\n"+"Puntuacion por aciertos: " + hud->intAString(puntuacion1);
+    
+//    crearMensaje("Porcentaje de acierto de tiros: " + floatAString(porcentajeAcierto) + "%", -1,-1);
+//    crearMensaje('Puntuacion por aciertos: ' + hud->intAString(puntuacion1), -1,-1);
     puntuacion += puntuacion1;
     
     tiempo = tiempoPartida.getElapsedTime();
@@ -139,12 +152,16 @@ int Nivel::calcularPuntuacionTotal()
     if(puntuacion2 < 0)
         puntuacion2 = 0;
     
-    crearMensaje('Tiempo de la partida: ' + minutos + ':' + segundos, -1,-1);
-    crearMensaje('Puntuacion por tiempo: ' + puntuacion2, -1,-1);
+//    crearMensaje('Tiempo de la partida: ' + hud->intAString(minutos) + ':' + hud->intAString(segundos), -1,-1);
+//    crearMensaje('Puntuacion por tiempo: ' + hud->intAString(puntuacion2), -1,-1);
+    
+    mensaje = mensaje+"\n"+"Tiempo de la partida: " + hud->intAString(minutos) + ":" + hud->intAString(segundos);
+    mensaje = mensaje+"\n"+"Puntuacion por tiempo: " + hud->intAString(puntuacion2);
     
     puntuacion += puntuacion2;
-    
-    crearMensaje('Puntuacion total: ' + puntuacion, -1,-1);
+    mensaje = mensaje+"\n"+"Puntuacion total: " + hud->intAString(puntuacion1);
+    //crearMensaje('Puntuacion total: ' + hud->intAString(puntuacion1), -1,-1);
+    crearMensaje(mensaje, -1, -1);
 }
 
 void Nivel::crearMensaje(std::string s, int t, int i){
@@ -167,12 +184,13 @@ bool Nivel::actualizarZombiesExistentes(Protagonista* p){
     bool nivelTerminado=false;
     int existe=true;
     for(int i=0; i<zombies.size(); i++){ 
-        zombies[i]->update(*(p->getSprite()), zombies);
+        zombies[i]->update(*(p->getSprite()), zombies, p->getArmas());
         existe = zombies[i]->Existe();
         if(existe==false){
             zombies.erase(zombies.begin()+i);
             i--;
             nivelTerminado=oleada->actualizarZombiesMuertos(1,hud);
+            //numZombies++;
         }
     }    
     return nivelTerminado;
@@ -198,11 +216,11 @@ sf::Vector2<int> Nivel::devuelvePos(){
     int lado = (int)rand() % spawnsZombies.size();//Genera aleatoriamente el lado en el que aparece el zombie
     switch(lado){
         //Por la izquierda
-        case 1:     pos.x=0-tam.x/15;
+        case 1:     pos.x=0-tam.x/50;
                     pos.y=(int)rand()%tam.y;    //Genera un numero aleatorio entre la posicion 0 y la maxima altura de la pantalla
                     break;
         //Por la derecha
-        case 2:     pos.x=tam.x+tam.x%15;
+        case 2:     pos.x=tam.x+tam.x/50;
                     pos.y=(int)rand()%tam.y;
                     break; 
         //Por arriba
@@ -211,10 +229,10 @@ sf::Vector2<int> Nivel::devuelvePos(){
                     break;             
         //Por abajo
         case 4:     pos.x=(int)rand()%tam.x;
-                    pos.y=tam.y+tam.y/15;                    
+                    pos.y=tam.y+tam.y/50;                    
                     break;
         //Por defecto, por la derecha            
-        default:    pos.x=tam.x+tam.x%15;
+        default:    pos.x=tam.x+tam.x/50;
                     pos.y=(int)rand()%tam.y;
                     break;
     }
@@ -229,7 +247,8 @@ void Nivel::crearZombies(int num){
     int tipo;
     Zombie* aux;
     PersonajeFactory* fab = new PersonajeFactory();
-    for(int i=0; i<num; i++){
+    for(int i=0; i<num; i++)
+    {
         pos=devuelvePos();
         sf::Vector2<float> v;
         v.x = (float) pos.x;
@@ -238,16 +257,26 @@ void Nivel::crearZombies(int num){
         tipo=devuelveTipo();
         aux = fab->crearZombie(tipo, v);
         zombies.push_back(aux);
+        numZombies++;
     }
 }
 
 //Controlamos el numero de zombies que generamos, dependiendo de los que ya hay en pantalla
 
 void Nivel::generarZombies(){
-    if(zombies.size()>20)
-        crearZombies(5);
-    else
-        crearZombies(10);
+    if(numZombies<oleada->getNumZombies()){
+        if(zombies.size()<20){
+            if(oleada->getNumZombies()-numZombies>=10)
+                crearZombies(10);
+            else
+                crearZombies(oleada->getNumZombies()-numZombies);
+        }else if(zombies.size()<75){
+            if(oleada->getNumZombies()-numZombies>=10)
+                crearZombies(5);
+            else
+                crearZombies(oleada->getNumZombies()-numZombies);
+        }else{}
+    }
 }
 
 
@@ -310,7 +339,7 @@ void Nivel::pintarMapa(sf::RenderWindow &w, int i){
 void Nivel::pintarNivel(sf::RenderWindow &w){ 
     for(int i=0; i<zombies.size(); i++){
         sf::Vector2<float> v = zombies[i]->getSprite()->getPosition();
-        cout<<"Zombie "<< i << ": Pos en x: " <<v.x <<" - Pos en y: "<<v.y<<endl;
+        //cout<<"Zombie "<< i << ": Pos en x: " <<v.x <<" - Pos en y: "<<v.y<<endl;
         zombies[i]->render(w);
     }
     for(int j=0; j<recursos.size(); j++){

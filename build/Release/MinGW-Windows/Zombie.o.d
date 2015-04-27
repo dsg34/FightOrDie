@@ -61,7 +61,7 @@ build/Release/MinGW-Windows/Zombie.o: Zombie.cpp Zombie.h Personaje.h \
  ../SFML-2.1/include/SFML/Graphics/RectangleShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/ConvexShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
- ../SFML-2.1/include/SFML/Graphics/Text.hpp
+ ../SFML-2.1/include/SFML/Graphics/Text.hpp Arma.h Proyectil.h Granada.h
 
 Zombie.h:
 
@@ -194,3 +194,9 @@ Personaje.h:
 ../SFML-2.1/include/SFML/Graphics/Sprite.hpp:
 
 ../SFML-2.1/include/SFML/Graphics/Text.hpp:
+
+Arma.h:
+
+Proyectil.h:
+
+Granada.h:

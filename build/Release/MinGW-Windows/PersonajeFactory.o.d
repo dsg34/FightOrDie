@@ -62,7 +62,7 @@ build/Release/MinGW-Windows/PersonajeFactory.o: PersonajeFactory.cpp \
  ../SFML-2.1/include/SFML/Graphics/ConvexShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
  ../SFML-2.1/include/SFML/Graphics/Text.hpp Protagonista.h Arma.h \
- Proyectil.h Granada.h Zombie.h
+ Proyectil.h Granada.h Recurso.h Zombie.h MapLoader.h
 
 PersonajeFactory.h:
 
@@ -204,4 +204,8 @@ Proyectil.h:
 
 Granada.h:
 
+Recurso.h:
+
 Zombie.h:
+
+MapLoader.h:

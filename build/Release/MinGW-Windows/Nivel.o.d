@@ -1,6 +1,5 @@
-build/Release/MinGW-Windows/NivelFactory.o: NivelFactory.cpp \
- NivelFactory.h Nivel.h MapLoader.h ../SFML-2.1/include/SFML/System.hpp \
- ../SFML-2.1/include/SFML/Config.hpp \
+build/Release/MinGW-Windows/Nivel.o: Nivel.cpp Nivel.h MapLoader.h \
+ ../SFML-2.1/include/SFML/System.hpp ../SFML-2.1/include/SFML/Config.hpp \
  ../SFML-2.1/include/SFML/System/Clock.hpp \
  ../SFML-2.1/include/SFML/System/Export.hpp \
  ../SFML-2.1/include/SFML/System/Time.hpp \
@@ -65,8 +64,6 @@ build/Release/MinGW-Windows/NivelFactory.o: NivelFactory.cpp \
  ../SFML-2.1/include/SFML/Graphics/Text.hpp Oleada.h HUD.h Protagonista.h \
  Arma.h Proyectil.h Granada.h Recurso.h Personaje.h Zombie.h RecursoHUD.h \
  RecursosFactory.h PersonajeFactory.h
-
-NivelFactory.h:
 
 Nivel.h:
 

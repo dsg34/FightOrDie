@@ -61,10 +61,10 @@ build/Release/MinGW-Windows/main.o: main.cpp Protagonista.h Arma.h \
  ../SFML-2.1/include/SFML/Graphics/RectangleShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/ConvexShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
- ../SFML-2.1/include/SFML/Graphics/Text.hpp Granada.h Personaje.h \
- Zombie.h HUD.h Recurso.h RecursoHUD.h ArmaFactory.h Nivel.h MapLoader.h \
- Oleada.h RecursosFactory.h PersonajeFactory.h Mundo.h NivelFactory.h \
- Menu.h MenuFactory.h
+ ../SFML-2.1/include/SFML/Graphics/Text.hpp Granada.h Recurso.h \
+ Personaje.h Zombie.h MapLoader.h HUD.h RecursoHUD.h ArmaFactory.h \
+ Nivel.h Oleada.h RecursosFactory.h PersonajeFactory.h Mundo.h \
+ NivelFactory.h Menu.h MenuFactory.h
 
 Protagonista.h:
 
@@ -202,21 +202,21 @@ Proyectil.h:
 
 Granada.h:
 
+Recurso.h:
+
 Personaje.h:
 
 Zombie.h:
 
-HUD.h:
+MapLoader.h:
 
-Recurso.h:
+HUD.h:
 
 RecursoHUD.h:
 
 ArmaFactory.h:
 
 Nivel.h:
-
-MapLoader.h:
 
 Oleada.h:
 

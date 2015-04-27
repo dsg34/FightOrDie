@@ -9,6 +9,8 @@
 #define	ZOMBIE_H
 
 #include "Personaje.h"
+#include "Arma.h"
+
 //#include "Protagonista.h"
 
 class Zombie: public Personaje {
@@ -17,9 +19,14 @@ public:
     Zombie(const Zombie& orig);
     virtual ~Zombie();
     
-    void update(sf::Sprite protagonista, std::vector<Zombie*> zombies);
+    void update(sf::Sprite protagonista, std::vector<Zombie*> zombies, std::vector<Arma*> armas);
     bool colisionConProta(sf::Sprite protagonista, char direccion);
     bool colisionConZombies(std::vector<Zombie*> zombies, char direccion);
+    bool colisionConBalas(std::vector<Arma*> armas);
+    bool colisionConGranadas(Arma* armaActual);
+    void recibirDanyo(int danyo);
+    void muere();
+    void actualizaMuerte();
     
     //bool Colision(Protagonista player);
 private:

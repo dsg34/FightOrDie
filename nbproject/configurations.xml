@@ -71,9 +71,6 @@
     <itemPath>lib/tinyxml/tinyxmlerror.cpp</itemPath>
     <itemPath>lib/tinyxml/tinyxmlparser.cpp</itemPath>
   </logicalFolder>
-  <sourceRootList>
-    <Elem>.</Elem>
-  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="Debug" type="1">

@@ -20,6 +20,8 @@ public:
     bool actualizarZombiesMuertos(int i, HUD* &hud);//Actualiza el numero de zombies muertos
     bool terminarOleada();//Se llamará cuando el numero de zombies 
     
+    int getNumZombies();
+    
     Oleada* crearOleada(int i, int j);    
     
     Oleada* crearOleada11();    
