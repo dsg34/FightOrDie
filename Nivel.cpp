@@ -114,8 +114,8 @@ int Nivel::calcularPuntuacionTotal()
     int tirosTotales = impactos + fallos;
     float porcentajeAcierto = (impactos/tirosTotales) * 100;
     int puntuacion1 = 100 * porcentajeAcierto;
-    crearMensaje('Porcentaje de acierto de tiros: ' + porcentajeAcierto + '%', -1,-1);
-    crearMensaje('Puntuacion por aciertos: ' + puntuacion1, -1,-1);
+    crearMensaje('Porcentaje de acierto de tiros: ' + std::string(porcentajeAcierto) + '%', -1,-1);
+    crearMensaje('Puntuacion por aciertos: ' + std::string(puntuacion1), -1,-1);
     puntuacion += puntuacion1;
     
     tiempo = tiempoPartida.getElapsedTime();
