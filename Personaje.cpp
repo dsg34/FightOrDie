@@ -27,7 +27,12 @@ Personaje::Personaje(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV
 Personaje::Personaje(const Personaje& orig) {
 }
 
-Personaje::~Personaje() {
+Personaje::~Personaje() 
+{
+    //delete sprite;
+    //delete tex;
+    delete boundingBox;
+    
 }
 
 void Personaje::render(sf::RenderWindow &window){

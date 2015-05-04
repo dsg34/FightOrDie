@@ -49,7 +49,21 @@ Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, 
 Protagonista::Protagonista(const Protagonista& orig) : Personaje(orig) {
 }
 
-Protagonista::~Protagonista() {
+Protagonista::~Protagonista() 
+{
+    delete arma;
+    
+    for(int i = 0; i < armas.size(); i++)
+    {
+        delete armas[i];
+    }
+    
+    int municionSecundaria;
+    
+    for(int i = 0; i < inventario.size(); i++)
+    {
+        delete inventario[i];
+    }
 }
 void Protagonista::setPosMira(sf::Vector2<int> pos){
     posmira = pos;
@@ -290,12 +304,18 @@ int Protagonista::Colision(std::vector<Zombie*> zombies, char direccion){
         }
         return 0;
  }
-void Protagonista::colisionConRecursos(std::vector<Recurso*> &recursos){
+void Protagonista::colisionConRecursos(std::vector<Recurso*> &recursos)
+{
+    Recurso* r;
         for(int i=0;i<recursos.size();i++){
-            if(boundingBox->intersects(*recursos[i]->getBoundingBox())){
+            if(boundingBox->intersects(*recursos[i]->getBoundingBox()))
+            {
                 recibirRecurso(recursos[i]);
                 recursos[i]->setExiste(false);
+                r = recursos[i];
                 recursos.erase(recursos.begin()+i);
+                delete r;
+                i--;
                 
             }
         }

@@ -79,7 +79,12 @@ RecursoHUD::RecursoHUD(int ti) {
 RecursoHUD::RecursoHUD(const RecursoHUD& orig) {
 }
 
-RecursoHUD::~RecursoHUD() {
+RecursoHUD::~RecursoHUD() 
+{
+    //delete tex;
+    //delete sprite;
+    //delete fuente;
+    //delete texto;
 }
 
 sf::Sprite* RecursoHUD::getSprite(){

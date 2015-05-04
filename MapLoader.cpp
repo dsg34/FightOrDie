@@ -9,8 +9,9 @@
 MapLoader::MapLoader() {
 }
 
-MapLoader::~MapLoader() {
-
+MapLoader::~MapLoader() 
+{
+    
 }
 bool MapLoader::LoadFromFile(std::string filename)
 {

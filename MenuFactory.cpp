@@ -10,7 +10,9 @@ MenuFactory::MenuFactory() {
 MenuFactory::MenuFactory(const MenuFactory& orig) {
 }
 
-MenuFactory::~MenuFactory() {
+MenuFactory::~MenuFactory() 
+{
+    delete menu;
 }
 
 Menu* MenuFactory::hacerMenu(int x, int y, int id){

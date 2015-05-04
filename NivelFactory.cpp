@@ -13,7 +13,8 @@ NivelFactory::NivelFactory() {
 NivelFactory::NivelFactory(const NivelFactory& orig) {
 }
 
-NivelFactory::~NivelFactory() {
+NivelFactory::~NivelFactory() 
+{
 }
 
 

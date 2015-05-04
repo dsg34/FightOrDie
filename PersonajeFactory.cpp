@@ -15,6 +15,8 @@ PersonajeFactory::PersonajeFactory(const PersonajeFactory& orig) {
 }
 
 PersonajeFactory::~PersonajeFactory() {
+    delete zombie;
+    delete protagonista;
 }
 
 Protagonista* PersonajeFactory::crearProtagonista(sf::Vector2<float> p){
@@ -45,8 +47,10 @@ Zombie* PersonajeFactory::crearZombie(int tipoZombie, sf::Vector2<float> p){
         zombie = crearZombieNormal(p);
     }else if(tipoZombie == 2){
         //rapido
+        zombie = crearZombieRapido(p);
     }else if(tipoZombie == 3){
         //gordo
+        zombie = crearZombieGordo(p);
     }
     return zombie;
 }
@@ -65,7 +69,48 @@ Zombie* PersonajeFactory::crearZombieNormal(sf::Vector2<float> p){
     
     sf::Sprite* aux = new sf::Sprite(sprite);
     //Zombie(sprite, textura, posicion, maxVida, velocidad)
-    zombie = new Zombie(aux, tex, p, 20, 2.2);
+    zombie = new Zombie(aux, tex, p, 20, 2);
+    
+    return zombie;
+}
+
+
+Zombie* PersonajeFactory::crearZombieRapido(sf::Vector2<float> p){
+    sf::Texture texAux;
+    if(!texAux.loadFromFile("resources/zombie_rapido.png")){
+        std::cerr <<"Error cargando la imagen zombie.png";
+        exit(0);
+    }
+    
+    sf::Texture* tex = new sf::Texture(texAux);
+    sf::Sprite sprite(texAux);
+    
+    sprite.setOrigin(75/2,75/2);
+    sprite.setTextureRect(sf::IntRect(0*75,0*75,75,75));
+    
+    sf::Sprite* aux = new sf::Sprite(sprite);
+    //Zombie(sprite, textura, posicion, maxVida, velocidad)
+    zombie = new Zombie(aux, tex, p, 10, 5);
+    
+    return zombie;
+}
+    
+Zombie* PersonajeFactory::crearZombieGordo(sf::Vector2<float> p){
+    sf::Texture texAux;
+    if(!texAux.loadFromFile("resources/zombie_fuerte.png")){
+        std::cerr <<"Error cargando la imagen zombie.png";
+        exit(0);
+    }
+    
+    sf::Texture* tex = new sf::Texture(texAux);
+    sf::Sprite sprite(texAux);
+    
+    sprite.setOrigin(75/2,75/2);
+    sprite.setTextureRect(sf::IntRect(0*75,0*75,75,75));
+    
+    sf::Sprite* aux = new sf::Sprite(sprite);
+    //Zombie(sprite, textura, posicion, maxVida, velocidad)
+    zombie = new Zombie(aux, tex, p, 30, 1);
     
     return zombie;
 }

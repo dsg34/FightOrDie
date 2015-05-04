@@ -6,7 +6,7 @@
 class Menu {
 public:
     Menu(sf::Sprite* s, sf::Texture* t, sf::Font* font, int x, int y, std::vector<std::string> apartados);
-    
+    virtual ~Menu();
     void draw(sf::RenderWindow &window);
     void MoveUp();
     void MoveDown();

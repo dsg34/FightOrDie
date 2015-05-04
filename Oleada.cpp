@@ -18,8 +18,8 @@ Oleada::Oleada(int i, int niv, int numZ, float tiempo) {
 Oleada::Oleada(const Oleada& orig) {
 }
 
-Oleada::~Oleada() {
-    
+Oleada::~Oleada() 
+{    
     
 }
 

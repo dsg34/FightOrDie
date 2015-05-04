@@ -44,7 +44,9 @@ Granada::Granada(sf::Vector2<float> s, sf::Vector2<float> m, int d, sf::Vector2<
 Granada::Granada(const Granada& orig) {
 }
 
-Granada::~Granada() {
+Granada::~Granada() 
+{
+    //delete sprite;
 }
 
 /**********************************************MÉTODOS GET Y SET**********************************************************************/

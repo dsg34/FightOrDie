@@ -74,7 +74,7 @@ void Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std:
             {
                 cont++;
 
-                sprite->setTextureRect(sf::IntRect(cont*53, 0, 53, 80));                
+                sprite->setTextureRect(sf::IntRect(cont*75, 0, 75, 75));                
 
                 if(cont == 5)
                     cont = 0;
@@ -85,7 +85,7 @@ void Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std:
                 direc = 0;
                 cont = 0;
 
-                sprite->setTextureRect(sf::IntRect(cont*53, 0, 53, 80));   
+                sprite->setTextureRect(sf::IntRect(cont*75, 0, 75, 75));   
             }
         }
     }
@@ -99,7 +99,7 @@ void Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std:
             {
                 cont++;
 
-                sprite->setTextureRect(sf::IntRect(cont*53, 3*80, 53, 80));                
+                sprite->setTextureRect(sf::IntRect(cont*75, 3*75, 75, 75));                
 
                 if(cont == 5)
                     cont = 0;
@@ -110,7 +110,7 @@ void Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std:
                 direc = 3;
                 cont = 0;
 
-                sprite->setTextureRect(sf::IntRect(cont*53, 3*80, 53, 80));   
+                sprite->setTextureRect(sf::IntRect(cont*75, 3*75, 75, 75));   
             }
         }
     }
@@ -129,7 +129,7 @@ void Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std:
             {
                 cont++;
 
-                sprite->setTextureRect(sf::IntRect(cont*53, 2*81, 53, 78));                
+                sprite->setTextureRect(sf::IntRect(cont*75, 2*75, 75, 75));                
 
                 if(cont == 5)
                     cont = 0;
@@ -140,7 +140,7 @@ void Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std:
                 direc = 2;
                 cont = 0;
 
-                sprite->setTextureRect(sf::IntRect(cont*53, 2*81, 53, 78));   
+                sprite->setTextureRect(sf::IntRect(cont*75, 2*75, 75, 75));   
             }
         }
 
@@ -151,11 +151,11 @@ void Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std:
 
         if(ejey == true)
         {
-            if(direc == 1)
+             if(direc == 1)
             {
                 cont++;
 
-                sprite->setTextureRect(sf::IntRect(cont*53, 80, 53, 80));                
+                sprite->setTextureRect(sf::IntRect(cont*75, 75, 75, 75));                
 
                 if(cont == 5)
                     cont = 0;
@@ -166,7 +166,7 @@ void Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std:
                 direc = 1;
                 cont = 0;
 
-                sprite->setTextureRect(sf::IntRect(cont*53, 80, 53, 80));   
+                sprite->setTextureRect(sf::IntRect(cont*75, 75, 75, 75));   
             }
         }
     }
@@ -250,11 +250,12 @@ bool Zombie::colisionConBalas(std::vector<Arma*> armas){
             if(boundingBox->intersects(cargador[i]->getSprite()->getGlobalBounds())){
                 //std::cout<<"Impacto!"<<std::endl;
                 armas[j]->eliminarProyectil(i);
+                std::cout<<"Elimino"<<std::endl;
                 recibirDanyo(armas[j]->getDanyo());
                 if(vida<=0){
                     muriendo=true;
                     muere();
-                    std::cout<<"Palmé"<<std::endl;
+                    //std::cout<<"Palmé"<<std::endl;
                     //std::cout<<estaVivo<<std::endl;
                 }
                 return true;

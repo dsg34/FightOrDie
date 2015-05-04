@@ -41,7 +41,11 @@ Recurso::Recurso(const Recurso& orig) {
     
 }
 
-Recurso::~Recurso() {
+Recurso::~Recurso() 
+{
+    //delete spriteRecurso;
+    // delete tex;       
+    //delete boundingBox;
 }
 /***********************************METODOS GET Y SET************************************************/
 int Recurso::getBloqueante(){

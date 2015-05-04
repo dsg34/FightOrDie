@@ -30,7 +30,10 @@ Proyectil::Proyectil(sf::Sprite* spriteProyectil, sf::Texture* t, sf::Vector2<fl
 Proyectil::Proyectil(const Proyectil& orig) {
 }
 
-Proyectil::~Proyectil() {
+Proyectil::~Proyectil() 
+{
+    //delete sprite;     
+    //delete tex;    
 }
 
 /********************************METODOS GET Y SET*******************************************************/

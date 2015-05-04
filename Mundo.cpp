@@ -62,7 +62,17 @@ void Mundo::capturarCierre()
 Mundo::Mundo(const Mundo& orig) {
 }
 
-Mundo::~Mundo() {
+Mundo::~Mundo() 
+{
+    delete window;
+    
+    delete protagonista;
+    delete fabricaPersonaje;
+    delete nivel;
+    delete fabricaNivel;    
+    //delete tex;
+    delete apuntar;    
+    
 }
 
 sf::Vector2<int> Mundo::posicionCursor(){
@@ -177,7 +187,7 @@ void Mundo::pintarMundo(){
     protagonista->pintarProtagonista(*window);
     protagonista->getArma()->pintarProyectiles(*window);
     //window->draw(*(protagonista->getSprite()));
-    nivel->pintarMapa(*window,2);//map->Draw(window);
+    //nivel->pintarMapa(*window,2);//map->Draw(window);
     nivel->pintarNivel(*window);//hud.pintarHUD(window);
     apuntar->setPosition(posicionCursor().x, posicionCursor().y);
     window->draw(*apuntar);                                    

@@ -110,7 +110,31 @@ HUD::HUD(Protagonista* p, sf::Vector2<int> tam) {
 HUD::HUD(const HUD& orig) {
 }
 
-HUD::~HUD() {
+HUD::~HUD() 
+{
+    //delete textura;
+    //delete fuente;
+    
+    //delete spriteVida;
+    //delete spriteVidaBoss;
+    delete municion;
+    
+    for(int i = 0; i < armas.size(); i++)
+    {
+        delete armas[i];
+    }
+    
+    for(int i = 0; i < recursos.size(); i++)
+    {
+        delete recursos[i];
+    }
+
+    delete puntuacion;
+    delete balas;    
+    delete mensaje;    
+    delete tamPantalla;
+    
+    
 }
 
 sf::Texture* HUD::getTextura(){
@@ -315,11 +339,16 @@ void HUD::anyadirArma(Arma* a){
 void HUD::eliminarArma(Arma* a){
     int tipo = a->getTipo();
     bool esta=false;
+    RecursoHUD* r;
     for(int i=0; i<armas.size();i++){
         if(esta==false && armas[i]->getTipo()==tipo){
             armas[i]->menosNum();
-            if(armas[i]->getNum()<=0){
+            if(armas[i]->getNum()<=0)
+            {
+                r = armas[i];
                 armas.erase(armas.begin()+i);
+                delete r;
+                i--;
                 actualizarArmasHUD();
             }
             esta=true;
@@ -348,11 +377,17 @@ void HUD::anyadirRecurso(Recurso* r){
 void HUD::eliminarRecurso(Recurso* r){
     int tipo = r->getTipo();
     bool esta=false;
+    RecursoHUD* p;
+    
     for(int i=0; i<recursos.size();i++){
         if(esta==false && recursos[i]->getTipo()==tipo){
             recursos[i]->menosNum();
-            if(recursos[i]->getNum()<=0){
+            if(recursos[i]->getNum()<=0)
+            {
+                p = recursos[i];
                 recursos.erase(recursos.begin()+i);
+                delete p;
+                i--;
                 actualizarArmasHUD();
             }
             esta=true;

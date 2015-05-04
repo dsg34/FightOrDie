@@ -41,8 +41,22 @@ Nivel::Nivel(int i, Protagonista* &p, sf::Vector2<int> t, std::vector<int> s, fl
 Nivel::Nivel(const Nivel& orig) {
 }
 
-Nivel::~Nivel() {
-
+Nivel::~Nivel() 
+{
+    delete mapa;
+    delete hud;
+    delete oleada;
+    
+    for(int i = 0; i < zombies.size(); i++)
+    {
+        delete zombies[i];
+    }
+    
+    for(int i = 0; i < recursos.size(); i++)
+    {
+        delete recursos[i];
+    }
+    
 }
 
 std::vector<Recurso*> Nivel::getRecursos(){
@@ -57,8 +71,11 @@ void Nivel::addRecurso(Recurso* r){
     recursos.push_back(r);
 }
     
-void Nivel::elimnarRecurso(int i){
+void Nivel::elimnarRecurso(int i)
+{
+    Recurso* r = recursos[i];
     recursos.erase(recursos.begin()+i);
+    delete r;
 }
 MapLoader* Nivel::getMapa(){
     return mapa;
@@ -170,12 +187,15 @@ void Nivel::crearMensaje(std::string s, int t, int i){
 
 void Nivel::actualizarRecursosExistentes(){
     int existe=1;
+    Recurso* r;
     for(int i=0; i<recursos.size(); i++){
         recursos[i]->actualizarRecurso();
         existe = recursos[i]->getExiste();
-        if(existe==0){
-            recursos.erase(recursos.begin()+i);
-            i--;
+        if(existe==0)
+        {
+            r = recursos[i];
+            recursos.erase(recursos.begin()+(i-1));
+            delete r;
         }
     }
 } 
@@ -183,12 +203,15 @@ void Nivel::actualizarRecursosExistentes(){
 bool Nivel::actualizarZombiesExistentes(Protagonista* p){
     bool nivelTerminado=false;
     int existe=true;
+    Zombie* z;
     for(int i=0; i<zombies.size(); i++){ 
         zombies[i]->update(*(p->getSprite()), zombies, p->getArmas());
         existe = zombies[i]->Existe();
-        if(existe==false){
+        if(existe==false)
+        {
+            z = zombies[i];
             zombies.erase(zombies.begin()+i);
-            i--;
+            delete z;
             nivelTerminado=oleada->actualizarZombiesMuertos(1,hud);
             //numZombies++;
         }
@@ -206,14 +229,15 @@ int Nivel::devuelveTipo(){
     else  //  70% de posibilidades
         tipo = 1;//Zombie normal  
     
-    tipo = 1;
     
     return tipo;
 }
 
 sf::Vector2<int> Nivel::devuelvePos(){
     sf::Vector2<int> pos, tam=*hud->getTamPantalla();
-    int lado = (int)rand() % spawnsZombies.size();//Genera aleatoriamente el lado en el que aparece el zombie
+    int lado = (int)rand() % spawnsZombies.size();
+    //Genera aleatoriamente el lado en el que aparece el zombie
+    /*
     switch(lado){
         //Por la izquierda
         case 1:     pos.x=0-tam.x/50;
@@ -235,6 +259,28 @@ sf::Vector2<int> Nivel::devuelvePos(){
         default:    pos.x=tam.x+tam.x/50;
                     pos.y=(int)rand()%tam.y;
                     break;
+    }*/
+     switch(lado){
+        //Por la izquierda
+        case 1:     pos.x=0-tam.x/50;
+                    pos.y=80/2;    //Genera un numero aleatorio entre la posicion 0 y la maxima altura de la pantalla
+                    break;
+        //Por la derecha
+        case 2:     pos.x=tam.x+tam.x/50;
+                    pos.y=80/2;
+                    break; 
+        //Por arriba
+        case 3:     pos.x=(int)rand()%tam.x;
+                    pos.y=0-tam.y/15;                    
+                    break;             
+        //Por abajo
+        case 4:     pos.x=(int)rand()%tam.x;
+                    pos.y=tam.y+tam.y/50;                    
+                    break;
+        //Por defecto, por la derecha            
+        default:    pos.x=tam.x+tam.x/50;
+                    pos.y=80/2;
+                    break;
     }
     
     
@@ -245,6 +291,7 @@ sf::Vector2<int> Nivel::devuelvePos(){
 void Nivel::crearZombies(int num){
     sf::Vector2<int> pos;
     int tipo;
+    /*
     Zombie* aux;
     PersonajeFactory* fab = new PersonajeFactory();
     for(int i=0; i<num; i++)
@@ -258,6 +305,22 @@ void Nivel::crearZombies(int num){
         aux = fab->crearZombie(tipo, v);
         zombies.push_back(aux);
         numZombies++;
+    }*/
+    
+    int cont=2;
+    Zombie* aux;
+    PersonajeFactory* fab = new PersonajeFactory();
+    for(int i=0; i<num; i++){
+        pos=devuelvePos();
+        sf::Vector2<float> v;
+        v.x = (float) pos.x;
+        v.y = (float) pos.y*cont;
+        cont=cont+2;
+        
+        tipo=devuelveTipo();
+        aux = fab->crearZombie(tipo, v);
+        zombies.push_back(aux);
+        numZombies++;
     }
 }
 
@@ -265,11 +328,14 @@ void Nivel::crearZombies(int num){
 
 void Nivel::generarZombies(){
     if(numZombies<oleada->getNumZombies()){
-        if(zombies.size()<20){
+        if(zombies.size()<20)
+        {
+            crearZombies(2);
+            /*
             if(oleada->getNumZombies()-numZombies>=10)
                 crearZombies(10);
             else
-                crearZombies(oleada->getNumZombies()-numZombies);
+                crearZombies(oleada->getNumZombies()-numZombies);*/
         }else if(zombies.size()<75){
             if(oleada->getNumZombies()-numZombies>=10)
                 crearZombies(5);
@@ -315,10 +381,14 @@ void Nivel::reducirSaludZombie(int i, Proyectil* p){
 /*
 void Nivel::reducirSaludZombie(int i, int d){
     bool muerto=false;
+    Zombie* z;
     if(i>0 && i<zombies.size()){
         muerto = zombies[i]->reducirSalud(d);
-        if(muerto==true){
+        if(muerto==true)
+        {
+            z = zombies[i];
             zombies.erase(zombies.begin()+i);
+            delete z;
             oleada->actualizarNumZombies(1, hud);//Actualizamos el numero de zombies muertos en la oleada
         }
     }
@@ -345,6 +415,7 @@ void Nivel::pintarNivel(sf::RenderWindow &w){
     for(int j=0; j<recursos.size(); j++){
         recursos[j]->pintarRecursos(w);        
     }
+    pintarMapa(w,2);//map->Draw(window);
     hud->pintarHUD(w);
     //mapa->pintarMapa()
 }

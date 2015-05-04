@@ -24,6 +24,19 @@ Menu::Menu(sf::Sprite* s, sf::Texture* t, sf::Font* font, int x, int y, std::vec
     
     selectedItemIndex = 0;
 }
+Menu::~Menu()
+{
+    //delete sprite;
+    //delete tex;
+    
+    delete font;
+    
+    
+    for(int i = 0; i < menu.size(); i++)
+    {
+        delete menu[i];
+    }
+}
 
 int Menu::GetPressedItem(){ 
     return selectedItemIndex; 
