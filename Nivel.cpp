@@ -23,6 +23,7 @@ Nivel::Nivel(int i, Protagonista* &p, sf::Vector2<int> t, std::vector<int> s, fl
     
     tApareceZombie=tZ;
     tApareceRecurso=15.0+rand()%15;
+    //tApareceRecurso=8;
     
     spawnsZombies=s;
     mapa=new MapLoader();
@@ -81,7 +82,7 @@ MapLoader* Nivel::getMapa(){
     return mapa;
 }
 
-void Nivel::controlarRacha(int imp){//
+void Nivel::controlarRacha(int imp){
     
     tiempo = relojRacha.getElapsedTime();
     if(imp > 0 && racha <= 20)
@@ -357,6 +358,7 @@ void Nivel::generarRecurso(){
     recursos.push_back(r);
     
     tApareceRecurso = 15.0 + rand()%15;
+    //tApareceRecurso = 8;
 }
 
 //ESTOS TRES METODOS SON INUTILES A PRIORI

@@ -250,7 +250,7 @@ bool Zombie::colisionConBalas(std::vector<Arma*> armas){
             if(boundingBox->intersects(cargador[i]->getSprite()->getGlobalBounds())){
                 //std::cout<<"Impacto!"<<std::endl;
                 armas[j]->eliminarProyectil(i);
-                std::cout<<"Elimino"<<std::endl;
+                //std::cout<<"Elimino"<<std::endl;
                 recibirDanyo(armas[j]->getDanyo());
                 if(vida<=0){
                     muriendo=true;

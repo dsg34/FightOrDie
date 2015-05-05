@@ -124,24 +124,28 @@ void Protagonista::dispararSecundaria(sf::Vector2<int> posicionCursor){
 void Protagonista::recibirRecurso(Recurso* r){
     // Escopeta=2; Botiquin=3; Metralleta=4; Barril=5; Madera=6; Granada=7; Valla=8;
     int tipo = r->getTipo();
-    if(tipo!=2 && tipo!=4 && tipo!=3 && tipo!=7){
-        inventario.push_back(r);  
-    }else if(tipo==2 || tipo==4 || tipo==7){ 
+    RecursosFactory* fab = new RecursosFactory();
+    if(tipo==5 || tipo==6 || tipo==8){        
+        inventario.push_back(fab->crearRecurso(tipo));  
+    }else if(tipo==2 || tipo==4 || tipo==7)
+    { 
         //Pistola: 1; Metralleta: 2; Escopeta: 3; Hacha: 4;
-        for(int i=0; i<armas.size(); i++){
-            if(tipo==2 && armas[i]->getTipo()==3)//Metralleta
+        for(int i=0; i<armas.size(); i++)
+        {
+            if(tipo==2 && armas[i]->getTipo()==3)//Escopeta
                 armas[i]->aumentarMunicion(50);
-            else if(tipo==4 && armas[i]->getTipo()==2)//Escopeta
+            else if(tipo==4 && armas[i]->getTipo()==2)//Metralleta
                 armas[i]->aumentarMunicion(100);
-            else if(tipo==7){
+            /*else if(tipo==7)
+            {
                 armas[i]->aumentarMunicionSecundaria(3);
-            }      
+            }      */
         }
-        if(tipo==7){
-            inventario.push_back(r);
-            RecursosFactory* fav = new RecursosFactory();
-            inventario.push_back(fav->crearRecurso(7));
-            inventario.push_back(fav->crearRecurso(7));
+        if(tipo==7)
+        {
+            inventario.push_back(fab->crearRecurso(tipo));
+            inventario.push_back(fab->crearRecurso(7));
+            inventario.push_back(fab->crearRecurso(7));
             municionSecundaria += 3;
         }
     }else if(tipo ==3){
@@ -150,7 +154,7 @@ void Protagonista::recibirRecurso(Recurso* r){
         else
             vida+=3;
     }
-    
+    delete fab;
 }
 std::vector<Arma*> Protagonista::getArmas(){
     return armas;
@@ -306,16 +310,24 @@ int Protagonista::Colision(std::vector<Zombie*> zombies, char direccion){
  }
 void Protagonista::colisionConRecursos(std::vector<Recurso*> &recursos)
 {
-    Recurso* r;
-        for(int i=0;i<recursos.size();i++){
+    //Recurso* r;
+        for(int i = recursos.size() - 1 ;i >= 0; i--)
+        {
+            //std::cout << "posicion:" << i << " recurso: " << recursos[i]->getTipo() << "." << std::endl;
             if(boundingBox->intersects(*recursos[i]->getBoundingBox()))
             {
+                //std::cout << "PRotagonista: posicion:" << i << " recurso: " << recursos[i]->getTipo() << "." << std::endl;
                 recibirRecurso(recursos[i]);
                 recursos[i]->setExiste(false);
-                r = recursos[i];
+                //r = recursos[i];
                 recursos.erase(recursos.begin()+i);
-                delete r;
-                i--;
+                //delete r;
+                /*
+                for(int j = 0; j < inventario.size(); j++)
+                {
+                    std::cout << "inventario: posicion:" << j << " recurso: " << inventario[j]->getTipo() << "." << std::endl;
+                }*/
+                //i--;
                 
             }
         }
