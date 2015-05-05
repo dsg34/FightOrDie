@@ -1,10 +1,3 @@
-/* 
- * File:   PersonajeFactory.cpp
- * Author: Dani
- * 
- * Created on 10 de abril de 2015, 15:45
- */
-
 #include "PersonajeFactory.h"
 
 PersonajeFactory::PersonajeFactory() {
@@ -68,8 +61,8 @@ Zombie* PersonajeFactory::crearZombieNormal(sf::Vector2<float> p){
     sprite.setTextureRect(sf::IntRect(0*75,0*75,75,75));
     
     sf::Sprite* aux = new sf::Sprite(sprite);
-    //Zombie(sprite, textura, posicion, maxVida, velocidad)
-    zombie = new Zombie(aux, tex, p, 20, 2);
+    //Zombie(sprite, textura, posicion, maxVida, velocidad, danyo)
+    zombie = new Zombie(aux, tex, p, 20, 2, 0.2);
     
     return zombie;
 }
@@ -89,8 +82,8 @@ Zombie* PersonajeFactory::crearZombieRapido(sf::Vector2<float> p){
     sprite.setTextureRect(sf::IntRect(0*75,0*75,75,75));
     
     sf::Sprite* aux = new sf::Sprite(sprite);
-    //Zombie(sprite, textura, posicion, maxVida, velocidad)
-    zombie = new Zombie(aux, tex, p, 10, 5);
+    //Zombie(sprite, textura, posicion, maxVida, velocidad, danyo)
+    zombie = new Zombie(aux, tex, p, 10, 5, 0.1);
     
     return zombie;
 }
@@ -109,8 +102,8 @@ Zombie* PersonajeFactory::crearZombieGordo(sf::Vector2<float> p){
     sprite.setTextureRect(sf::IntRect(0*75,0*75,75,75));
     
     sf::Sprite* aux = new sf::Sprite(sprite);
-    //Zombie(sprite, textura, posicion, maxVida, velocidad)
-    zombie = new Zombie(aux, tex, p, 30, 1);
+    //Zombie(sprite, textura, posicion, maxVida, velocidad, danyo)
+    zombie = new Zombie(aux, tex, p, 30, 1, 0.3);
     
     return zombie;
 }

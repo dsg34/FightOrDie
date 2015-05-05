@@ -1,15 +1,8 @@
-/* 
- * File:   Mundo.cpp
- * Author: Dani
- * 
- * Created on 23 de abril de 2015, 18:21
- */
-
 #include "Mundo.h"
 #define UPDATE_TIME 1000/15
 #define RENDER_TIME 1000/60
 
-Mundo::Mundo(sf::RenderWindow &w) {
+Mundo::Mundo(sf::RenderWindow &w, int niv) {
     window=&w;
     tamPantalla=(sf::Vector2<int>) window->getSize();
     
@@ -22,7 +15,7 @@ Mundo::Mundo(sf::RenderWindow &w) {
     protagonista=fabricaPersonaje->crearProtagonista(pos);
        
     fabricaNivel=new NivelFactory();
-    nivel = fabricaNivel->crearNivel(1, protagonista, tamPantalla);
+    nivel = fabricaNivel->crearNivel(niv, protagonista, tamPantalla);
     window->setMouseCursorVisible(false);
     
     relojUpdate.restart();
@@ -46,33 +39,38 @@ Mundo::Mundo(sf::RenderWindow &w) {
     
 }
 
-void Mundo::capturarCierre()
+bool Mundo::capturarCierre()
 {
+    bool captura=false;
     //Bucle de obtenciÃƒÂ³n de eventos
     sf::Event event;
     while(window->pollEvent(event))
     {
         if(event.type == sf::Event::Closed)
         {
-            window->close();
+            captura=true;
         }
     }
+    return captura;
+}
+
+bool Mundo::capturarPausa()
+{
+    bool pausa = false;
+    //Bucle de obtenciÃƒÂ³n de eventos
+    
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+    {
+        pausa=true;
+    }
+
+    return pausa;
 }
 
 Mundo::Mundo(const Mundo& orig) {
 }
 
-Mundo::~Mundo() 
-{
-    delete window;
-    
-    delete protagonista;
-    delete fabricaPersonaje;
-    delete nivel;
-    delete fabricaNivel;    
-    //delete tex;
-    delete apuntar;    
-    
+Mundo::~Mundo() {
 }
 
 sf::Vector2<int> Mundo::posicionCursor(){
@@ -103,8 +101,10 @@ int Mundo::ejecutarMundo(){
                         
             protagonista->update(posicionCursor(),nivel->getZombies(), nivel->getMapa(), nivel->getRecursos());
             existePersonaje=protagonista->Existe();
+            
+            //1: Menu Inicio ; 2: Menu Pausa ; 3: Menu Fin de nivel ; 4: Menu muerte ; 5: Menu ¿Desea Salir?
             if(existePersonaje==false)
-                estado=2;
+                estado=4;
             
             int impactos = 0;
             std::vector<Arma*> arm = protagonista->getArmas();
@@ -130,8 +130,12 @@ int Mundo::ejecutarMundo(){
             pintarMundo();
             relojRender.restart();
         }
-        capturarCierre(); 
+        if(capturarCierre())
+            estado=5;
+        if(capturarPausa())
+            estado=2;
     }
+    window->clear();
     return estado;
 }
 
@@ -187,7 +191,7 @@ void Mundo::pintarMundo(){
     protagonista->pintarProtagonista(*window);
     protagonista->getArma()->pintarProyectiles(*window);
     //window->draw(*(protagonista->getSprite()));
-    //nivel->pintarMapa(*window,2);//map->Draw(window);
+    nivel->pintarMapa(*window,2);//map->Draw(window);
     nivel->pintarNivel(*window);//hud.pintarHUD(window);
     apuntar->setPosition(posicionCursor().x, posicionCursor().y);
     window->draw(*apuntar);                                    

@@ -39,6 +39,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/ArmaFactory.o \
 	${OBJECTDIR}/Granada.o \
 	${OBJECTDIR}/HUD.o \
+	${OBJECTDIR}/Juego.o \
 	${OBJECTDIR}/MapLoader.o \
 	${OBJECTDIR}/Menu.o \
 	${OBJECTDIR}/MenuFactory.o \
@@ -75,7 +76,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L../SFML-2.1/lib -lsfml-graphics-d -lsfml-window-d -lsfml-system-d -lsfml-audio-d -lsfml-main-d -lsfml-network-d
+LDLIBSOPTIONS=-L../SFML-2.1/lib -lsfml-graphics-d -lsfml-graphics-s-d -lsfml-window-d -lsfml-window-s-d -lsfml-system-d -lsfml-system-s-d -lsfml-audio-d -lsfml-audio-s-d -lsfml-main-d -lsfml-network-d -lsfml-network-s-d
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -104,6 +105,11 @@ ${OBJECTDIR}/HUD.o: HUD.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/HUD.o HUD.cpp
+
+${OBJECTDIR}/Juego.o: Juego.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Juego.o Juego.cpp
 
 ${OBJECTDIR}/MapLoader.o: MapLoader.cpp 
 	${MKDIR} -p ${OBJECTDIR}

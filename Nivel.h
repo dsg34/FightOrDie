@@ -1,10 +1,3 @@
-/**************************************************************************************************************/
-/* 
- * File:   Nivel.h
- * Author: Dani
- *
- * Created on 21 de abril de 2015, 9:11
- */
 #include "MapLoader.h"
 #include "Oleada.h"
 #include "RecursosFactory.h"
@@ -73,7 +66,7 @@ private:
     int impactos;//Almacena los aciertos y los fallos durante la ultima racha
     int fallos;    
     int numZombies;
-    
+    int posAnt;
     std::vector<int> spawnsZombies;//Se debe indicar por que direcciones (izquierda 1, derecha 2, arriba 3, abajo 4) saldran los zombies
 };
 

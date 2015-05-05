@@ -8,6 +8,7 @@
       <itemPath>ArmaFactory.h</itemPath>
       <itemPath>Granada.h</itemPath>
       <itemPath>HUD.h</itemPath>
+      <itemPath>Juego.h</itemPath>
       <itemPath>MapLoader.h</itemPath>
       <itemPath>Menu.h</itemPath>
       <itemPath>MenuFactory.h</itemPath>
@@ -36,6 +37,7 @@
       <itemPath>ArmaFactory.cpp</itemPath>
       <itemPath>Granada.cpp</itemPath>
       <itemPath>HUD.cpp</itemPath>
+      <itemPath>Juego.cpp</itemPath>
       <itemPath>MapLoader.cpp</itemPath>
       <itemPath>Menu.cpp</itemPath>
       <itemPath>MenuFactory.cpp</itemPath>
@@ -91,11 +93,16 @@
           </linkerAddLib>
           <linkerLibItems>
             <linkerLibLibItem>sfml-graphics-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-graphics-s-d</linkerLibLibItem>
             <linkerLibLibItem>sfml-window-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-window-s-d</linkerLibLibItem>
             <linkerLibLibItem>sfml-system-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-system-s-d</linkerLibLibItem>
             <linkerLibLibItem>sfml-audio-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-audio-s-d</linkerLibLibItem>
             <linkerLibLibItem>sfml-main-d</linkerLibLibItem>
             <linkerLibLibItem>sfml-network-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-network-s-d</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -110,6 +117,42 @@
       <item path="Granada.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Granada.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="HUD.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="HUD.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Juego.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Juego.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MapLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MapLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Menu.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Menu.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MenuFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MenuFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Mundo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Mundo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Nivel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Nivel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NivelFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="NivelFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Oleada.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Oleada.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="HUD.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -215,16 +258,22 @@
           <developmentMode>5</developmentMode>
         </asmTool>
         <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fightordie</output>
           <linkerAddLib>
             <pElem>../SFML-2.1/lib</pElem>
           </linkerAddLib>
           <linkerLibItems>
-            <linkerLibLibItem>sfml-graphics</linkerLibLibItem>
-            <linkerLibLibItem>sfml-window</linkerLibLibItem>
-            <linkerLibLibItem>sfml-system</linkerLibLibItem>
-            <linkerLibLibItem>sfml-audio</linkerLibLibItem>
-            <linkerLibLibItem>sfml-main</linkerLibLibItem>
-            <linkerLibLibItem>sfml-network</linkerLibLibItem>
+            <linkerLibLibItem>sfml-graphics-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-graphics-s-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-window-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-window-s-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-system-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-system-s-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-audio-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-audio-s-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-main-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-network-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-network-s-d</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -239,6 +288,42 @@
       <item path="Granada.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Granada.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="HUD.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="HUD.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Juego.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Juego.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MapLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MapLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Menu.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Menu.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MenuFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MenuFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Mundo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Mundo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Nivel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Nivel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NivelFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="NivelFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Oleada.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Oleada.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="HUD.cpp" ex="false" tool="1" flavor2="0">
       </item>

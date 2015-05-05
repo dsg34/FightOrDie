@@ -1,10 +1,3 @@
-/* 
- * File:   Recurso.h
- * Author: Marc
- *
- * Created on 7 de abril de 2015, 13:08
- */
-
 /*
 int bloqueante;
 1 bloquea, 0 no

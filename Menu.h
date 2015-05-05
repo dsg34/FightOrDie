@@ -1,4 +1,3 @@
-
 #ifndef MENU_H
 #define	MENU_H
 #include <SFML/Graphics.hpp>
@@ -6,12 +5,12 @@
 class Menu {
 public:
     Menu(sf::Sprite* s, sf::Texture* t, sf::Font* font, int x, int y, std::vector<std::string> apartados);
-    virtual ~Menu();
+    
     void draw(sf::RenderWindow &window);
     void MoveUp();
     void MoveDown();
     int GetPressedItem();
-    int update(sf::RenderWindow &window);
+    int update(sf::RenderWindow &window);    
 
 private:
     sf::Sprite* sprite;
@@ -23,4 +22,3 @@ private:
 };
 
 #endif	/* MENU_H */
-

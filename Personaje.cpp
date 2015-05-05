@@ -1,10 +1,3 @@
-/* 
- * File:   Personaje.cpp
- * Author: Dani
- * 
- * Created on 6 de abril de 2015, 15:50
- */
-
 #include "Personaje.h"
 
 Personaje::Personaje(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int ve){

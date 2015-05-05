@@ -1,5 +1,5 @@
-build/Release/MinGW-Windows/main.o: main.cpp Protagonista.h Arma.h \
- Proyectil.h ../SFML-2.1/include/SFML/Graphics.hpp \
+build/Release/MinGW-Windows/main.o: main.cpp Juego.h Protagonista.h \
+ Arma.h Proyectil.h ../SFML-2.1/include/SFML/Graphics.hpp \
  ../SFML-2.1/include/SFML/Window.hpp ../SFML-2.1/include/SFML/System.hpp \
  ../SFML-2.1/include/SFML/Config.hpp \
  ../SFML-2.1/include/SFML/System/Clock.hpp \
@@ -65,6 +65,8 @@ build/Release/MinGW-Windows/main.o: main.cpp Protagonista.h Arma.h \
  Personaje.h Zombie.h MapLoader.h HUD.h RecursoHUD.h ArmaFactory.h \
  Nivel.h Oleada.h RecursosFactory.h PersonajeFactory.h Mundo.h \
  NivelFactory.h Menu.h MenuFactory.h
+
+Juego.h:
 
 Protagonista.h:
 

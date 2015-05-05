@@ -1,17 +1,9 @@
-/* 
- * File:   Mundo.h
- * Author: Dani
- *
- * Created on 23 de abril de 2015, 18:21
- */
-
 #include <math.h> 
 #include <vector>
 #include "Protagonista.h"
 #include "HUD.h"
 #include "NivelFactory.h"
 #include "ArmaFactory.h"
-#include "Zombie.h"
 #define kVel 5
 
 #ifndef MUNDO_H
@@ -19,12 +11,14 @@
 
 class Mundo {
 public:
-    Mundo(sf::RenderWindow &w);
+    Mundo(sf::RenderWindow &w, int niv);
     Mundo(const Mundo& orig);
     virtual ~Mundo();
     
     sf::Vector2<int> posicionCursor();
-    void capturarCierre();
+    bool capturarCierre();
+    bool capturarPausa();
+    
     int ejecutarMundo();
     
     void interpolarMundo();
@@ -51,4 +45,3 @@ private:
 };
 
 #endif	/* MUNDO_H */
-

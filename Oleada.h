@@ -1,10 +1,3 @@
-/* 
- * File:   Oleada.h
- * Author: Dani
- *
- * Created on 21 de abril de 2015, 9:12
- */
-
 #ifndef OLEADA_H
 #define	OLEADA_H
 #include <SFML/Graphics.hpp>

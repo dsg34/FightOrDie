@@ -1,11 +1,3 @@
-/* 
- * File:   Proyectil.cpp
- * Author: Dani
- * 
- * Created on 7 de abril de 2015, 16:46
- */
-
-
 #include "Proyectil.h"
 
 Proyectil::Proyectil(sf::Sprite* spriteProyectil, sf::Texture* t, sf::Vector2<float> s, sf::Vector2<float> m, int d, int v, int r) {

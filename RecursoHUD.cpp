@@ -1,10 +1,3 @@
-/* 
- * File:   RecursoHUD.cpp
- * Author: Dani
- * 
- * Created on 17 de abril de 2015, 12:31
- */
-
 #include "RecursoHUD.h"
 
 RecursoHUD::RecursoHUD(int ti) {

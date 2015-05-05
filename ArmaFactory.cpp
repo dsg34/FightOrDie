@@ -1,10 +1,3 @@
-/* 
- * File:   ArmaFactory.cpp
- * Author: Dani
- * 
- * Created on 7 de abril de 2015, 15:36
- */
-
 #include "ArmaFactory.h"
 
 ArmaFactory::ArmaFactory() {

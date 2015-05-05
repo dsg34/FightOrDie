@@ -1,10 +1,3 @@
-/* 
- * File:   PersonajeFactory.h
- * Author: Dani
- *
- * Created on 10 de abril de 2015, 15:45
- */
-
 #ifndef PERSONAJEFACTORY_H
 #define	PERSONAJEFACTORY_H
 #include "Personaje.h"

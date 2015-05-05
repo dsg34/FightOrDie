@@ -1,9 +1,3 @@
-/* 
- * File:   Nivel.cpp
- * Author: Dani
- * 
- * Created on 21 de abril de 2015, 9:11
- */
 using namespace std;
 #include "Nivel.h"
 
@@ -20,10 +14,10 @@ Nivel::Nivel(int i, Protagonista* &p, sf::Vector2<int> t, std::vector<int> s, fl
     tiempoPartida.restart();
     
     numZombies=0;
+    posAnt=0;
     
     tApareceZombie=tZ;
     tApareceRecurso=15.0+rand()%15;
-    //tApareceRecurso=8;
     
     spawnsZombies=s;
     mapa=new MapLoader();
@@ -82,7 +76,7 @@ MapLoader* Nivel::getMapa(){
     return mapa;
 }
 
-void Nivel::controlarRacha(int imp){
+void Nivel::controlarRacha(int imp){//
     
     tiempo = relojRacha.getElapsedTime();
     if(imp > 0 && racha <= 20)
@@ -203,11 +197,15 @@ void Nivel::actualizarRecursosExistentes(){
 
 bool Nivel::actualizarZombiesExistentes(Protagonista* p){
     bool nivelTerminado=false;
+    bool zombieAtaca=false;
     int existe=true;
     Zombie* z;
     for(int i=0; i<zombies.size(); i++){ 
-        zombies[i]->update(*(p->getSprite()), zombies, p->getArmas());
-        existe = zombies[i]->Existe();
+        zombieAtaca=zombies[i]->update(*(p->getSprite()), zombies, p->getArmas(), recursos, mapa);
+        if(zombieAtaca==true){
+            p->recibirDanyo(zombies[i]->getDanyo());
+        }
+        existe = zombies[i]->getEstado();
         if(existe==false)
         {
             z = zombies[i];
@@ -238,37 +236,15 @@ sf::Vector2<int> Nivel::devuelvePos(){
     sf::Vector2<int> pos, tam=*hud->getTamPantalla();
     int lado = (int)rand() % spawnsZombies.size();
     //Genera aleatoriamente el lado en el que aparece el zombie
-    /*
-    switch(lado){
-        //Por la izquierda
-        case 1:     pos.x=0-tam.x/50;
-                    pos.y=(int)rand()%tam.y;    //Genera un numero aleatorio entre la posicion 0 y la maxima altura de la pantalla
-                    break;
-        //Por la derecha
-        case 2:     pos.x=tam.x+tam.x/50;
-                    pos.y=(int)rand()%tam.y;
-                    break; 
-        //Por arriba
-        case 3:     pos.x=(int)rand()%tam.x;
-                    pos.y=0-tam.y/15;                    
-                    break;             
-        //Por abajo
-        case 4:     pos.x=(int)rand()%tam.x;
-                    pos.y=tam.y+tam.y/50;                    
-                    break;
-        //Por defecto, por la derecha            
-        default:    pos.x=tam.x+tam.x/50;
-                    pos.y=(int)rand()%tam.y;
-                    break;
-    }*/
+    
      switch(lado){
         //Por la izquierda
         case 1:     pos.x=0-tam.x/50;
-                    pos.y=80/2;    //Genera un numero aleatorio entre la posicion 0 y la maxima altura de la pantalla
+                    pos.y=rand()%9;    //Genera un numero aleatorio entre la posicion 0 y la maxima altura de la pantalla
                     break;
         //Por la derecha
         case 2:     pos.x=tam.x+tam.x/50;
-                    pos.y=80/2;
+                    pos.y=rand()%9;
                     break; 
         //Por arriba
         case 3:     pos.x=(int)rand()%tam.x;
@@ -280,7 +256,7 @@ sf::Vector2<int> Nivel::devuelvePos(){
                     break;
         //Por defecto, por la derecha            
         default:    pos.x=tam.x+tam.x/50;
-                    pos.y=80/2;
+                    pos.y=rand()%9;
                     break;
     }
     
@@ -292,32 +268,16 @@ sf::Vector2<int> Nivel::devuelvePos(){
 void Nivel::crearZombies(int num){
     sf::Vector2<int> pos;
     int tipo;
-    /*
-    Zombie* aux;
-    PersonajeFactory* fab = new PersonajeFactory();
-    for(int i=0; i<num; i++)
-    {
-        pos=devuelvePos();
-        sf::Vector2<float> v;
-        v.x = (float) pos.x;
-        v.y = (float) pos.y;
-        //cout<<"Pos en x: "<<v.x <<" - Pos en y: "<<v.y<<endl;
-        tipo=devuelveTipo();
-        aux = fab->crearZombie(tipo, v);
-        zombies.push_back(aux);
-        numZombies++;
-    }*/
-    
-    int cont=2;
     Zombie* aux;
     PersonajeFactory* fab = new PersonajeFactory();
     for(int i=0; i<num; i++){
         pos=devuelvePos();
         sf::Vector2<float> v;
+        if(pos.y==posAnt)
+            pos.y+=1;
         v.x = (float) pos.x;
-        v.y = (float) pos.y*cont;
-        cont=cont+2;
-        
+        v.y = (float) pos.y*80;
+        posAnt=pos.y;
         tipo=devuelveTipo();
         aux = fab->crearZombie(tipo, v);
         zombies.push_back(aux);
@@ -358,7 +318,6 @@ void Nivel::generarRecurso(){
     recursos.push_back(r);
     
     tApareceRecurso = 15.0 + rand()%15;
-    //tApareceRecurso = 8;
 }
 
 //ESTOS TRES METODOS SON INUTILES A PRIORI

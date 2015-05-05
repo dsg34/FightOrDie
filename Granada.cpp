@@ -1,9 +1,3 @@
-/* 
- * File:   Granada.cpp
- * Author: Dani
- * 
- * Created on 8 de abril de 2015, 19:56
- */
 #include <iostream>
 #include "Granada.h"
 #include "Arma.h"

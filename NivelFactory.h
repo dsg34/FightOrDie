@@ -1,10 +1,3 @@
-/* 
- * File:   NivelFactory.h
- * Author: Dani
- *
- * Created on 23 de abril de 2015, 21:49
- */
-
 #include "Nivel.h"
 #include "Protagonista.h"
 #ifndef NIVELFACTORY_H

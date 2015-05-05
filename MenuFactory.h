@@ -1,4 +1,3 @@
-
 #ifndef MENUFACTORY_H
 #define	MENUFACTORY_H
 #include "Menu.h"
@@ -15,4 +14,3 @@ private:
 };
 
 #endif	/* MENUFACTORY_H */
-

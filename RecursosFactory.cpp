@@ -1,10 +1,3 @@
-/* 
- * File:   RecursosFactory.cpp
- * Author: Marc
- * 
- * Created on 7 de abril de 2015, 15:36
- */
-
 /*
 int bloqueante;
 

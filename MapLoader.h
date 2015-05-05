@@ -1,10 +1,3 @@
-/* 
- * File:   MapLoader.h
- * Author: monchu11_18
- *
- * Created on 20 de marzo de 2015, 20:41
- */
-
 #ifndef MAPLOADER_H
 #define	MAPLOADER_H
 

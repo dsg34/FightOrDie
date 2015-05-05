@@ -1,10 +1,3 @@
-/* 
- * File:   Oleada.cpp
- * Author: Dani
- * 
- * Created on 21 de abril de 2015, 9:12
- */
-
 #include "Oleada.h"
 
 Oleada::Oleada(int i, int niv, int numZ, float tiempo) {

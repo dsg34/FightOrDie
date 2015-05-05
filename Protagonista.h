@@ -40,6 +40,7 @@ public:
     void pintarProtagonista(sf::RenderWindow &w);
     std::vector<Recurso*> getInventario();
     void setInventario(std::vector<Recurso*> i);
+    void recibirDanyo(float cant);
     //sf::RectangleShape* getRectangle();
 private:
 

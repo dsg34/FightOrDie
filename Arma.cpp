@@ -1,10 +1,3 @@
-/* 
- * File:   Arma.cpp
- * Author: Dani
- * 
- * Created on 7 de abril de 2015, 13:08
- */
-
 #include "Arma.h"
 
 Arma::Arma(sf::Sprite* s, sf::Texture* te, int t, int d, int v, int mB, int m, float c, int r) {

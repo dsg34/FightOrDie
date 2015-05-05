@@ -1,10 +1,3 @@
-/* 
- * File:   Recurso.cpp
- * Author: Marc
- * 
- * Created on 7 de abril de 2015, 13:08
- */
-
 #include "Recurso.h"
 #include<time.h>
 

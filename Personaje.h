@@ -1,9 +1,3 @@
-/* 
- * File:   Personaje.h
- * Author: Dani
- *
- * Created on 6 de abril de 2015, 15:50
- */
 #include <iostream>
 #include <SFML/Graphics.hpp>
 

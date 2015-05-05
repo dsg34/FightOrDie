@@ -1,4 +1,3 @@
-
 #include "MapLoader.h"
 #include "lib/tinyxml/tinyxml.h"
 #include <iostream>

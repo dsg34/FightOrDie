@@ -1,10 +1,3 @@
-/* 
- * File:   NivelFactory.cpp
- * Author: Dani
- * 
- * Created on 23 de abril de 2015, 21:49
- */
-
 #include "NivelFactory.h"
 
 NivelFactory::NivelFactory() {

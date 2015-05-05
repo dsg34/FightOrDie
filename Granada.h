@@ -1,9 +1,3 @@
-/* 
- * File:   Granada.h
- * Author: Dani
- *
- * Created on 8 de abril de 2015, 19:56
- */
 #include <SFML/Graphics.hpp>
 
 #ifndef GRANADA_H

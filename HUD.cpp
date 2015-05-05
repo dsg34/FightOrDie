@@ -1,10 +1,3 @@
-/* 
- * File:   HUD.cpp
- * Author: Dani
- * 
- * Created on 15 de abril de 2015, 20:05
- */
-
 #include "HUD.h"
 
 HUD::HUD(Protagonista* p, sf::Vector2<int> tam) {

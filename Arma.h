@@ -1,10 +1,3 @@
-/* 
- * File:   Arma.h
- * Author: Dani
- *
- * Created on 7 de abril de 2015, 13:08
- */
-
 #include "Proyectil.h"
 #include "Granada.h"
 
