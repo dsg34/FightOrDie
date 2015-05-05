@@ -1,9 +1,3 @@
-/* 
- * File:   Granada.h
- * Author: Dani
- *
- * Created on 8 de abril de 2015, 19:56
- */
 #include <SFML/Graphics.hpp>
 
 #ifndef GRANADA_H
@@ -12,7 +6,7 @@
 
 class Granada {
 public:
-    Granada(sf::Vector2<float> s, sf::Vector2<float> m, int d);
+    Granada(sf::Vector2<float> s, sf::Vector2<float> m, int d, sf::Vector2<int> pos);
     Granada(const Granada& orig);
     virtual ~Granada();
     
@@ -25,6 +19,7 @@ public:
     int getDanyo();
     sf::Vector2<float> getPosAnterior();
     sf::Vector2<float> getPosActual();
+    int getEstado();
             
     void setContador(int c);
     void setIteracionExplosion(sf::Vector2<int> v);
@@ -39,11 +34,14 @@ public:
     
     int updateGranada();
     void pintarGranada(sf::RenderWindow &window);
+    
+    void mover(float x, float y);
 protected:    
     int contador;
     int velocidad;
     int rango;
     int danyo;
+    int estado;
     
     sf::Vector2<int> iteracionExplosion;
     sf::Sprite* sprite;
@@ -51,6 +49,8 @@ protected:
     
     sf::Vector2<float> posAnterior;
     sf::Vector2<float> posActual;
+    sf::Vector2<int> posicionFinal;
+    
 private:
 
 };

@@ -13,8 +13,8 @@ CND_BUILDDIR=build
 CND_DLIB_EXT=dll
 NBTMPDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fight_or_die
-OUTPUT_BASENAME=fight_or_die
+OUTPUT_PATH=${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fightordie
+OUTPUT_BASENAME=fightordie
 PACKAGE_TOP_DIR=fightordie/
 
 # Functions

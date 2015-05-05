@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=Fight_or_die
+PROJECTNAME=FightOrDie
 
 # Active Configuration
 DEFAULTCONF=Debug

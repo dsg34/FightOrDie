@@ -7,10 +7,23 @@
       <itemPath>Arma.h</itemPath>
       <itemPath>ArmaFactory.h</itemPath>
       <itemPath>Granada.h</itemPath>
+      <itemPath>HUD.h</itemPath>
+      <itemPath>Juego.h</itemPath>
+      <itemPath>MapLoader.h</itemPath>
+      <itemPath>Menu.h</itemPath>
+      <itemPath>MenuFactory.h</itemPath>
+      <itemPath>Mundo.h</itemPath>
+      <itemPath>Nivel.h</itemPath>
+      <itemPath>NivelFactory.h</itemPath>
+      <itemPath>Oleada.h</itemPath>
       <itemPath>Personaje.h</itemPath>
       <itemPath>PersonajeFactory.h</itemPath>
       <itemPath>Protagonista.h</itemPath>
       <itemPath>Proyectil.h</itemPath>
+      <itemPath>Recurso.h</itemPath>
+      <itemPath>RecursoHUD.h</itemPath>
+      <itemPath>RecursosFactory.h</itemPath>
+      <itemPath>Zombie.h</itemPath>
       <itemPath>librerias.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -23,10 +36,23 @@
       <itemPath>Arma.cpp</itemPath>
       <itemPath>ArmaFactory.cpp</itemPath>
       <itemPath>Granada.cpp</itemPath>
+      <itemPath>HUD.cpp</itemPath>
+      <itemPath>Juego.cpp</itemPath>
+      <itemPath>MapLoader.cpp</itemPath>
+      <itemPath>Menu.cpp</itemPath>
+      <itemPath>MenuFactory.cpp</itemPath>
+      <itemPath>Mundo.cpp</itemPath>
+      <itemPath>Nivel.cpp</itemPath>
+      <itemPath>NivelFactory.cpp</itemPath>
+      <itemPath>Oleada.cpp</itemPath>
       <itemPath>Personaje.cpp</itemPath>
       <itemPath>PersonajeFactory.cpp</itemPath>
       <itemPath>Protagonista.cpp</itemPath>
       <itemPath>Proyectil.cpp</itemPath>
+      <itemPath>Recurso.cpp</itemPath>
+      <itemPath>RecursoHUD.cpp</itemPath>
+      <itemPath>RecursosFactory.cpp</itemPath>
+      <itemPath>Zombie.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -40,6 +66,12 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>lib/tinyxml/tinystr.cpp</itemPath>
+    <itemPath>lib/tinyxml/tinystr.h</itemPath>
+    <itemPath>lib/tinyxml/tinyxml.cpp</itemPath>
+    <itemPath>lib/tinyxml/tinyxml.h</itemPath>
+    <itemPath>lib/tinyxml/tinyxmlerror.cpp</itemPath>
+    <itemPath>lib/tinyxml/tinyxmlparser.cpp</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -52,20 +84,25 @@
       <compileType>
         <ccTool>
           <incDir>
-            <pElem>../../../Downloads/Programas/Netbeans/SFML-2.1/include</pElem>
+            <pElem>../SFML-2.1/include</pElem>
           </incDir>
         </ccTool>
         <linkerTool>
           <linkerAddLib>
-            <pElem>../../../Downloads/Programas/Netbeans/SFML-2.1/lib</pElem>
+            <pElem>../SFML-2.1/lib</pElem>
           </linkerAddLib>
           <linkerLibItems>
             <linkerLibLibItem>sfml-graphics-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-graphics-s-d</linkerLibLibItem>
             <linkerLibLibItem>sfml-window-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-window-s-d</linkerLibLibItem>
             <linkerLibLibItem>sfml-system-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-system-s-d</linkerLibLibItem>
             <linkerLibLibItem>sfml-audio-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-audio-s-d</linkerLibLibItem>
             <linkerLibLibItem>sfml-main-d</linkerLibLibItem>
             <linkerLibLibItem>sfml-network-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-network-s-d</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -80,6 +117,42 @@
       <item path="Granada.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Granada.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="HUD.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="HUD.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Juego.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Juego.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MapLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MapLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Menu.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Menu.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MenuFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MenuFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Mundo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Mundo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Nivel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Nivel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NivelFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="NivelFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Oleada.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Oleada.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Personaje.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -96,6 +169,34 @@
       <item path="Proyectil.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Proyectil.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Recurso.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Recurso.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RecursoHUD.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RecursoHUD.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RecursosFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RecursosFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Zombie.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Zombie.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/tinyxml/tinystr.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/tinyxml/tinystr.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/tinyxml/tinyxml.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/tinyxml/tinyxml.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/tinyxml/tinyxmlerror.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/tinyxml/tinyxmlparser.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="librerias.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -125,16 +226,22 @@
           <developmentMode>5</developmentMode>
         </asmTool>
         <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fightordie</output>
           <linkerAddLib>
             <pElem>../SFML-2.1/lib</pElem>
           </linkerAddLib>
           <linkerLibItems>
-            <linkerLibLibItem>sfml-graphics</linkerLibLibItem>
-            <linkerLibLibItem>sfml-window</linkerLibLibItem>
-            <linkerLibLibItem>sfml-system</linkerLibLibItem>
-            <linkerLibLibItem>sfml-audio</linkerLibLibItem>
-            <linkerLibLibItem>sfml-main</linkerLibLibItem>
-            <linkerLibLibItem>sfml-network</linkerLibLibItem>
+            <linkerLibLibItem>sfml-graphics-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-graphics-s-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-window-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-window-s-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-system-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-system-s-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-audio-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-audio-s-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-main-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-network-d</linkerLibLibItem>
+            <linkerLibLibItem>sfml-network-s-d</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -149,6 +256,42 @@
       <item path="Granada.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Granada.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="HUD.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="HUD.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Juego.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Juego.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MapLoader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MapLoader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Menu.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Menu.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MenuFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MenuFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Mundo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Mundo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Nivel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Nivel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NivelFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="NivelFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Oleada.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Oleada.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Personaje.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -165,6 +308,34 @@
       <item path="Proyectil.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Proyectil.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Recurso.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Recurso.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RecursoHUD.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RecursoHUD.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RecursosFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RecursosFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Zombie.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Zombie.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/tinyxml/tinystr.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/tinyxml/tinystr.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/tinyxml/tinyxml.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/tinyxml/tinyxml.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/tinyxml/tinyxmlerror.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/tinyxml/tinyxmlparser.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="librerias.h" ex="false" tool="3" flavor2="0">
       </item>

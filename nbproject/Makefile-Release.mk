@@ -38,10 +38,27 @@ OBJECTFILES= \
 	${OBJECTDIR}/Arma.o \
 	${OBJECTDIR}/ArmaFactory.o \
 	${OBJECTDIR}/Granada.o \
+	${OBJECTDIR}/HUD.o \
+	${OBJECTDIR}/Juego.o \
+	${OBJECTDIR}/MapLoader.o \
+	${OBJECTDIR}/Menu.o \
+	${OBJECTDIR}/MenuFactory.o \
+	${OBJECTDIR}/Mundo.o \
+	${OBJECTDIR}/Nivel.o \
+	${OBJECTDIR}/NivelFactory.o \
+	${OBJECTDIR}/Oleada.o \
 	${OBJECTDIR}/Personaje.o \
 	${OBJECTDIR}/PersonajeFactory.o \
 	${OBJECTDIR}/Protagonista.o \
 	${OBJECTDIR}/Proyectil.o \
+	${OBJECTDIR}/Recurso.o \
+	${OBJECTDIR}/RecursoHUD.o \
+	${OBJECTDIR}/RecursosFactory.o \
+	${OBJECTDIR}/Zombie.o \
+	${OBJECTDIR}/lib/tinyxml/tinystr.o \
+	${OBJECTDIR}/lib/tinyxml/tinyxml.o \
+	${OBJECTDIR}/lib/tinyxml/tinyxmlerror.o \
+	${OBJECTDIR}/lib/tinyxml/tinyxmlparser.o \
 	${OBJECTDIR}/main.o
 
 
@@ -59,15 +76,15 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L../SFML-2.1/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lsfml-main -lsfml-network
+LDLIBSOPTIONS=-L../SFML-2.1/lib -lsfml-graphics-d -lsfml-graphics-s-d -lsfml-window-d -lsfml-window-s-d -lsfml-system-d -lsfml-system-s-d -lsfml-audio-d -lsfml-audio-s-d -lsfml-main-d -lsfml-network-d -lsfml-network-s-d
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fight_or_die.exe
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fightordie.exe
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fight_or_die.exe: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fightordie.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fight_or_die ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fightordie ${OBJECTFILES} ${LDLIBSOPTIONS}
 
 ${OBJECTDIR}/Arma.o: Arma.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -83,6 +100,51 @@ ${OBJECTDIR}/Granada.o: Granada.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Granada.o Granada.cpp
+
+${OBJECTDIR}/HUD.o: HUD.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/HUD.o HUD.cpp
+
+${OBJECTDIR}/Juego.o: Juego.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Juego.o Juego.cpp
+
+${OBJECTDIR}/MapLoader.o: MapLoader.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/MapLoader.o MapLoader.cpp
+
+${OBJECTDIR}/Menu.o: Menu.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Menu.o Menu.cpp
+
+${OBJECTDIR}/MenuFactory.o: MenuFactory.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/MenuFactory.o MenuFactory.cpp
+
+${OBJECTDIR}/Mundo.o: Mundo.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Mundo.o Mundo.cpp
+
+${OBJECTDIR}/Nivel.o: Nivel.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Nivel.o Nivel.cpp
+
+${OBJECTDIR}/NivelFactory.o: NivelFactory.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/NivelFactory.o NivelFactory.cpp
+
+${OBJECTDIR}/Oleada.o: Oleada.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Oleada.o Oleada.cpp
 
 ${OBJECTDIR}/Personaje.o: Personaje.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -104,6 +166,46 @@ ${OBJECTDIR}/Proyectil.o: Proyectil.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Proyectil.o Proyectil.cpp
 
+${OBJECTDIR}/Recurso.o: Recurso.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Recurso.o Recurso.cpp
+
+${OBJECTDIR}/RecursoHUD.o: RecursoHUD.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RecursoHUD.o RecursoHUD.cpp
+
+${OBJECTDIR}/RecursosFactory.o: RecursosFactory.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RecursosFactory.o RecursosFactory.cpp
+
+${OBJECTDIR}/Zombie.o: Zombie.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Zombie.o Zombie.cpp
+
+${OBJECTDIR}/lib/tinyxml/tinystr.o: lib/tinyxml/tinystr.cpp 
+	${MKDIR} -p ${OBJECTDIR}/lib/tinyxml
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/lib/tinyxml/tinystr.o lib/tinyxml/tinystr.cpp
+
+${OBJECTDIR}/lib/tinyxml/tinyxml.o: lib/tinyxml/tinyxml.cpp 
+	${MKDIR} -p ${OBJECTDIR}/lib/tinyxml
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/lib/tinyxml/tinyxml.o lib/tinyxml/tinyxml.cpp
+
+${OBJECTDIR}/lib/tinyxml/tinyxmlerror.o: lib/tinyxml/tinyxmlerror.cpp 
+	${MKDIR} -p ${OBJECTDIR}/lib/tinyxml
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/lib/tinyxml/tinyxmlerror.o lib/tinyxml/tinyxmlerror.cpp
+
+${OBJECTDIR}/lib/tinyxml/tinyxmlparser.o: lib/tinyxml/tinyxmlparser.cpp 
+	${MKDIR} -p ${OBJECTDIR}/lib/tinyxml
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/lib/tinyxml/tinyxmlparser.o lib/tinyxml/tinyxmlparser.cpp
+
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -115,7 +217,7 @@ ${OBJECTDIR}/main.o: main.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fight_or_die.exe
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fightordie.exe
 
 # Subprojects
 .clean-subprojects:

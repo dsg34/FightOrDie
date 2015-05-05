@@ -1,11 +1,3 @@
-/* 
- * File:   Proyectil.cpp
- * Author: Dani
- * 
- * Created on 7 de abril de 2015, 16:46
- */
-
-
 #include "Proyectil.h"
 
 Proyectil::Proyectil(sf::Sprite* spriteProyectil, sf::Texture* t, sf::Vector2<float> s, sf::Vector2<float> m, int d, int v, int r) {
@@ -30,7 +22,10 @@ Proyectil::Proyectil(sf::Sprite* spriteProyectil, sf::Texture* t, sf::Vector2<fl
 Proyectil::Proyectil(const Proyectil& orig) {
 }
 
-Proyectil::~Proyectil() {
+Proyectil::~Proyectil() 
+{
+    //delete sprite;     
+    //delete tex;    
 }
 
 /********************************METODOS GET Y SET*******************************************************/
@@ -103,17 +98,22 @@ void Proyectil::setPosActual(sf::Vector2<float> v){
 //Actualiza la posicion de la Proyectil en funcion del vector mov de la propia Proyectil, que almacena el incremento en x e y que debe realizar la Proyectil en cada iteracion
 bool Proyectil::updatePosition(){
     bool devuelve = false;    
-
+    posAnterior = sprite->getPosition();
     if(contador<rango){        
         sprite->move(2*velocidad*mov.x, 2*velocidad*mov.y);
         contador++;
     }else{
         devuelve=true;
     }
-    
+    posActual = sprite->getPosition();
+        
     return devuelve;
 }
 
 void Proyectil::setPositionSprite(sf::Vector2<float> v){
     sprite->setPosition(v.x, v.y);
+}
+
+void Proyectil::mover(float x, float y){
+    sprite->move(x,y);
 }

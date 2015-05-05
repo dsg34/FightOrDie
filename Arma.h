@@ -1,10 +1,3 @@
-/* 
- * File:   Arma.h
- * Author: Dani
- *
- * Created on 7 de abril de 2015, 13:08
- */
-
 #include "Proyectil.h"
 #include "Granada.h"
 
@@ -24,7 +17,9 @@ public:
     int getVelocidad();
     int getMunicion();
     int getMaxProyectiles();
+    int getTipo();
     
+    void aumentarMunicion(int i);
     void setCargador(std::vector<Proyectil*> v); 
     void setSecundaria(std::vector<Granada*> g);
     void setDanyo(int d);
@@ -33,16 +28,18 @@ public:
     void setMaxProyectiles(int b);
     void setMunicionSecundaria(int i);
     void setDanyoSecundaria(int ds);
+    void setTipo(int i);
     
     void aumentarDanyo();
     void aumentarMunicion();
+    void aumentarMunicionSecundaria(int i);
     
     sf::Vector2<float> vectorDisparo(sf::Vector2<float> puntoPersonaje, sf::Vector2<int> puntoCursor);
     bool disparar(sf::Vector2<float> s, sf::Vector2<int> pos);
     void dispararSecundaria(sf::Vector2<float> s, sf::Vector2<int> pos);
     void updateProyectiles();
     void pintarProyectiles(sf::RenderWindow &window);
-    void eliminarProyectil(int i);    
+    void eliminarProyectil(int i);
 protected:
     std::vector<Proyectil*> cargador;
     std::vector<Granada*> secundaria;

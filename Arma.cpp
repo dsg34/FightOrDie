@@ -1,10 +1,3 @@
-/* 
- * File:   Arma.cpp
- * Author: Dani
- * 
- * Created on 7 de abril de 2015, 13:08
- */
-
 #include "Arma.h"
 
 Arma::Arma(sf::Sprite* s, sf::Texture* te, int t, int d, int v, int mB, int m, float c, int r) {
@@ -15,7 +8,7 @@ Arma::Arma(sf::Sprite* s, sf::Texture* te, int t, int d, int v, int mB, int m, f
     danyoSecundaria=0;
     velocidad=v;
     maxProyectiles=mB;
-    municion=m;
+    municion=0;
     municionSecundaria=0;
     cadencia=c;
     rango = r;
@@ -29,7 +22,21 @@ Arma::Arma(const Arma& orig) {
     
 }
 
-Arma::~Arma() {
+Arma::~Arma() 
+{
+    for(int i = 0; i < cargador.size(); i++)
+    {
+        delete cargador[i];
+    }
+    
+            
+    for(int i = 0; i < secundaria.size(); i++)
+    {
+        delete secundaria[i];
+    }
+
+    //delete spriteProyectil;
+    //delete tex;       
 }
 /***********************************METODOS GET Y SET************************************************/
 int Arma::getDanyo(){
@@ -95,11 +102,28 @@ void Arma::aumentarMunicion(){
 void Arma::setMunicionSecundaria(int i){
     municionSecundaria=i;
 }
+
+int Arma::getTipo(){
+    return tipo;
+}
+void Arma::setTipo(int i){
+    tipo=i;
+}
+
+void Arma::aumentarMunicion(int i){
+    if(municion+i<maxProyectiles)
+        municion=municion+i;
+    else
+        municion=maxProyectiles;
+}
+void Arma::aumentarMunicionSecundaria(int i){
+    municionSecundaria+=i;
+}
 /**************************************METODOS CUSTOM***********************************************************/
 
 sf::Vector2<float> Arma::vectorDisparo(sf::Vector2<float> puntoPersonaje, sf::Vector2<int> puntoCursor){
     static const float pi = 3.141592654f;        
-    
+    //std::cout<<puntoCursor.x<<" - "<< puntoCursor.y << std::endl;
     sf::Vector2<float> devuelve;
     
     float vecX = (float) puntoCursor.x - puntoPersonaje.x;
@@ -187,26 +211,34 @@ void Arma::dispararSecundaria(sf::Vector2<float> s, sf::Vector2<int> pos){
     Granada* auxGranada;
     sf::Vector2<float> m = vectorDisparo(s, pos);
     tiempo=reloj.getElapsedTime();
-    if(municionSecundaria>0){
-        if(secundaria.size()<maxProyectiles){ //Controlamos que no se exceda un numero maximo de balas para que el programa no tenga problemas
-            auxGranada = new Granada(s, m, danyoSecundaria);//Control de velocidad y danyo
-            secundaria.push_back(auxGranada);
-            municionSecundaria--;        
-        }
+    if(secundaria.size()<maxProyectiles){ //Controlamos que no se exceda un numero maximo de balas para que el programa no tenga problemas
+        auxGranada = new Granada(s, m, danyoSecundaria, pos);//Control de velocidad y danyo
+        secundaria.push_back(auxGranada);
+        municionSecundaria--;        
     }
 }
 
 //Actualiza la posicion de cada Proyectil llamando al metodo update de la propia Proyectil
-void Arma::updateProyectiles(){
-    
+void Arma::updateProyectiles()
+{
+    Proyectil* p;
     for(int i=0;i<cargador.size(); i++){
-        if(cargador[i]->updatePosition()==true){//Si la actualizacion de posicion devuelve true, se elimina la Proyectil del cargador
+        if(cargador[i]->updatePosition()==true)
+        {//Si la actualizacion de posicion devuelve true, se elimina la Proyectil del cargador            
+            p = cargador[i];            
             cargador.erase(cargador.begin()+i);
+            delete p;
+            //i--;
         }
     }
+    Granada* g;
     for(int i=0;i<secundaria.size(); i++){
-        if(secundaria[i]->updateGranada()==2){//Si la actualizacion de posicion devuelve true, se elimina la Proyectil del cargador
+        if(secundaria[i]->updateGranada()==2)
+        {//Si la actualizacion de posicion devuelve true, se elimina la Proyectil del cargador
+            g = secundaria[i];
             secundaria.erase(secundaria.begin()+i);
+            delete g;
+            //i--;
         }
     }
    
@@ -225,7 +257,14 @@ void Arma::pintarProyectiles(sf::RenderWindow &window){
 }
 
 //Elimina una Proyectil de forma manual. Metodo necesario para cuando una Proyectil colisione con un objeto
-void Arma::eliminarProyectil(int i){
+void Arma::eliminarProyectil(int i)
+{
+    Proyectil* p;
     if(i>=0 && i<cargador.size())
+    {
+        p = cargador[i];
         cargador.erase(cargador.begin()+i);
+        delete p;
+        //i--;
+    }
 }
