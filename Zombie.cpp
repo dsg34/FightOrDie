@@ -4,7 +4,6 @@
  * 
  * Created on 22 de abril de 2015, 16:56
  */
-
 #include "Zombie.h"
 
 Zombie::Zombie(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int ve) :Personaje(s,t,p,mV,ve) {

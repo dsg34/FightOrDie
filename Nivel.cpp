@@ -212,9 +212,7 @@ int Nivel::devuelveTipo(){
         tipo = 2;//Zombie rapido
     else  //  70% de posibilidades
         tipo = 1;//Zombie normal  
-    
-    tipo = 1;
-    
+
     return tipo;
 }
 

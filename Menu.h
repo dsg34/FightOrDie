@@ -11,7 +11,7 @@ public:
     void MoveUp();
     void MoveDown();
     int GetPressedItem();
-    int update(sf::RenderWindow &window);
+    int update(sf::RenderWindow &window);    
 
 private:
     sf::Sprite* sprite;

@@ -39,6 +39,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/ArmaFactory.o \
 	${OBJECTDIR}/Granada.o \
 	${OBJECTDIR}/HUD.o \
+	${OBJECTDIR}/Juego.o \
 	${OBJECTDIR}/MapLoader.o \
 	${OBJECTDIR}/Menu.o \
 	${OBJECTDIR}/MenuFactory.o \
@@ -104,6 +105,11 @@ ${OBJECTDIR}/HUD.o: HUD.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/HUD.o HUD.cpp
+
+${OBJECTDIR}/Juego.o: Juego.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Juego.o Juego.cpp
 
 ${OBJECTDIR}/MapLoader.o: MapLoader.cpp 
 	${MKDIR} -p ${OBJECTDIR}

@@ -9,7 +9,7 @@
 #define UPDATE_TIME 1000/15
 #define RENDER_TIME 1000/60
 
-Mundo::Mundo(sf::RenderWindow &w) {
+Mundo::Mundo(sf::RenderWindow &w, int niv) {
     window=&w;
     tamPantalla=(sf::Vector2<int>) window->getSize();
     
@@ -22,7 +22,7 @@ Mundo::Mundo(sf::RenderWindow &w) {
     protagonista=fabricaPersonaje->crearProtagonista(pos);
        
     fabricaNivel=new NivelFactory();
-    nivel = fabricaNivel->crearNivel(1, protagonista, tamPantalla);
+    nivel = fabricaNivel->crearNivel(niv, protagonista, tamPantalla);
     window->setMouseCursorVisible(false);
     
     relojUpdate.restart();
@@ -46,17 +46,32 @@ Mundo::Mundo(sf::RenderWindow &w) {
     
 }
 
-void Mundo::capturarCierre()
+bool Mundo::capturarCierre()
 {
+    bool captura=false;
     //Bucle de obtenciÃƒÂ³n de eventos
     sf::Event event;
     while(window->pollEvent(event))
     {
         if(event.type == sf::Event::Closed)
         {
-            window->close();
+            captura=true;
         }
     }
+    return captura;
+}
+
+bool Mundo::capturarPausa()
+{
+    bool pausa = false;
+    //Bucle de obtenciÃƒÂ³n de eventos
+    
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+    {
+        pausa=true;
+    }
+
+    return pausa;
 }
 
 Mundo::Mundo(const Mundo& orig) {
@@ -93,8 +108,10 @@ int Mundo::ejecutarMundo(){
                         
             protagonista->update(posicionCursor(),nivel->getZombies(), nivel->getMapa(), nivel->getRecursos());
             existePersonaje=protagonista->Existe();
+            
+            //1: Menu Inicio ; 2: Menu Pausa ; 3: Menu Fin de nivel ; 4: Menu muerte ; 5: Menu ¿Desea Salir?
             if(existePersonaje==false)
-                estado=2;
+                estado=4;
             nivelAcabado = nivel->actualizarNivel(protagonista, 0,0);
             if(nivelAcabado==true)//Nivel finalizado
                 estado=3;
@@ -108,8 +125,12 @@ int Mundo::ejecutarMundo(){
             pintarMundo();
             relojRender.restart();
         }
-        capturarCierre(); 
+        if(capturarCierre())
+            estado=5;
+        if(capturarPausa())
+            estado=2;
     }
+    window->clear();
     return estado;
 }
 

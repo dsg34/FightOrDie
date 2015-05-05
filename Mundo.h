@@ -18,12 +18,14 @@
 
 class Mundo {
 public:
-    Mundo(sf::RenderWindow &w);
+    Mundo(sf::RenderWindow &w, int niv);
     Mundo(const Mundo& orig);
     virtual ~Mundo();
     
     sf::Vector2<int> posicionCursor();
-    void capturarCierre();
+    bool capturarCierre();
+    bool capturarPausa();
+    
     int ejecutarMundo();
     
     void interpolarMundo();

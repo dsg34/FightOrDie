@@ -1,4 +1,4 @@
-build/Release/MinGW-Windows/main.o: main.cpp Juego.h Protagonista.h \
+build/Release/MinGW-Windows/Juego.o: Juego.cpp Juego.h Protagonista.h \
  Arma.h Proyectil.h ../SFML-2.1/include/SFML/Graphics.hpp \
  ../SFML-2.1/include/SFML/Window.hpp ../SFML-2.1/include/SFML/System.hpp \
  ../SFML-2.1/include/SFML/Config.hpp \
