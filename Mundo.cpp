@@ -4,6 +4,7 @@
 
 Mundo::Mundo(sf::RenderWindow &w, int niv) {
     window=&w;
+    
     tamPantalla=(sf::Vector2<int>) window->getSize();
     
     fabricaPersonaje=new PersonajeFactory();
@@ -36,6 +37,9 @@ Mundo::Mundo(sf::RenderWindow &w, int niv) {
     apuntar->setOrigin(75/2,75/2);
     apuntar->setTextureRect(sf::IntRect(1*75, 4*75, 75, 75));
     apuntar->setPosition((sf::Vector2f)posicionCursor());
+    
+    px = 600;
+    py = 400;
     
 }
 
@@ -72,12 +76,54 @@ Mundo::Mundo(const Mundo& orig) {
 
 Mundo::~Mundo() {
 }
-
+/*
 sf::Vector2<int> Mundo::posicionCursor(){
     sf::Vector2<int> pos;
     sf::Mouse raton;
     pos.x = raton.getPosition(*window).x;
     pos.y = raton.getPosition(*window).y;
+    
+    return pos;
+}*/
+
+sf::Vector2<int> Mundo::posicionCursor()
+{
+    
+    sf::Vector2<int> pos;    
+    sf::Mouse raton;
+    
+    
+    if(sf::Joystick::isConnected(1))
+    {
+        float positionY = sf::Joystick::getAxisPosition(1, sf::Joystick::R);
+        float positionX = sf::Joystick::getAxisPosition(1, sf::Joystick::U);
+        
+        if(positionY < -30)
+            pos.y = py - 3;
+        else if(positionY > 30)
+            pos.y = py + 3;
+        else
+            pos.y = py;
+
+        if(positionX < -30)
+            pos.x = px - 3;
+        else if(positionX > 30)
+            pos.x = px + 3;
+        else
+            pos.x = px;
+    }
+    else
+    {
+        pos.x = raton.getPosition(*window).x;
+        pos.y = raton.getPosition(*window).y;
+    }
+    py = pos.y;
+    px = pos.x;
+    //pos.x = raton.getPosition(*window).x;
+    //pos.y = raton.getPosition(*window).y;
+    //pos.x = 600 + positionX;
+    //pos.y = 400 + positionY;
+    
     
     return pos;
 }

@@ -132,19 +132,15 @@ void Protagonista::siguienteArma(){
     for(int i=0; i<armas.size(); i++){
         if((armas[i]->getTipo()==arma->getTipo()) && encontrado==false){
             encontrado=true;
-            std::cout<<"Entra"<<std::endl; 
             if(i<armas.size()-1){                
                 arma=armas[i+1];
-                std::cout<<"Siguiente arma: "<< armas[i+1]->getTipo() << " = "<<arma->getTipo() <<std::endl; 
             }else
                 arma=armas[0];
         }
     }
     if(arma->getMunicion()<=0){
-        std::cout<<"Arma: "<<arma->getTipo()<<"Munición: "<<arma->getMunicion()<<std::endl; 
         siguienteArma();
-    }else{
-        std::cout<<"Fin "<<arma->getTipo()<<std::endl<<std::endl;   
+    }else{ 
     }
 }
 
@@ -217,30 +213,35 @@ void Protagonista::update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, M
     colisionConRecursos(recursos);
     int teclaX=0;
     int teclaY=0;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
+    
+    float positionY = sf::Joystick::getAxisPosition(1, sf::Joystick::Y);
+    float positionX = sf::Joystick::getAxisPosition(1, sf::Joystick::X);   
+        
+    
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||positionY < -20){
         teclaY=-1;
-    }else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
+    }else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) ||positionY > 20){
         teclaY=1;
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||positionX < -20){
         teclaX=-1;
-    }else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
+    }else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || positionX > 20){
         teclaX=1;
     }
     actualizaPerso(teclaX,teclaY, enemigos, m);  //por aqui no deberiamos pasar enemigos
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+    if (sf::Joystick::isButtonPressed(1,5) || sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                         //miPistola->disparar(sprite.getPosition(), posicionCursor(window));
         disparar(posmira);
                         //miProtagonista->getArma()->disparar(*miProtagonista->getSprite()->getPosition(), posicionCursor(window));
-    }else if (sf::Mouse::isButtonPressed((sf::Mouse::Right))){
+    }else if (sf::Joystick::isButtonPressed(1,4) || sf::Mouse::isButtonPressed((sf::Mouse::Right))){
                         //miPistola->dispararSecundaria(sprite.getPosition(), posicionCursor(window));
         dispararSecundaria(posmira);
     }
     if(relojCambioArma.getElapsedTime().asSeconds()>0.4){//Controlamos que reciba solamente un evento cada 0.5 segundos
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)){//Opcional CAMBIO DE ARMA CON RUEDA DE RATON
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1) || sf::Joystick::isButtonPressed(1, 3)){//Opcional CAMBIO DE ARMA CON RUEDA DE RATON
             siguienteArma();
             relojCambioArma.restart();
-        }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)){
+        }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1) || sf::Joystick::isButtonPressed(1, 2)){
             anteriorArma();
             relojCambioArma.restart();
         }        

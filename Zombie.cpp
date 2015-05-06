@@ -35,6 +35,7 @@ Zombie::~Zombie() {
 }
 
 bool Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std::vector<Arma*> armas, std::vector<Recurso*> recursos, MapLoader* mapa){
+    
     posAnterior = posActual;
     *boundingBox = sprite->getGlobalBounds();
     bool ataque = false;
@@ -51,7 +52,6 @@ bool Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std:
             }
         }else{
             calcularDireccion(protagonista);
-
             char direccion;
             if(equis>0 &&(y==0||y>0))
                 direccion = 'D';
@@ -61,9 +61,8 @@ bool Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std:
                 direccion = 'A';
             else
                 direccion = 'W';
-
+            
             colisionConBalas(armas);
-
             if(colisionConProta(protagonista, direccion)){
                 ataque=true;
                 contA=0;
@@ -223,7 +222,8 @@ void Zombie::calcularDireccion(sf::Sprite protagonista){
 
 void Zombie::detectarObstaculos(MapLoader* mapa){
     if(!mapa->Colision(sprite->getPosition().x+(equis*(25/abs(velocidad))), sprite->getPosition().y+(y*(25/abs(velocidad))),1)){          //no se puede mover
-        if(equis!=0){          //horizontal
+        if(equis!=0){        
+            //horizontal
             if(!mapa->Colision(sprite->getPosition().x+(equis*(25/abs(velocidad))), sprite->getPosition().y-25,1)){
                 if(!mapa->Colision(sprite->getPosition().x+(equis*(25/abs(velocidad))), sprite->getPosition().y+25,1)){
                     if(!mapa->Colision(sprite->getPosition().x+(equis*(25/abs(velocidad))), sprite->getPosition().y-50,1)){
@@ -273,7 +273,9 @@ void Zombie::detectarObstaculos(MapLoader* mapa){
             }
         }
     }else
+    {
         obsMapa=false;
+    }
 }
 
 void Zombie::detectarZombie(std::vector<Zombie*> zombies, char direccion, MapLoader* mapa){

@@ -110,6 +110,7 @@ bool Nivel::actualizarNivel(Protagonista* p, int impac, int fall)
     tiempo = relojRecurso.getElapsedTime();
     actualizarRecursosExistentes();
     bool terminado = actualizarZombiesExistentes(p);
+    
     //std::cout << "Segundos: " << tiempo.asSeconds()<< " - ApareceRecurso: " << tApareceRecurso << std::endl;
     if(tiempo.asSeconds()>tApareceRecurso){
         generarRecurso();
@@ -205,6 +206,7 @@ bool Nivel::actualizarZombiesExistentes(Protagonista* p){
         if(zombieAtaca==true){
             p->recibirDanyo(zombies[i]->getDanyo());
         }
+        
         existe = zombies[i]->getEstado();
         if(existe==false)
         {

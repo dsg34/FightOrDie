@@ -173,10 +173,12 @@ bool MapLoader::Colision(int x,int y, int tipo){
     int pos = tile_x + 52*tile_y;
     //std::cout << pos << std::endl;
     if(tipo == 0){
+        
         if(gids[pos] != 0){
             return false;
         }
     }else{
+        
         if(gids[pos] != 1264 && gids[pos] != 0){
             return false;
         }

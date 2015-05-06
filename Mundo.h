@@ -42,6 +42,9 @@ private:
     
     float frecuencia;
     int contInterpolacion;
+    int px;
+    int py;
+    
 };
 
 #endif	/* MUNDO_H */
