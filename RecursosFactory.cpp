@@ -1,10 +1,3 @@
-/* 
- * File:   RecursosFactory.cpp
- * Author: Marc
- * 
- * Created on 7 de abril de 2015, 15:36
- */
-
 /*
 int bloqueante;
 
@@ -37,7 +30,8 @@ RecursosFactory::RecursosFactory() {
 RecursosFactory::RecursosFactory(const RecursosFactory& orig) {
 }
 
-RecursosFactory::~RecursosFactory() {
+RecursosFactory::~RecursosFactory() 
+{
 }
 // Escopeta=2; Botiquin=3; Metralleta=4; Barril=5; Madera=6; Granada=7; Valla=8;
 Recurso* RecursosFactory::crearBotiquin()

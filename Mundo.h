@@ -1,10 +1,3 @@
-/* 
- * File:   Mundo.h
- * Author: Dani
- *
- * Created on 23 de abril de 2015, 18:21
- */
-
 #include <math.h> 
 #include <vector>
 #include "Protagonista.h"
@@ -18,13 +11,19 @@
 
 class Mundo {
 public:
-    Mundo(sf::RenderWindow &w, int niv);
+    Mundo(sf::RenderWindow &w);
     Mundo(const Mundo& orig);
     virtual ~Mundo();
     
     sf::Vector2<int> posicionCursor();
     bool capturarCierre();
     bool capturarPausa();
+    
+    void siguienteNivel();
+    void reiniciarProtagonista();
+    void reiniciarMundo();
+    void reiniciarNivel();
+    void cambiarNivel(int i);
     
     int ejecutarMundo();
     
@@ -52,4 +51,3 @@ private:
 };
 
 #endif	/* MUNDO_H */
-

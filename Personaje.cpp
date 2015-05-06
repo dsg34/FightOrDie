@@ -1,10 +1,3 @@
-/* 
- * File:   Personaje.cpp
- * Author: Dani
- * 
- * Created on 6 de abril de 2015, 15:50
- */
-
 #include "Personaje.h"
 
 Personaje::Personaje(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int ve){
@@ -27,7 +20,12 @@ Personaje::Personaje(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV
 Personaje::Personaje(const Personaje& orig) {
 }
 
-Personaje::~Personaje() {
+Personaje::~Personaje() 
+{
+    //delete sprite;
+    //delete tex;
+    delete boundingBox;
+    
 }
 
 void Personaje::render(sf::RenderWindow &window){
@@ -113,7 +111,7 @@ void Personaje::setMuriendo(bool m){
     muriendo=m;
 }
 bool Personaje::Existe(){
-    if(vida==0)
+    if(vida<=0)
         return false;
     else
         return true;

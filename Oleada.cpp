@@ -1,10 +1,3 @@
-/* 
- * File:   Oleada.cpp
- * Author: Dani
- * 
- * Created on 21 de abril de 2015, 9:12
- */
-
 #include "Oleada.h"
 
 Oleada::Oleada(int i, int niv, int numZ, float tiempo) {
@@ -13,13 +6,15 @@ Oleada::Oleada(int i, int niv, int numZ, float tiempo) {
     numZombies=numZ;
     tiempoBonificacion=tiempo;
     zombiesEliminados=0;
+    
+    nIni = 10;
 }
 
 Oleada::Oleada(const Oleada& orig) {
 }
 
-Oleada::~Oleada() {
-    
+Oleada::~Oleada() 
+{    
     
 }
 
@@ -27,24 +22,32 @@ int Oleada::getNumZombies(){
     return numZombies;
 }
 
-bool Oleada::actualizarZombiesMuertos(int i, HUD* &hud){//Actualiza el numero de zombies muertos. Autogestiona la creacion de oleadas hasta que acaba el nivel
+int Oleada::getId(){
+    return id;
+}
+
+// 0: sigue oleada; 1: cambia oleada; 2: cambia 
+int Oleada::actualizarZombiesMuertos(int i, HUD* &hud){//Actualiza el numero de zombies muertos. Autogestiona la creacion de oleadas hasta que acaba el nivel
+    int estado=0;
+    
     zombiesEliminados+=i;
-    bool nivelFinalizado=false;
     if(zombiesEliminados==numZombies){
         //Crear objeto MENSAJE "Oleada terminada. Puntuacion: x" y mostrar por pantalla
         hud->crearMensaje("Oleada terminada", -1, -1);
-        nivelFinalizado = terminarOleada();          
+        if(terminarOleada())
+            estado=2;//Nivel acabado
+        else
+            estado=1;//Oleada acabada
     }
     
-    return nivelFinalizado;
+    return estado;
 }
-bool Oleada::terminarOleada(){
+bool Oleada::terminarOleada(){    
     bool nivelFinalizado=false;
     if(id<3){       
-        crearOleada(nivel, id+1);
+        nivelFinalizado=false;        
     }else{        
         nivelFinalizado=true;
-        //crear objeto MENSAJE "Nivel terminado. Puntuacion: x" y mostrar por pantalla donde se reciba el booleano
     }
     
     return nivelFinalizado;
@@ -55,7 +58,11 @@ Oleada* Oleada::crearOleada(int i, int j){
     switch(i){
         case 1:
             switch(j){
-                case 1: crearOleada11();break;
+                case 1:
+                {   
+                    crearOleada11();
+                    break;
+                }
                 case 2: crearOleada12();break;
                 case 3: crearOleada13();break;
             }

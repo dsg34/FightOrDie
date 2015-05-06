@@ -1,9 +1,3 @@
-/* 
- * File:   RecursoHUD.h
- * Author: Dani
- *
- * Created on 17 de abril de 2015, 12:31
- */
 #include <SFML/Graphics.hpp>
 #include <sstream>
 #ifndef RECURSOHUD_H

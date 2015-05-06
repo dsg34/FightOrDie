@@ -1,10 +1,3 @@
-/* 
- * File:   Juego.h
- * Author: Dani
- *
- * Created on 4 de mayo de 2015, 21:54
- */
-
 #include <math.h> 
 #include <vector>
 #include "Protagonista.h"
@@ -26,13 +19,17 @@ class Juego {
 public:
     Juego();
     Juego(const Juego& orig);
-    virtual ~Juego();
+    virtual ~Juego();   
     
-    void reiniciarJuego();
+    void cambiarNivel();
     bool menuSalirDelJuego();
     bool capturarCierre();
     int ejecutarMenu(int tipo);
+    
+    void reiniciarJuego();
     void siguienteNivel();
+    void repetirNivel();
+    
     
     int ejecutarJuego();
 private:
@@ -42,4 +39,3 @@ private:
 };
 
 #endif	/* JUEGO_H */
-

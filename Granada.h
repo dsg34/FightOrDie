@@ -1,9 +1,3 @@
-/* 
- * File:   Granada.h
- * Author: Dani
- *
- * Created on 8 de abril de 2015, 19:56
- */
 #include <SFML/Graphics.hpp>
 
 #ifndef GRANADA_H
@@ -40,7 +34,7 @@ public:
     
     int updateGranada();
     void pintarGranada(sf::RenderWindow &window);
-    
+    bool estaExplotando();
     void mover(float x, float y);
 protected:    
     int contador;
@@ -49,6 +43,8 @@ protected:
     int danyo;
     int estado;
     
+    bool haExplotadoYa;
+    
     sf::Vector2<int> iteracionExplosion;
     sf::Sprite* sprite;
     sf::Vector2<float> mov;
@@ -56,6 +52,8 @@ protected:
     sf::Vector2<float> posAnterior;
     sf::Vector2<float> posActual;
     sf::Vector2<int> posicionFinal;
+    
+    
     
 private:
 

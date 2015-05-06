@@ -1,9 +1,3 @@
-/* 
- * File:   Granada.cpp
- * Author: Dani
- * 
- * Created on 8 de abril de 2015, 19:56
- */
 #include <iostream>
 #include "Granada.h"
 #include "Arma.h"
@@ -38,13 +32,16 @@ Granada::Granada(sf::Vector2<float> s, sf::Vector2<float> m, int d, sf::Vector2<
     estado=0;
     posActual = s;
     posAnterior = s;
+    haExplotadoYa = false;
     
 }
 
 Granada::Granada(const Granada& orig) {
 }
 
-Granada::~Granada() {
+Granada::~Granada() 
+{
+    //delete sprite;
 }
 
 /**********************************************MÉTODOS GET Y SET**********************************************************************/
@@ -140,7 +137,7 @@ int Granada::updateGranada(){
     posAnterior = sprite->getPosition();
     if(abs(posicionFinal.x-pos.x)<10 && abs(posicionFinal.y-pos.y)<10){ //&& posicionFinal.y=pos.y)
         contador=rango-20;
-        
+        haExplotadoYa = true;
     }
     if(contador==0)
         sprite->setScale(0.6,0.6);
@@ -186,4 +183,11 @@ void Granada::pintarGranada(sf::RenderWindow &window){
 
 void Granada::mover(float x, float y){
     sprite->move(x,y);
+}
+
+bool Granada::estaExplotando(){
+    if(estado== 1)
+        return true;
+    else
+        return false;
 }

@@ -1,10 +1,3 @@
-/* 
- * File:   Recurso.cpp
- * Author: Marc
- * 
- * Created on 7 de abril de 2015, 13:08
- */
-
 #include "Recurso.h"
 #include<time.h>
 
@@ -41,7 +34,11 @@ Recurso::Recurso(const Recurso& orig) {
     
 }
 
-Recurso::~Recurso() {
+Recurso::~Recurso() 
+{
+    //delete spriteRecurso;
+    // delete tex;       
+    //delete boundingBox;
 }
 /***********************************METODOS GET Y SET************************************************/
 int Recurso::getBloqueante(){

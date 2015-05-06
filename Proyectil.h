@@ -1,10 +1,3 @@
-/* 
- * File:   Proyectil.h
- * Author: Dani
- *
- * Created on 7 de abril de 2015, 16:46
- */
-
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <math.h> 

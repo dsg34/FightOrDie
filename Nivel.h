@@ -1,10 +1,3 @@
-/**************************************************************************************************************/
-/* 
- * File:   Nivel.h
- * Author: Dani
- *
- * Created on 21 de abril de 2015, 9:11
- */
 #include "MapLoader.h"
 #include "Oleada.h"
 #include "RecursosFactory.h"
@@ -28,14 +21,15 @@ public:
     int calcularPuntuacionTotal();
     int calcularPuntuacionDinamica();    
     
+    int getId();
+    
     int devuelveTipo();
     sf::Vector2<int> devuelvePos();
     
     void crearZombies(int num);
     void generarZombies();
-    bool actualizarZombiesExistentes(Protagonista* p);
-    /*void reducirSaludZombie(int i, Proyectil* p);
-    void reducirSaludZombie(int i, int d);*/
+    int actualizarZombiesExistentes(Protagonista* p);
+    void siguienteOleada();
     void generarRecurso();
     void actualizarRecursosExistentes();
     bool actualizarNivel(Protagonista* p, int impactos, int fallos);
@@ -73,6 +67,11 @@ private:
     int impactos;//Almacena los aciertos y los fallos durante la ultima racha
     int fallos;    
     int numZombies;
+    
+    int posAnt1;
+    int posAnt2;
+    int posAnt3;
+    int posAnt4;
     
     std::vector<int> spawnsZombies;//Se debe indicar por que direcciones (izquierda 1, derecha 2, arriba 3, abajo 4) saldran los zombies
 };

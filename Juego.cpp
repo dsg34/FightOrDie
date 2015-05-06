@@ -1,10 +1,3 @@
-/* 
- * File:   Juego.cpp
- * Author: Dani
- * 
- * Created on 4 de mayo de 2015, 21:54
- */
-
 #include "Juego.h"
 
 Juego::Juego() {
@@ -27,6 +20,15 @@ bool Juego::menuSalirDelJuego(){
         case -11: salir=false; break;
     }
     return salir;    
+}
+
+void Juego::cambiarNivel(){
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) && sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
+        mundo->cambiarNivel(1);
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) && sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
+        mundo->cambiarNivel(2);
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) && sf::Keyboard::isKeyPressed(sf::Keyboard::Num3))
+        mundo->cambiarNivel(3);
 }
 
 bool Juego::capturarCierre()
@@ -68,26 +70,23 @@ int Juego::ejecutarMenu(int tipo){
     return estadoMenu;
 }
 void Juego::reiniciarJuego(){
-    //int niv = mundo->getNivel()->getId();
-    int niv=1;
-    delete mundo;
-    mundo = new Mundo(*window, niv);
+    mundo->reiniciarMundo();
 }
 
 void Juego::siguienteNivel(){
-    //int niv = mundo->getNivel()->getId();
-    int niv=1;
-    delete mundo;
-    mundo = new Mundo(*window, niv);
+    mundo->siguienteNivel();
+}
+
+void Juego::repetirNivel(){
+    mundo->reiniciarNivel();
 }
 
 int Juego::ejecutarJuego()
 {        
     sf::RenderWindow w(sf::VideoMode(1300, 750), "Fight or Die");    
     window=&w;
-    mundo = new Mundo(*window, 1);
+    mundo = new Mundo(*window);
     bool salir = false; bool salirJuego = false; bool salirMenu = false;
-    bool confirmar = false;
     int estadoMundo = -1;
     int estadoMenu = -1;
     sf::Clock reloj;
@@ -96,8 +95,7 @@ int Juego::ejecutarJuego()
     //1: Menu Inicio ; 2: Menu Pausa ; 3: Menu Fin de nivel ; 4: Menu muerte ; 5: Menu ¿Desea Salir?            
     //MENU DE INICIO
     while(salir!=true){
-        delete mundo;
-        mundo = new Mundo(*window, 1);
+        
         estadoMenu = ejecutarMenu(1);    
         if(estadoMenu==-2){
             if(menuSalirDelJuego())
@@ -108,6 +106,7 @@ int Juego::ejecutarJuego()
                 while(salirMenu!=true){
                     //MENU DE PAUSA-FIN DE NIVEL-MUERTE
                     estadoMenu = ejecutarMenu(estadoMundo);
+                   
                     //-2: Salir ; -3: Jugar ; -4: Continuar ; -5: Mejoras ; -6: Siguiente nivel ; -7: Reiniciar juego; -8: Opciones ; -9: Volver a inicio      
                     switch(estadoMenu){
                         case -2: if(menuSalirDelJuego()){
@@ -116,10 +115,12 @@ int Juego::ejecutarJuego()
                         case -3: /*salir=true;*/break; //Jugar
                         case -4: salirMenu=true; break;            //Continuar
                         case -5: /*salir=true;*/break; //Mejoras
-                        case -6: /*salir=true;*/break; //Siguiente nivel                    
-                        case -7: salirMenu=true; reiniciarJuego();break; //Reiniciar juego 
+                        case -6: siguienteNivel(); salirMenu=true;break; //Siguiente nivel                    
+                        case -7: salirMenu=true; repetirNivel();break; //Reiniciar juego 
                         case -8: /*salir=true;*/break; //Opciones
-                        case -9: salirMenu=true; salirJuego=true;reiniciarJuego();break; //Volver a inicio                     
+                        case -9: salirMenu=true; salirJuego=true;reiniciarJuego();break; //Volver a inicio 
+                        case -10: salir=true;salirJuego=true;salirMenu=true; break;
+                        case -11: salirMenu=true; break;
                     }
                 }
                 salirMenu=false;

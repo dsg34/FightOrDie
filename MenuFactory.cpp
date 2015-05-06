@@ -1,4 +1,3 @@
-
 #include "MenuFactory.h"
 #include <vector>
 #include <SFML/Graphics.hpp>

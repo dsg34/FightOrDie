@@ -1,10 +1,3 @@
-/* 
- * File:   Oleada.h
- * Author: Dani
- *
- * Created on 21 de abril de 2015, 9:12
- */
-
 #ifndef OLEADA_H
 #define	OLEADA_H
 #include <SFML/Graphics.hpp>
@@ -17,8 +10,9 @@ public:
     virtual ~Oleada();
     
     //void crearNuevosZombies(std::vector<Zombie*> v);
-    bool actualizarZombiesMuertos(int i, HUD* &hud);//Actualiza el numero de zombies muertos
+    int actualizarZombiesMuertos(int i, HUD* &hud);//Actualiza el numero de zombies muertos
     bool terminarOleada();//Se llamará cuando el numero de zombies 
+    int getId();
     
     int getNumZombies();
     

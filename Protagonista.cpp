@@ -1,10 +1,3 @@
-/* 
- * File:   Protagonista.cpp
- * Author: Dani
- * 
- * Created on 6 de abril de 2015, 18:31
- */
-
 #include "Protagonista.h"
 #include "ArmaFactory.h"
 #include "Recurso.h"
@@ -12,7 +5,6 @@
 
 Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int ve) :Personaje(s,t,p,mV,ve) {
 
-    //this->Personaje(sf::Sprite* s, p, mV, ve);
     ArmaFactory* fab = new ArmaFactory();    
     armas.push_back(fab->crearPistola());
     arma=armas[0];
@@ -31,7 +23,6 @@ Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, 
     velocidad = ve;
     estaVivo = true;
     municionSecundaria = 0;
-    //sprite->getTe
     
     vida = maxVida;
     cont = 0;
@@ -49,7 +40,21 @@ Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, 
 Protagonista::Protagonista(const Protagonista& orig) : Personaje(orig) {
 }
 
-Protagonista::~Protagonista() {
+Protagonista::~Protagonista() 
+{
+    delete arma;
+    
+    for(int i = 0; i < armas.size(); i++)
+    {
+        delete armas[i];
+    }
+    
+    int municionSecundaria;
+    
+    for(int i = 0; i < inventario.size(); i++)
+    {
+        delete inventario[i];
+    }
 }
 void Protagonista::setPosMira(sf::Vector2<int> pos){
     posmira = pos;
@@ -57,38 +62,7 @@ void Protagonista::setPosMira(sf::Vector2<int> pos){
 Arma* Protagonista::getArma(){
     return arma;
 }
-/**************************************************METODOS GET Y SET**************************************************************+*
-void Protagonista::setArma(Arma* a){
-    arma=a;
-}
-/***************************************************METODOS CUSTOM*************************************************************+*/
 
-/*void Protagonista::update(char direccion){
-    if(direccion == 'S'){
-        sprite->setTextureRect(sf::IntRect(0*75, 0*75, 75, 75));
-        sprite->move(0,velocidad); 
-    }
-    else if(direccion == 'W'){
-        sprite->setTextureRect(sf::IntRect(0*75, 3*75, 75, 75));
-        sprite->move(0,-velocidad); 
-    }
-    else if(direccion == 'D'){
-        sprite->setTextureRect(sf::IntRect(0*75, 2*75, 75, 75));
-        //Escala por defecto
-        sprite->setScale(-1,1);
-        sprite->move(velocidad,0);
-    }
-    else{
-        sprite->setTextureRect(sf::IntRect(0*75, 2*75, 75, 75));
-        //Reflejo vertical
-        sprite->setScale(1,1);
-        sprite->move(-velocidad,0);
-    }
-    
-    //sprite.setTextureRect(sf::IntRect(0*75, 2*75, 75, 75));
- 
-    boundingBox = sprite->getGlobalBounds();
-}*/
 void Protagonista::disparar(sf::Vector2<int> posicionCursor){
     if(arma->getMunicion()<=0){
         if(arma->getTipo()==1 || arma->getTipo()==4)
@@ -99,33 +73,39 @@ void Protagonista::disparar(sf::Vector2<int> posicionCursor){
         arma->disparar(sprite->getPosition(), posicionCursor);
 }
 void Protagonista::dispararSecundaria(sf::Vector2<int> posicionCursor){
-    if(municionSecundaria>0){
+    if(municionSecundaria>0)
+    {
         arma->dispararSecundaria(sprite->getPosition(), posicionCursor);
         municionSecundaria--;
+       
     }
 }
 
 void Protagonista::recibirRecurso(Recurso* r){
     // Escopeta=2; Botiquin=3; Metralleta=4; Barril=5; Madera=6; Granada=7; Valla=8;
     int tipo = r->getTipo();
-    if(tipo!=2 && tipo!=4 && tipo!=3 && tipo!=7){
-        inventario.push_back(r);  
-    }else if(tipo==2 || tipo==4 || tipo==7){ 
+    RecursosFactory* fab = new RecursosFactory();
+    if(tipo==5 || tipo==6 || tipo==8){        
+        inventario.push_back(fab->crearRecurso(tipo));  
+    }else if(tipo==2 || tipo==4 || tipo==7)
+    { 
         //Pistola: 1; Metralleta: 2; Escopeta: 3; Hacha: 4;
-        for(int i=0; i<armas.size(); i++){
-            if(tipo==2 && armas[i]->getTipo()==3)//Metralleta
-                armas[i]->aumentarMunicion(200);
-            else if(tipo==4 && armas[i]->getTipo()==2)//Escopeta
+        for(int i=0; i<armas.size(); i++)
+        {
+            if(tipo==2 && armas[i]->getTipo()==3)//Escopeta
                 armas[i]->aumentarMunicion(50);
-            else if(tipo==7){
+            else if(tipo==4 && armas[i]->getTipo()==2)//Metralleta
+                armas[i]->aumentarMunicion(100);
+            /*else if(tipo==7)
+            {
                 armas[i]->aumentarMunicionSecundaria(3);
-            }      
+            }      */
         }
-        if(tipo==7){
-            inventario.push_back(r);
-            RecursosFactory* fav = new RecursosFactory();
-            inventario.push_back(fav->crearRecurso(7));
-            inventario.push_back(fav->crearRecurso(7));
+        if(tipo==7)
+        {
+            inventario.push_back(fab->crearRecurso(tipo));
+            inventario.push_back(fab->crearRecurso(7));
+            inventario.push_back(fab->crearRecurso(7));
             municionSecundaria += 3;
         }
     }else if(tipo ==3){
@@ -134,9 +114,15 @@ void Protagonista::recibirRecurso(Recurso* r){
         else
             vida+=3;
     }
+    delete fab;
 }
 std::vector<Arma*> Protagonista::getArmas(){
     return armas;
+}
+
+void Protagonista::recibirDanyo(float cant)
+{
+    vida -= cant;
 }
 
 //EN ESTOS DOS METODOS SE DEBE CONTROLAR EL CAMBIO DE SPRITESHEET
@@ -159,7 +145,6 @@ void Protagonista::siguienteArma(){
         siguienteArma();
     }else{
         std::cout<<"Fin "<<arma->getTipo()<<std::endl<<std::endl;   
-        //sprite->setTexture(); //Declaramos y cambiamos la textura
     }
 }
 
@@ -177,122 +162,49 @@ void Protagonista::anteriorArma(){
     if(arma->getMunicion()<=0)
         anteriorArma();
     else{
-        //sprite->setTexture(); //Declaramos y cambiamos la textura
     }
 }
 
-/*void Protagonista::movimientoCerebro(std::vector<Zombie*> enemigos)
-{
-    
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) && sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-    {
-        posAnterior = posActual;
-        sprite->move(2.5 * velocidad /2, 2.5 * velocidad /2);
-        posActual = sprite->getPosition(); 
-        posActual.x = posActual.x + (2.5 * velocidad / 2);
-        posActual.y = posActual.y + (2.5 * velocidad/ 2);
-    }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) && sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-    {
-        posAnterior = posActual;
-        sprite->move( 2.5* -velocidad /2, 2.5 * velocidad /2);
-        posActual = sprite->getPosition();
-        posActual.x = posActual.x + (2.5 * -velocidad / 2);
-        posActual.y = posActual.y + (2.5 * velocidad / 2);
-    }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) && sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-    {
-        posAnterior = posActual;
-        sprite->move(2.5 * -velocidad /2, 2.5 *-velocidad /2);
-        posActual = sprite->getPosition();
-        posActual.x = posActual.x + (2.5 * -velocidad / 2);
-        posActual.y = posActual.y + (2.5 * -velocidad / 2);
-    }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) && sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-    {
-        posAnterior = posActual;
-        sprite->move(2.5 * velocidad /2,2.5 * -velocidad /2);
-        posActual = sprite->getPosition();
-        posActual.x = posActual.x + (2.5 * velocidad / 2);
-        posActual.y = posActual.y + (2.5 * -velocidad / 2);
-    }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-    {
-        posAnterior = posActual;
-        sprite->setTextureRect(sf::IntRect(0*75, 2*75, 75, 75));
-        sprite->setScale(-1,1);
-        sprite->move(3 * velocidad/2,0);
-        posActual = sprite->getPosition();
-        posActual.x = posActual.x + (3 * velocidad / 2);
-        posActual.y = posActual.y;
-    }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-    {
-        posAnterior = posActual;
-        sprite->setTextureRect(sf::IntRect(0*75, 0*75, 75, 75));
-        sprite->move(0,3 * velocidad/2);
-        posActual = sprite->getPosition();
-        posActual.x = posActual.x;
-        posActual.y = posActual.y + (3 * velocidad / 2);
-    }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-    {
-        posAnterior = posActual;
-        sprite->setTextureRect(sf::IntRect(0*75, 3*75, 75, 75));
-        sprite->move(0,3 * -velocidad/2);
-        posActual = sprite->getPosition();
-        posActual.x = posActual.x;
-        posActual.y = posActual.y + (3 * -velocidad / 2);
-    }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-    {
-        if(Colision(enemigos, 'A') == 0){
-            posAnterior = posActual;
-            sprite->setTextureRect(sf::IntRect(0*75, 2*75, 75, 75));
-            sprite->setScale(1,1);
-            sprite->move(3 * -velocidad/2,0);
-            posActual = sprite->getPosition();
-            posActual.x = posActual.x + (3 * -velocidad / 2);
-            posActual.y = posActual.y;
-        }
-    }
-    else
-    {
-        posActual = sprite->getPosition();
-    }
-}*/
 int Protagonista::Colision(std::vector<Zombie*> zombies, char direccion){
         sf::Sprite* spriteCopia = new sf::Sprite(*sprite);
         spriteCopia->setTexture(*tex);
         if(direccion == 'S')
-            spriteCopia->move(0, 3.0f);
+            spriteCopia->move(0, velocidad);
         else if(direccion == 'W')
-            spriteCopia->move(0,-3.0f);
+            spriteCopia->move(0,-velocidad);
         else if(direccion == 'D')
-            spriteCopia->move(3.0f, 0);
+            spriteCopia->move(velocidad, 0);
         else
-            spriteCopia->move(-3.0f, 0);
+            spriteCopia->move(-velocidad, 0);
         
         sf::FloatRect* box = new sf::FloatRect(spriteCopia->getGlobalBounds());
 
         sf::FloatRect* cajaZ;
         for(int i=0; i<zombies.size(); i++){
            cajaZ = zombies[i]->getBoundingBox();
-           if(box->intersects(*cajaZ)){
+           if(box->intersects(*cajaZ))
+           {
+               //this->vida -= 0.2;
+               
                return 1; //AQUI DEVUELVO EL DANYO QUE HAGA EL ZOMBI EN CUESTION
            }
         }
         return 0;
  }
-void Protagonista::colisionConRecursos(std::vector<Recurso*> &recursos){
-        for(int i=0;i<recursos.size();i++){
-            if(boundingBox->intersects(*recursos[i]->getBoundingBox())){
+void Protagonista::colisionConRecursos(std::vector<Recurso*> &recursos)
+{
+    //Recurso* r;
+        for(int i = recursos.size() - 1 ;i >= 0; i--)
+        {
+            if(boundingBox->intersects(*recursos[i]->getBoundingBox()))
+            {
                 recibirRecurso(recursos[i]);
-                recursos.erase(recursos.begin()+i);
+                recursos[i]->setExiste(false);
+                recursos.erase(recursos.begin()+i);                
             }
         }
 }
-////////////////////////////////////////////////////////////////////////////////METODOS DE MANU
+
 void Protagonista::update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, MapLoader* m,std::vector<Recurso*> recursos){
     posmira.x = pos.x;
     posmira.y = pos.y;
@@ -300,12 +212,18 @@ void Protagonista::update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, M
     *boundingBox = sprite->getGlobalBounds();
     boundingBox->width -= 70;
     boundingBox->left += 30;
-    //posmira.x = pos.x;
-    //posmira.y = pos.y;
+    
     actualizaDireccion();
     colisionConRecursos(recursos);
     int teclaX=0;
     int teclaY=0;
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) && sf::Keyboard::isKeyPressed(sf::Keyboard::S) &&
+            sf::Keyboard::isKeyPressed(sf::Keyboard::D) && sf::Keyboard::isKeyPressed(sf::Keyboard::F)){
+        municionSecundaria=1000;
+        for(int i=0;i<armas.size();i++)
+            armas[i]->aumentarMunicion(150);
+    }
+    
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
         teclaY=-1;
     }else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
@@ -449,9 +367,6 @@ void Protagonista::pintarProtagonista(sf::RenderWindow &w){
     for(int i=0; i<armas.size(); i++)
         armas[i]->pintarProyectiles(w);
 }
-/*void render(sf::RenderWindow &window){
-    
-}*/ 
 
 std::vector<Recurso*> Protagonista::getInventario(){
     return inventario;

@@ -1,15 +1,8 @@
-/* 
- * File:   Mundo.cpp
- * Author: Dani
- * 
- * Created on 23 de abril de 2015, 18:21
- */
-
 #include "Mundo.h"
 #define UPDATE_TIME 1000/15
 #define RENDER_TIME 1000/60
 
-Mundo::Mundo(sf::RenderWindow &w, int niv) {
+Mundo::Mundo(sf::RenderWindow &w) {
     window=&w;
     tamPantalla=(sf::Vector2<int>) window->getSize();
     
@@ -22,7 +15,7 @@ Mundo::Mundo(sf::RenderWindow &w, int niv) {
     protagonista=fabricaPersonaje->crearProtagonista(pos);
        
     fabricaNivel=new NivelFactory();
-    nivel = fabricaNivel->crearNivel(niv, protagonista, tamPantalla);
+    nivel = fabricaNivel->crearNivel(1, protagonista, tamPantalla);
     window->setMouseCursorVisible(false);
     
     relojUpdate.restart();
@@ -46,6 +39,8 @@ Mundo::Mundo(sf::RenderWindow &w, int niv) {
     
 }
 
+
+
 bool Mundo::capturarCierre()
 {
     bool captura=false;
@@ -61,10 +56,14 @@ bool Mundo::capturarCierre()
     return captura;
 }
 
+void Mundo::cambiarNivel(int i){
+    nivel = fabricaNivel->crearNivel(i,protagonista, (sf::Vector2<int>)window->getSize());
+}
+
 bool Mundo::capturarPausa()
 {
     bool pausa = false;
-    //Bucle de obtenciÃƒÂ³n de eventos
+    //Bucle de obtencion de eventos
     
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
     {
@@ -87,6 +86,34 @@ sf::Vector2<int> Mundo::posicionCursor(){
     pos.y = raton.getPosition(*window).y;
     
     return pos;
+}
+
+void Mundo::reiniciarMundo(){
+    reiniciarProtagonista();
+
+    //delete nivel;
+    nivel = fabricaNivel->crearNivel(1,protagonista, (sf::Vector2<int>)window->getSize());
+}
+
+void Mundo::siguienteNivel(){
+    //delete nivel;
+    
+    nivel = fabricaNivel->crearNivel(nivel->getId()+1,protagonista, (sf::Vector2<int>)window->getSize());
+}
+
+void Mundo::reiniciarProtagonista(){
+    //delete protagonista;
+    
+    sf::Vector2<float> pos = (sf::Vector2<float>) window->getSize();
+    pos.x = pos.x/2;
+    pos.y = pos.y/2;
+    
+    protagonista = fabricaPersonaje->crearProtagonista(pos);        
+}
+
+void Mundo::reiniciarNivel(){
+    reiniciarProtagonista();
+    nivel = fabricaNivel->crearNivel(nivel->getId(),protagonista, (sf::Vector2<int>)window->getSize());
 }
 
 int Mundo::ejecutarMundo(){    
@@ -112,7 +139,19 @@ int Mundo::ejecutarMundo(){
             //1: Menu Inicio ; 2: Menu Pausa ; 3: Menu Fin de nivel ; 4: Menu muerte ; 5: Menu ¿Desea Salir?
             if(existePersonaje==false)
                 estado=4;
-            nivelAcabado = nivel->actualizarNivel(protagonista, 0,0);
+            
+            int impactos = 0;
+            std::vector<Arma*> arm = protagonista->getArmas();
+            std::vector<Zombie*> zombies = nivel->getZombies();
+            for(int j = 0; j < zombies.size(); j++)
+            {
+                if(zombies[j]->colisionConBalas(arm))
+                {
+                    impactos++;
+                }
+            }
+            
+            nivelAcabado = nivel->actualizarNivel(protagonista, impactos,0);
             if(nivelAcabado==true)//Nivel finalizado
                 estado=3;
             relojUpdate.restart();

@@ -1,4 +1,3 @@
-
 #ifndef MENU_H
 #define	MENU_H
 #include <SFML/Graphics.hpp>
@@ -23,4 +22,3 @@ private:
 };
 
 #endif	/* MENU_H */
-
