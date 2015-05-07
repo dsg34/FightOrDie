@@ -432,16 +432,21 @@ std::string HUD::intAString(int p){
     return devuelve;
 }
 
-void HUD::crearMensaje(std::string s, int t, int cont){
+void HUD::crearMensaje(std::string s, int t, int cont, int p){
     mensaje = new sf::Text();
     int tam;
     if(t>0)
         tam=t;
     else
         tam=60;
+    
     mensaje->setFont(*fuente);
     mensaje->setCharacterSize(60);
-    mensaje->setPosition(tamPantalla->x/4+((tamPantalla->x/20)), tamPantalla->y/2-(tamPantalla->y/10));
+    if(p == 0)
+        mensaje->setPosition(tamPantalla->x/4+((tamPantalla->x/20)), tamPantalla->y/2-(tamPantalla->y/10));
+    else
+        mensaje->setPosition(100, 100);
+
     mensaje->setString(s);
     
     if(cont>25)

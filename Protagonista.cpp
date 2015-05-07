@@ -8,9 +8,9 @@ Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, 
     ArmaFactory* fab = new ArmaFactory();    
     armas.push_back(fab->crearPistola());
     arma=armas[0];
-    armas.push_back(fab->crearHacha());
-    armas.push_back(fab->crearEscopeta());
     armas.push_back(fab->crearMetralleta());
+    armas.push_back(fab->crearEscopeta());
+    armas.push_back(fab->crearHacha());
     
     tex = new sf::Texture(*t);
     sprite = new sf::Sprite(*s);
@@ -22,7 +22,7 @@ Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, 
     maxVida = mV;
     velocidad = ve;
     estaVivo = true;
-    municionSecundaria = 0;
+    municionSecundaria = 5;
     
     vida = maxVida;
     cont = 0;
@@ -132,15 +132,19 @@ void Protagonista::siguienteArma(){
     for(int i=0; i<armas.size(); i++){
         if((armas[i]->getTipo()==arma->getTipo()) && encontrado==false){
             encontrado=true;
+            std::cout<<"Entra"<<std::endl; 
             if(i<armas.size()-1){                
                 arma=armas[i+1];
+                std::cout<<"Siguiente arma: "<< armas[i+1]->getTipo() << " = "<<arma->getTipo() <<std::endl; 
             }else
                 arma=armas[0];
         }
     }
     if(arma->getMunicion()<=0){
+        std::cout<<"Arma: "<<arma->getTipo()<<"Munición: "<<arma->getMunicion()<<std::endl; 
         siguienteArma();
-    }else{ 
+    }else{
+        std::cout<<"Fin "<<arma->getTipo()<<std::endl<<std::endl;   
     }
 }
 
@@ -201,7 +205,7 @@ void Protagonista::colisionConRecursos(std::vector<Recurso*> &recursos)
         }
 }
 
-void Protagonista::update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, MapLoader* m,std::vector<Recurso*> recursos){
+int Protagonista::update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, MapLoader* m,std::vector<Recurso*> recursos){
     posmira.x = pos.x;
     posmira.y = pos.y;
     posAnterior = sprite->getPosition();
@@ -213,7 +217,6 @@ void Protagonista::update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, M
     colisionConRecursos(recursos);
     int teclaX=0;
     int teclaY=0;
-    
     float positionY = sf::Joystick::getAxisPosition(1, sf::Joystick::Y);
     float positionX = sf::Joystick::getAxisPosition(1, sf::Joystick::X);   
         
@@ -246,8 +249,12 @@ void Protagonista::update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, M
             relojCambioArma.restart();
         }        
     }
+    int fallos = 0;
     for(int i=0; i<armas.size(); i++)
-        armas[i]->updateProyectiles();
+    {
+        fallos += armas[i]->updateProyectiles();
+    }
+    return fallos;
 }
 
 void Protagonista::actualizaDireccion(){

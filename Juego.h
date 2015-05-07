@@ -19,13 +19,18 @@ class Juego {
 public:
     Juego();
     Juego(const Juego& orig);
-    virtual ~Juego();
+    virtual ~Juego();   
     
-    void reiniciarJuego();
+    int menuMejoras();
+    void cambiarNivel();
     bool menuSalirDelJuego();
     bool capturarCierre();
     int ejecutarMenu(int tipo);
+    
+    void reiniciarJuego();
     void siguienteNivel();
+    void repetirNivel();
+    
     
     int ejecutarJuego();
 private:

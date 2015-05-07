@@ -24,11 +24,11 @@ Menu::Menu(sf::Sprite* s, sf::Texture* t, sf::Font* font, int x, int y, std::vec
         menu.push_back(new sf::Text(aux));
     }
     
-    if(menu[0]->getString()!=sf::String("Abandonar el juego"))
+    if(menu[0]->getString()!=sf::String("ABANDONAR EL JUEGO") && menu[0]->getString()!=sf::String("NIVEL FINALIZADO") && menu[0]->getString()!=sf::String("MEJORAR ARMA")&& menu[0]->getString()!=sf::String("HAS MUERTO"))
         selectedItemIndex = 0;
     else{
-        selectedItemIndex = 1;
-        menu[0]->setColor(sf::Color::White);
+        selectedItemIndex = 1;        
+        menu[0]->setColor(sf::Color::Yellow);
         menu[1]->setColor(sf::Color::Red);
     }
 }
@@ -68,6 +68,16 @@ int Menu::update(sf::RenderWindow &window){
                 devuelve=-10;
             else if(menu[devuelve]->getString() == "No")
                 devuelve=-11;
+            else if(menu[devuelve]->getString() == "Atras")
+                devuelve=-12;
+            else if(menu[devuelve]->getString() == "Mejorar pistola")
+                devuelve=-13;
+            else if(menu[devuelve]->getString() == "Mejorar metralleta")
+                devuelve=-14;
+            else if(menu[devuelve]->getString() == "Mejorar escopeta")
+                devuelve=-15; 
+            else if(menu[devuelve]->getString() == "Mejorar hacha")
+                devuelve=-16;
         }
     }
    
@@ -83,7 +93,7 @@ void Menu::draw(sf::RenderWindow &window){
 }
 
 void Menu::MoveUp(){
-    if(selectedItemIndex - 1 >= 0 && (menu[selectedItemIndex-1]->getString()!=sf::String("Abandonar el juego"))){
+    if(selectedItemIndex - 1 >= 0 && (menu[selectedItemIndex-1]->getString()!=sf::String("ABANDONAR EL JUEGO")) && (menu[selectedItemIndex-1]->getString()!=sf::String("HAS MUERTO")) && (menu[selectedItemIndex-1]->getString()!=sf::String("NIVEL FINALIZADO")) && (menu[selectedItemIndex-1]->getString()!=sf::String("MEJORAR ARMA")) ){
         menu[selectedItemIndex]->setColor(sf::Color::White);
         selectedItemIndex--;
         menu[selectedItemIndex]->setColor(sf::Color::Red);

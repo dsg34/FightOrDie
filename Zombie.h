@@ -22,7 +22,7 @@ public:
     bool colisionConProta(sf::Sprite protagonista, char direccion);
     bool colisionConZombies(std::vector<Zombie*> zombies, char direccion);
     bool colisionConBalas(std::vector<Arma*> armas);
-    bool colisionConGranadas(Arma* armaActual);
+    bool colisionConGranadas(std::vector<Arma*> armas);
     void recibirDanyo(int danyo);
     void muere();
     void actualizaMuerte();

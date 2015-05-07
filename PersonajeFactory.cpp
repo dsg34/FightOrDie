@@ -8,8 +8,7 @@ PersonajeFactory::PersonajeFactory(const PersonajeFactory& orig) {
 }
 
 PersonajeFactory::~PersonajeFactory() {
-    delete zombie;
-    delete protagonista;
+    
 }
 
 Protagonista* PersonajeFactory::crearProtagonista(sf::Vector2<float> p){

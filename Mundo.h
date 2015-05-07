@@ -11,13 +11,25 @@
 
 class Mundo {
 public:
-    Mundo(sf::RenderWindow &w, int niv);
+    Mundo(sf::RenderWindow &w);
     Mundo(const Mundo& orig);
     virtual ~Mundo();
     
     sf::Vector2<int> posicionCursor();
     bool capturarCierre();
     bool capturarPausa();
+    
+    int getPuntuacionMundo();
+    int setPuntuacionMundo(int p);
+    Protagonista* getProtagonista();
+    void siguienteNivel();
+    void reiniciarProtagonista();
+    void reiniciarMundo();
+    void reiniciarNivel();
+    void cambiarNivel(int i);
+    
+    void setPuntuacionNivel(int p);
+    int getPuntuacionNivel();
     
     int ejecutarMundo();
     
@@ -44,7 +56,6 @@ private:
     int contInterpolacion;
     int px;
     int py;
-    
 };
 
 #endif	/* MUNDO_H */

@@ -1,3 +1,9 @@
+/* 
+ * File:   Granada.cpp
+ * Author: Dani
+ * 
+ * Created on 8 de abril de 2015, 19:56
+ */
 #include <iostream>
 #include "Granada.h"
 #include "Arma.h"
@@ -32,6 +38,7 @@ Granada::Granada(sf::Vector2<float> s, sf::Vector2<float> m, int d, sf::Vector2<
     estado=0;
     posActual = s;
     posAnterior = s;
+    haExplotadoYa = false;
     
 }
 
@@ -126,7 +133,7 @@ void Granada::setRecorteSprite(int i, int j){
     sprite->setTextureRect(sf::IntRect(i*75, j*75, 75, 75));
 }
   
-//Actualiza la posicion de la Granada y devuelve 0 en caso de estar en movimiento sin explotar, 1 en caso de estar explotando (debe causar daño) y 2 si ha acabado su ciclo
+//Actualiza la posicion de la Granada y devuelve 0 en caso de estar en movimiento sin explotar, 1 en caso de estar explotando (debe causar daÃ±o) y 2 si ha acabado su ciclo
 int Granada::updateGranada(){
     int devuelve = 0;
     //Posicion inicial de las imagenes de explosion
@@ -134,9 +141,9 @@ int Granada::updateGranada(){
             
     sf::Vector2<int> pos = (sf::Vector2<int>)sprite->getPosition() ;
     posAnterior = sprite->getPosition();
-    if(abs(posicionFinal.x-pos.x)<10 && abs(posicionFinal.y-pos.y)<10){ //&& posicionFinal.y=pos.y)
+    if(abs(posicionFinal.x-pos.x)<10 && abs(posicionFinal.y-pos.y)<10 && haExplotadoYa == false){ //&& posicionFinal.y=pos.y)
         contador=rango-20;
-        
+        haExplotadoYa = true;
     }
     if(contador==0)
         sprite->setScale(0.6,0.6);
@@ -168,6 +175,7 @@ int Granada::updateGranada(){
     }else{//Cuando se acaba el movimiento y la explosion, se devuelve 2 para eliminar la Granada
         devuelve = 2;
         setRecorteSprite(1,0);
+        //std::cout<<"La explosion acaba"<<std::endl;
     }
     contador++;
     estado = devuelve;
@@ -182,4 +190,10 @@ void Granada::pintarGranada(sf::RenderWindow &window){
 
 void Granada::mover(float x, float y){
     sprite->move(x,y);
+}
+bool Granada::estaExplotando(){
+    if(estado== 1)
+        return true;
+    else
+        return false;
 }

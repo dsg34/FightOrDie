@@ -111,7 +111,7 @@ void Personaje::setMuriendo(bool m){
     muriendo=m;
 }
 bool Personaje::Existe(){
-    if(vida==0)
+    if(vida<=0)
         return false;
     else
         return true;

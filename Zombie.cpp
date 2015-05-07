@@ -35,7 +35,6 @@ Zombie::~Zombie() {
 }
 
 bool Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std::vector<Arma*> armas, std::vector<Recurso*> recursos, MapLoader* mapa){
-    
     posAnterior = posActual;
     *boundingBox = sprite->getGlobalBounds();
     bool ataque = false;
@@ -44,6 +43,9 @@ bool Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std:
     boundingBox->width -= 70;
     boundingBox->left += 30;  
     if(muriendo==false){
+        colisionConBalas(armas);
+        colisionConGranadas(armas);
+        
         if(atacando==true){        
             frecuencia = reloj.getElapsedTime();            
             if(frecuencia.asSeconds()>0.1){
@@ -52,6 +54,7 @@ bool Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std:
             }
         }else{
             calcularDireccion(protagonista);
+
             char direccion;
             if(equis>0 &&(y==0||y>0))
                 direccion = 'D';
@@ -61,14 +64,15 @@ bool Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std:
                 direccion = 'A';
             else
                 direccion = 'W';
+
             
-            colisionConBalas(armas);
+
             if(colisionConProta(protagonista, direccion)){
                 ataque=true;
                 contA=0;
                 atacando=true;
             }else{
-                colisionConBalas(armas);
+                
                 detectarObstaculos(mapa);
                 detectarZombie(zombies, direccion, mapa);
 
@@ -222,8 +226,7 @@ void Zombie::calcularDireccion(sf::Sprite protagonista){
 
 void Zombie::detectarObstaculos(MapLoader* mapa){
     if(!mapa->Colision(sprite->getPosition().x+(equis*(25/abs(velocidad))), sprite->getPosition().y+(y*(25/abs(velocidad))),1)){          //no se puede mover
-        if(equis!=0){        
-            //horizontal
+        if(equis!=0){          //horizontal
             if(!mapa->Colision(sprite->getPosition().x+(equis*(25/abs(velocidad))), sprite->getPosition().y-25,1)){
                 if(!mapa->Colision(sprite->getPosition().x+(equis*(25/abs(velocidad))), sprite->getPosition().y+25,1)){
                     if(!mapa->Colision(sprite->getPosition().x+(equis*(25/abs(velocidad))), sprite->getPosition().y-50,1)){
@@ -273,9 +276,7 @@ void Zombie::detectarObstaculos(MapLoader* mapa){
             }
         }
     }else
-    {
         obsMapa=false;
-    }
 }
 
 void Zombie::detectarZombie(std::vector<Zombie*> zombies, char direccion, MapLoader* mapa){
@@ -440,33 +441,40 @@ bool Zombie::colisionConZombies(std::vector<Zombie*> zombies, char direccion){
     return false;
 }
 bool Zombie::colisionConBalas(std::vector<Arma*> armas){
-    for(int j=0; j<armas.size();j++){
-        std::vector<Proyectil*> cargador = armas[j]->getCargador();
-        for(int i=0; i<cargador.size();i++){
-            if(boundingBox->intersects(cargador[i]->getSprite()->getGlobalBounds())){
-                armas[j]->eliminarProyectil(i);
-                recibirDanyo(armas[j]->getDanyo());
-                if(vida==0){
-                    muriendo=true;
-                    muere();
+    if(muriendo==false){
+        for(int j=0; j<armas.size();j++){
+            std::vector<Proyectil*> cargador = armas[j]->getCargador();
+            for(int i=0; i<cargador.size();i++){
+                if(boundingBox->intersects(cargador[i]->getSprite()->getGlobalBounds())){
+                    armas[j]->eliminarProyectil(i);
+                    recibirDanyo(armas[j]->getDanyo());
+                    if(vida<=0){
+                        muere();
+                    }
+                    return true;
                 }
-                return true;
             }
-        }
-    } 
+        } 
+    }
     return false;
 }
-bool Zombie::colisionConGranadas(Arma* armaActual){
-    std::vector<Granada*> granadas = armaActual->getSecundaria();
-    for(int i=0; i<granadas.size(); i++){
-        if(boundingBox->intersects(granadas[i]->getSprite()->getGlobalBounds())){
-            recibirDanyo(granadas[i]->getDanyo());
-            if(vida==0){
-                muriendo=true;
-                muere();
+bool Zombie::colisionConGranadas(std::vector<Arma*> armas){
+    if(muriendo==false){
+        for(int j=0; j<armas.size();j++){
+            std::vector<Granada*> granadas = armas[j]->getSecundaria();
+            for(int i=0; i<granadas.size(); i++){
+                if(boundingBox->intersects(granadas[i]->getSprite()->getGlobalBounds()) && granadas[i]->estaExplotando()){
+                    recibirDanyo(granadas[i]->getDanyo());
+                    if(vida<=0){
+                        muere();
+                        //std::cout<<"Palmé"<<std::endl;
+                    }
+                    return true;
+                }
             }
         }
     }
+    return false;
 }
 void Zombie::recibirDanyo(int danyo){
     vida -= danyo;

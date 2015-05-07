@@ -2,9 +2,8 @@
 #define UPDATE_TIME 1000/15
 #define RENDER_TIME 1000/60
 
-Mundo::Mundo(sf::RenderWindow &w, int niv) {
+Mundo::Mundo(sf::RenderWindow &w) {
     window=&w;
-    
     tamPantalla=(sf::Vector2<int>) window->getSize();
     
     fabricaPersonaje=new PersonajeFactory();
@@ -16,7 +15,7 @@ Mundo::Mundo(sf::RenderWindow &w, int niv) {
     protagonista=fabricaPersonaje->crearProtagonista(pos);
        
     fabricaNivel=new NivelFactory();
-    nivel = fabricaNivel->crearNivel(niv, protagonista, tamPantalla);
+    nivel = fabricaNivel->crearNivel(1, protagonista, tamPantalla);
     window->setMouseCursorVisible(false);
     
     relojUpdate.restart();
@@ -37,16 +36,16 @@ Mundo::Mundo(sf::RenderWindow &w, int niv) {
     apuntar->setOrigin(75/2,75/2);
     apuntar->setTextureRect(sf::IntRect(1*75, 4*75, 75, 75));
     apuntar->setPosition((sf::Vector2f)posicionCursor());
-    
     px = 600;
     py = 400;
-    
 }
+
+
 
 bool Mundo::capturarCierre()
 {
     bool captura=false;
-    //Bucle de obtenciÃƒÂ³n de eventos
+    //Bucle de obtencion de eventos
     sf::Event event;
     while(window->pollEvent(event))
     {
@@ -58,10 +57,27 @@ bool Mundo::capturarCierre()
     return captura;
 }
 
+Protagonista* Mundo::getProtagonista(){
+    return protagonista;
+}
+
+int Mundo::getPuntuacionMundo(){
+    return nivel->getPuntuacion();
+}
+
+int Mundo::setPuntuacionMundo(int p){
+    nivel->setPuntuacion(p);
+}
+
+void Mundo::cambiarNivel(int i){
+    protagonista->getSprite()->setPosition(tamPantalla.x/2, tamPantalla.y);
+    nivel = fabricaNivel->crearNivel(i,protagonista, (sf::Vector2<int>)window->getSize());
+}
+
 bool Mundo::capturarPausa()
 {
     bool pausa = false;
-    //Bucle de obtenciÃƒÂ³n de eventos
+    //Bucle de obtencion de eventos
     
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
     {
@@ -76,15 +92,6 @@ Mundo::Mundo(const Mundo& orig) {
 
 Mundo::~Mundo() {
 }
-/*
-sf::Vector2<int> Mundo::posicionCursor(){
-    sf::Vector2<int> pos;
-    sf::Mouse raton;
-    pos.x = raton.getPosition(*window).x;
-    pos.y = raton.getPosition(*window).y;
-    
-    return pos;
-}*/
 
 sf::Vector2<int> Mundo::posicionCursor()
 {
@@ -128,6 +135,35 @@ sf::Vector2<int> Mundo::posicionCursor()
     return pos;
 }
 
+
+void Mundo::reiniciarMundo(){
+    reiniciarProtagonista();
+
+    //delete nivel;
+    nivel = fabricaNivel->crearNivel(1,protagonista, (sf::Vector2<int>)window->getSize());
+}
+
+void Mundo::siguienteNivel(){
+    //delete nivel;
+    protagonista->getSprite()->setPosition(tamPantalla.x/2, tamPantalla.y/2);
+    nivel = fabricaNivel->crearNivel(nivel->getId()+1,protagonista, (sf::Vector2<int>)window->getSize());
+}
+
+void Mundo::reiniciarProtagonista(){
+    //delete protagonista;
+    
+    sf::Vector2<float> pos = (sf::Vector2<float>) window->getSize();
+    pos.x = pos.x/2;
+    pos.y = pos.y/2;
+    
+    protagonista = fabricaPersonaje->crearProtagonista(pos);        
+}
+
+void Mundo::reiniciarNivel(){
+    reiniciarProtagonista();
+    nivel = fabricaNivel->crearNivel(nivel->getId(),protagonista, (sf::Vector2<int>)window->getSize());
+}
+
 int Mundo::ejecutarMundo(){    
     int estado=0;   //estado 0: Sigue en juego; estado 1: Menu de pausa; estado 2: Menu de "Has muerto"; estado 3: Nivel finalizado; estado 4: Juego finalizado
     bool nivelAcabado=false;  
@@ -145,7 +181,10 @@ int Mundo::ejecutarMundo(){
             sf::Event event;
                                              
                         
-            protagonista->update(posicionCursor(),nivel->getZombies(), nivel->getMapa(), nivel->getRecursos());
+            int fallos;
+                        
+            fallos = protagonista->update(posicionCursor(),nivel->getZombies(), nivel->getMapa(), nivel->getRecursos());
+            
             existePersonaje=protagonista->Existe();
             
             //1: Menu Inicio ; 2: Menu Pausa ; 3: Menu Fin de nivel ; 4: Menu muerte ; 5: Menu ¿Desea Salir?
@@ -161,11 +200,20 @@ int Mundo::ejecutarMundo(){
                 {
                     impactos++;
                 }
+                if(zombies[j]->colisionConGranadas(arm))
+                {
+                    impactos += 8;
+                }
             }
             
-            nivelAcabado = nivel->actualizarNivel(protagonista, impactos,0);
-            if(nivelAcabado==true)//Nivel finalizado
+            nivelAcabado = nivel->actualizarNivel(protagonista, impactos,fallos);
+            if(nivelAcabado==true){//Nivel finalizado                
+                nivel->calcularPuntuacionTotal();
+                pintarMundo();
+                sf::Time delayTime = sf::seconds(10);
+                sf::sleep(delayTime);
                 estado=3;
+            }
             relojUpdate.restart();
         }
         
@@ -183,6 +231,14 @@ int Mundo::ejecutarMundo(){
     }
     window->clear();
     return estado;
+}
+
+void Mundo::setPuntuacionNivel(int p){
+    nivel->setPuntuacion(p);
+}
+    
+int Mundo::getPuntuacionNivel(){
+    return nivel->getPuntuacion();
 }
 
 void Mundo::interpolarMundo(){

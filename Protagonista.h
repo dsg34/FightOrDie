@@ -35,7 +35,7 @@ public:
     void colisionConRecursos(std::vector<Recurso*> &recursos);
     void actualizaDireccion();
     void actualizaPerso(int teclaX, int teclaY, std::vector<Zombie*> enemigos, MapLoader* m);
-    void update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, MapLoader* m,std::vector<Recurso*> recursos);
+    int update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, MapLoader* m,std::vector<Recurso*> recursos);
     void setPosMira(sf::Vector2<int>);
     void pintarProtagonista(sf::RenderWindow &w);
     std::vector<Recurso*> getInventario();

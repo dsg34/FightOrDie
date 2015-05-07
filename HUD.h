@@ -60,7 +60,7 @@ public:
     
     void pintarHUD(sf::RenderWindow &window);
     
-    void crearMensaje(std::string s, int t, int cont);
+    void crearMensaje(std::string s, int t, int cont, int p);
 private:
     sf::Texture* textura;
     sf::Font* fuente;

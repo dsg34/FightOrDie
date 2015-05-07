@@ -46,25 +46,35 @@ Menu* MenuFactory::hacerMenu(int x, int y, int id){
     
     sf::Font* fuente=new sf::Font(font);
     std::vector<std::string> apartados;
-    if(id==1){
+    if(id==1){                                  //Inicio
         apartados.push_back("Jugar");
-    }else if(id==2){
+    }else if(id==2){                            //Pausa
         apartados.push_back("Continuar");
         apartados.push_back("Mejoras");
         apartados.push_back("Volver a inicio");
-    }else if(id==3){
+    }else if(id==3){                            //Fin de nivel
+        apartados.push_back("NIVEL FINALIZADO");     /**/
         apartados.push_back("Siguiente nivel");
         apartados.push_back("Volver a inicio");
-    }else if(id==4){
+    }else if(id==4){                            //Menu muerte
+        apartados.push_back("HAS MUERTO");           /**/
         apartados.push_back("Reiniciar juego");
         apartados.push_back("Volver a inicio");
     }
     
-    if(id==5){
-        apartados.push_back("Abandonar el juego");
+    if(id==5){                                  //Menu salir
+        apartados.push_back("ABANDONAR EL JUEGO");   /**/
         apartados.push_back("Si");
         apartados.push_back("No");
-    }else{
+    }else if(id==6){                            //Menu mejoras
+        apartados.push_back("MEJORAR ARMA");         /**/
+        apartados.push_back("Mejorar pistola");
+        apartados.push_back("Mejorar metralleta");
+        apartados.push_back("Mejorar escopeta");
+        apartados.push_back("Mejorar hacha");
+        apartados.push_back("Atras");
+    }
+    else{
         apartados.push_back("Opciones");
         apartados.push_back("Salir");
     }

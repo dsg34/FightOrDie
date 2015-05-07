@@ -18,6 +18,7 @@ public:
     int getMunicion();
     int getMaxProyectiles();
     int getTipo();
+    int getMejora();
     
     void aumentarMunicion(int i);
     void setCargador(std::vector<Proyectil*> v); 
@@ -29,6 +30,7 @@ public:
     void setMunicionSecundaria(int i);
     void setDanyoSecundaria(int ds);
     void setTipo(int i);
+    void aumentarMejora();
     
     void aumentarDanyo();
     void aumentarMunicion();
@@ -37,7 +39,7 @@ public:
     sf::Vector2<float> vectorDisparo(sf::Vector2<float> puntoPersonaje, sf::Vector2<int> puntoCursor);
     bool disparar(sf::Vector2<float> s, sf::Vector2<int> pos);
     void dispararSecundaria(sf::Vector2<float> s, sf::Vector2<int> pos);
-    void updateProyectiles();
+    int updateProyectiles();
     void pintarProyectiles(sf::RenderWindow &window);
     void eliminarProyectil(int i);
 protected:
@@ -52,6 +54,7 @@ protected:
     int rango;
     float cadencia;
     int tipo;
+    int mejora;
     sf::Clock reloj;
     sf::Time tiempo;
     sf::Sprite* spriteProyectil;

@@ -5,7 +5,7 @@ Arma::Arma(sf::Sprite* s, sf::Texture* te, int t, int d, int v, int mB, int m, f
     tex = new sf::Texture(*te);
     tipo=t;
     danyo=d;    
-    danyoSecundaria=0;
+    danyoSecundaria=4;
     velocidad=v;
     maxProyectiles=mB;
     municion=0;
@@ -16,6 +16,7 @@ Arma::Arma(sf::Sprite* s, sf::Texture* te, int t, int d, int v, int mB, int m, f
     cargador = std::vector<Proyectil*>();   
     reloj.restart();
     tiempo=reloj.getElapsedTime();
+    mejora = 0;
 }
 
 Arma::Arma(const Arma& orig) {
@@ -141,6 +142,13 @@ sf::Vector2<float> Arma::vectorDisparo(sf::Vector2<float> puntoPersonaje, sf::Ve
     return devuelve;
 }
 
+int Arma::getMejora(){
+    return mejora;
+    
+}
+void Arma::aumentarMejora(){
+    mejora++;
+}
 //El metodo disparar crea una nueva Proyectil de las disparadas por la Arma a no ser que se haya alcanzado el maximo de Proyectiles simultaneas disponible
 bool Arma::disparar(sf::Vector2<float> s, sf::Vector2<int> pos){
     bool agotadas=false;    
@@ -219,8 +227,10 @@ void Arma::dispararSecundaria(sf::Vector2<float> s, sf::Vector2<int> pos){
 }
 
 //Actualiza la posicion de cada Proyectil llamando al metodo update de la propia Proyectil
-void Arma::updateProyectiles()
+int Arma::updateProyectiles()
 {
+    int fallos = 0;
+    
     Proyectil* p;
     for(int i=0;i<cargador.size(); i++){
         if(cargador[i]->updatePosition()==true)
@@ -228,6 +238,7 @@ void Arma::updateProyectiles()
             p = cargador[i];            
             cargador.erase(cargador.begin()+i);
             delete p;
+            fallos++;
             //i--;
         }
     }
@@ -241,7 +252,7 @@ void Arma::updateProyectiles()
             //i--;
         }
     }
-   
+    return fallos;
 }
 
 //Pinta cada Proyectil

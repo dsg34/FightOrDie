@@ -14,7 +14,10 @@ Nivel::Nivel(int i, Protagonista* &p, sf::Vector2<int> t, std::vector<int> s, fl
     tiempoPartida.restart();
     
     numZombies=0;
-    posAnt=0;
+    posAnt1=0;
+    posAnt2=0;
+    posAnt3=0;
+    posAnt4=0;
     
     tApareceZombie=tZ;
     tApareceRecurso=15.0+rand()%15;
@@ -54,12 +57,21 @@ Nivel::~Nivel()
     
 }
 
+int Nivel::getId(){
+    return id;
+}
+
 std::vector<Recurso*> Nivel::getRecursos(){
     return recursos;
 }
 
 std::vector<Zombie*> Nivel::getZombies(){
     return zombies;
+}
+
+void Nivel::siguienteOleada(){
+    oleada = oleada->crearOleada(id, oleada->getId()+1);
+    numZombies=0;
 }
     
 void Nivel::addRecurso(Recurso* r){
@@ -85,19 +97,20 @@ void Nivel::controlarRacha(int imp){//
         relojRacha.restart();
         puntuacion += 5 * racha;
     }
-    else if(tiempo.asSeconds() > 1)
+    else if(tiempo.asSeconds() > 3)
     {
         relojRacha.restart();
         racha = 0;
-    }
-    
-    
+    }        
 }
 
 bool Nivel::actualizarNivel(Protagonista* p, int impac, int fall)
 {   
-    impactos = impac;
-    fallos = fall;
+
+    bool terminado=false;
+    
+    impactos += impac;
+    fallos += fall;
     hud->actualizarHUD(p, puntuacion);
     
     controlarRacha(impac);
@@ -109,15 +122,26 @@ bool Nivel::actualizarNivel(Protagonista* p, int impac, int fall)
     }
     tiempo = relojRecurso.getElapsedTime();
     actualizarRecursosExistentes();
-    bool terminado = actualizarZombiesExistentes(p);
-    
+    int estadoNivel = actualizarZombiesExistentes(p);
     //std::cout << "Segundos: " << tiempo.asSeconds()<< " - ApareceRecurso: " << tApareceRecurso << std::endl;
     if(tiempo.asSeconds()>tApareceRecurso){
         generarRecurso();
         relojRecurso.restart();
     }
+    if(estadoNivel==1)
+        siguienteOleada();
+    else if(estadoNivel==2)
+        terminado=true;
     
     return terminado;
+}
+
+int Nivel::getPuntuacion(){
+    return puntuacion;
+}
+    
+void Nivel::setPuntuacion(int p){
+    puntuacion = puntuacion+p;
 }
 
 std::string floatAString(float f){
@@ -134,12 +158,10 @@ std::string floatAString(float f){
 int Nivel::calcularPuntuacionTotal()
 {
     int tirosTotales = impactos + fallos;
-    float porcentajeAcierto = (impactos/tirosTotales) * 100;
-    int puntuacion1 = 100 * porcentajeAcierto;
-    std::string mensaje = "Porcentaje de acierto de tiros: " + floatAString(porcentajeAcierto) + "%";
-    
-    mensaje = mensaje+"\n"+"Puntuacion por aciertos: " + hud->intAString(puntuacion1);
-    
+    float porcentajeAcierto = (impactos/(float)tirosTotales) * 100;
+    float puntuacion1 = 100 * porcentajeAcierto;
+    std::string mensaje = "Porcentaje de acierto de tiros - " + floatAString(porcentajeAcierto) + "%";
+    mensaje = mensaje+"\n"+"Puntuacion por aciertos - " + floatAString(puntuacion1);
 //    crearMensaje("Porcentaje de acierto de tiros: " + floatAString(porcentajeAcierto) + "%", -1,-1);
 //    crearMensaje('Puntuacion por aciertos: ' + hud->intAString(puntuacion1), -1,-1);
     puntuacion += puntuacion1;
@@ -168,17 +190,18 @@ int Nivel::calcularPuntuacionTotal()
 //    crearMensaje('Tiempo de la partida: ' + hud->intAString(minutos) + ':' + hud->intAString(segundos), -1,-1);
 //    crearMensaje('Puntuacion por tiempo: ' + hud->intAString(puntuacion2), -1,-1);
     
-    mensaje = mensaje+"\n"+"Tiempo de la partida: " + hud->intAString(minutos) + ":" + hud->intAString(segundos);
-    mensaje = mensaje+"\n"+"Puntuacion por tiempo: " + hud->intAString(puntuacion2);
-    
+    mensaje = mensaje+"\n"+"Tiempo de la partida - " + hud->intAString(minutos) + "m " + hud->intAString(segundos) + 's';
+    mensaje = mensaje+"\n"+"Puntuacion por tiempo - " + hud->intAString(puntuacion2);
     puntuacion += puntuacion2;
-    mensaje = mensaje+"\n"+"Puntuacion total: " + hud->intAString(puntuacion1);
+    mensaje = mensaje+"\n"+"Puntuacion total - " + hud->intAString(puntuacion);
     //crearMensaje('Puntuacion total: ' + hud->intAString(puntuacion1), -1,-1);
-    crearMensaje(mensaje, -1, -1);
+    crearMensaje(mensaje, -1, -1, 1);
+    
+    return 1;
 }
 
-void Nivel::crearMensaje(std::string s, int t, int i){
-    hud->crearMensaje(s, t, i);
+void Nivel::crearMensaje(std::string s, int t, int i, int p){
+    hud->crearMensaje(s, t, i, p);
 }
 
 void Nivel::actualizarRecursosExistentes(){
@@ -196,28 +219,28 @@ void Nivel::actualizarRecursosExistentes(){
     }
 } 
 
-bool Nivel::actualizarZombiesExistentes(Protagonista* p){
-    bool nivelTerminado=false;
+int Nivel::actualizarZombiesExistentes(Protagonista* p){
+    int estadoNivel=0;
     bool zombieAtaca=false;
     int existe=true;
+    
     Zombie* z;
     for(int i=0; i<zombies.size(); i++){ 
         zombieAtaca=zombies[i]->update(*(p->getSprite()), zombies, p->getArmas(), recursos, mapa);
         if(zombieAtaca==true){
             p->recibirDanyo(zombies[i]->getDanyo());
         }
-        
         existe = zombies[i]->getEstado();
         if(existe==false)
         {
             z = zombies[i];
             zombies.erase(zombies.begin()+i);
             delete z;
-            nivelTerminado=oleada->actualizarZombiesMuertos(1,hud);
+            estadoNivel=oleada->actualizarZombiesMuertos(1,hud);
             //numZombies++;
         }
     }    
-    return nivelTerminado;
+    return estadoNivel;
 } 
 
 int Nivel::devuelveTipo(){
@@ -236,34 +259,64 @@ int Nivel::devuelveTipo(){
 
 sf::Vector2<int> Nivel::devuelvePos(){
     sf::Vector2<int> pos, tam=*hud->getTamPantalla();
-    int lado = (int)rand() % spawnsZombies.size();
+    
+    bool correcto=false;
+    int lado=-1;
+    while(!correcto){
+        lado = 1+(int)rand() % 4;
+        if(std::find(spawnsZombies.begin(), spawnsZombies.end(), lado)!=spawnsZombies.end())
+            correcto=true;
+    }
+    
     //Genera aleatoriamente el lado en el que aparece el zombie
     
      switch(lado){
         //Por la izquierda
         case 1:     pos.x=0-tam.x/50;
-                    pos.y=rand()%9;    //Genera un numero aleatorio entre la posicion 0 y la maxima altura de la pantalla
+                    pos.y=rand()%9;
+                    if(pos.y==posAnt1)
+                        pos.y+=1;
+                    
+                    posAnt1=pos.y;
+                    pos.y=pos.y*80;    //Genera un numero aleatorio entre la posicion 0 y la maxima altura de la pantalla
                     break;
         //Por la derecha
         case 2:     pos.x=tam.x+tam.x/50;
                     pos.y=rand()%9;
+                    if(pos.y==posAnt2)
+                        pos.y+=1;
+        
+                    posAnt2=pos.y;
+                    pos.y=pos.y*80;
                     break; 
         //Por arriba
-        case 3:     pos.x=(int)rand()%tam.x;
-                    pos.y=0-tam.y/15;                    
-                    break;             
+        case 3:     pos.y=0-tam.y/50;
+                    pos.x=rand()%9;
+                    if(pos.x==posAnt3)
+                        pos.x+=1;
+        
+                    posAnt3=pos.x;
+                    pos.x=pos.x*80;
+                    break;
         //Por abajo
-        case 4:     pos.x=(int)rand()%tam.x;
-                    pos.y=tam.y+tam.y/50;                    
+        case 4:     pos.y=tam.y+tam.y/50;
+                    pos.x=rand()%9;
+                    if(pos.x==posAnt4)
+                        pos.x+=1;
+        
+                    posAnt4=pos.x;
+                    pos.x=pos.x*80;
                     break;
         //Por defecto, por la derecha            
         default:    pos.x=tam.x+tam.x/50;
                     pos.y=rand()%9;
-                    break;
-    }
-    
-    
-    
+                    if(pos.y==posAnt2)
+                        pos.y+=1;
+        
+                    posAnt2=pos.y;
+                    pos.y=pos.y*80;
+                    break; 
+    }         
     return pos;
 }
 
@@ -275,11 +328,10 @@ void Nivel::crearZombies(int num){
     for(int i=0; i<num; i++){
         pos=devuelvePos();
         sf::Vector2<float> v;
-        if(pos.y==posAnt)
-            pos.y+=1;
+
         v.x = (float) pos.x;
-        v.y = (float) pos.y*80;
-        posAnt=pos.y;
+        v.y = (float) pos.y;
+
         tipo=devuelveTipo();
         aux = fab->crearZombie(tipo, v);
         zombies.push_back(aux);
@@ -290,21 +342,15 @@ void Nivel::crearZombies(int num){
 //Controlamos el numero de zombies que generamos, dependiendo de los que ya hay en pantalla
 
 void Nivel::generarZombies(){
+    //cout<<"Zombies muertos: "<<numZombies<< " de un total de "<<oleada->getNumZombies()<<endl;
     if(numZombies<oleada->getNumZombies()){
         if(zombies.size()<20)
-        {
-            crearZombies(2);
-            /*
-            if(oleada->getNumZombies()-numZombies>=10)
-                crearZombies(10);
-            else
-                crearZombies(oleada->getNumZombies()-numZombies);*/
-        }else if(zombies.size()<75){
-            if(oleada->getNumZombies()-numZombies>=10)
-                crearZombies(5);
+        {            
+            if(oleada->getNumZombies()-numZombies>=2)
+                crearZombies(2);
             else
                 crearZombies(oleada->getNumZombies()-numZombies);
-        }else{}
+        }
     }
 }
 
@@ -322,48 +368,6 @@ void Nivel::generarRecurso(){
     tApareceRecurso = 15.0 + rand()%15;
 }
 
-//ESTOS TRES METODOS SON INUTILES A PRIORI
-/*
-void Nivel::reducirSaludZombie(int i, Granada* g){
-    int estado = g->getEstado();
-    if(estado==1){
-        int d = g->getDanyo();
-        reducirSaludZombie(i, d);
-    }
-}
-void Nivel::reducirSaludZombie(int i, Proyectil* p){
-    int d = p->getDanyo();
-    reducirSaludZombie(i, d);
-}
-void Nivel::reducirSaludZombie(int i, Proyectil* p){
-    bool muerto=false;
-    int d = p->getDanyo();
-    reducirSaludZombie(i, d);
-}*/
-
-/*
-void Nivel::reducirSaludZombie(int i, int d){
-    bool muerto=false;
-    Zombie* z;
-    if(i>0 && i<zombies.size()){
-        muerto = zombies[i]->reducirSalud(d);
-        if(muerto==true)
-        {
-            z = zombies[i];
-            zombies.erase(zombies.begin()+i);
-            delete z;
-            oleada->actualizarNumZombies(1, hud);//Actualizamos el numero de zombies muertos en la oleada
-        }
-    }
-}*/
-
-/*METODO QUE RECIBA ARRAY DE BALAS Y COMPRUEBE PARA CADA ZOMBIE SI SE PRODUCE DANYO*/
-
-/*void Nivel::compruebaDanyoZombie(std::vector<Proyectil*> &v,){
-    for(int i=0; i<zombies.size(); i++){
-        zombies[i]->calcularColisionBalas(v);
-    }
-}*/
 //Separamos mapa y nivel porque lo primero que se ha de pintar es el mapa, luego el protagonista y luego el resto del nivel
 void Nivel::pintarMapa(sf::RenderWindow &w, int i){
     mapa->Draw(w,i);
