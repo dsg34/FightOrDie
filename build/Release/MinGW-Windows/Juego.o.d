@@ -64,7 +64,7 @@ build/Release/MinGW-Windows/Juego.o: Juego.cpp Juego.h Protagonista.h \
  ../SFML-2.1/include/SFML/Graphics/Text.hpp Granada.h Recurso.h \
  Personaje.h Zombie.h MapLoader.h HUD.h RecursoHUD.h ArmaFactory.h \
  Nivel.h Oleada.h RecursosFactory.h PersonajeFactory.h Mundo.h \
- NivelFactory.h Menu.h MenuFactory.h
+ NivelFactory.h Menu.h MenuFactory.h GuardarCargarPartida.h
 
 Juego.h:
 
@@ -233,3 +233,5 @@ NivelFactory.h:
 Menu.h:
 
 MenuFactory.h:
+
+GuardarCargarPartida.h:

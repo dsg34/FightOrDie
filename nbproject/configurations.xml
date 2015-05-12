@@ -7,6 +7,7 @@
       <itemPath>Arma.h</itemPath>
       <itemPath>ArmaFactory.h</itemPath>
       <itemPath>Granada.h</itemPath>
+      <itemPath>GuardarCargarPartida.h</itemPath>
       <itemPath>HUD.h</itemPath>
       <itemPath>Juego.h</itemPath>
       <itemPath>MapLoader.h</itemPath>
@@ -36,6 +37,7 @@
       <itemPath>Arma.cpp</itemPath>
       <itemPath>ArmaFactory.cpp</itemPath>
       <itemPath>Granada.cpp</itemPath>
+      <itemPath>GuardarCargarPartida.cpp</itemPath>
       <itemPath>HUD.cpp</itemPath>
       <itemPath>Juego.cpp</itemPath>
       <itemPath>MapLoader.cpp</itemPath>
@@ -118,6 +120,10 @@
       </item>
       <item path="Granada.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="GuardarCargarPartida.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GuardarCargarPartida.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="HUD.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="HUD.h" ex="false" tool="3" flavor2="0">
@@ -125,38 +131,6 @@
       <item path="Juego.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Juego.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="MapLoader.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="MapLoader.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Menu.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Menu.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="MenuFactory.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="MenuFactory.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Mundo.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Mundo.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Nivel.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Nivel.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="NivelFactory.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="NivelFactory.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Oleada.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Oleada.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="HUD.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="HUD.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="MapLoader.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -289,6 +263,10 @@
       </item>
       <item path="Granada.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="GuardarCargarPartida.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GuardarCargarPartida.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="HUD.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="HUD.h" ex="false" tool="3" flavor2="0">
@@ -296,38 +274,6 @@
       <item path="Juego.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Juego.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="MapLoader.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="MapLoader.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Menu.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Menu.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="MenuFactory.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="MenuFactory.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Mundo.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Mundo.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Nivel.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Nivel.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="NivelFactory.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="NivelFactory.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Oleada.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Oleada.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="HUD.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="HUD.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="MapLoader.cpp" ex="false" tool="1" flavor2="0">
       </item>

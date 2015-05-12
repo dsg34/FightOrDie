@@ -19,7 +19,9 @@ public:
     void addRecurso(Recurso* r);
     void elimnarRecurso(int i);
     int calcularPuntuacionTotal();
-    int calcularPuntuacionDinamica();    
+    int calcularPuntuacionDinamica();  
+    int getPuntuacion();
+    void setPuntuacion(int p);
     
     int getId();
     
@@ -36,7 +38,7 @@ public:
     void actualizarInfoBalas(int impactos, int fallos);//Debe actulizar la variable de impactos y fallos
     
     void compruebaDanyoZombie(std::vector<Proyectil*> &v);
-    void crearMensaje(std::string s, int t, int i);
+    void crearMensaje(std::string s, int t, int i, int p);
     
     void pintarMapa(sf::RenderWindow &w, int i);
     void pintarNivel(sf::RenderWindow &w);//Pinta nivel, recursos y HUD

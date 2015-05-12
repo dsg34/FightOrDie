@@ -18,6 +18,7 @@ public:
     int getMunicion();
     int getMaxProyectiles();
     int getTipo();
+    int getMejora();
     
     void aumentarMunicion(int i);
     void setCargador(std::vector<Proyectil*> v); 
@@ -29,6 +30,8 @@ public:
     void setMunicionSecundaria(int i);
     void setDanyoSecundaria(int ds);
     void setTipo(int i);
+    void aumentarMejora();
+    void setMejora(int m);
     
     void aumentarDanyo();
     void aumentarMunicion();
@@ -52,6 +55,7 @@ protected:
     int rango;
     float cadencia;
     int tipo;
+    int mejora;
     sf::Clock reloj;
     sf::Time tiempo;
     sf::Sprite* spriteProyectil;

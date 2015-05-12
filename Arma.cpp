@@ -5,13 +5,14 @@ Arma::Arma(sf::Sprite* s, sf::Texture* te, int t, int d, int v, int mB, int m, f
     tex = new sf::Texture(*te);
     tipo=t;
     danyo=d;    
-    danyoSecundaria=0;
+    danyoSecundaria=4;
     velocidad=v;
     maxProyectiles=mB;
     municion=0;
     municionSecundaria=0;
     cadencia=c;
     rango = r;
+    mejora=0;
     
     cargador = std::vector<Proyectil*>();   
     reloj.restart();
@@ -45,6 +46,19 @@ int Arma::getDanyo(){
 }
 void Arma::setDanyo(int d){
     danyo=d;
+}
+
+int Arma::getMejora(){
+    return mejora;
+    
+}
+
+void Arma::setMejora(int m){
+    mejora=m;
+}
+
+void Arma::aumentarMejora(){
+    mejora++;
 }
 
 int Arma::getDanyoSecundaria(){

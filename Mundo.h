@@ -19,11 +19,20 @@ public:
     bool capturarCierre();
     bool capturarPausa();
     
+    int getPuntuacionMundo();
+    int setPuntuacionMundo(int p);    
+    Nivel* getNivel();
+    void cargarPartida(std::vector<int> v);
+    void setMejoraArma(int i, int m);
+    Protagonista* getProtagonista();
     void siguienteNivel();
     void reiniciarProtagonista();
     void reiniciarMundo();
     void reiniciarNivel();
     void cambiarNivel(int i);
+    
+    void setPuntuacionNivel(int p);
+    int getPuntuacionNivel();
     
     int ejecutarMundo();
     

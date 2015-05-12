@@ -44,7 +44,7 @@ Mundo::Mundo(sf::RenderWindow &w) {
 bool Mundo::capturarCierre()
 {
     bool captura=false;
-    //Bucle de obtenciÃƒÂ³n de eventos
+    //Bucle de obtencion de eventos
     sf::Event event;
     while(window->pollEvent(event))
     {
@@ -56,7 +56,20 @@ bool Mundo::capturarCierre()
     return captura;
 }
 
+Protagonista* Mundo::getProtagonista(){
+    return protagonista;
+}
+
+int Mundo::getPuntuacionMundo(){
+    return nivel->getPuntuacion();
+}
+
+int Mundo::setPuntuacionMundo(int p){
+    nivel->setPuntuacion(p);
+}
+
 void Mundo::cambiarNivel(int i){
+    protagonista->getSprite()->setPosition(tamPantalla.x/2, tamPantalla.y);
     nivel = fabricaNivel->crearNivel(i,protagonista, (sf::Vector2<int>)window->getSize());
 }
 
@@ -97,8 +110,29 @@ void Mundo::reiniciarMundo(){
 
 void Mundo::siguienteNivel(){
     //delete nivel;
-    
+    protagonista->getSprite()->setPosition(tamPantalla.x/2, tamPantalla.y/2);
     nivel = fabricaNivel->crearNivel(nivel->getId()+1,protagonista, (sf::Vector2<int>)window->getSize());
+}
+
+Nivel* Mundo::getNivel(){
+    return nivel;
+}
+
+//Empezamos con las mejoras, en el nivel y con la puntuacion que tenia el usuario
+void Mundo::cargarPartida(std::vector<int> v){
+    //Los cuatro primeros enteros son el valor de mejora de las cuatro primeras armas
+    for(int i=0; i<4; i++)
+        setMejoraArma(i, v[i]);
+    //El siguiente es el nivel
+    protagonista->getSprite()->setPosition(tamPantalla.x/2, tamPantalla.y/2);    
+    nivel = fabricaNivel->crearNivel(v[4], protagonista, (sf::Vector2<int>)window->getSize());
+    //El siguiente es la puntuacion
+    nivel->setPuntuacion(v[5]);
+}
+
+void Mundo::setMejoraArma(int i, int m){
+    Arma* c = protagonista->getArmas()[i];
+    c->setMejora(m);
 }
 
 void Mundo::reiniciarProtagonista(){
@@ -129,9 +163,8 @@ int Mundo::ejecutarMundo(){
         //Actualizamos 15 veces por segundo
         if(frecuencia>UPDATE_TIME){ 
             
-            //Bucle de obtenciÃ³n de eventos
-            sf::Event event;
-                                             
+            //Bucle de obtencion de eventos
+            sf::Event event;                                             
                         
             protagonista->update(posicionCursor(),nivel->getZombies(), nivel->getMapa(), nivel->getRecursos());
             existePersonaje=protagonista->Existe();
@@ -149,11 +182,20 @@ int Mundo::ejecutarMundo(){
                 {
                     impactos++;
                 }
+                if(zombies[j]->colisionConGranadas(arm))
+                {
+                    impactos += 8;
+                }
             }
             
             nivelAcabado = nivel->actualizarNivel(protagonista, impactos,0);
-            if(nivelAcabado==true)//Nivel finalizado
+            if(nivelAcabado==true){//Nivel finalizado                
+                nivel->calcularPuntuacionTotal();
+                pintarMundo();
+                sf::Time delayTime = sf::seconds(10);
+                sf::sleep(delayTime);
                 estado=3;
+            }
             relojUpdate.restart();
         }
         
@@ -171,6 +213,14 @@ int Mundo::ejecutarMundo(){
     }
     window->clear();
     return estado;
+}
+
+void Mundo::setPuntuacionNivel(int p){
+    nivel->setPuntuacion(p);
+}
+    
+int Mundo::getPuntuacionNivel(){
+    return nivel->getPuntuacion();
 }
 
 void Mundo::interpolarMundo(){

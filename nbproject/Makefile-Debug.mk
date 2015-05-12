@@ -38,6 +38,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Arma.o \
 	${OBJECTDIR}/ArmaFactory.o \
 	${OBJECTDIR}/Granada.o \
+	${OBJECTDIR}/GuardarCargarPartida.o \
 	${OBJECTDIR}/HUD.o \
 	${OBJECTDIR}/Juego.o \
 	${OBJECTDIR}/MapLoader.o \
@@ -100,6 +101,11 @@ ${OBJECTDIR}/Granada.o: Granada.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Granada.o Granada.cpp
+
+${OBJECTDIR}/GuardarCargarPartida.o: GuardarCargarPartida.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/GuardarCargarPartida.o GuardarCargarPartida.cpp
 
 ${OBJECTDIR}/HUD.o: HUD.cpp 
 	${MKDIR} -p ${OBJECTDIR}

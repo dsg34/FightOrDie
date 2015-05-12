@@ -33,7 +33,7 @@ int Oleada::actualizarZombiesMuertos(int i, HUD* &hud){//Actualiza el numero de 
     zombiesEliminados+=i;
     if(zombiesEliminados==numZombies){
         //Crear objeto MENSAJE "Oleada terminada. Puntuacion: x" y mostrar por pantalla
-        hud->crearMensaje("Oleada terminada", -1, -1);
+        hud->crearMensaje("Oleada terminada", -1, -1, 0);
         if(terminarOleada())
             estado=2;//Nivel acabado
         else
