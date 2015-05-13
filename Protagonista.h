@@ -8,6 +8,7 @@
 #ifndef PROTAGONISTA_H
 #define	PROTAGONISTA_H
 
+#include "RecursosFactory.h"
 #include "Arma.h"
 #include "Recurso.h"
 #include "Personaje.h"
@@ -41,16 +42,19 @@ public:
     std::vector<Recurso*> getInventario();
     void setInventario(std::vector<Recurso*> i);
     void recibirDanyo(float cant);
+    bool muerto();
+    void actualizaMuerte();
     //sf::RectangleShape* getRectangle();
 private:
-
+    
     Arma* arma;
     std::vector<Arma*> armas;
     sf::Vector2<int> posmira;
     sf::Clock relojCambioArma;
+    sf::Clock reloj;
     int municionSecundaria;
     //sf::RectangleShape* rectangle;
-    
+    RecursosFactory* fabR;
     std::vector<Recurso*> inventario;
     
 };

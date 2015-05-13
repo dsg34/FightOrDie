@@ -46,6 +46,9 @@ bool Mundo::capturarCierre()
 {
     bool captura=false;
     //Bucle de obtencion de eventos
+    
+    
+    
     sf::Event event;
     while(window->pollEvent(event))
     {
@@ -55,6 +58,28 @@ bool Mundo::capturarCierre()
         }
     }
     return captura;
+}
+
+Nivel* Mundo::getNivel()
+{
+    return nivel;
+}
+
+void Mundo::setMejoraArma(int i, int m)
+{
+    Arma* c = protagonista->getArmas()[i];
+    c->setMejora(m);
+}
+
+void Mundo::cargarPartida(std::vector<int> v){
+    //Los cuatro primeros enteros son el valor de mejora de las cuatro primeras armas
+    for(int i=0; i<4; i++)
+        setMejoraArma(i, v[i]);
+    //El siguiente es el nivel
+    protagonista->getSprite()->setPosition(tamPantalla.x/2, tamPantalla.y/2);    
+    nivel = fabricaNivel->crearNivel(v[4], protagonista, (sf::Vector2<int>)window->getSize());
+    //El siguiente es la puntuacion
+    nivel->setPuntuacion(v[5]);
 }
 
 Protagonista* Mundo::getProtagonista(){
@@ -79,7 +104,8 @@ bool Mundo::capturarPausa()
     bool pausa = false;
     //Bucle de obtencion de eventos
     
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+    
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Joystick::isButtonPressed(1, 7))
     {
         pausa=true;
     }
@@ -118,6 +144,24 @@ sf::Vector2<int> Mundo::posicionCursor()
             pos.x = px + 3;
         else
             pos.x = px;
+        
+        if(pos.x < 20)
+        {
+            pos.x = 20;
+        }
+        else if(pos.x > window->getSize().x -50)
+        {
+            pos.x = window->getSize().x - 50;
+        }
+        
+        if(pos.y < 20)
+        {
+            pos.y = 20;
+        }
+        if(pos.y > window->getSize().y - 50)
+        {
+            pos.y = window->getSize().y - 50;
+        }
     }
     else
     {
@@ -185,7 +229,7 @@ int Mundo::ejecutarMundo(){
                         
             fallos = protagonista->update(posicionCursor(),nivel->getZombies(), nivel->getMapa(), nivel->getRecursos());
             
-            existePersonaje=protagonista->Existe();
+            existePersonaje=protagonista->muerto();
             
             //1: Menu Inicio ; 2: Menu Pausa ; 3: Menu Fin de nivel ; 4: Menu muerte ; 5: Menu ¿Desea Salir?
             if(existePersonaje==false)
@@ -290,12 +334,12 @@ void Mundo::pintarMundo(){
     window->clear();
     nivel->pintarMapa(*window,0);//map->Draw(window);
     //Actualizamos la posicion de las balas
-    protagonista->pintarProtagonista(*window);
-    protagonista->getArma()->pintarProyectiles(*window);
+    protagonista->pintarProtagonista(*window);    
     //window->draw(*(protagonista->getSprite()));
     nivel->pintarMapa(*window,2);//map->Draw(window);
     nivel->pintarNivel(*window);//hud.pintarHUD(window);
+    protagonista->getArma()->pintarProyectiles(*window);
     apuntar->setPosition(posicionCursor().x, posicionCursor().y);
-    window->draw(*apuntar);                                    
+    window->draw(*apuntar);      
     window->display();
 }

@@ -24,7 +24,16 @@ int recogida;
 
 #include "RecursosFactory.h"
 
-RecursosFactory::RecursosFactory() {
+RecursosFactory::RecursosFactory() 
+{
+    sf::Texture tex;
+    if (!tex.loadFromFile("resources/hud.png"))
+    {
+        std::cerr << "Error cargando la imagen sprites.png";
+        exit(0);
+    }
+    
+    texturaHud = new sf::Texture(tex);;
 }
 
 RecursosFactory::RecursosFactory(const RecursosFactory& orig) {
@@ -36,13 +45,8 @@ RecursosFactory::~RecursosFactory()
 // Escopeta=2; Botiquin=3; Metralleta=4; Barril=5; Madera=6; Granada=7; Valla=8;
 Recurso* RecursosFactory::crearBotiquin()
 {
-    sf::Texture tex;
-    if (!tex.loadFromFile("resources/hud.png"))
-    {
-        std::cerr << "Error cargando la imagen sprites.png";
-        exit(0);
-    }
-    sf::Sprite spriteMadera(tex);
+    
+    sf::Sprite spriteMadera(*texturaHud);
     
     
     sf::Sprite* aux = new sf::Sprite(spriteMadera);
@@ -51,20 +55,14 @@ Recurso* RecursosFactory::crearBotiquin()
     aux->setTextureRect(sf::IntRect(9*75, 3*75, 75, 75)); 
     aux->setScale(0.5,0.5);
     
-    Recurso* p = new Recurso(aux, new sf::Texture(tex), 0, 0, 0, 0, 0, 3);
+    Recurso* p = new Recurso(aux, texturaHud, 0, 0, 0, 0, 0, 3);
     
     return p;
 }
 
 Recurso* RecursosFactory::crearMadera()
 {
-    sf::Texture tex;
-    if (!tex.loadFromFile("resources/hud.png"))
-    {
-        std::cerr << "Error cargando la imagen sprites.png";
-        exit(0);
-    }
-    sf::Sprite spriteMadera(tex);
+    sf::Sprite spriteMadera(*texturaHud);
     
     
     sf::Sprite* aux = new sf::Sprite(spriteMadera);
@@ -73,20 +71,14 @@ Recurso* RecursosFactory::crearMadera()
     aux->setTextureRect(sf::IntRect(11*75, 0, 75, 75)); 
     aux->setScale(0.5,0.5);
     
-    Recurso* p = new Recurso(aux, new sf::Texture(tex), 0, 0, 1, 0, 0, 6);
+    Recurso* p = new Recurso(aux, texturaHud, 0, 0, 1, 0, 0, 6);
     
     return p;
 }
 
 Recurso* RecursosFactory::crearValla(int res)
 {
-    sf::Texture tex;
-    if (!tex.loadFromFile("resources/hud.png"))
-    {
-        std::cerr << "Error cargando la imagen sprites.png";
-        exit(0);
-    }
-    sf::Sprite spriteValla(tex);
+    sf::Sprite spriteValla(*texturaHud);
     
     
     sf::Sprite* aux = new sf::Sprite(spriteValla);
@@ -95,20 +87,14 @@ Recurso* RecursosFactory::crearValla(int res)
     aux->setTextureRect(sf::IntRect(10*75, 0, 75, 75)); 
     aux->setScale(0.7,0.7);
     
-    Recurso* p = new Recurso(aux, new sf::Texture(tex), 1, 0, 1, 1, res, 8);
+    Recurso* p = new Recurso(aux, texturaHud, 1, 0, 1, 1, res, 8);
     
     return p;
 }
 
 Recurso* RecursosFactory::crearBarril()
 {
-    sf::Texture tex;
-    if (!tex.loadFromFile("resources/hud.png"))
-    {
-        std::cerr << "Error cargando la imagen sprites.png";
-        exit(0);
-    }
-    sf::Sprite sprite(tex);
+    sf::Sprite sprite(*texturaHud);
     
     
     sf::Sprite* aux = new sf::Sprite(sprite);
@@ -117,20 +103,14 @@ Recurso* RecursosFactory::crearBarril()
     aux->setTextureRect(sf::IntRect(9*75, 0, 75, 75)); 
     aux->setScale(0.5,0.5);
     
-    Recurso* p = new Recurso(aux, new sf::Texture(tex), 1, 0, 1, 1, 0, 5);
+    Recurso* p = new Recurso(aux, texturaHud, 1, 0, 1, 1, 0, 5);
     
     return p;
 }
 
 Recurso* RecursosFactory::crearMunicionEscopeta()
 {
-    sf::Texture tex;
-    if (!tex.loadFromFile("resources/hud.png"))
-    {
-        std::cerr << "Error cargando la imagen sprites.png";
-        exit(0);
-    }
-    sf::Sprite sprite(tex);
+    sf::Sprite sprite(*texturaHud);
     
     
     sf::Sprite* aux = new sf::Sprite(sprite);
@@ -139,21 +119,14 @@ Recurso* RecursosFactory::crearMunicionEscopeta()
     aux->setTextureRect(sf::IntRect(11*75, 2*75, 75, 75)); 
     aux->setScale(0.5,0.5);
     
-    Recurso* p = new Recurso(aux, new sf::Texture(tex), 0, 0, 0, 0, 0, 2);
+    Recurso* p = new Recurso(aux, texturaHud, 0, 0, 0, 0, 0, 2);
     
     return p;
 }
 
 Recurso* RecursosFactory::crearMunicionMetralleta()
 {
-    sf::Texture tex;
-    if (!tex.loadFromFile("resources/hud.png"))
-    {
-        std::cerr << "Error cargando la imagen sprites.png";
-        exit(0);
-    }
-    sf::Sprite sprite(tex);
-    
+    sf::Sprite sprite(*texturaHud);
     
     sf::Sprite* aux = new sf::Sprite(sprite);
     
@@ -161,21 +134,14 @@ Recurso* RecursosFactory::crearMunicionMetralleta()
     aux->setTextureRect(sf::IntRect(10*75, 2*75, 75, 75)); 
     aux->setScale(0.5,0.5);
     
-    Recurso* p = new Recurso(aux, new sf::Texture(tex), 0, 0, 0, 0, 0, 4);
+    Recurso* p = new Recurso(aux, texturaHud, 0, 0, 0, 0, 0, 4);
     
     return p;
 }
 
 Recurso* RecursosFactory::crearMunicionGranada()
 {
-    sf::Texture tex;
-    if (!tex.loadFromFile("resources/hud.png"))
-    {
-        std::cerr << "Error cargando la imagen sprites.png";
-        exit(0);
-    }
-    sf::Sprite sprite(tex);
-    
+    sf::Sprite sprite(*texturaHud);
     
     sf::Sprite* aux = new sf::Sprite(sprite);
     
@@ -183,7 +149,7 @@ Recurso* RecursosFactory::crearMunicionGranada()
     aux->setTextureRect(sf::IntRect(12*75, 2*75, 75+37.5, 75)); 
     aux->setScale(0.5,0.5);
     
-    Recurso* p = new Recurso(aux, new sf::Texture(tex), 0, 0, 0, 0, 0, 7);
+    Recurso* p = new Recurso(aux, texturaHud, 0, 0, 0, 0, 0, 7);
     
     return p;
 }

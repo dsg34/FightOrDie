@@ -19,6 +19,7 @@ private:
     sf::Font* font;
     int elementos;
     std::vector<sf::Text*> menu;
+    sf::Clock xbox;
 };
 
 #endif	/* MENU_H */

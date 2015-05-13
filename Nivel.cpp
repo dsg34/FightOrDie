@@ -19,6 +19,9 @@ Nivel::Nivel(int i, Protagonista* &p, sf::Vector2<int> t, std::vector<int> s, fl
     posAnt3=0;
     posAnt4=0;
     
+    fabR = new RecursosFactory();
+    fabP = new PersonajeFactory();
+    
     tApareceZombie=tZ;
     tApareceRecurso=15.0+rand()%15;
     
@@ -159,7 +162,7 @@ int Nivel::calcularPuntuacionTotal()
 {
     int tirosTotales = impactos + fallos;
     float porcentajeAcierto = (impactos/(float)tirosTotales) * 100;
-    float puntuacion1 = 100 * porcentajeAcierto;
+    float puntuacion1 = 130 * porcentajeAcierto;
     std::string mensaje = "Porcentaje de acierto de tiros - " + floatAString(porcentajeAcierto) + "%";
     mensaje = mensaje+"\n"+"Puntuacion por aciertos - " + floatAString(puntuacion1);
 //    crearMensaje("Porcentaje de acierto de tiros: " + floatAString(porcentajeAcierto) + "%", -1,-1);
@@ -221,14 +224,28 @@ void Nivel::actualizarRecursosExistentes(){
 
 int Nivel::actualizarZombiesExistentes(Protagonista* p){
     int estadoNivel=0;
-    bool zombieAtaca=false;
+    int zombieAtaca=0;
     int existe=true;
+    int vida = 0;
     
     Zombie* z;
     for(int i=0; i<zombies.size(); i++){ 
         zombieAtaca=zombies[i]->update(*(p->getSprite()), zombies, p->getArmas(), recursos, mapa);
-        if(zombieAtaca==true){
-            p->recibirDanyo(zombies[i]->getDanyo());
+        if(zombieAtaca==1){
+            if(p->getVida()>0){
+                p->recibirDanyo(zombies[i]->getDanyo());
+                p->setCont(0);
+            }
+        }else if(zombieAtaca==2){
+            for(int j=0; j<recursos.size(); j++){ 
+                vida=recursos[j]->getResistencia();
+                vida=vida-zombies[i]->getDanyo();
+                recursos[j]->setResistencia(vida);
+                if(vida<0){
+                    recursos[j]->setExiste(false);
+                    //recursos.erase(recursos.begin()+j); 
+                }
+            }
         }
         existe = zombies[i]->getEstado();
         if(existe==false)
@@ -323,8 +340,7 @@ sf::Vector2<int> Nivel::devuelvePos(){
 void Nivel::crearZombies(int num){
     sf::Vector2<int> pos;
     int tipo;
-    Zombie* aux;
-    PersonajeFactory* fab = new PersonajeFactory();
+    Zombie* aux;    
     for(int i=0; i<num; i++){
         pos=devuelvePos();
         sf::Vector2<float> v;
@@ -333,7 +349,12 @@ void Nivel::crearZombies(int num){
         v.y = (float) pos.y;
 
         tipo=devuelveTipo();
-        aux = fab->crearZombie(tipo, v);
+        
+        
+        if(numZombies == oleada->getNumZombies() - 1 && oleada->getId() == 3)
+            tipo = 4;
+        
+        aux = fabP->crearZombie(tipo, v);
         zombies.push_back(aux);
         numZombies++;
     }
@@ -346,8 +367,8 @@ void Nivel::generarZombies(){
     if(numZombies<oleada->getNumZombies()){
         if(zombies.size()<20)
         {            
-            if(oleada->getNumZombies()-numZombies>=2)
-                crearZombies(2);
+            if(oleada->getNumZombies()-numZombies>=5)
+                crearZombies(5);
             else
                 crearZombies(oleada->getNumZombies()-numZombies);
         }
@@ -357,11 +378,10 @@ void Nivel::generarZombies(){
 
 void Nivel::generarRecurso(){
     int tipo = 2 + rand()%6;
-    RecursosFactory* fab = new RecursosFactory();
     
-    Recurso* r = fab->crearRecurso(tipo);
+    Recurso* r = fabR->crearRecurso(tipo);
     while(mapa->Colision((int)r->getVectorActual().x, (int)r->getVectorActual().y, 0)==false)
-        r = fab->crearRecurso(tipo);
+        r = fabR->crearRecurso(tipo);
     //if(map->Colision(sprite.getPosition().x,(sprite.getPosition().y - kVel + 75/2))){    
     recursos.push_back(r);
     

@@ -48,6 +48,10 @@ void Arma::setDanyo(int d){
     danyo=d;
 }
 
+void Arma::setMejora(int m){
+    mejora=m;
+}
+
 int Arma::getDanyoSecundaria(){
     return danyoSecundaria;
     

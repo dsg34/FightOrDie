@@ -5,10 +5,11 @@ Juego::Juego() {
 }
 
 Juego::Juego(const Juego& orig) {
+    gestionPartida=new GuardarCargarPartida();
 }
 
 Juego::~Juego() {    
-    
+    delete gestionPartida;
 }
 
 std::string intAString(int f){
@@ -193,7 +194,7 @@ void Juego::repetirNivel(){
 }
 
 int Juego::ejecutarJuego()
-{        
+{            
     sf::RenderWindow w(sf::VideoMode(1300, 750), "Fight or Die");    
     window=&w;
     mundo = new Mundo(*window);
@@ -203,7 +204,7 @@ int Juego::ejecutarJuego()
     sf::Clock reloj;
     reloj.restart();    
 
-    //1: Menu Inicio ; 2: Menu Pausa ; 3: Menu Fin de nivel ; 4: Menu muerte ; 5: Menu ¿Desea Salir?            
+    //1: Menu Inicio ; 2: Menu Pausa ; 3: Menu Fin de nivel ; 4: Menu muerte ; 5: Menu ¿Desea Salir?
     //MENU DE INICIO
     while(salir!=true){
         
@@ -212,8 +213,11 @@ int Juego::ejecutarJuego()
             if(menuSalirDelJuego())
                 exit(0);
         }else{
+            if(estadoMenu==-19){//Cargar partida
+                mundo->cargarPartida(gestionPartida->cargarPartida());                
+            }
             while(salirJuego!=true){
-                estadoMundo = mundo->ejecutarMundo(); 
+                estadoMundo = mundo->ejecutarMundo();                
                 while(salirMenu!=true){
                     //MENU DE PAUSA-FIN DE NIVEL-MUERTE
                     estadoMenu = ejecutarMenu(estadoMundo);
@@ -226,13 +230,14 @@ int Juego::ejecutarJuego()
                         case -3: /*salir=true;*/break; //Jugar
                         case -4: salirMenu=true; break;            //Continuar
                         case -5: menuMejoras();break;           //Mejoras
-                        case -6: siguienteNivel(); salirMenu=true;break; //Siguiente nivel                    
+                        case -6: siguienteNivel();gestionPartida->guardarPartida(mundo->getNivel(),mundo->getProtagonista());estadoMundo=2; salirMenu=true;break; //Siguiente nivel                    
                         case -7: salirMenu=true; repetirNivel();break; //Reiniciar juego 
-                        case -8: /*salir=true;*/break; //Opciones
+                        case -8: break; //Opciones
                         case -9: salirMenu=true; salirJuego=true;reiniciarJuego();break; //Volver a inicio 
                         case -10: salir=true;salirJuego=true;salirMenu=true; break; //Salir del juego
                         case -11: salirMenu=true; break;                    //No salir
                         case -12: estadoMundo=2; break;                     //Atras
+                        case -18: gestionPartida->guardarPartida(mundo->getNivel(),mundo->getProtagonista());estadoMundo=2; break;                     //Atras
                     }
                 }
                 salirMenu=false;

@@ -48,8 +48,10 @@ Menu* MenuFactory::hacerMenu(int x, int y, int id){
     std::vector<std::string> apartados;
     if(id==1){                                  //Inicio
         apartados.push_back("Jugar");
+        apartados.push_back("Continuar partida");
     }else if(id==2){                            //Pausa
         apartados.push_back("Continuar");
+        apartados.push_back("Guardar partida");
         apartados.push_back("Mejoras");
         apartados.push_back("Volver a inicio");
     }else if(id==3){                            //Fin de nivel

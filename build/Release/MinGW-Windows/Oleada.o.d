@@ -61,9 +61,9 @@ build/Release/MinGW-Windows/Oleada.o: Oleada.cpp Oleada.h \
  ../SFML-2.1/include/SFML/Graphics/RectangleShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/ConvexShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
- ../SFML-2.1/include/SFML/Graphics/Text.hpp HUD.h Protagonista.h Arma.h \
- Proyectil.h Granada.h Recurso.h Personaje.h Zombie.h MapLoader.h \
- RecursoHUD.h
+ ../SFML-2.1/include/SFML/Graphics/Text.hpp HUD.h Protagonista.h \
+ RecursosFactory.h Recurso.h Arma.h Proyectil.h Granada.h Personaje.h \
+ Zombie.h MapLoader.h RecursoHUD.h
 
 Oleada.h:
 
@@ -199,13 +199,15 @@ HUD.h:
 
 Protagonista.h:
 
+RecursosFactory.h:
+
+Recurso.h:
+
 Arma.h:
 
 Proyectil.h:
 
 Granada.h:
-
-Recurso.h:
 
 Personaje.h:
 

@@ -31,6 +31,7 @@ public:
     void setDanyoSecundaria(int ds);
     void setTipo(int i);
     void aumentarMejora();
+    void setMejora(int m);
     
     void aumentarDanyo();
     void aumentarMunicion();

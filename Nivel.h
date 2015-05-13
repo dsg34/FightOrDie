@@ -74,7 +74,8 @@ private:
     int posAnt2;
     int posAnt3;
     int posAnt4;
-    
+    PersonajeFactory* fabP;
+    RecursosFactory* fabR;
     std::vector<int> spawnsZombies;//Se debe indicar por que direcciones (izquierda 1, derecha 2, arriba 3, abajo 4) saldran los zombies
 };
 

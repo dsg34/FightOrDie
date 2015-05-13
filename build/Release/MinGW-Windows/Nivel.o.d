@@ -62,8 +62,8 @@ build/Release/MinGW-Windows/Nivel.o: Nivel.cpp Nivel.h MapLoader.h \
  ../SFML-2.1/include/SFML/Graphics/ConvexShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
  ../SFML-2.1/include/SFML/Graphics/Text.hpp Oleada.h HUD.h Protagonista.h \
- Arma.h Proyectil.h Granada.h Recurso.h Personaje.h Zombie.h RecursoHUD.h \
- RecursosFactory.h PersonajeFactory.h
+ RecursosFactory.h Recurso.h Arma.h Proyectil.h Granada.h Personaje.h \
+ Zombie.h RecursoHUD.h PersonajeFactory.h
 
 Nivel.h:
 
@@ -203,20 +203,20 @@ HUD.h:
 
 Protagonista.h:
 
+RecursosFactory.h:
+
+Recurso.h:
+
 Arma.h:
 
 Proyectil.h:
 
 Granada.h:
 
-Recurso.h:
-
 Personaje.h:
 
 Zombie.h:
 
 RecursoHUD.h:
-
-RecursosFactory.h:
 
 PersonajeFactory.h:

@@ -15,6 +15,7 @@ public:
     Zombie* crearZombieNormal(sf::Vector2<float> p);
     Zombie* crearZombieRapido(sf::Vector2<float> p);
     Zombie* crearZombieGordo(sf::Vector2<float> p);
+    Zombie* crearBoss(sf::Vector2<float> p);
     /*
     Zombie crearZombieNormal(sf::Vector2 p);
     Zombie* crearZombieRapido(sf::Vector2 p);
@@ -26,6 +27,11 @@ private:
     bool protagonistaCreado;
     Protagonista* protagonista;
     Zombie* zombie;
+    sf::Texture* texturaZombieNormal;
+    sf::Texture* texturaZombieRapido;
+    sf::Texture* texturaZombieFuerte;
+    sf::Texture* texturaProtagonista;
+    
 };
 
 #endif	/* PERSONAJEFACTORY_H */

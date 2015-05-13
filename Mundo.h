@@ -18,6 +18,9 @@ public:
     sf::Vector2<int> posicionCursor();
     bool capturarCierre();
     bool capturarPausa();
+    Nivel* getNivel();
+    void setMejoraArma(int i, int m);
+    void cargarPartida(std::vector<int> v);
     
     int getPuntuacionMundo();
     int setPuntuacionMundo(int p);

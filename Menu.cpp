@@ -31,22 +31,78 @@ Menu::Menu(sf::Sprite* s, sf::Texture* t, sf::Font* font, int x, int y, std::vec
         menu[0]->setColor(sf::Color::Yellow);
         menu[1]->setColor(sf::Color::Red);
     }
+    
+    xbox.restart();
 }
 
 int Menu::GetPressedItem(){ 
     return selectedItemIndex; 
 }
 
-int Menu::update(sf::RenderWindow &window){
+int Menu::update(sf::RenderWindow &window)
+{    
+    int devuelve=-1;
+    
+    
+    if(xbox.getElapsedTime().asSeconds() > 0.1 )
+    {
+        if(sf::Joystick::isConnected(1))
+        {
+            float positionY = sf::Joystick::getAxisPosition(1, sf::Joystick::Y);   
+
+            if(positionY < -20)
+                MoveUp();
+            else if(positionY > 20)
+                MoveDown();
+
+            if(sf::Joystick::isButtonPressed(1, 0))
+            {
+                devuelve=GetPressedItem();
+                    if(menu[devuelve]->getString() == sf::String("Salir"))
+                        devuelve=-2;
+                    else if(menu[devuelve]->getString() == "Jugar")
+                        devuelve=-3;
+                    else if(menu[devuelve]->getString() == "Continuar")
+                        devuelve=-4;
+                    else if(menu[devuelve]->getString() == "Mejoras")
+                        devuelve=-5;
+                    else if(menu[devuelve]->getString() == "Siguiente nivel")
+                        devuelve=-6;
+                    else if(menu[devuelve]->getString() == "Reiniciar juego")
+                        devuelve=-7;
+                    else if(menu[devuelve]->getString() == "Opciones")
+                        devuelve=-8;
+                    else if(menu[devuelve]->getString() == "Volver a inicio")
+                        devuelve=-9;
+                    else if(menu[devuelve]->getString() == "Si")
+                        devuelve=-10;
+                    else if(menu[devuelve]->getString() == "No")
+                        devuelve=-11;
+                    else if(menu[devuelve]->getString() == "Atras")
+                        devuelve=-12;
+                    else if(menu[devuelve]->getString() == "Mejorar pistola")
+                        devuelve=-13;
+                    else if(menu[devuelve]->getString() == "Mejorar metralleta")
+                        devuelve=-14;
+                    else if(menu[devuelve]->getString() == "Mejorar escopeta")
+                        devuelve=-15; 
+                    else if(menu[devuelve]->getString() == "Mejorar hacha")
+                        devuelve=-16;
+            }
+        }
+        
+        xbox.restart();
+    }
+    
     sf::Event event;
     window.pollEvent(event);
-    int devuelve=-1;
+    
     if(event.type == sf::Event::KeyReleased){
         if(event.key.code==sf::Keyboard::Up){
             MoveUp();
         }else if(event.key.code==sf::Keyboard::Down){
             MoveDown();
-        }else if(event.key.code==sf::Keyboard::Return){            
+        }else if(event.key.code==sf::Keyboard::Return ){            
             devuelve=GetPressedItem();
             if(menu[devuelve]->getString() == sf::String("Salir"))
                 devuelve=-2;

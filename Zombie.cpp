@@ -34,10 +34,11 @@ Zombie::Zombie(const Zombie& orig) : Personaje(orig){
 Zombie::~Zombie() {
 }
 
-bool Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std::vector<Arma*> armas, std::vector<Recurso*> recursos, MapLoader* mapa){
+int Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std::vector<Arma*> armas, std::vector<Recurso*> recursos, MapLoader* mapa){
     posAnterior = posActual;
     *boundingBox = sprite->getGlobalBounds();
-    bool ataque = false;
+    int ataque = 0;
+    bool dominante = false;
     sf::Time frecuencia;
     obsMapa = true;
     boundingBox->width -= 70;
@@ -53,7 +54,7 @@ bool Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std:
                 reloj.restart();
             }
         }else{
-            calcularDireccion(protagonista);
+            dominante = calcularDireccion(protagonista);
 
             char direccion;
             if(equis>0 &&(y==0||y>0))
@@ -65,17 +66,38 @@ bool Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std:
             else
                 direccion = 'W';
 
-            
-
             if(colisionConProta(protagonista, direccion)){
-                ataque=true;
+                ataque=1;
+                contA=0;
+                atacando=true;
+            }else if(colisionConRecursos(recursos)){
+                ataque=2;
                 contA=0;
                 atacando=true;
             }else{
                 
-                detectarObstaculos(mapa);
-                detectarZombie(zombies, direccion, mapa);
-
+                detectarObstaculos(mapa, dominante);
+                if(equis>0 && y>0)
+                    direccion = 'C';
+                else if(equis<0 && y>0)
+                    direccion = 'Z';
+                else if(equis>0 && y<0)
+                    direccion = 'E';
+                else if(equis<0 && y<0)      
+                    direccion = 'Q';
+                else if(equis>0)
+                    direccion = 'D';
+                else if(y>0)
+                    direccion = 'S';
+                else if(equis<0)
+                    direccion = 'A';
+                else
+                    direccion = 'W';
+                if(obsMapa==false)
+                    detectarZombie(zombies, direccion, mapa);
+                else if(!colisionConZombies(zombies, direccion))
+                    sprite->move(equis,y);
+                
                 posActual = sprite->getPosition();
             }
         }
@@ -84,12 +106,12 @@ bool Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std:
         if(frecuencia.asSeconds()>0.1){
             actualizaMuerte();
             reloj.restart();
-        }
+        }    
     }
     return ataque;
 }
 
-void Zombie::calcularDireccion(sf::Sprite protagonista){
+bool Zombie::calcularDireccion(sf::Sprite protagonista){
     
     bool ejey = false;
     bool ejex = true;
@@ -222,11 +244,13 @@ void Zombie::calcularDireccion(sf::Sprite protagonista){
     {                
         y = 0;
     }
+    
+    return ejex;
 }
 
-void Zombie::detectarObstaculos(MapLoader* mapa){
+void Zombie::detectarObstaculos(MapLoader* mapa, bool dominante){
     if(!mapa->Colision(sprite->getPosition().x+(equis*(25/abs(velocidad))), sprite->getPosition().y+(y*(25/abs(velocidad))),1)){          //no se puede mover
-        if(equis!=0){          //horizontal
+        if(dominante){          //horizontal
             if(!mapa->Colision(sprite->getPosition().x+(equis*(25/abs(velocidad))), sprite->getPosition().y-25,1)){
                 if(!mapa->Colision(sprite->getPosition().x+(equis*(25/abs(velocidad))), sprite->getPosition().y+25,1)){
                     if(!mapa->Colision(sprite->getPosition().x+(equis*(25/abs(velocidad))), sprite->getPosition().y-50,1)){
@@ -280,40 +304,32 @@ void Zombie::detectarObstaculos(MapLoader* mapa){
 }
 
 void Zombie::detectarZombie(std::vector<Zombie*> zombies, char direccion, MapLoader* mapa){
-    if(equis>0 && y>0)
-        direccion = 'C';
-    else if(equis<0 && y>0)
-        direccion = 'Z';
-    else if(equis>0 && y<0)
-        direccion = 'E';
-    else if(equis<0 && y<0)      
-        direccion = 'Q';
-    else if(equis>0)
-        direccion = 'D';
-    else if(y>0)
-        direccion = 'S';
-    else if(equis<0)
-        direccion = 'A';
-    else
-        direccion = 'W';
+    sf::Time frecuencia;
 
     if(!colisionConZombies(zombies, direccion)){
-        if(esquiva==1){
-            sprite->move(0,-velocidad);
-            sprite->move(equis,y);
-        }else if(esquiva==2){
-            sprite->move(0,velocidad);
-            sprite->move(equis,y);
-        }else if(esquiva==3){
-            sprite->move(-velocidad,0);
-            sprite->move(equis,y);
-        }else if(esquiva==4){
-            sprite->move(velocidad,0);
-            sprite->move(equis,y);
-        }else
-            sprite->move(equis,y);
-    }else if(obsMapa==false){
-        if(direccion=='Q'||direccion=='Z'||direccion=='E'||direccion=='C'){
+        sprite->move(equis,y);
+    }else {
+        if(esquiva!=0){
+            frecuencia = reloj.getElapsedTime();            
+            if(frecuencia.asSeconds()>(10/velocidad)){
+                esquiva=0;
+                reloj.restart();
+            }else{
+                if(esquiva==1){
+                    if(!colisionConZombies(zombies, 'W'))
+                        sprite->move(0,-velocidad);
+                }else if(esquiva==2){
+                    if(!colisionConZombies(zombies, 'S'))
+                        sprite->move(0,velocidad);
+                }else if(esquiva==3){
+                    if(!colisionConZombies(zombies, 'A'))
+                        sprite->move(-velocidad,0);
+                }else if(esquiva==4){
+                    if(!colisionConZombies(zombies, 'D'))
+                        sprite->move(velocidad,0);
+                }
+            }
+        }else if(direccion=='Q'||direccion=='Z'||direccion=='E'||direccion=='C'){
             if(direccion=='Q'){
                 if(esquiva==2 && !colisionConZombies(zombies, 'S') && mapa->Colision(sprite->getPosition().x, sprite->getPosition().y+velocidad,1))
                     sprite->move(0,velocidad);
@@ -323,6 +339,8 @@ void Zombie::detectarZombie(std::vector<Zombie*> zombies, char direccion, MapLoa
                     sprite->move(-velocidad,0);
                 else if(!colisionConZombies(zombies, 'W'))
                     sprite->move(0,-velocidad);
+                else if(!colisionConZombies(zombies, 'Z'))
+                    sprite->move(-velocidad,velocidad);
 
             }else if(direccion=='E'){
                 if(esquiva==2 && !colisionConZombies(zombies, 'S') && mapa->Colision(sprite->getPosition().x, sprite->getPosition().y+velocidad,1))
@@ -333,7 +351,9 @@ void Zombie::detectarZombie(std::vector<Zombie*> zombies, char direccion, MapLoa
                     sprite->move(velocidad,0);
                 else if(!colisionConZombies(zombies, 'W'))
                     sprite->move(0,-velocidad);
-
+                else if(!colisionConZombies(zombies, 'C'))
+                    sprite->move(velocidad,velocidad);
+                
             }else if(direccion=='Z'){
                 if(esquiva==1 && !colisionConZombies(zombies, 'W') && mapa->Colision(sprite->getPosition().x, sprite->getPosition().y-velocidad,1))
                     sprite->move(0,-velocidad);
@@ -343,6 +363,8 @@ void Zombie::detectarZombie(std::vector<Zombie*> zombies, char direccion, MapLoa
                     sprite->move(-velocidad,0);
                 else if(!colisionConZombies(zombies, 'S'))
                     sprite->move(0,velocidad);
+                else if(!colisionConZombies(zombies, 'Q'))
+                    sprite->move(-velocidad,-velocidad);
 
             }else{
                 if(esquiva==1 && !colisionConZombies(zombies, 'W') && mapa->Colision(sprite->getPosition().x, sprite->getPosition().y-velocidad,1))
@@ -353,11 +375,13 @@ void Zombie::detectarZombie(std::vector<Zombie*> zombies, char direccion, MapLoa
                     sprite->move(velocidad,0);
                 else if(!colisionConZombies(zombies, 'S'))
                     sprite->move(0,velocidad);
-
+                else if(!colisionConZombies(zombies, 'E')) 
+                    sprite->move(velocidad,-velocidad);
+                
             }
         }else{
-            if(direccion=='W' || direccion=='S'){
-
+            reloj.restart();
+            if(direccion=='W' || direccion=='S'){ 
                 if(!colisionConZombies(zombies, 'A')){
                     sprite->move(-velocidad,0);
                     esquiva=3;
@@ -365,9 +389,8 @@ void Zombie::detectarZombie(std::vector<Zombie*> zombies, char direccion, MapLoa
                     sprite->move(velocidad,0);
                     esquiva=4;
                 }
-
+                
             }else {
-
                 if(!colisionConZombies(zombies, 'W')){
                     sprite->move(0,-velocidad);
                     esquiva=1;
@@ -375,13 +398,13 @@ void Zombie::detectarZombie(std::vector<Zombie*> zombies, char direccion, MapLoa
                     sprite->move(0,velocidad);
                     esquiva=2;
                 } 
-
             }
         }
     }
 }
 
 bool Zombie::colisionConProta(sf::Sprite spriteProta, char direccion){
+    
     sf::Sprite* spriteCopia = new sf::Sprite(*sprite);
     spriteCopia->setTexture(*tex);
 
@@ -397,7 +420,7 @@ bool Zombie::colisionConProta(sf::Sprite spriteProta, char direccion){
 
     sf::FloatRect* box = new sf::FloatRect(spriteCopia->getGlobalBounds());
     box->width -= 70;
-    box->left+=35;
+    box->left += 40;
 
     sf::FloatRect cajaProta = spriteProta.getGlobalBounds();
     if(box->intersects(cajaProta)){
@@ -407,6 +430,7 @@ bool Zombie::colisionConProta(sf::Sprite spriteProta, char direccion){
 }
 
 bool Zombie::colisionConZombies(std::vector<Zombie*> zombies, char direccion){
+    
     sf::Sprite* spriteCopia = new sf::Sprite(*sprite);
     spriteCopia->setTexture(*tex);
 
@@ -429,8 +453,8 @@ bool Zombie::colisionConZombies(std::vector<Zombie*> zombies, char direccion){
 
 
     sf::FloatRect* box = new sf::FloatRect(spriteCopia->getGlobalBounds());
-    box->width -= 70;
-    box->left+=35;
+    
+    
     sf::FloatRect* cajaZ;
     for(int i=0; i<zombies.size(); i++){
        cajaZ = zombies[i]->getBoundingBox();
@@ -458,6 +482,22 @@ bool Zombie::colisionConBalas(std::vector<Arma*> armas){
     }
     return false;
 }
+
+bool Zombie::colisionConRecursos(std::vector<Recurso*> &recursos)
+{
+    //Recurso* r;
+    for(int i = recursos.size() - 1 ;i >= 0; i--)
+    {
+        if(boundingBox->intersects(*recursos[i]->getBoundingBox()))
+        {
+            if(recursos[i]->getBloqueante()){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 bool Zombie::colisionConGranadas(std::vector<Arma*> armas){
     if(muriendo==false){
         for(int j=0; j<armas.size();j++){

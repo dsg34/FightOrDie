@@ -7,6 +7,7 @@
 #include "Mundo.h"
 #include "Menu.h"
 #include "MenuFactory.h"
+#include "GuardarCargarPartida.h"
 using namespace std;
 #define kVel 5
 
@@ -37,6 +38,7 @@ private:
     sf::RenderWindow* window;
     Mundo* mundo;
     Menu* menu;
+    GuardarCargarPartida* gestionPartida;
 };
 
 #endif	/* JUEGO_H */

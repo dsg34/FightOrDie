@@ -61,8 +61,9 @@ build/Release/MinGW-Windows/PersonajeFactory.o: PersonajeFactory.cpp \
  ../SFML-2.1/include/SFML/Graphics/RectangleShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/ConvexShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
- ../SFML-2.1/include/SFML/Graphics/Text.hpp Protagonista.h Arma.h \
- Proyectil.h Granada.h Recurso.h Zombie.h MapLoader.h
+ ../SFML-2.1/include/SFML/Graphics/Text.hpp Protagonista.h \
+ RecursosFactory.h Recurso.h Arma.h Proyectil.h Granada.h Zombie.h \
+ MapLoader.h
 
 PersonajeFactory.h:
 
@@ -198,13 +199,15 @@ Personaje.h:
 
 Protagonista.h:
 
+RecursosFactory.h:
+
+Recurso.h:
+
 Arma.h:
 
 Proyectil.h:
 
 Granada.h:
-
-Recurso.h:
 
 Zombie.h:
 

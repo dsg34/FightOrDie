@@ -18,6 +18,9 @@ private:
     Recurso* crearMadera();
     Recurso* crearValla(int res);
     Recurso* crearBarril();
+    
+    sf::Texture* texturaHud;
+    
 
 };
 

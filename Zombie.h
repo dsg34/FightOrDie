@@ -14,9 +14,9 @@ public:
     Zombie(const Zombie& orig);
     virtual ~Zombie();
     
-    bool update(sf::Sprite protagonista, std::vector<Zombie*> zombies, std::vector<Arma*> armas, std::vector<Recurso*> recursos, MapLoader* mapa);
-    void calcularDireccion(sf::Sprite protagonista);
-    void detectarObstaculos(MapLoader* mapa);
+    int update(sf::Sprite protagonista, std::vector<Zombie*> zombies, std::vector<Arma*> armas, std::vector<Recurso*> recursos, MapLoader* mapa);
+    bool calcularDireccion(sf::Sprite protagonista);
+    void detectarObstaculos(MapLoader* mapa, bool dominante);
     void detectarZombie(std::vector<Zombie*> zombies, char direccion, MapLoader* mapa);
 
     bool colisionConProta(sf::Sprite protagonista, char direccion);
@@ -27,7 +27,7 @@ public:
     void muere();
     void actualizaMuerte();
     void atacar();
-    bool colisionConRecursos(std::vector<Recurso*> recursos, char direccion);
+    bool colisionConRecursos(std::vector<Recurso*> &recursos);
     float getDanyo();
     bool getEstado();
 
