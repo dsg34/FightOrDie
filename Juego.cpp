@@ -230,7 +230,7 @@ int Juego::ejecutarJuego()
                         case -3: /*salir=true;*/break; //Jugar
                         case -4: salirMenu=true; break;            //Continuar
                         case -5: menuMejoras();break;           //Mejoras
-                        case -6: siguienteNivel(); salirMenu=true;break; //Siguiente nivel                    
+                        case -6: siguienteNivel();gestionPartida->guardarPartida(mundo->getNivel(),mundo->getProtagonista());estadoMundo=2; salirMenu=true;break; //Siguiente nivel                    
                         case -7: salirMenu=true; repetirNivel();break; //Reiniciar juego 
                         case -8: break; //Opciones
                         case -9: salirMenu=true; salirJuego=true;reiniciarJuego();break; //Volver a inicio 
