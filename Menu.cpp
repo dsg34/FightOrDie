@@ -44,7 +44,7 @@ int Menu::update(sf::RenderWindow &window)
     int devuelve=-1;
     
     
-    if(xbox.getElapsedTime().asSeconds() > 0.1 )
+    if(xbox.getElapsedTime().asSeconds() > 0.1 && sf::Joystick::isConnected(1) )
     {
         if(sf::Joystick::isConnected(1))
         {
@@ -88,21 +88,24 @@ int Menu::update(sf::RenderWindow &window)
                         devuelve=-15; 
                     else if(menu[devuelve]->getString() == "Mejorar hacha")
                         devuelve=-16;
+                    else if(menu[devuelve]->getString() == "Guardar partida")
+                        devuelve=-18;
+                    else if(menu[devuelve]->getString() == "Continuar partida")
+                        devuelve=-19;
+                    else if(menu[devuelve]->getString() == "Mejores puntuaciones")
+                        devuelve=-20;
             }
         }
         
         xbox.restart();
     }
-    
-    sf::Event event;
-    window.pollEvent(event);
-    
-    if(event.type == sf::Event::KeyReleased){
-        if(event.key.code==sf::Keyboard::Up){
+    else if(xbox.getElapsedTime().asSeconds() > 0.05)
+    {
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
             MoveUp();
-        }else if(event.key.code==sf::Keyboard::Down){
+        }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
             MoveDown();
-        }else if(event.key.code==sf::Keyboard::Return ){            
+        }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return)){            
             devuelve=GetPressedItem();
             if(menu[devuelve]->getString() == sf::String("Salir"))
                 devuelve=-2;
@@ -134,9 +137,67 @@ int Menu::update(sf::RenderWindow &window)
                 devuelve=-15; 
             else if(menu[devuelve]->getString() == "Mejorar hacha")
                 devuelve=-16;
+            else if(menu[devuelve]->getString() == "Guardar partida")
+                devuelve=-18;
+            else if(menu[devuelve]->getString() == "Continuar partida")
+                devuelve=-19;
+            else if(menu[devuelve]->getString() == "Mejores puntuaciones")
+                        devuelve=-20;
         }
+        
+        xbox.restart();
     }
-   
+    /*
+    else
+    {
+    
+        sf::Event event;
+        window.pollEvent(event);
+
+        if(event.type == sf::Event::KeyReleased){
+            if(event.key.code==sf::Keyboard::Up){
+                MoveUp();
+            }else if(event.key.code==sf::Keyboard::Down){
+                MoveDown();
+            }else if(event.key.code==sf::Keyboard::Return ){            
+                devuelve=GetPressedItem();
+                if(menu[devuelve]->getString() == sf::String("Salir"))
+                    devuelve=-2;
+                else if(menu[devuelve]->getString() == "Jugar")
+                    devuelve=-3;
+                else if(menu[devuelve]->getString() == "Continuar")
+                    devuelve=-4;
+                else if(menu[devuelve]->getString() == "Mejoras")
+                    devuelve=-5;
+                else if(menu[devuelve]->getString() == "Siguiente nivel")
+                    devuelve=-6;
+                else if(menu[devuelve]->getString() == "Reiniciar juego")
+                    devuelve=-7;
+                else if(menu[devuelve]->getString() == "Opciones")
+                    devuelve=-8;
+                else if(menu[devuelve]->getString() == "Volver a inicio")
+                    devuelve=-9;
+                else if(menu[devuelve]->getString() == "Si")
+                    devuelve=-10;
+                else if(menu[devuelve]->getString() == "No")
+                    devuelve=-11;
+                else if(menu[devuelve]->getString() == "Atras")
+                    devuelve=-12;
+                else if(menu[devuelve]->getString() == "Mejorar pistola")
+                    devuelve=-13;
+                else if(menu[devuelve]->getString() == "Mejorar metralleta")
+                    devuelve=-14;
+                else if(menu[devuelve]->getString() == "Mejorar escopeta")
+                    devuelve=-15; 
+                else if(menu[devuelve]->getString() == "Mejorar hacha")
+                    devuelve=-16;
+                else if(menu[devuelve]->getString() == "Guardar partida")
+                    devuelve=-18;
+                else if(menu[devuelve]->getString() == "Continuar partida")
+                    devuelve=-19;
+            }
+        }
+    }*/
     return devuelve;
 }
 

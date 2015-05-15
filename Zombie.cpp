@@ -5,6 +5,7 @@ Zombie::Zombie(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int 
     tex = new sf::Texture(*t);
     sprite->setTexture(*tex);
     sprite->setPosition(p);
+    std::cout << "constructor x " << p.x << std::endl;
     
     posActual = p;
     posAnterior = p;
@@ -26,6 +27,7 @@ Zombie::Zombie(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int 
     esquiva = 0;
     obsMapa = true;
     reloj.restart();
+    audios = Sonidos::Instance();
 }
 
 Zombie::Zombie(const Zombie& orig) : Personaje(orig){
@@ -35,6 +37,9 @@ Zombie::~Zombie() {
 }
 
 int Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std::vector<Arma*> armas, std::vector<Recurso*> recursos, MapLoader* mapa){
+    
+    std::cout << "primer update zombie" << std::endl;
+    
     posAnterior = posActual;
     *boundingBox = sprite->getGlobalBounds();
     int ataque = 0;
@@ -75,7 +80,8 @@ int Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std::
                 contA=0;
                 atacando=true;
             }else{
-                
+                std::cout << "psrpritex" << sprite->getPosition().x << std::endl;
+                std::cout << "psrpritey" << sprite->getPosition().y << std::endl;
                 detectarObstaculos(mapa, dominante);
                 if(equis>0 && y>0)
                     direccion = 'C';
@@ -249,6 +255,8 @@ bool Zombie::calcularDireccion(sf::Sprite protagonista){
 }
 
 void Zombie::detectarObstaculos(MapLoader* mapa, bool dominante){
+    std::cout << "zombiex" << sprite->getPosition().x << std::endl;
+    std::cout << "zombiey" << sprite->getPosition().y << std::endl;
     if(!mapa->Colision(sprite->getPosition().x+(equis*(25/abs(velocidad))), sprite->getPosition().y+(y*(25/abs(velocidad))),1)){          //no se puede mover
         if(dominante){          //horizontal
             if(!mapa->Colision(sprite->getPosition().x+(equis*(25/abs(velocidad))), sprite->getPosition().y-25,1)){
@@ -534,6 +542,8 @@ void Zombie::atacar(){
     if(contA==5){
         atacando=false;
         cont=0;
+        //audios->ataqueZombie.setVolume(50);
+        audios->ataqueZombie.play();
     }
 }
 

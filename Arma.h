@@ -59,7 +59,7 @@ protected:
     sf::Clock reloj;
     sf::Time tiempo;
     sf::Sprite* spriteProyectil;
-    sf::Texture* tex;       
+    sf::Texture* tex;      
 };
 
 #endif	/* ARMA_H */

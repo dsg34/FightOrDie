@@ -49,6 +49,7 @@ Menu* MenuFactory::hacerMenu(int x, int y, int id){
     if(id==1){                                  //Inicio
         apartados.push_back("Jugar");
         apartados.push_back("Continuar partida");
+        apartados.push_back("Mejores puntuaciones");
     }else if(id==2){                            //Pausa
         apartados.push_back("Continuar");
         apartados.push_back("Guardar partida");
@@ -74,6 +75,8 @@ Menu* MenuFactory::hacerMenu(int x, int y, int id){
         apartados.push_back("Mejorar metralleta");
         apartados.push_back("Mejorar escopeta");
         apartados.push_back("Mejorar hacha");
+        apartados.push_back("Atras");
+    }else if(id==7){                                  //Menu Puntuaciones
         apartados.push_back("Atras");
     }
     else{

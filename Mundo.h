@@ -4,6 +4,8 @@
 #include "HUD.h"
 #include "NivelFactory.h"
 #include "ArmaFactory.h"
+#include "Sonidos.h"
+#include <SFML/Audio.hpp>
 #define kVel 5
 
 #ifndef MUNDO_H
@@ -55,10 +57,14 @@ private:
     sf::Clock relojUpdate;
     sf::Clock relojRender;
     
+    
+    
     float frecuencia;
     int contInterpolacion;
     int px;
     int py;
+    Sonidos* audios;
+    
 };
 
 #endif	/* MUNDO_H */

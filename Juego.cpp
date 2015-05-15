@@ -1,11 +1,13 @@
 #include "Juego.h"
+#include <SFML/Audio.hpp>
 
-Juego::Juego() {
-
+Juego::Juego() 
+{
+    gestionPartida=new GuardarCargarPartida();
 }
 
 Juego::Juego(const Juego& orig) {
-    gestionPartida=new GuardarCargarPartida();
+    
 }
 
 Juego::~Juego() {    
@@ -34,6 +36,123 @@ bool Juego::menuSalirDelJuego(){
     return salir;    
 }
 
+void Juego::menuPuntuaciones(){
+    //1: Menu Inicio ; 2: Menu Pausa ; 3: Menu Fin de nivel ; 4: Menu muerte ; 5: Salir
+    sf::Clock reloj;
+    reloj.restart();    
+    MenuFactory* fab = new MenuFactory();
+    Menu* menu;        
+    menu=fab->hacerMenu(window->getSize().x, window->getSize().y, 7);
+    std::vector<int> punt = gestionPartida->cargarPuntuaciones();
+    /**************************************************************MOSTRAR PUNTUACION DISPONIBLE*********************************************************/
+    // Load it from a file
+    sf::Font font;
+    if (!font.loadFromFile("fonts/ZOMBIE.ttf"))
+    {
+        // error...
+    }               
+    
+    std::vector<sf::Text*> puntuacionesNivel1;
+    sf::Text* aux;
+    sf::Vector2<int> pos(window->getSize().x/8*2, window->getSize().y/8);
+    int ampX=window->getSize().x/8*0.7;
+    int ampY=window->getSize().y/6*2;
+    
+    sf::Text* tex = new sf::Text();
+    tex->setFont(font);
+    tex->setCharacterSize(60);
+    tex->setString("MAXIMAS PUNTUACIONES");
+    tex->setPosition(pos.x+ampX*0.75, pos.y*(-1.5)+ampY);
+    tex->setColor(sf::Color::Yellow);
+    
+    sf::Text* niv1 = new sf::Text();
+    niv1->setFont(font);
+    niv1->setCharacterSize(50);
+    niv1->setString("NIVEL 1");
+    niv1->setPosition(pos.x+(0.5*ampX), pos.y*(-0.5)+ampY);
+    niv1->setColor(sf::Color::Yellow);
+    
+    sf::Text* niv2 = new sf::Text();
+    niv2->setFont(font);
+    niv2->setCharacterSize(50);
+    niv2->setString("NIVEL 2");
+    niv2->setPosition(pos.x*2+(0.5*ampX), pos.y*(-0.5)+ampY);
+    niv2->setColor(sf::Color::Yellow);
+    
+    sf::Text* niv3 = new sf::Text();
+    niv3->setFont(font);
+    niv3->setCharacterSize(50);
+    niv3->setString("NIVEL 3");
+    niv3->setPosition(pos.x*3+(0.5*ampX), pos.y*(-0.5)+ampY);
+    niv3->setColor(sf::Color::Yellow);
+    
+    for(int i=0; i<punt.size()/3; i++){
+        aux = new sf::Text();
+        aux->setFont(font);
+        aux->setCharacterSize(45);
+        aux->setString(intAString(punt[i]));
+        aux->setPosition(pos.x+ampX, pos.y*i+ampY);
+        aux->setColor(sf::Color::White);
+        puntuacionesNivel1.push_back(aux);
+    }    
+    std::vector<sf::Text*> puntuacionesNivel2;
+    for(int i=0; i<punt.size()/3; i++){
+        aux = new sf::Text();
+        aux->setFont(font);
+        aux->setCharacterSize(45);
+        aux->setString(intAString(punt[i+5]));
+        aux->setPosition(pos.x*2+ampX, pos.y*i+ampY);
+        aux->setColor(sf::Color::White);
+        puntuacionesNivel1.push_back(aux);
+    }
+    std::vector<sf::Text*> puntuacionesNivel3;
+    for(int i=0; i<punt.size()/3; i++){
+        aux = new sf::Text();
+        aux->setFont(font);
+        aux->setCharacterSize(45);
+        aux->setString(intAString(punt[i+10]));
+        aux->setPosition(pos.x*3+ampX, pos.y*i+ampY);
+        aux->setColor(sf::Color::White);
+        puntuacionesNivel1.push_back(aux);
+    }
+    
+    /**************************************************************BUCLE DE MENU**************************************************************************/
+    int estadoMenu = -1;    
+    while(estadoMenu!=-12){                              
+        if(reloj.getElapsedTime().asMilliseconds()>UPDATE_TIME){
+            estadoMenu = menu->update(*window);                                    
+            window->clear();            
+            menu->draw(*window);
+            window->draw(*tex);
+            window->draw(*niv1);
+            window->draw(*niv2);
+            window->draw(*niv3);
+            for(int j=0; j<puntuacionesNivel1.size(); j++)
+                window->draw(*puntuacionesNivel1[j]);
+            for(int k=0; k<puntuacionesNivel1.size(); k++)
+                window->draw(*puntuacionesNivel1[k]);
+            for(int l=0; l<puntuacionesNivel1.size(); l++)
+                window->draw(*puntuacionesNivel1[l]);
+            window->display();
+            reloj.restart();
+            capturarCierre();
+         }
+    }
+    
+    delete tex;
+    delete niv1;
+    //delete niv2;
+    //delete niv3;
+    /*for(int j=0; j<puntuacionesNivel1.size(); j++)                
+        delete puntuacionesNivel1[j];
+        
+    for(int k=0; k<puntuacionesNivel1.size(); k++)
+        delete puntuacionesNivel1[k];
+        
+    for(int l=0; l<puntuacionesNivel1.size(); l++)
+        delete puntuacionesNivel1[l];*/
+    
+}
 
 bool subirPuntuacion(){
     bool subir=false;
@@ -202,24 +321,52 @@ int Juego::ejecutarJuego()
     int estadoMundo = -1;
     int estadoMenu = -1;
     sf::Clock reloj;
-    reloj.restart();    
+    reloj.restart();   
+    
+   
+    sf::SoundBuffer buffer;
+    buffer.loadFromFile("resources/inicio.wav");
+    
+    sf::Sound sound;
+    sound.setBuffer(buffer);
+    sound.play();
 
     //1: Menu Inicio ; 2: Menu Pausa ; 3: Menu Fin de nivel ; 4: Menu muerte ; 5: Menu ¿Desea Salir?
     //MENU DE INICIO
-    while(salir!=true){
+    while(salir!=true)
+    {
         
         estadoMenu = ejecutarMenu(1);    
-        if(estadoMenu==-2){
+        if(estadoMenu==-2)
+        {            
             if(menuSalirDelJuego())
                 exit(0);
-        }else{
-            if(estadoMenu==-19){//Cargar partida
+        }else if(estadoMenu==-20){
+            menuPuntuaciones();
+        }else if(estadoMenu==-19 && gestionPartida->cargarPartida().size()<=0){
+        
+        }else
+        {
+            if(estadoMenu==-19)
+            {//Cargar partida
                 mundo->cargarPartida(gestionPartida->cargarPartida());                
             }
-            while(salirJuego!=true){
-                estadoMundo = mundo->ejecutarMundo();                
-                while(salirMenu!=true){
+            sound.stop();
+            
+            while(salirJuego!=true)
+            {
+                estadoMundo = mundo->ejecutarMundo();   
+                
+                while(salirMenu!=true)
+                {
+                    sound.play();
                     //MENU DE PAUSA-FIN DE NIVEL-MUERTE
+                    if(estadoMundo==3){
+                        gestionPartida->guardarPuntuacion(mundo->getNivel());
+                        siguienteNivel();
+                        gestionPartida->guardarPartida(mundo->getNivel(),mundo->getProtagonista());
+                    }
+                    
                     estadoMenu = ejecutarMenu(estadoMundo);
                    
                     //-2: Salir ; -3: Jugar ; -4: Continuar ; -5: Mejoras ; -6: Siguiente nivel ; -7: Reiniciar juego; -8: Opciones ; -9: Volver a inicio      
@@ -230,17 +377,19 @@ int Juego::ejecutarJuego()
                         case -3: /*salir=true;*/break; //Jugar
                         case -4: salirMenu=true; break;            //Continuar
                         case -5: menuMejoras();break;           //Mejoras
-                        case -6: siguienteNivel();gestionPartida->guardarPartida(mundo->getNivel(),mundo->getProtagonista());estadoMundo=2; salirMenu=true;break; //Siguiente nivel                    
+                        case -6: salirMenu=true;break; //Siguiente nivel                    
                         case -7: salirMenu=true; repetirNivel();break; //Reiniciar juego 
                         case -8: break; //Opciones
                         case -9: salirMenu=true; salirJuego=true;reiniciarJuego();break; //Volver a inicio 
                         case -10: salir=true;salirJuego=true;salirMenu=true; break; //Salir del juego
                         case -11: salirMenu=true; break;                    //No salir
                         case -12: estadoMundo=2; break;                     //Atras
-                        case -18: gestionPartida->guardarPartida(mundo->getNivel(),mundo->getProtagonista());estadoMundo=2; break;                     //Atras
+                        case -18: gestionPartida->guardarPartida(mundo->getNivel(),mundo->getProtagonista());estadoMundo=2;cout<<"eu"<<endl;estadoMundo=2;  break;//Guardar partida
                     }
                 }
+                sound.stop();
                 salirMenu=false;
+                
             }
             salirJuego=false;
         }

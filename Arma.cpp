@@ -17,6 +17,7 @@ Arma::Arma(sf::Sprite* s, sf::Texture* te, int t, int d, int v, int mB, int m, f
     reloj.restart();
     tiempo=reloj.getElapsedTime();
     mejora = 0;
+  
 }
 
 Arma::Arma(const Arma& orig) {
@@ -203,7 +204,6 @@ bool Arma::disparar(sf::Vector2<float> s, sf::Vector2<int> pos){
                     m1 = vectorDisparo(s, aux);
                     auxProyectil = new Proyectil(spriteProyectil, tex, s, m1, danyo, velocidad, rango);//Control de velocidad y danyo
                     cargador.push_back(auxProyectil);
-                    
                     reloj.restart();
                     municion--;
                     /**m.x=m.x-0.1;

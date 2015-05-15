@@ -37,6 +37,8 @@ Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, 
     inventario = std::vector<Recurso*>();
     
     relojCambioArma.restart();
+    
+    
 }
 
 Protagonista::Protagonista(const Protagonista& orig) : Personaje(orig) {
@@ -65,14 +67,21 @@ Arma* Protagonista::getArma(){
     return arma;
 }
 
-void Protagonista::disparar(sf::Vector2<int> posicionCursor){
+int Protagonista::disparar(sf::Vector2<int> posicionCursor)
+{
+    int disparando = 1;
+    
     if(arma->getMunicion()<=0){
         if(arma->getTipo()==1 || arma->getTipo()==4)
             arma->setMunicion(5000);
         else
             siguienteArma();
     }else
-        arma->disparar(sprite->getPosition(), posicionCursor);
+    {
+        disparando = arma->disparar(sprite->getPosition(), posicionCursor);        
+    }
+    
+    return disparando;
 }
 void Protagonista::dispararSecundaria(sf::Vector2<int> posicionCursor){
     if(municionSecundaria>0)
@@ -205,7 +214,9 @@ void Protagonista::colisionConRecursos(std::vector<Recurso*> &recursos)
         }
 }
 
-int Protagonista::update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, MapLoader* m,std::vector<Recurso*> recursos){
+int Protagonista::update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, MapLoader* m,std::vector<Recurso*> recursos, int &disp){
+    
+    int disparando = 1;
     posmira.x = pos.x;
     posmira.y = pos.y;
     posAnterior = sprite->getPosition();
@@ -226,9 +237,11 @@ int Protagonista::update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, Ma
         float positionX = sf::Joystick::getAxisPosition(1, sf::Joystick::X);   
 
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||positionY < -20){
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||positionY < -20)
+        {            
             teclaY=-1;
-        }else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) ||positionY > 20){
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) ||positionY > 20){
             teclaY=1;
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||positionX < -20){
@@ -237,15 +250,17 @@ int Protagonista::update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, Ma
             teclaX=1;
         }
         actualizaPerso(teclaX,teclaY, enemigos, m);  //por aqui no deberiamos pasar enemigos
-        if (sf::Joystick::isButtonPressed(1,5) || sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                            //miPistola->disparar(sprite.getPosition(), posicionCursor(window));
-            disparar(posmira);
-                            //miProtagonista->getArma()->disparar(*miProtagonista->getSprite()->getPosition(), posicionCursor(window));
-        }else if (sf::Joystick::isButtonPressed(1,4) || sf::Mouse::isButtonPressed((sf::Mouse::Right))){
+        if (sf::Joystick::isButtonPressed(1,5) || sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        { //miPistola->disparar(sprite.getPosition(), posicionCursor(window));
+            disparando = disparar(posmira);
+            disp = disparando;
+        } //miProtagonista->getArma()->disparar(*miProtagonista->getSprite()->getPosition(), posicionCursor(window));
+        else if (sf::Joystick::isButtonPressed(1,4) || sf::Mouse::isButtonPressed((sf::Mouse::Right))){
                             //miPistola->dispararSecundaria(sprite.getPosition(), posicionCursor(window));
             dispararSecundaria(posmira);
         }
-        if(relojCambioArma.getElapsedTime().asSeconds()>0.2){//Controlamos que reciba solamente un evento cada 0.5 segundos
+        if(relojCambioArma.getElapsedTime().asSeconds()>0.2)
+        {//Controlamos que reciba solamente un evento cada 0.5 segundos
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1) || sf::Joystick::isButtonPressed(1, 3)){//Opcional CAMBIO DE ARMA CON RUEDA DE RATON
                 siguienteArma();
                 relojCambioArma.restart();
@@ -260,9 +275,11 @@ int Protagonista::update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, Ma
             fallos += armas[i]->updateProyectiles();
         }
     }
-    else{
+    else
+    {
         frecuencia = reloj.getElapsedTime();            
-        if(frecuencia.asSeconds()>0.1){
+        if(frecuencia.asSeconds()>0.1)
+        {
             actualizaMuerte();
             reloj.restart();
         }
@@ -312,8 +329,10 @@ void Protagonista::actualizaDireccion(){
     }    
 }
 
-void Protagonista::actualizaPerso(int teclaX, int teclaY, std::vector<Zombie*> enemigos, MapLoader* m){
-
+void Protagonista::actualizaPerso(int teclaX, int teclaY, std::vector<Zombie*> enemigos, MapLoader* m)
+{
+    std::cout << "x en perso:" << teclaX << std::endl;
+    std::cout << "y en perso:" << teclaY << std::endl;
         
     if (teclaY==-1){
         if(direc==0 || direc==1 || direc==5 || direc==6 || direc==7){

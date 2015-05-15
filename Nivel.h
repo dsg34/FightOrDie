@@ -1,9 +1,11 @@
 #include "MapLoader.h"
 #include "Oleada.h"
 #include "RecursosFactory.h"
+#include "Sonidos.h"
 #include "Proyectil.h"
 #include "PersonajeFactory.h"
 #include "Zombie.h"
+
 #ifndef NIVEL_H
 #define	NIVEL_H
 
@@ -70,6 +72,8 @@ private:
     int fallos;    
     int numZombies;
     
+    
+    
     int posAnt1;
     int posAnt2;
     int posAnt3;
@@ -77,6 +81,8 @@ private:
     PersonajeFactory* fabP;
     RecursosFactory* fabR;
     std::vector<int> spawnsZombies;//Se debe indicar por que direcciones (izquierda 1, derecha 2, arriba 3, abajo 4) saldran los zombies
+    Sonidos* audios;
+    sf::Clock sonidosClock;
 };
 
 #endif	/* NIVEL_H */

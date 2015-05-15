@@ -25,6 +25,7 @@ public:
     int menuMejoras();
     void cambiarNivel();
     bool menuSalirDelJuego();
+    void menuPuntuaciones();
     bool capturarCierre();
     int ejecutarMenu(int tipo);
     

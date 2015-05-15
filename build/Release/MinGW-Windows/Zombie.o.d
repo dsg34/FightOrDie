@@ -62,7 +62,16 @@ build/Release/MinGW-Windows/Zombie.o: Zombie.cpp Zombie.h Personaje.h \
  ../SFML-2.1/include/SFML/Graphics/ConvexShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
  ../SFML-2.1/include/SFML/Graphics/Text.hpp Arma.h Proyectil.h Granada.h \
- MapLoader.h Recurso.h
+ MapLoader.h Recurso.h Sonidos.h ../SFML-2.1/include/SFML/Audio.hpp \
+ ../SFML-2.1/include/SFML/Audio/Listener.hpp \
+ ../SFML-2.1/include/SFML/Audio/Export.hpp \
+ ../SFML-2.1/include/SFML/Audio/Music.hpp \
+ ../SFML-2.1/include/SFML/Audio/SoundStream.hpp \
+ ../SFML-2.1/include/SFML/Audio/SoundSource.hpp \
+ ../SFML-2.1/include/SFML/Audio/Sound.hpp \
+ ../SFML-2.1/include/SFML/Audio/SoundBuffer.hpp \
+ ../SFML-2.1/include/SFML/Audio/SoundBufferRecorder.hpp \
+ ../SFML-2.1/include/SFML/Audio/SoundRecorder.hpp
 
 Zombie.h:
 
@@ -205,3 +214,25 @@ Granada.h:
 MapLoader.h:
 
 Recurso.h:
+
+Sonidos.h:
+
+../SFML-2.1/include/SFML/Audio.hpp:
+
+../SFML-2.1/include/SFML/Audio/Listener.hpp:
+
+../SFML-2.1/include/SFML/Audio/Export.hpp:
+
+../SFML-2.1/include/SFML/Audio/Music.hpp:
+
+../SFML-2.1/include/SFML/Audio/SoundStream.hpp:
+
+../SFML-2.1/include/SFML/Audio/SoundSource.hpp:
+
+../SFML-2.1/include/SFML/Audio/Sound.hpp:
+
+../SFML-2.1/include/SFML/Audio/SoundBuffer.hpp:
+
+../SFML-2.1/include/SFML/Audio/SoundBufferRecorder.hpp:
+
+../SFML-2.1/include/SFML/Audio/SoundRecorder.hpp:

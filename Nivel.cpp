@@ -1,5 +1,6 @@
 using namespace std;
 #include "Nivel.h"
+#include <SFML/Audio.hpp>
 
 Nivel::Nivel(int i, Protagonista* &p, sf::Vector2<int> t, std::vector<int> s, float tZ) {
 
@@ -37,6 +38,12 @@ Nivel::Nivel(int i, Protagonista* &p, sf::Vector2<int> t, std::vector<int> s, fl
         niv = "resources/nivel3.tmx";
     
     mapa->LoadFromFile(niv);
+    
+   audios = Sonidos::Instance();
+   
+   sonidosClock.restart();
+    
+    
 }
 
 Nivel::Nivel(const Nivel& orig) {
@@ -120,9 +127,16 @@ bool Nivel::actualizarNivel(Protagonista* p, int impac, int fall)
     tiempo = relojZombie.getElapsedTime();
     
     if(tiempo.asSeconds()>tApareceZombie){
-        generarZombies();
+        generarZombies();   
         relojZombie.restart();
     }
+    
+    if(sonidosClock.getElapsedTime().asSeconds() > 20+rand()% 45)
+    {
+        audios->zombie2.play();
+        sonidosClock.restart();
+    }
+    
     tiempo = relojRecurso.getElapsedTime();
     actualizarRecursosExistentes();
     int estadoNivel = actualizarZombiesExistentes(p);
@@ -132,7 +146,10 @@ bool Nivel::actualizarNivel(Protagonista* p, int impac, int fall)
         relojRecurso.restart();
     }
     if(estadoNivel==1)
+    {
+        crearMensaje("Se acerca una nueva oleada de zombies...", 40, 150, 1);        
         siguienteOleada();
+    }
     else if(estadoNivel==2)
         terminado=true;
     
@@ -229,7 +246,9 @@ int Nivel::actualizarZombiesExistentes(Protagonista* p){
     int vida = 0;
     
     Zombie* z;
-    for(int i=0; i<zombies.size(); i++){ 
+    for(int i=0; i<zombies.size(); i++)
+    { 
+        std::cout << "numero del zombie" << i << std::endl;
         zombieAtaca=zombies[i]->update(*(p->getSprite()), zombies, p->getArmas(), recursos, mapa);
         if(zombieAtaca==1){
             if(p->getVida()>0){
@@ -350,11 +369,33 @@ void Nivel::crearZombies(int num){
 
         tipo=devuelveTipo();
         
+        if(numZombies == oleada->getNumZombies() -10 && oleada->getId() == 3)
+            crearMensaje("Se acerca algo fuera de lo normal...", 40, 150, 1);
         
         if(numZombies == oleada->getNumZombies() - 1 && oleada->getId() == 3)
-            tipo = 4;
+        {
+            tipo = 4;      
+            //audios->risaBoss.setVolume(25);
+            audios->risaBoss.play();
+        }
+        
+        
         
         aux = fabP->crearZombie(tipo, v);
+        if(tipo = 4)
+        {
+            int x = aux->getPosActual().x;
+            if(x < 450)
+                x = x - 100;
+            else
+                x = x + 100;
+            
+            sf::Vector2<float> v;
+            v.x = x;
+            v.y = aux->getPosActual().y;
+            
+            aux->setPosActual(v);
+        }
         zombies.push_back(aux);
         numZombies++;
     }

@@ -21,6 +21,11 @@ public:
     
     void guardarPartida(Nivel* n, Protagonista* p);
     std::vector<int> cargarPartida();
+    
+    void guardarPuntuacion(Nivel* n);
+    std::vector<int> cargarPuntuaciones();
+    void inicializarPuntuaciones();
+    
     bool existeFichero(std::string nombre);
     std::string intAString(int f);
     int stringAInt(std::string s);

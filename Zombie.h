@@ -5,6 +5,7 @@
 #include "Arma.h"
 #include "MapLoader.h"
 #include "Recurso.h"
+#include "Sonidos.h"
 
 //#include "Protagonista.h"
 
@@ -41,6 +42,7 @@ private:
     int contA;
     int esquiva;
     bool obsMapa;
+    Sonidos* audios;
 };
 
 #endif	/* ZOMBIE_H */

@@ -441,7 +441,7 @@ void HUD::crearMensaje(std::string s, int t, int cont, int p){
         tam=60;
     
     mensaje->setFont(*fuente);
-    mensaje->setCharacterSize(60);
+    mensaje->setCharacterSize(tam);
     if(p == 0)
         mensaje->setPosition(tamPantalla->x/4+((tamPantalla->x/20)), tamPantalla->y/2-(tamPantalla->y/10));
     else
@@ -493,7 +493,7 @@ void HUD::pintarHUD(sf::RenderWindow &window){
     puntuacion->setScale(1.0,1.0);
     window.draw(*puntuacion);
     
-    if(contMensaje>0 && contMensaje<60){        
+    if(contMensaje>0 && contMensaje<=tiempoMensaje){        
         window.draw(*mensaje);
         contMensaje++;
     }else if(contMensaje>tiempoMensaje)

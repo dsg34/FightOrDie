@@ -8,7 +8,7 @@
 #include "GuardarCargarPartida.h"
 
 GuardarCargarPartida::GuardarCargarPartida() {
-
+    
 }
 
 GuardarCargarPartida::GuardarCargarPartida(const GuardarCargarPartida& orig) {
@@ -18,7 +18,7 @@ GuardarCargarPartida::~GuardarCargarPartida() {
 }
 
 //Debe devolver: -Estado mejoras de armas (4 ints) -Nivel actual (1 int) -Oleada actual (1 int)
-
+/***********************************************************************************************************GESTION DE PARTIDAS*/
 void GuardarCargarPartida::guardarPartida(Nivel* n, Protagonista* p){
     std::ofstream escribirPartida("data.txt");
     if(existeFichero(std::string("data.txt"))){
@@ -35,11 +35,11 @@ void GuardarCargarPartida::guardarPartida(Nivel* n, Protagonista* p){
 }
 
 //Debe devolver: -Estado mejoras de armas (4 ints) -Nivel actual (1 int) -Oleada actual (1 int)
-std::vector<int> GuardarCargarPartida::cargarPartida(){
+std::vector<int> GuardarCargarPartida::cargarPartida(){    
     std::vector<int> v;
-    std::ifstream leerPartida("data.txt");
     int intAux=-1;
     if(existeFichero("data.txt")){
+        std::ifstream leerPartida("data.txt");
         std::string linea;        
         if (leerPartida.is_open())
         {
@@ -50,11 +50,150 @@ std::vector<int> GuardarCargarPartida::cargarPartida(){
             //cout<<intAString(intAux)<<endl;
           }
            leerPartida.close();
-        }        
+        }     
     }
     return v;
 }
+/***********************************************************************************************************GESTION DE PUNTUACIONES*/
+void GuardarCargarPartida::guardarPuntuacion(Nivel* n){
+    cout<<"Guarda puntuacion"<<endl;
+    std::vector<int> v;
+    std::vector<std::string> original;
+    int intAux=-1, nuevaPunt=n->getPuntuacion(), pos=-1;
+    if(existeFichero("data-point.txt")==false)
+        inicializarPuntuaciones(); 
+    std::ifstream leerPuntuaciones("data-point.txt");            
+    if(existeFichero("data-point.txt")){
+        //COMPROBAMOS SI LA NUEVA PUNTUACION ES MAS ALTA QUE LAS 5 QUE YA HAY EN EL NIVEL
+        std::string linea;        
+        int nivel = n->getId();
+        int cont = 1;
+        if (leerPuntuaciones.is_open())
+        {
+          while ( getline (leerPuntuaciones,linea))
+          {
+              linea=encriptado(linea);
+              original.push_back(linea);
+              //cout<<"Valor original: "<<linea<< "(nivel actual: "<< intAString(cont) << " - nivel buscado: " << intAString(nivel) << ")" <<endl;
+              if(linea.compare(std::string("-"))!=false){
+                  if(cont==nivel){
+                      intAux=stringAInt(linea)+0;
+                      v.push_back(intAux);
+                  }                  
+              }else{                 
+                  cont++;
+              }                            
+          }
+          /*cout<<endl<<endl<<"Valores a comparar: "<<endl;
+          for(int i=0; i<v.size(); i++)
+              cout<<"-"<<intAString(v[i])<<endl;
+          
+          cout<<endl;
+          cout<<"Tamaño de V: "<<intAString(v.size())<<endl;*/
+           leerPuntuaciones.close();
+        }
+        //cout<<"Tamaño de V: "<<intAString(v.size())<<endl;
+        for(int i=v.size()-1; i>=0; i--){
+            //cout<<"Valor anterior: "<<intAString(v[i])<< " - Valor a comparar: "<<intAString(nuevaPunt)<<endl;
+            if(v[i]<nuevaPunt)
+                pos=i;            
+        }                 
+        
+        //EN CASO DE QUE ASÍ SEA, ANYADIMOS LA PUNTUACION DONDE CORRESPONDA
+        if(pos>-1){
+            
+            cout<<endl<<endl<<"Antigua clasificacion: "<<endl;
+            for(int i=0; i<v.size(); i++)
+                cout<<"-"<<intAString(v[i])<<endl;
 
+            cout<<endl;
+            
+            cout<< "Insertamos en: " <<intAString(pos)<<endl;
+            
+            v.insert(v.begin()+pos, nuevaPunt);
+            v.pop_back();
+            
+            cout<<endl<<endl<<"Nueva clasificacion: "<<endl;
+            for(int i=0; i<v.size(); i++)
+                cout<<"-"<<intAString(v[i])<<endl;
+
+            cout<<endl;
+            
+            //POR ULTIMO, REESCRIBIMOS EL FICHERO
+            std::ofstream escribirPartida("data-point.txt");
+            int cont=1;//Llevamos la cuenta del nivel que estamos comprobando y de la iteracion que llevamos en total
+            while(cont<4){
+                cout<<"Iteracion "<<cont<<endl;
+                if(cont==nivel){
+                    for(int i=0; i<v.size(); i++){
+                        escribirPartida<<encriptado(intAString(v[i]))<<endl;                                        
+                        cout<<"Escribo: "<< intAString(v[i]) << "(POS "<< i << ")" <<endl;
+                    }
+                }else{
+                    for(int i=(cont-1)*6; i<(cont*5)+((cont-1)); i++){
+                        escribirPartida<<encriptado(original[i])<<endl;
+                        cout<<"Escribo: "<< original[i]<< "(POS "<< i << ")" <<endl;
+                    }
+                }
+                //Cuando llega aqui, ha escrito un nivel entero, por lo que escribimos un -
+                
+                escribirPartida<<encriptado(std::string("-"))<<endl;
+                cout<<"Escribo: "<< std::string("-") <<endl;
+                cont++;
+            }
+            escribirPartida.close();
+        }
+    }
+}
+//Devuelve un vector con las 5 mejores puntuaciones del nivel indicado
+std::vector<int> GuardarCargarPartida::cargarPuntuaciones(){
+    std::vector<int> v;
+    cout<<"Carga puntuaciones:"<<endl;
+    
+    if(existeFichero("data-point.txt")==false)
+        inicializarPuntuaciones();    
+        
+    
+    std::ifstream leerPuntuaciones("data-point.txt");
+    int intAux=-1;    
+    
+    if(existeFichero("data-point.txt")){
+        std::string linea;        
+        if (leerPuntuaciones.is_open())
+        {
+          while ( getline (leerPuntuaciones,linea) )
+          {
+              linea=encriptado(linea);
+            if(linea.compare(std::string("-"))!=false){
+                intAux=stringAInt(linea)+0;
+                v.push_back(intAux);
+            }
+          }
+           leerPuntuaciones.close();
+        }        
+    }
+    cout<<"Fin de la carga"<<endl;
+    return v;
+}
+
+void GuardarCargarPartida::inicializarPuntuaciones(){
+    std::ofstream inicializarPuntuaciones("data-point.txt");
+    if(existeFichero(std::string("data-point.txt"))){
+        
+        int cont=0;
+        while(cont<3){
+            for(int i=0; i<5; i++)
+                inicializarPuntuaciones<<encriptado(intAString(0))<<endl;
+            
+            inicializarPuntuaciones<<encriptado(std::string("-"))<<endl;
+            cont++;
+        }
+        inicializarPuntuaciones.close();
+    }  
+}
+
+
+/*************************************************************************************FUNCIONES GENERALES*/
 bool GuardarCargarPartida::existeFichero(std::string nombre) {
     ifstream f(nombre.c_str());
     if (f.good()) {

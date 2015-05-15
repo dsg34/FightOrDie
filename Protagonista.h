@@ -15,6 +15,7 @@
 #include "Zombie.h"
 #include "MapLoader.h"
 
+
 class Protagonista: public Personaje {
 public:
     Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int ve);
@@ -29,14 +30,14 @@ public:
     void anteriorArma();
     //void update(char direccion);
     void recibirRecurso(Recurso* r);
-    void disparar(sf::Vector2<int> posicionCursor);
+    int disparar(sf::Vector2<int> posicionCursor);
     void dispararSecundaria(sf::Vector2<int> posicionCursor);
     void movimientoCerebro(std::vector<Zombie*> enemigos);
     int Colision(std::vector<Zombie*> zombies, char direccion);
     void colisionConRecursos(std::vector<Recurso*> &recursos);
     void actualizaDireccion();
     void actualizaPerso(int teclaX, int teclaY, std::vector<Zombie*> enemigos, MapLoader* m);
-    int update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, MapLoader* m,std::vector<Recurso*> recursos);
+    int update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, MapLoader* m,std::vector<Recurso*> recursos, int &disp);
     void setPosMira(sf::Vector2<int>);
     void pintarProtagonista(sf::RenderWindow &w);
     std::vector<Recurso*> getInventario();
@@ -56,6 +57,7 @@ private:
     //sf::RectangleShape* rectangle;
     RecursosFactory* fabR;
     std::vector<Recurso*> inventario;
+    
     
 };
 

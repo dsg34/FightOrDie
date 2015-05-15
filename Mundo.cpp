@@ -1,4 +1,6 @@
 #include "Mundo.h"
+#include "Sonidos.h"
+#include <SFML/Audio.hpp>
 #define UPDATE_TIME 1000/15
 #define RENDER_TIME 1000/60
 
@@ -38,6 +40,9 @@ Mundo::Mundo(sf::RenderWindow &w) {
     apuntar->setPosition((sf::Vector2f)posicionCursor());
     px = 600;
     py = 400;
+    
+    audios = Sonidos::Instance();
+    
 }
 
 
@@ -211,8 +216,12 @@ void Mundo::reiniciarNivel(){
 int Mundo::ejecutarMundo(){    
     int estado=0;   //estado 0: Sigue en juego; estado 1: Menu de pausa; estado 2: Menu de "Has muerto"; estado 3: Nivel finalizado; estado 4: Juego finalizado
     bool nivelAcabado=false;  
-    bool existePersonaje=false;    
+    bool existePersonaje=false;  
+    bool sonandoNivel = false;
+    bool sonando = false;
     
+    sf::Clock disparo;    
+    disparo.restart();
     //Bucle del juego    
     while (window->isOpen() && estado==0)
     {
@@ -222,12 +231,53 @@ int Mundo::ejecutarMundo(){
         if(frecuencia>UPDATE_TIME){ 
             
             //Bucle de obtenciÃ³n de eventos
-            sf::Event event;
-                                             
-                        
+            sf::Event event;         
+                      
             int fallos;
-                        
-            fallos = protagonista->update(posicionCursor(),nivel->getZombies(), nivel->getMapa(), nivel->getRecursos());
+            int disparando = 1;
+            fallos = protagonista->update(posicionCursor(),nivel->getZombies(), nivel->getMapa(), nivel->getRecursos(), disparando);
+            
+            if(disparando == 0 && disparo.getElapsedTime().asSeconds() > 0.3)
+            {      
+                audios->pistola.play();
+                disparo.restart();
+            }
+            
+            if(nivel->getId() == 1)
+            {
+                if(sonandoNivel == false)
+                {
+                    audios->nivel1.setLoop(true);
+                    
+                    sonandoNivel = true;
+                    audios->nivel1.play();
+                }
+                
+            }
+            else if(nivel->getId() == 2)
+            {
+                if(sonandoNivel == false)
+                {
+                    audios->nivel2.setLoop(true);
+                    
+                    sonandoNivel = true;
+                    audios->nivel2.play();
+                }
+                
+            }
+            else if(nivel->getId() == 3)
+            {
+                if(sonandoNivel == false)
+                {
+                    audios->nivel3.setLoop(true);
+                    
+                    sonandoNivel = true;
+                    audios->nivel3.play();
+                }
+                
+            }
+            
+            
             
             existePersonaje=protagonista->muerto();
             
@@ -236,17 +286,18 @@ int Mundo::ejecutarMundo(){
                 estado=4;
             
             int impactos = 0;
-            std::vector<Arma*> arm = protagonista->getArmas();
+            std::vector<Arma*> arm = protagonista->getArmas();           
             std::vector<Zombie*> zombies = nivel->getZombies();
             for(int j = 0; j < zombies.size(); j++)
             {
                 if(zombies[j]->colisionConBalas(arm))
                 {
                     impactos++;
+                    
                 }
                 if(zombies[j]->colisionConGranadas(arm))
                 {
-                    impactos += 8;
+                    impactos++;
                 }
             }
             
@@ -256,6 +307,19 @@ int Mundo::ejecutarMundo(){
                 pintarMundo();
                 sf::Time delayTime = sf::seconds(10);
                 sf::sleep(delayTime);
+                if(nivel->getId() == 1)
+                {
+                    audios->nivel1.stop();                    
+                }
+                else if(nivel->getId() == 2)
+                {
+                    audios->nivel2.stop();                    
+                }
+                else if(nivel->getId() == 3)
+                {
+                    audios->nivel3.stop();                    
+                }
+                audios->pistola.stop();
                 estado=3;
             }
             relojUpdate.restart();
@@ -269,9 +333,39 @@ int Mundo::ejecutarMundo(){
             relojRender.restart();
         }
         if(capturarCierre())
+        {
+            if(nivel->getId() == 1)
+            {
+                audios->nivel1.pause();
+            }
+            else if(nivel->getId() == 2)
+            {
+                audios->nivel2.pause();
+            }
+            else if(nivel->getId() == 3)
+            {
+                audios->nivel3.pause();
+            }
+            sonandoNivel = false;
             estado=5;
+        }
         if(capturarPausa())
+        {
+            if(nivel->getId() == 1)
+            {
+                audios->nivel1.pause();
+            }
+            else if(nivel->getId() == 2)
+            {
+                audios->nivel2.pause();
+            }
+            else if(nivel->getId() == 3)
+            {
+                audios->nivel3.pause();
+            }
+            sonandoNivel = false;
             estado=2;
+        }
     }
     window->clear();
     return estado;

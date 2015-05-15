@@ -63,7 +63,16 @@ build/Release/MinGW-Windows/Oleada.o: Oleada.cpp Oleada.h \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
  ../SFML-2.1/include/SFML/Graphics/Text.hpp HUD.h Protagonista.h \
  RecursosFactory.h Recurso.h Arma.h Proyectil.h Granada.h Personaje.h \
- Zombie.h MapLoader.h RecursoHUD.h
+ Zombie.h MapLoader.h Sonidos.h ../SFML-2.1/include/SFML/Audio.hpp \
+ ../SFML-2.1/include/SFML/Audio/Listener.hpp \
+ ../SFML-2.1/include/SFML/Audio/Export.hpp \
+ ../SFML-2.1/include/SFML/Audio/Music.hpp \
+ ../SFML-2.1/include/SFML/Audio/SoundStream.hpp \
+ ../SFML-2.1/include/SFML/Audio/SoundSource.hpp \
+ ../SFML-2.1/include/SFML/Audio/Sound.hpp \
+ ../SFML-2.1/include/SFML/Audio/SoundBuffer.hpp \
+ ../SFML-2.1/include/SFML/Audio/SoundBufferRecorder.hpp \
+ ../SFML-2.1/include/SFML/Audio/SoundRecorder.hpp RecursoHUD.h
 
 Oleada.h:
 
@@ -214,5 +223,27 @@ Personaje.h:
 Zombie.h:
 
 MapLoader.h:
+
+Sonidos.h:
+
+../SFML-2.1/include/SFML/Audio.hpp:
+
+../SFML-2.1/include/SFML/Audio/Listener.hpp:
+
+../SFML-2.1/include/SFML/Audio/Export.hpp:
+
+../SFML-2.1/include/SFML/Audio/Music.hpp:
+
+../SFML-2.1/include/SFML/Audio/SoundStream.hpp:
+
+../SFML-2.1/include/SFML/Audio/SoundSource.hpp:
+
+../SFML-2.1/include/SFML/Audio/Sound.hpp:
+
+../SFML-2.1/include/SFML/Audio/SoundBuffer.hpp:
+
+../SFML-2.1/include/SFML/Audio/SoundBufferRecorder.hpp:
+
+../SFML-2.1/include/SFML/Audio/SoundRecorder.hpp:
 
 RecursoHUD.h:

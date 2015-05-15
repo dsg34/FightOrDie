@@ -55,6 +55,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Recurso.o \
 	${OBJECTDIR}/RecursoHUD.o \
 	${OBJECTDIR}/RecursosFactory.o \
+	${OBJECTDIR}/Sonidos.o \
 	${OBJECTDIR}/Zombie.o \
 	${OBJECTDIR}/lib/tinyxml/tinystr.o \
 	${OBJECTDIR}/lib/tinyxml/tinyxml.o \
@@ -186,6 +187,11 @@ ${OBJECTDIR}/RecursosFactory.o: RecursosFactory.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RecursosFactory.o RecursosFactory.cpp
+
+${OBJECTDIR}/Sonidos.o: Sonidos.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../SFML-2.1/include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sonidos.o Sonidos.cpp
 
 ${OBJECTDIR}/Zombie.o: Zombie.cpp 
 	${MKDIR} -p ${OBJECTDIR}
