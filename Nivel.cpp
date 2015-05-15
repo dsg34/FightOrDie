@@ -360,8 +360,9 @@ void Nivel::generarRecurso(){
     RecursosFactory* fab = new RecursosFactory();
     
     Recurso* r = fab->crearRecurso(tipo);
-    while(mapa->Colision((int)r->getVectorActual().x, (int)r->getVectorActual().y, 0)==false)
+    while(mapa->Colision((int)r->getVectorActual().x, (int)r->getVectorActual().y, 0)==false){
         r = fab->crearRecurso(tipo);
+    }
     //if(map->Colision(sprite.getPosition().x,(sprite.getPosition().y - kVel + 75/2))){    
     recursos.push_back(r);
     

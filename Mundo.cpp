@@ -69,7 +69,7 @@ int Mundo::setPuntuacionMundo(int p){
 }
 
 void Mundo::cambiarNivel(int i){
-    protagonista->getSprite()->setPosition(tamPantalla.x/2, tamPantalla.y);
+    protagonista->getSprite()->setPosition(tamPantalla.x/2, tamPantalla.y/2);
     nivel = fabricaNivel->crearNivel(i,protagonista, (sf::Vector2<int>)window->getSize());
 }
 
