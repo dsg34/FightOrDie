@@ -42,6 +42,7 @@ Mundo::Mundo(sf::RenderWindow &w) {
     py = 400;
     
     audios = Sonidos::Instance();
+    contInterpolacion = 0;
     
 }
 
@@ -242,6 +243,16 @@ int Mundo::ejecutarMundo(){
                 audios->pistola.play();
                 disparo.restart();
             }
+            else if(disparando == 3 && disparo.getElapsedTime().asSeconds() > 0.7)
+            {      
+                audios->escopeta.play();
+                disparo.restart();
+            }
+            else if(disparando == 2 && disparo.getElapsedTime().asSeconds() > 0.1)
+            {      
+                audios->metralleta.play();
+                disparo.restart();
+            }
             
             if(nivel->getId() == 1)
             {
@@ -302,6 +313,7 @@ int Mundo::ejecutarMundo(){
             }
             
             nivelAcabado = nivel->actualizarNivel(protagonista, impactos,fallos);
+                
             if(nivelAcabado==true){//Nivel finalizado                
                 nivel->calcularPuntuacionTotal();
                 pintarMundo();
@@ -323,6 +335,8 @@ int Mundo::ejecutarMundo(){
                 estado=3;
             }
             relojUpdate.restart();
+            
+            
         }
         
         frecuencia = relojRender.getElapsedTime().asMilliseconds();
@@ -332,6 +346,7 @@ int Mundo::ejecutarMundo(){
             pintarMundo();
             relojRender.restart();
         }
+        
         if(capturarCierre())
         {
             if(nivel->getId() == 1)
@@ -366,6 +381,8 @@ int Mundo::ejecutarMundo(){
             sonandoNivel = false;
             estado=2;
         }
+                
+                
     }
     window->clear();
     return estado;
@@ -379,9 +396,10 @@ int Mundo::getPuntuacionNivel(){
     return nivel->getPuntuacion();
 }
 
-void Mundo::interpolarMundo(){
+void Mundo::interpolarMundo()
+{
     //SE INTERPOLA: PERSONAJE - ZOMBIES - GRANADAS - PROYECTILES
-    if(contInterpolacion==4)
+    if(contInterpolacion > 4)
         contInterpolacion=0;
     
     sf::Vector2<float> mov;
@@ -394,13 +412,17 @@ void Mundo::interpolarMundo(){
     protagonista->mover(mov.x, mov.y);
     
     std::vector<Zombie*> zom = nivel->getZombies();
-    for(int i=0; i<zom.size(); i++){
+    for(int i=0; i<zom.size(); i++)
+    {
+        
         mov.x= zom[i]->getPosActual().x-zom[i]->getPosAnterior().x;
         mov.y= zom[i]->getPosActual().y-zom[i]->getPosAnterior().y;
-        
+        std::cout << "mov x " << mov.x << std::endl;
         mov.x = mov.x*contInterpolacion*0.25;
         mov.y = mov.y*contInterpolacion*0.25;
+        std::cout << "mov x2 " << mov.x << std::endl;
         zom[i]->mover(mov.x, mov.y);
+        
     }
     
     std::vector<Proyectil*> bal = protagonista->getArma()->getCargador();
@@ -422,6 +444,8 @@ void Mundo::interpolarMundo(){
         mov.y = mov.y*contInterpolacion*0.25;
         gra[i]->mover(mov.x, mov.y);
     }
+    
+    //contInterpolacion++;
 }
 
 void Mundo::pintarMundo(){

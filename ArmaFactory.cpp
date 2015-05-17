@@ -48,7 +48,7 @@ Arma* ArmaFactory::crearMetralleta(){//Se debe controlar que, al acabarse la mun
     
     sf::Sprite* aux = new sf::Sprite(spriteBala);
     
-    Arma* m = new Arma(aux, new sf::Texture(tex), 2, 1, 25, 150, 100, 0.1, 30);
+    Arma* m = new Arma(aux, new sf::Texture(tex), 2, 2.5, 25, 300, 100, 0.1, 30);
     
     return m;
 }

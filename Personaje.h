@@ -6,7 +6,7 @@
 
 class Personaje {
 public:
-    Personaje(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int ve);
+    Personaje(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, float ve);
     Personaje(const Personaje& orig);
     virtual ~Personaje();
     //Se emplea virtual para que, si se crea una instancia de una clase hija de personaje, se llame a los métodos de dicha clase y no a los genericos
@@ -18,7 +18,7 @@ public:
     sf::Texture* getTexture();
     int getVida();
     int getMaxVida();
-    int getVelocidad();
+    float getVelocidad();
     int getCont();//Contador de la posicion del sprite en la que se esta
     int getDirec();//Direccion del personaje
     bool getMuriendo();
@@ -33,7 +33,7 @@ public:
     void setTexture(sf::Texture* t);
     void setVida(int v);
     void setMaxVida(int mV);
-    void setVelocidad(int ve);
+    void setVelocidad(float ve);
     void setCont(int c);//Contador de la posicion del sprite en la que se esta
     void setDirec(int d);//Direccion del personaje
     void setMuriendo(bool m);
@@ -43,7 +43,7 @@ protected:
     sf::Texture* tex;
     int vida;
     int maxVida;
-    int velocidad;
+    float velocidad;
     int cont;//Contador de la posicion del sprite en la que se esta
     int direc;//Direccion del personaje
     bool muriendo;//Booleano para determinar si el personaje esta en animacion de muerte

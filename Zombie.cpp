@@ -1,11 +1,10 @@
 #include "Zombie.h"
 
-Zombie::Zombie(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int ve, float dan) :Personaje(s,t,p,mV,ve) {
+Zombie::Zombie(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, float ve, float dan) :Personaje(s,t,p,mV,ve) {
     sprite = new sf::Sprite(*s);    
     tex = new sf::Texture(*t);
     sprite->setTexture(*tex);
     sprite->setPosition(p);
-    std::cout << "constructor x " << p.x << std::endl;
     
     posActual = p;
     posAnterior = p;
@@ -38,7 +37,7 @@ Zombie::~Zombie() {
 
 int Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std::vector<Arma*> armas, std::vector<Recurso*> recursos, MapLoader* mapa){
     
-    std::cout << "primer update zombie" << std::endl;
+    std::cout << "entra en el update" << sprite->getPosition().x <<std::endl;
     
     posAnterior = posActual;
     *boundingBox = sprite->getGlobalBounds();
@@ -48,19 +47,24 @@ int Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std::
     obsMapa = true;
     boundingBox->width -= 70;
     boundingBox->left += 30;  
+    
+    std::cout << "despues del update" << sprite->getPosition().x <<std::endl;
+    
     if(muriendo==false){
         colisionConBalas(armas);
         colisionConGranadas(armas);
-        
+        std::cout << "despues del update2" << sprite->getPosition().x <<std::endl;
         if(atacando==true){        
             frecuencia = reloj.getElapsedTime();            
             if(frecuencia.asSeconds()>0.1){
                 atacar();
                 reloj.restart();
             }
+            std::cout << "despues del update3" << sprite->getPosition().x <<std::endl;
         }else{
+            std::cout << "despues del update5" << sprite->getPosition().x <<std::endl;
             dominante = calcularDireccion(protagonista);
-
+            std::cout << "despues del update4" << sprite->getPosition().x <<std::endl;
             char direccion;
             if(equis>0 &&(y==0||y>0))
                 direccion = 'D';
@@ -70,19 +74,24 @@ int Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std::
                 direccion = 'A';
             else
                 direccion = 'W';
-
+            std::cout << "despues del update6" << sprite->getPosition().x <<std::endl;
             if(colisionConProta(protagonista, direccion)){
                 ataque=1;
                 contA=0;
                 atacando=true;
+                std::cout << "despues del update7" << sprite->getPosition().x <<std::endl;
             }else if(colisionConRecursos(recursos)){
                 ataque=2;
                 contA=0;
                 atacando=true;
+                std::cout << "despues del update8" << sprite->getPosition().x <<std::endl;
             }else{
+                std::cout << "despues del update9" << sprite->getPosition().x <<std::endl;
                 std::cout << "psrpritex" << sprite->getPosition().x << std::endl;
                 std::cout << "psrpritey" << sprite->getPosition().y << std::endl;
                 detectarObstaculos(mapa, dominante);
+                std::cout << "despues del update12" << sprite->getPosition().x <<std::endl;
+                
                 if(equis>0 && y>0)
                     direccion = 'C';
                 else if(equis<0 && y>0)
@@ -99,21 +108,32 @@ int Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std::
                     direccion = 'A';
                 else
                     direccion = 'W';
+                
+                std::cout << "despues del update10" << sprite->getPosition().x <<std::endl;
                 if(obsMapa==false)
                     detectarZombie(zombies, direccion, mapa);
                 else if(!colisionConZombies(zombies, direccion))
                     sprite->move(equis,y);
-                
+                std::cout << "despues del update11" << sprite->getPosition().x <<std::endl;
                 posActual = sprite->getPosition();
             }
         }
+        
+        std::cout << "if update " << sprite->getPosition().x <<std::endl;
+        
     }else{
         frecuencia = reloj.getElapsedTime();            
         if(frecuencia.asSeconds()>0.1){
             actualizaMuerte();
             reloj.restart();
         }    
+        
+        std::cout << "else update " << sprite->getPosition().x <<std::endl;
+        
     }
+    
+    std::cout << "sale del update" << sprite->getPosition().x <<std::endl;
+    
     return ataque;
 }
 
@@ -255,14 +275,20 @@ bool Zombie::calcularDireccion(sf::Sprite protagonista){
 }
 
 void Zombie::detectarObstaculos(MapLoader* mapa, bool dominante){
-    std::cout << "zombiex" << sprite->getPosition().x << std::endl;
-    std::cout << "zombiey" << sprite->getPosition().y << std::endl;
-    if(!mapa->Colision(sprite->getPosition().x+(equis*(25/abs(velocidad))), sprite->getPosition().y+(y*(25/abs(velocidad))),1)){          //no se puede mover
+    std::cout << "inicio detectar obstaculos " << posActual.x <<std::endl;
+    std::cout << "sprite " << sprite->getPosition().x <<std::endl;
+    std::cout << "equis " << equis <<std::endl;
+    std::cout << "vel " << velocidad <<std::endl;
+    std::cout << "vvvv" << fabs(velocidad) << std::endl;
+    std::cout << "sprite " << sprite->getPosition().y <<std::endl;
+    std::cout << "y " << y <<std::endl;
+    if(!mapa->Colision(sprite->getPosition().x+(equis*(25/fabs(velocidad))), sprite->getPosition().y+(y*(25/fabs(velocidad))),1)){   
+        std::cout << "despues del update2 " << posActual.x <<std::endl;//no se puede mover
         if(dominante){          //horizontal
-            if(!mapa->Colision(sprite->getPosition().x+(equis*(25/abs(velocidad))), sprite->getPosition().y-25,1)){
-                if(!mapa->Colision(sprite->getPosition().x+(equis*(25/abs(velocidad))), sprite->getPosition().y+25,1)){
-                    if(!mapa->Colision(sprite->getPosition().x+(equis*(25/abs(velocidad))), sprite->getPosition().y-50,1)){
-                        if(!mapa->Colision(sprite->getPosition().x+(equis*(25/abs(velocidad))), sprite->getPosition().y+50,1)){
+            if(!mapa->Colision(sprite->getPosition().x+(equis*(25/fabs(velocidad))), sprite->getPosition().y-25,1)){
+                if(!mapa->Colision(sprite->getPosition().x+(equis*(25/fabs(velocidad))), sprite->getPosition().y+25,1)){
+                    if(!mapa->Colision(sprite->getPosition().x+(equis*(25/fabs(velocidad))), sprite->getPosition().y-50,1)){
+                        if(!mapa->Colision(sprite->getPosition().x+(equis*(25/fabs(velocidad))), sprite->getPosition().y+50,1)){
                             if(sprite->getPosition().y>375){
                                 equis=0;
                                 y=-velocidad;
@@ -283,10 +309,10 @@ void Zombie::detectarObstaculos(MapLoader* mapa, bool dominante){
                 y=-velocidad;
             }
         }else{                      //vertizal
-            if(!mapa->Colision(sprite->getPosition().x-25, sprite->getPosition().y+(y*(25/abs(velocidad))),1)){
-                if(!mapa->Colision(sprite->getPosition().x+25, sprite->getPosition().y+(y*(25/abs(velocidad))),1)){
-                    if(!mapa->Colision(sprite->getPosition().x-50, sprite->getPosition().y+(y*(25/abs(velocidad))),1)){
-                        if(!mapa->Colision(sprite->getPosition().x+50, sprite->getPosition().y+(y*(25/abs(velocidad))),1)){
+            if(!mapa->Colision(sprite->getPosition().x-25, sprite->getPosition().y+(y*(25/fabs(velocidad))),1)){
+                if(!mapa->Colision(sprite->getPosition().x+25, sprite->getPosition().y+(y*(25/fabs(velocidad))),1)){
+                    if(!mapa->Colision(sprite->getPosition().x-50, sprite->getPosition().y+(y*(25/fabs(velocidad))),1)){
+                        if(!mapa->Colision(sprite->getPosition().x+50, sprite->getPosition().y+(y*(25/fabs(velocidad))),1)){
                             if(sprite->getPosition().x>375){
                                 equis=-velocidad;
                                 y=0;
@@ -307,8 +333,12 @@ void Zombie::detectarObstaculos(MapLoader* mapa, bool dominante){
                 equis=-velocidad;
             }
         }
-    }else
+    }else{
+        std::cout << "er!" << std::endl;
         obsMapa=false;
+    }
+    
+    std::cout << "er!" << std::endl;
 }
 
 void Zombie::detectarZombie(std::vector<Zombie*> zombies, char direccion, MapLoader* mapa){

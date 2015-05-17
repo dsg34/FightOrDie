@@ -23,14 +23,23 @@ public:
     Sonidos();
     Sonidos(const Sonidos& orig);
     virtual ~Sonidos();
+    sf::Music inicio;
     sf::Music nivel1;
     sf::Music nivel2;
     sf::Music nivel3;
     sf::Music pistola;
+    sf::Music escopeta;
+    sf::Music metralleta;
     sf::Music risaBoss;
     sf::Music ataqueZombie;
     sf::Music zombie1;
     sf::Music zombie2;
+    sf::Music zombie3;
+    sf::Music zombie4;
+    sf::Music zombie5;
+    sf::Music zombie6;
+    sf::Music zombie7;
+    sf::Music zombie8;
     
     Sonidos &operator = (const Sonidos & );
     

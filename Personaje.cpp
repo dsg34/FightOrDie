@@ -1,6 +1,6 @@
 #include "Personaje.h"
 
-Personaje::Personaje(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int ve){
+Personaje::Personaje(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, float ve){
     
     tex=t;
     sprite=new sf::Sprite(*s);
@@ -83,10 +83,10 @@ void Personaje::setMaxVida(int mV){
     maxVida=mV;
 }
 
-int Personaje::getVelocidad(){
+float Personaje::getVelocidad(){
     return velocidad;
 }
-void Personaje::setVelocidad(int ve){
+void Personaje::setVelocidad(float ve){
     velocidad=ve;
 }
 

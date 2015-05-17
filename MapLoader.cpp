@@ -167,12 +167,14 @@ void MapLoader::Draw(sf::RenderWindow &window,int capa)
 }
 // en tipo 0 es para personaje y recurso y 1 para zombie
 //devuelve true si el personaje puede avanzar a esa posicion
-bool MapLoader::Colision(int x,int y, int tipo){
+bool MapLoader::Colision(int x,int y, int tipo)
+{
+    std::cout << "x: " << x << std::endl;
     int tile_x = x/25;
     int tile_y = y/25;
     int pos = tile_x + 52*tile_y;
     //std::cout << pos << std::endl;
-    std::cout << "x: " << x << std::endl;
+    
     std::cout << "y: " << y << std::endl;
     std::cout << "tipo: " << tipo << std::endl;
     std::cout << "pos: " << pos << std::endl;

@@ -4,6 +4,7 @@
 Juego::Juego() 
 {
     gestionPartida=new GuardarCargarPartida();
+    audios = Sonidos::Instance();
 }
 
 Juego::Juego(const Juego& orig) {
@@ -324,12 +325,8 @@ int Juego::ejecutarJuego()
     reloj.restart();   
     
    
-    sf::SoundBuffer buffer;
-    buffer.loadFromFile("resources/inicio.wav");
     
-    sf::Sound sound;
-    sound.setBuffer(buffer);
-    sound.play();
+    audios->inicio.play();
 
     //1: Menu Inicio ; 2: Menu Pausa ; 3: Menu Fin de nivel ; 4: Menu muerte ; 5: Menu ¿Desea Salir?
     //MENU DE INICIO
@@ -351,7 +348,7 @@ int Juego::ejecutarJuego()
             {//Cargar partida
                 mundo->cargarPartida(gestionPartida->cargarPartida());                
             }
-            sound.stop();
+            audios->inicio.stop();
             
             while(salirJuego!=true)
             {
@@ -359,7 +356,7 @@ int Juego::ejecutarJuego()
                 
                 while(salirMenu!=true)
                 {
-                    sound.play();
+                    audios->inicio.play();
                     //MENU DE PAUSA-FIN DE NIVEL-MUERTE
                     if(estadoMundo==3){
                         gestionPartida->guardarPuntuacion(mundo->getNivel());
@@ -387,7 +384,7 @@ int Juego::ejecutarJuego()
                         case -18: gestionPartida->guardarPartida(mundo->getNivel(),mundo->getProtagonista());estadoMundo=2;cout<<"eu"<<endl;estadoMundo=2;  break;//Guardar partida
                     }
                 }
-                sound.stop();
+                audios->inicio.stop();
                 salirMenu=false;
                 
             }

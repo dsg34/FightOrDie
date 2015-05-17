@@ -11,7 +11,7 @@
 
 class Zombie: public Personaje {
 public:
-    Zombie(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int ve, float dan);
+    Zombie(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, float ve, float dan);
     Zombie(const Zombie& orig);
     virtual ~Zombie();
     

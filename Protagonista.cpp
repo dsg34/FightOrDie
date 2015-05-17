@@ -3,7 +3,7 @@
 #include "Recurso.h"
 #include "RecursosFactory.h"
 
-Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int ve) :Personaje(s,t,p,mV,ve) {
+Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, float ve) :Personaje(s,t,p,mV,ve) {
 
     ArmaFactory* fab = new ArmaFactory();    
     armas.push_back(fab->crearPistola());
@@ -78,7 +78,16 @@ int Protagonista::disparar(sf::Vector2<int> posicionCursor)
             siguienteArma();
     }else
     {
-        disparando = arma->disparar(sprite->getPosition(), posicionCursor);        
+        disparando = arma->disparar(sprite->getPosition(), posicionCursor);    
+        if(disparando == 0)
+        {
+            if(arma->getTipo() == 2)
+                disparando = 2;
+            else if(arma->getTipo() == 3)
+                disparando = 3;
+            else if(arma->getTipo() == 4)
+                disparando = 4;
+        }
     }
     
     return disparando;

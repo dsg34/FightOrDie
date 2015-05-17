@@ -3,6 +3,7 @@
 #include "Protagonista.h"
 #include "HUD.h"
 #include "ArmaFactory.h"
+#include "Sonidos.h"
 #include "Nivel.h"
 #include "Mundo.h"
 #include "Menu.h"
@@ -40,6 +41,7 @@ private:
     Mundo* mundo;
     Menu* menu;
     GuardarCargarPartida* gestionPartida;
+    Sonidos* audios;
 };
 
 #endif	/* JUEGO_H */

@@ -18,7 +18,7 @@
 
 class Protagonista: public Personaje {
 public:
-    Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, int ve);
+    Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, float ve);
     Protagonista(const Protagonista& orig2);
     virtual ~Protagonista();
     

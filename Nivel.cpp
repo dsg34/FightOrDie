@@ -116,7 +116,7 @@ void Nivel::controlarRacha(int imp){//
 
 bool Nivel::actualizarNivel(Protagonista* p, int impac, int fall)
 {   
-
+    
     bool terminado=false;
     
     impactos += impac;
@@ -131,15 +131,47 @@ bool Nivel::actualizarNivel(Protagonista* p, int impac, int fall)
         relojZombie.restart();
     }
     
-    if(sonidosClock.getElapsedTime().asSeconds() > 20+rand()% 45)
+    if(sonidosClock.getElapsedTime().asSeconds() > 15+rand()% 40)
     {
-        audios->zombie2.play();
+        int num = 1+rand()%8;
+        
+        switch(num)
+        {
+            case 1:
+                audios->zombie1.play();
+                break;
+            case 2:
+                audios->zombie2.play();
+                break;
+            case 3:
+                audios->zombie3.play();
+                break;
+            case 4:
+                audios->zombie4.play();
+                break;
+            case 5:
+                audios->zombie5.play();
+                break;
+            case 6:
+                audios->zombie6.play();
+                break;
+            case 7:
+                audios->zombie7.play();
+                break;
+            case 8:
+                audios->zombie8.play();
+                break;
+             
+        }
+        
         sonidosClock.restart();
     }
     
     tiempo = relojRecurso.getElapsedTime();
     actualizarRecursosExistentes();
     int estadoNivel = actualizarZombiesExistentes(p);
+    if(zombies.size() > 0)
+        std::cout << "update nivel " << zombies[0]->getSprite()->getPosition().x <<  std::endl;
     //std::cout << "Segundos: " << tiempo.asSeconds()<< " - ApareceRecurso: " << tApareceRecurso << std::endl;
     if(tiempo.asSeconds()>tApareceRecurso){
         generarRecurso();
@@ -152,6 +184,9 @@ bool Nivel::actualizarNivel(Protagonista* p, int impac, int fall)
     }
     else if(estadoNivel==2)
         terminado=true;
+    
+    if(zombies.size() > 0)
+        std::cout << "update nivel " << zombies[0]->getSprite()->getPosition().x <<  std::endl;
     
     return terminado;
 }
@@ -249,7 +284,9 @@ int Nivel::actualizarZombiesExistentes(Protagonista* p){
     for(int i=0; i<zombies.size(); i++)
     { 
         std::cout << "numero del zombie" << i << std::endl;
+        std::cout << "entra en el for" << zombies[i]->getSprite()->getPosition().x << std::endl;
         zombieAtaca=zombies[i]->update(*(p->getSprite()), zombies, p->getArmas(), recursos, mapa);
+        std::cout << "despues en el for" << zombies[i]->getSprite()->getPosition().x << std::endl;
         if(zombieAtaca==1){
             if(p->getVida()>0){
                 p->recibirDanyo(zombies[i]->getDanyo());
@@ -266,15 +303,18 @@ int Nivel::actualizarZombiesExistentes(Protagonista* p){
                 }
             }
         }
+        std::cout << "enmedio del for" << zombies[i]->getSprite()->getPosition().x << std::endl;
         existe = zombies[i]->getEstado();
         if(existe==false)
         {
             z = zombies[i];
             zombies.erase(zombies.begin()+i);
-            delete z;
+            //delete z;
             estadoNivel=oleada->actualizarZombiesMuertos(1,hud);
             //numZombies++;
         }
+        
+        std::cout << "sale del for" << zombies[i]->getSprite()->getPosition().x << std::endl;
     }    
     return estadoNivel;
 } 
@@ -419,7 +459,7 @@ void Nivel::generarZombies(){
 
 void Nivel::generarRecurso(){
     int tipo = 2 + rand()%6;
-    
+   ;
     Recurso* r = fabR->crearRecurso(tipo);
     while(mapa->Colision((int)r->getVectorActual().x, (int)r->getVectorActual().y, 0)==false)
         r = fabR->crearRecurso(tipo);
