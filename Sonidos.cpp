@@ -17,7 +17,7 @@ Sonidos::Sonidos() {
     nivel2.openFromFile("resources/Nivel2.wav");
     nivel2.setVolume(10);
     nivel3.openFromFile("resources/Nivel3.wav");
-    nivel3.setVolume(40);
+    nivel3.setVolume(20);
     pistola.openFromFile("resources/pistola2.wav");
     pistola.setVolume(6);
     escopeta.openFromFile("resources/escopeta.wav");
