@@ -38,10 +38,11 @@ private:
     float y;
     bool atacando;
     float danyo;
-    sf::Clock reloj;;
+    sf::Clock reloj;
     int contA;
     int esquiva;
     bool obsMapa;
+    bool esqDir;
     Sonidos* audios;
 };
 

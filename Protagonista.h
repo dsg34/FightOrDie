@@ -57,7 +57,7 @@ private:
     //sf::RectangleShape* rectangle;
     RecursosFactory* fabR;
     std::vector<Recurso*> inventario;
-    
+    bool disparando;
     
 };
 

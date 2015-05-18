@@ -348,49 +348,44 @@ sf::Vector2<int> Nivel::devuelvePos(){
     
      switch(lado){
         //Por la izquierda
-        case 1:     pos.x=0-tam.x/50;
-                    pos.y=rand()%9;
-                    if(pos.y==posAnt1)
-                        pos.y+=1;
+         case 1:     pos.x=-80;
+                    posAnt1++;
+                    if(posAnt1==9)
+                        posAnt1=0;
                     
-                    posAnt1=pos.y;
-                    pos.y=pos.y*80;    //Genera un numero aleatorio entre la posicion 0 y la maxima altura de la pantalla
+                    pos.y=posAnt1*80;    //Genera un numero aleatorio entre la posicion 0 y la maxima altura de la pantalla
                     break;
         //Por la derecha
-        case 2:     pos.x=tam.x+tam.x/50;
-                    pos.y=rand()%9;
-                    if(pos.y==posAnt2)
-                        pos.y+=1;
-        
-                    posAnt2=pos.y;
-                    pos.y=pos.y*80;
+        case 2:     pos.x=tam.x+80;
+                    posAnt2++;
+                    if(posAnt2==9)
+                        posAnt2=0;
+                    
+                    pos.y=posAnt2*80;
                     break; 
         //Por arriba
-        case 3:     pos.y=0-tam.y/50;
-                    pos.x=rand()%9;
-                    if(pos.x==posAnt3)
-                        pos.x+=1;
-        
-                    posAnt3=pos.x;
-                    pos.x=pos.x*80;
+        case 3:     pos.y=-80;
+                    posAnt3++;
+                    if(posAnt3==17)
+                        posAnt3=0;
+                    
+                    pos.x=posAnt3*80;
                     break;
         //Por abajo
-        case 4:     pos.y=tam.y+tam.y/50;
-                    pos.x=rand()%9;
-                    if(pos.x==posAnt4)
-                        pos.x+=1;
-        
-                    posAnt4=pos.x;
-                    pos.x=pos.x*80;
+        case 4:     pos.y=tam.y+80;
+                    posAnt4++;
+                    if(posAnt4==17)
+                        posAnt4=0;
+                    
+                    pos.x=posAnt4*80;
                     break;
         //Por defecto, por la derecha            
-        default:    pos.x=tam.x+tam.x/50;
-                    pos.y=rand()%9;
-                    if(pos.y==posAnt2)
-                        pos.y+=1;
-        
-                    posAnt2=pos.y;
-                    pos.y=pos.y*80;
+        default:    pos.x=tam.x+80;
+                    posAnt2++;
+                    if(posAnt2==9)
+                        posAnt2=0;
+                    
+                    pos.y=posAnt2*80;
                     break; 
     }         
     return pos;

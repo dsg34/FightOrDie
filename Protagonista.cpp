@@ -35,7 +35,7 @@ Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, 
     boundingBox->left += 30;
     //delete fab;
     inventario = std::vector<Recurso*>();
-    
+    disparando = false;
     relojCambioArma.restart();
     
     
@@ -203,7 +203,20 @@ int Protagonista::Colision(std::vector<Zombie*> zombies, char direccion){
         for(int i=0; i<zombies.size(); i++){
            cajaZ = zombies[i]->getBoundingBox();
            if(box->intersects(*cajaZ))
-           {               
+           {       
+               if(direccion == 'D'){
+                    if(spriteCopia->getPosition().x > zombies[i]->getSprite()->getPosition().x-35)
+                        return 0;
+                }else if(direccion == 'S'){
+                    if(spriteCopia->getPosition().y > zombies[i]->getSprite()->getPosition().y-35)
+                        return 0;
+                }else if(direccion == 'A'){
+                    if(spriteCopia->getPosition().x < zombies[i]->getSprite()->getPosition().x+35)
+                        return 0;
+                }else{
+                    if(spriteCopia->getPosition().y < zombies[i]->getSprite()->getPosition().y+35)
+                        return 0;
+                }
                return 1; //AQUI DEVUELVO EL DANYO QUE HAGA EL ZOMBI EN CUESTION
            }
         }
@@ -225,7 +238,7 @@ void Protagonista::colisionConRecursos(std::vector<Recurso*> &recursos)
 
 int Protagonista::update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, MapLoader* m,std::vector<Recurso*> recursos, int &disp){
     
-    int disparando = 1;
+    int dispara = 1;
     posmira.x = pos.x;
     posmira.y = pos.y;
     posAnterior = sprite->getPosition();
@@ -270,10 +283,15 @@ int Protagonista::update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, Ma
             teclaX=1;
         }
         actualizaPerso(teclaX,teclaY, enemigos, m);  //por aqui no deberiamos pasar enemigos
+        frecuencia = reloj.getElapsedTime();            
+        if(frecuencia.asSeconds()>0.5){
+            disparando=false;
+        }
         if (sf::Joystick::isButtonPressed(mando,5) || sf::Mouse::isButtonPressed(sf::Mouse::Left))
         { //miPistola->disparar(sprite.getPosition(), posicionCursor(window));
-            disparando = disparar(posmira);
-            disp = disparando;
+            dispara = disparar(posmira);
+            disp = dispara;
+            disparando = true;
         } //miProtagonista->getArma()->disparar(*miProtagonista->getSprite()->getPosition(), posicionCursor(window));
         else if (sf::Joystick::isButtonPressed(mando,4) || sf::Mouse::isButtonPressed((sf::Mouse::Right))){
                             //miPistola->dispararSecundaria(sprite.getPosition(), posicionCursor(window));
@@ -314,39 +332,75 @@ void Protagonista::actualizaDireccion(){
     int persoX=sprite->getPosition().x;
     int persoY=sprite->getPosition().y;
         
-    if((miraY>persoY-60 && miraX<persoX-25) && (miraY<persoY+60 && miraX<persoX-25)){
-        direc=0;    //Izquierda
-        sprite->setTextureRect(sf::IntRect(cont*75,150,75,75));
-        sprite->setScale(1,1);
-    }else if((miraY>persoY-60 && miraX>persoX+25) && (miraY<persoY+60 && miraX>persoX+25)){
-        direc=1;    //Derecha
-        sprite->setTextureRect(sf::IntRect(cont*75,150,75,75));
-        sprite->setScale(-1,1);
-    }else if(miraX<persoX-60 && miraY>persoY+35){
-        direc=2;    //Abajo-Izda
-        sprite->setTextureRect(sf::IntRect(cont*75,225,75,75));
-        sprite->setScale(1,1);
-    }else if((miraX>persoX-60 && miraY>persoY+35) && (miraX<persoX+60 && miraY>persoY+35)){   
-        direc=3;    //Abajo
-        sprite->setTextureRect(sf::IntRect(cont*75,0,75,75));
-        sprite->setScale(1,1); 
-    }else if(miraX>persoX+60 && miraY>persoY+35){
-        direc=4;   //Abajo-der
-        sprite->setTextureRect(sf::IntRect(cont*75,225,75,75));
-        sprite->setScale(-1,1);
-    }else if(miraX<persoX-60 && miraY<persoY-35){
-        direc=5;   //Arriba-izda
-        sprite->setTextureRect(sf::IntRect(cont*75,300,75,75));
-        sprite->setScale(1,1);
-    }else if((miraX>persoX-60 && miraY<persoY-35) && (miraX<persoX+60 && miraY<persoY+35)){
-        direc=6;    //Arriba
-        sprite->setTextureRect(sf::IntRect(cont*75,75,75,75));  
-        sprite->setScale(1,1);
-    }else if(miraX>persoX+60 && miraY<persoY-35){
-        direc=7;   //Arriba-der
-        sprite->setTextureRect(sf::IntRect(cont*75,300,75,75));
-        sprite->setScale(-1,1);
-    }    
+    if(disparando==true){
+        if((miraY>persoY-60 && miraX<persoX-25) && (miraY<persoY+60 && miraX<persoX-25)){
+            direc=0;    //Izquierda
+            sprite->setTextureRect(sf::IntRect(cont*75,150+375,75,75));
+            sprite->setScale(1,1);
+        }else if((miraY>persoY-60 && miraX>persoX+25) && (miraY<persoY+60 && miraX>persoX+25)){
+            direc=1;    //Derecha
+            sprite->setTextureRect(sf::IntRect(cont*75,150+375,75,75));
+            sprite->setScale(-1,1);
+        }else if(miraX<persoX-60 && miraY>persoY+35){
+            direc=2;    //Abajo-Izda
+            sprite->setTextureRect(sf::IntRect(cont*75,225+375,75,75));
+            sprite->setScale(1,1);
+        }else if((miraX>persoX-60 && miraY>persoY+35) && (miraX<persoX+60 && miraY>persoY+35)){   
+            direc=3;    //Abajo
+            sprite->setTextureRect(sf::IntRect(cont*75,375,75,75));
+            sprite->setScale(1,1); 
+        }else if(miraX>persoX+60 && miraY>persoY+35){
+            direc=4;   //Abajo-der
+            sprite->setTextureRect(sf::IntRect(cont*75,225+375,75,75));
+            sprite->setScale(-1,1);
+        }else if(miraX<persoX-60 && miraY<persoY-35){
+            direc=5;   //Arriba-izda
+            sprite->setTextureRect(sf::IntRect(cont*75,300+375,75,75));
+            sprite->setScale(1,1);
+        }else if((miraX>persoX-60 && miraY<persoY-35) && (miraX<persoX+60 && miraY<persoY+35)){
+            direc=6;    //Arriba
+            sprite->setTextureRect(sf::IntRect(cont*75,75+375,75,75));  
+            sprite->setScale(1,1);
+        }else if(miraX>persoX+60 && miraY<persoY-35){
+            direc=7;   //Arriba-der
+            sprite->setTextureRect(sf::IntRect(cont*75,300+375,75,75));
+            sprite->setScale(-1,1);
+        }    
+    }else{
+        if((miraY>persoY-60 && miraX<persoX-25) && (miraY<persoY+60 && miraX<persoX-25)){
+            direc=0;    //Izquierda
+            sprite->setTextureRect(sf::IntRect(cont*75,150,75,75));
+            sprite->setScale(1,1);
+        }else if((miraY>persoY-60 && miraX>persoX+25) && (miraY<persoY+60 && miraX>persoX+25)){
+            direc=1;    //Derecha
+            sprite->setTextureRect(sf::IntRect(cont*75,150,75,75));
+            sprite->setScale(-1,1);
+        }else if(miraX<persoX-60 && miraY>persoY+35){
+            direc=2;    //Abajo-Izda
+            sprite->setTextureRect(sf::IntRect(cont*75,225,75,75));
+            sprite->setScale(1,1);
+        }else if((miraX>persoX-60 && miraY>persoY+35) && (miraX<persoX+60 && miraY>persoY+35)){   
+            direc=3;    //Abajo
+            sprite->setTextureRect(sf::IntRect(cont*75,0,75,75));
+            sprite->setScale(1,1); 
+        }else if(miraX>persoX+60 && miraY>persoY+35){
+            direc=4;   //Abajo-der
+            sprite->setTextureRect(sf::IntRect(cont*75,225,75,75));
+            sprite->setScale(-1,1);
+        }else if(miraX<persoX-60 && miraY<persoY-35){
+            direc=5;   //Arriba-izda
+            sprite->setTextureRect(sf::IntRect(cont*75,300,75,75));
+            sprite->setScale(1,1);
+        }else if((miraX>persoX-60 && miraY<persoY-35) && (miraX<persoX+60 && miraY<persoY+35)){
+            direc=6;    //Arriba
+            sprite->setTextureRect(sf::IntRect(cont*75,75,75,75));  
+            sprite->setScale(1,1);
+        }else if(miraX>persoX+60 && miraY<persoY-35){
+            direc=7;   //Arriba-der
+            sprite->setTextureRect(sf::IntRect(cont*75,300,75,75));
+            sprite->setScale(-1,1);
+        }    
+    } 
 }
 
 void Protagonista::actualizaPerso(int teclaX, int teclaY, std::vector<Zombie*> enemigos, MapLoader* m)

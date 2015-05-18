@@ -56,6 +56,7 @@ int Menu::update(sf::RenderWindow &window)
     {
         if(sf::Joystick::isConnected(mando))
         {
+            //std::cout << "--------------------------------------------------------------------------mando " << mando << std::endl;
             float positionY = sf::Joystick::getAxisPosition(mando, sf::Joystick::Y);   
 
             if(positionY < -20)
