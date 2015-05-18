@@ -43,19 +43,27 @@ int Menu::update(sf::RenderWindow &window)
 {    
     int devuelve=-1;
     
-    
-    if(xbox.getElapsedTime().asSeconds() > 0.1 && sf::Joystick::isConnected(1) )
-    {
-        if(sf::Joystick::isConnected(1))
+    int mando = 0;
+        for(int i = 0; i < 8; i++)
         {
-            float positionY = sf::Joystick::getAxisPosition(1, sf::Joystick::Y);   
+           if(sf::Joystick::isConnected(i))
+           {
+               mando = i;
+           }                    
+        }
+    
+    if(xbox.getElapsedTime().asSeconds() > 0.1 && sf::Joystick::isConnected(mando) )
+    {
+        if(sf::Joystick::isConnected(mando))
+        {
+            float positionY = sf::Joystick::getAxisPosition(mando, sf::Joystick::Y);   
 
             if(positionY < -20)
                 MoveUp();
             else if(positionY > 20)
                 MoveDown();
 
-            if(sf::Joystick::isButtonPressed(1, 0))
+            if(sf::Joystick::isButtonPressed(mando, 0))
             {
                 devuelve=GetPressedItem();
                     if(menu[devuelve]->getString() == sf::String("Salir"))
@@ -99,7 +107,7 @@ int Menu::update(sf::RenderWindow &window)
         
         xbox.restart();
     }
-    else if(xbox.getElapsedTime().asSeconds() > 0.05)
+    else if(xbox.getElapsedTime().asSeconds() > 0.08)
     {
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
             MoveUp();

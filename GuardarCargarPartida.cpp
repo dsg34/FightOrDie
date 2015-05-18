@@ -20,7 +20,10 @@ GuardarCargarPartida::~GuardarCargarPartida() {
 //Debe devolver: -Estado mejoras de armas (4 ints) -Nivel actual (1 int) -Oleada actual (1 int)
 /***********************************************************************************************************GESTION DE PARTIDAS*/
 void GuardarCargarPartida::guardarPartida(Nivel* n, Protagonista* p){
-    std::ofstream escribirPartida("data.txt");
+    std::cout << "hola" << std::endl;
+    std::ofstream escribirPartida;
+    std::cout << "adios" << std::endl;
+    escribirPartida.open("data.txt");
     if(existeFichero(std::string("data.txt"))){
         //ESCRIBIMOS LAS MEJORAS DE ARMAS
         for(int i=0; i<4; i++)

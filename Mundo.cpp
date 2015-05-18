@@ -131,11 +131,19 @@ sf::Vector2<int> Mundo::posicionCursor()
     sf::Vector2<int> pos;    
     sf::Mouse raton;
     
+    int mando = 0;
+        for(int i = 0; i < 8; i++)
+        {
+           if(sf::Joystick::isConnected(i))
+           {
+               mando = i;
+           }                    
+        }
     
-    if(sf::Joystick::isConnected(1))
+    if(sf::Joystick::isConnected(mando))
     {
-        float positionY = sf::Joystick::getAxisPosition(1, sf::Joystick::R);
-        float positionX = sf::Joystick::getAxisPosition(1, sf::Joystick::U);
+        float positionY = sf::Joystick::getAxisPosition(mando, sf::Joystick::R);
+        float positionX = sf::Joystick::getAxisPosition(mando, sf::Joystick::U);
         
         if(positionY < -30)
             pos.y = py - 3;
