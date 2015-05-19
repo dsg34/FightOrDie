@@ -178,6 +178,10 @@ Recurso* RecursosFactory::crearRecurso(int tip)
     {
         p = crearMadera();
     }
+    else if(tip == 8)
+    {
+        p = crearValla(25);
+    }
     else
     {
         p = crearMunicionGranada();

@@ -48,7 +48,7 @@ Arma* ArmaFactory::crearMetralleta(){//Se debe controlar que, al acabarse la mun
     
     sf::Sprite* aux = new sf::Sprite(spriteBala);
     
-    Arma* m = new Arma(aux, new sf::Texture(tex), 2, 2.5, 25, 300, 100, 0.1, 30);
+    Arma* m = new Arma(aux, new sf::Texture(tex), 2, 2.5, 25, 300, 100, 0.2, 30);
     
     return m;
 }
@@ -89,7 +89,7 @@ Arma* ArmaFactory::crearHacha(){//Se debe controlar que, al acabarse la municion
     
     sf::Sprite* aux = new sf::Sprite(spriteBala);
     
-    Arma* h = new Arma(aux, new sf::Texture(tex), 4, 4, 7, 1, 2000, 0.1, 2);
+    Arma* h = new Arma(aux, new sf::Texture(tex), 4, 10, 7, 1, 2000, 0.8, 2);
     h->setMunicion(5000);
     return h;
 }

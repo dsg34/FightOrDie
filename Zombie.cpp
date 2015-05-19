@@ -20,8 +20,10 @@ Zombie::Zombie(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, floa
     muriendo = false;
     atacando = false;
     boundingBox = new sf::FloatRect((*sprite).getGlobalBounds());
-    boundingBox->width -= 70;
-    boundingBox->left += 35;
+    boundingBox->width -= 55;
+    boundingBox->left += 25;
+    boundingBox->height -= 55;
+    boundingBox->top += 25;
     
     esquiva = 0;
     esqDir = false;
@@ -43,8 +45,10 @@ int Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std::
     bool dominante = false;
     sf::Time frecuencia;
     obsMapa = true;
-    boundingBox->width -= 70;
-    boundingBox->left += 35;  
+    boundingBox->width -= 55;
+    boundingBox->left += 25;
+    boundingBox->height -= 55;
+    boundingBox->top += 25;
     if(muriendo==false){
         colisionConBalas(armas);
         colisionConGranadas(armas);
@@ -408,8 +412,10 @@ bool Zombie::colisionConProta(sf::Sprite spriteProta, char direccion){
 
 
     sf::FloatRect* box = new sf::FloatRect(spriteCopia->getGlobalBounds());
-    box->width -= 70;
-    box->left += 40;
+    box->width -= 55;
+    box->left += 25;
+    box->height -= 55;
+    box->top += 25;  
 
     sf::FloatRect cajaProta = spriteProta.getGlobalBounds();
     if(box->intersects(cajaProta)){
@@ -486,11 +492,15 @@ bool Zombie::colisionConBalas(std::vector<Arma*> armas){
 bool Zombie::colisionConRecursos(std::vector<Recurso*> &recursos)
 {
     //Recurso* r;
-    for(int i = recursos.size() - 1 ;i >= 0; i--)
-    {
-        if(boundingBox->intersects(*recursos[i]->getBoundingBox()))
-        {
-            if(recursos[i]->getBloqueante()){
+    for(int i=0;i<recursos.size();i++){
+        if(boundingBox->intersects(recursos[i]->getSprite()->getGlobalBounds())){
+            if(recursos[i]->getBloqueante()==1){
+                recursos[i]->setResistencia(recursos[i]->getResistencia()-danyo);
+                if(recursos[i]->getResistencia()<=0){
+                    recursos[i]->setBloqueante(0);
+                    recursos[i]->setExiste(0);
+                }
+                    
                 return true;
             }
         }

@@ -37,6 +37,48 @@ bool Juego::menuSalirDelJuego(){
     return salir;    
 }
 
+int Juego::menuFinDelJuego(){
+//1: Menu Inicio ; 2: Menu Pausa ; 3: Menu Fin de nivel ; 4: Menu muerte ; 5: Salir
+    sf::Clock reloj;
+    reloj.restart();    
+    MenuFactory* fab = new MenuFactory();
+    Menu* menu;        
+    menu=fab->hacerMenu(window->getSize().x, window->getSize().y, 8);
+    
+    sf::Texture tex;
+    if (!tex.loadFromFile("resources/final.png"))
+    {
+        std::cerr << "Error cargando la imagen sprites.png";
+        exit(0);
+    }
+    //sf::Vector2<int> tam = (sf::Vector2<int>) w.getSize();
+    sf::Texture* textura=new sf::Texture(tex);
+
+    sf::Sprite* aux = new sf::Sprite();
+    aux->setTexture(*textura);
+    aux->setPosition(0,0);    
+    
+    /**************************************************************BUCLE DE MENU**************************************************************************/
+    int estadoMenu = -1;    
+    while(estadoMenu!=-9){                              
+        if(reloj.getElapsedTime().asMilliseconds()>UPDATE_TIME){
+            estadoMenu = menu->update(*window);                                    
+            window->clear();            
+            menu->draw(*window);
+            window->draw(*aux);
+            window->display();
+            reloj.restart();
+            capturarCierre();
+         }
+    }
+    
+    delete aux;
+    delete textura;
+    
+    return estadoMenu;
+}
+
+
 void Juego::menuPuntuaciones(){
     //1: Menu Inicio ; 2: Menu Pausa ; 3: Menu Fin de nivel ; 4: Menu muerte ; 5: Salir
     sf::Clock reloj;
@@ -185,7 +227,7 @@ int Juego::menuMejoras(){
     aux->setTexture(*textura);
     std::vector<Arma*> armas = mundo->getProtagonista()->getArmas();
     int nivelMejora=-1;
-    for(int i=0; i<4;i++){        
+    for(int i=0; i<4;i++){
         nivelMejora=armas[i]->getMejora();
         aux->setTextureRect(sf::IntRect(0*75*9, (nivelMejora-1)*75/2, 75*8, 75/2));
         aux->setPosition(sf::Vector2f(window->getSize().x/7*4, 250+((i+1)*50)));
@@ -208,6 +250,7 @@ int Juego::menuMejoras(){
     /**************************************************************BUCLE DE MENU**************************************************************************/
     int estadoMenu = -1;
     int armaMejorada=-1;
+    int precio = 5000;
     while(estadoMenu!=-12){                              
         if(reloj.getElapsedTime().asMilliseconds()>UPDATE_TIME){
             estadoMenu = menu->update(*window);
@@ -221,8 +264,8 @@ int Juego::menuMejoras(){
             }            
             
             if(armaMejorada>=0 && armaMejorada<4){//Comprobar que se ha mejorado un arma
-                if(armas[armaMejorada]->getMejora()<11 && mundo->getPuntuacionNivel() >= (50000*(armas[armaMejorada]->getMejora()+1))){//Comprobar que el usuario puede pagar
-                    mundo->setPuntuacionNivel(-(50000*(armas[armaMejorada]->getMejora()+1)));//Retirar el coste de la puntuacion
+                if(armas[armaMejorada]->getMejora()<11 && mundo->getPuntuacionNivel() >= (precio*(armas[armaMejorada]->getMejora()+1))){//Comprobar que el usuario puede pagar
+                    mundo->setPuntuacionNivel(-(precio*(armas[armaMejorada]->getMejora()+1)));//Retirar el coste de la puntuacion
                     armas[armaMejorada]->aumentarDanyo();   //Aumentar el danyo
                     armas[armaMejorada]->aumentarMejora();  //Aumentar el nivel de mejora                                                            
                 }
@@ -255,11 +298,11 @@ int Juego::menuMejoras(){
 
 void Juego::cambiarNivel(){
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) && sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
-        mundo->cambiarNivel(1);
+        mundo->cambiarNivel(1, -1);
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) && sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
-        mundo->cambiarNivel(2);
+        mundo->cambiarNivel(2, -1);
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) && sf::Keyboard::isKeyPressed(sf::Keyboard::Num3))
-        mundo->cambiarNivel(3);
+        mundo->cambiarNivel(3, -1);
 }
 
 bool Juego::capturarCierre()
@@ -301,16 +344,16 @@ int Juego::ejecutarMenu(int tipo){
     }
     return estadoMenu;
 }
-void Juego::reiniciarJuego(){
-    mundo->reiniciarMundo();
+void Juego::reiniciarJuego(int p){
+    mundo->reiniciarMundo(p);
 }
 
-void Juego::siguienteNivel(){
-    mundo->siguienteNivel();
+void Juego::siguienteNivel(int p){
+    mundo->siguienteNivel(p);
 }
 
-void Juego::repetirNivel(){
-    mundo->reiniciarNivel();
+void Juego::repetirNivel(int p){
+    mundo->reiniciarNivel(p);
 }
 
 int Juego::ejecutarJuego()
@@ -346,7 +389,7 @@ int Juego::ejecutarJuego()
         {
             if(estadoMenu==-19)
             {//Cargar partida
-                mundo->cargarPartida(gestionPartida->cargarPartida());                
+                mundo->cargarPartida(gestionPartida->cargarPartida(), gestionPartida->cargarPuntuacionSimple());                
             }
             audios->inicio.stop();
             
@@ -358,14 +401,20 @@ int Juego::ejecutarJuego()
                 {
                     audios->inicio.play();
                     //MENU DE PAUSA-FIN DE NIVEL-MUERTE
+                    //CAMBIO DE NIVEL
                     if(estadoMundo==3){
                         gestionPartida->guardarPuntuacion(mundo->getNivel());
-                        siguienteNivel();
+                        gestionPartida->guardarPuntuacionSimple(mundo->getNivel());
+                        siguienteNivel(mundo->getNivel()->getPuntuacion());
                         gestionPartida->guardarPartida(mundo->getNivel(),mundo->getProtagonista());
                     }
                     
-                    estadoMenu = ejecutarMenu(estadoMundo);
-                   
+                    if(estadoMundo!=8)
+                        estadoMenu = ejecutarMenu(estadoMundo);
+                    else{
+                        gestionPartida->guardarPuntuacion(mundo->getNivel());
+                        estadoMenu = menuFinDelJuego();
+                    }
                     //-2: Salir ; -3: Jugar ; -4: Continuar ; -5: Mejoras ; -6: Siguiente nivel ; -7: Reiniciar juego; -8: Opciones ; -9: Volver a inicio      
                     switch(estadoMenu){
                         case -2: if(menuSalirDelJuego()){
@@ -374,17 +423,24 @@ int Juego::ejecutarJuego()
                         case -3: /*salir=true;*/break; //Jugar
                         case -4: salirMenu=true; break;            //Continuar
                         case -5: menuMejoras();break;           //Mejoras
-                        case -6: salirMenu=true;break; //Siguiente nivel                    
-                        case -7: salirMenu=true; repetirNivel();break; //Reiniciar juego 
+                        case -6: salirMenu=true;gestionPartida->guardarPartida(mundo->getNivel(),mundo->getProtagonista());break; //Siguiente nivel                    
+                        case -7: salirMenu=true; 
+                                 if(mundo->getNivel()->getId()==1)
+                                     repetirNivel(0);
+                                 else{
+                                     mundo->cargarPartida(gestionPartida->cargarPartida(), gestionPartida->cargarPuntuacionSimple());
+                                 }
+                                 break; //Reiniciar juego 
                         case -8: break; //Opciones
-                        case -9: salirMenu=true; salirJuego=true;reiniciarJuego();break; //Volver a inicio 
+                        case -9: salirMenu=true; salirJuego=true;reiniciarJuego(0);break; //Volver a inicio 
                         case -10: salir=true;salirJuego=true;salirMenu=true; break; //Salir del juego
                         case -11: salirMenu=true; break;                    //No salir
                         case -12: estadoMundo=2; break;                     //Atras
-                        case -18: gestionPartida->guardarPartida(mundo->getNivel(),mundo->getProtagonista());estadoMundo=2;cout<<"eu"<<endl;estadoMundo=2;  break;//Guardar partida
+                        case -18: gestionPartida->guardarPartida(mundo->getNivel(),mundo->getProtagonista());estadoMundo=2;estadoMundo=2;  break;//Guardar partida
                     }
                 }
-                audios->inicio.stop();
+                if(estadoMenu!=-9)
+                    audios->inicio.stop();
                 salirMenu=false;
                 
             }

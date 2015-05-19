@@ -28,16 +28,21 @@ public:
     int getId();
     
     int devuelveTipo();
+    int devuelveTipoRecurso();
     sf::Vector2<int> devuelvePos();
+    sf::Vector2<int> creaPos();
     
     void crearZombies(int num);
     void generarZombies();
     int actualizarZombiesExistentes(Protagonista* p);
     void siguienteOleada();
     void generarRecurso();
-    void actualizarRecursosExistentes();
-    bool actualizarNivel(Protagonista* p, int impactos, int fallos);
+    sf::Vector2<float> actualizarRecursosExistentes();
+    bool actualizarNivel(Protagonista* p, int impactos, int fallos, sf::Vector2<int> posCursor);
     void actualizarInfoBalas(int impactos, int fallos);//Debe actulizar la variable de impactos y fallos
+    void soltarRecurso(Protagonista* p, int tipo, sf::Vector2<int> posCursor);
+    void cambiarSerrucho();
+    void addRecursoBloqueante(Recurso* r);
     
     void compruebaDanyoZombie(std::vector<Proyectil*> &v);
     void crearMensaje(std::string s, int t, int i, int p);
@@ -59,6 +64,7 @@ private:
     int racha;
     std::vector<Zombie*> zombies;
     std::vector<Recurso*> recursos;
+    std::vector<Recurso*> recursosBloqueantes;
     
     sf::Clock relojZombie;
     sf::Clock relojRecurso;
@@ -71,7 +77,7 @@ private:
     int impactos;//Almacena los aciertos y los fallos durante la ultima racha
     int fallos;    
     int numZombies;
-    
+    std::vector<Granada*> explosiones;
     
     
     int posAnt1;

@@ -34,6 +34,7 @@ public:
     void setOpacidadMunicion(float f);
     void setOpacidadPuntuacion(float f);
     void setOpacidadVidaBoss(float f);
+    void cambiarHachaPorSerrucho();
     
     void cargarSpriteVida();
     void cargarSpriteVidaBoss(int i);
@@ -44,7 +45,8 @@ public:
     void actualizarArmasHUD();
     void actualizarArrayArmas(std::vector<Arma*> v);
     void actualizarRecursosHUD();
-    void actualizarArrayRecursos(std::vector<Recurso*> v);
+    void actualizarArrayRecursos(Protagonista* p, std::vector<Recurso*> v);
+    void eliminarGranada(Recurso* r, std::vector<Recurso*> v, int i);
     void actualizarHUD(Protagonista* p, int punt);
     std::string intAString(int p);
     
@@ -67,6 +69,7 @@ private:
     
     sf::Sprite* spriteVida;
     sf::Sprite* spriteVidaBoss;
+    sf::Sprite* sprintDisponible;
     sf::Sprite* municion;
     std::vector<RecursoHUD*> armas;
     std::vector<RecursoHUD*> recursos;
@@ -82,7 +85,7 @@ private:
     
     int vida;
     int tipoPrincipal;
-    bool boss;
+    bool sprint;
     float opacidadVida;
     float opacidadMunicion;
     float opacidadPuntuacion;

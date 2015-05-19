@@ -22,16 +22,18 @@ public:
     bool capturarPausa();
     Nivel* getNivel();
     void setMejoraArma(int i, int m);
-    void cargarPartida(std::vector<int> v);
+    void cargarPartida(std::vector<int> v, int p);
     
     int getPuntuacionMundo();
     int setPuntuacionMundo(int p);
     Protagonista* getProtagonista();
-    void siguienteNivel();
+    void siguienteNivel(int p);
     void reiniciarProtagonista();
-    void reiniciarMundo();
-    void reiniciarNivel();
-    void cambiarNivel(int i);
+    void reiniciarMundo(int p);
+    void reiniciarNivel(int p);
+    void cambiarNivel(int i, int p);
+    
+    void reinicioInterpolar();
     
     void setPuntuacionNivel(int p);
     int getPuntuacionNivel();
@@ -58,7 +60,7 @@ private:
     sf::Clock relojRender;
     
     
-    
+    bool serrucho;
     float frecuencia;
     int contInterpolacion;
     int px;

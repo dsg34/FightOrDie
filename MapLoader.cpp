@@ -169,23 +169,17 @@ void MapLoader::Draw(sf::RenderWindow &window,int capa)
 //devuelve true si el personaje puede avanzar a esa posicion
 bool MapLoader::Colision(int x,int y, int tipo)
 {
-    std::cout << "x: " << x << std::endl;
     int tile_x = x/25;
     int tile_y = y/25;
     int pos = tile_x + 52*tile_y;
-    //std::cout << pos << std::endl;
-    
-    std::cout << "y: " << y << std::endl;
-    std::cout << "tipo: " << tipo << std::endl;
-    std::cout << "pos: " << pos << std::endl;
     
     
     if(tipo == 0){
-        if(gids[pos] != 0){
+        if(gids[pos] != 0 && gids[pos] != 4){
             return false;
         }
     }else{
-        if(gids[pos] != 1264 && gids[pos] != 0 && gids[pos] != 2){
+        if(gids[pos] != 0 && gids[pos] != 3){
             return false;
         }
     }

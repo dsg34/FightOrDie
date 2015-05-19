@@ -40,6 +40,12 @@ public:
     sf::Music zombie6;
     sf::Music zombie7;
     sf::Music zombie8;
+    sf::Music granada;
+    sf::Music menu1;
+    sf::Music menu2;
+    sf::Music hacha;
+    sf::Music serrucho;
+    sf::Music resoplido;
     
     Sonidos &operator = (const Sonidos & );
     

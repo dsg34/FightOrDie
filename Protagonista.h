@@ -14,6 +14,7 @@
 #include "Personaje.h"
 #include "Zombie.h"
 #include "MapLoader.h"
+#include "Sonidos.h"
 
 
 class Protagonista: public Personaje {
@@ -45,6 +46,11 @@ public:
     void recibirDanyo(float cant);
     bool muerto();
     void actualizaMuerte();
+    void sacarDeInventario(int posicion);
+    void sacarRecursoInventario(int tipo);
+    void anyadirGranada(sf::Vector2<float> p);
+    bool devuelveSprintDisponible();
+    std::string intAString(int p);
     //sf::RectangleShape* getRectangle();
 private:
     
@@ -53,12 +59,20 @@ private:
     sf::Vector2<int> posmira;
     sf::Clock relojCambioArma;
     sf::Clock reloj;
+    sf::Clock relojSprint;
     int municionSecundaria;
     //sf::RectangleShape* rectangle;
     RecursosFactory* fabR;
     std::vector<Recurso*> inventario;
     bool disparando;
     
+    sf::Texture* texPistola;
+    sf::Texture* texEscopeta;
+    sf::Texture* texMetralleta;
+    sf::Texture* texAcha;
+    Sonidos* audios;
+    bool correr;
+    bool granada;
 };
 
 #endif	/* PROTAGONISTA_H */

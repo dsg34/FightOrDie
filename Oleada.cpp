@@ -120,16 +120,16 @@ Oleada* Oleada::crearOleada23(){
 //////////////////////////////////////////////Nivel 3
   
 Oleada* Oleada::crearOleada31(){
-    Oleada* o = new Oleada(1, 1, nIni*4, 2);
+    Oleada* o = new Oleada(1, 3, nIni*4, 2);
     return o;
 }
 
 Oleada* Oleada::crearOleada32(){
-    Oleada* o = new Oleada(1, 1, nIni*4.5, 1.5);
+    Oleada* o = new Oleada(2, 3, nIni*4.5, 1.5);
     return o;
 }
 
 Oleada* Oleada::crearOleada33(){
-    Oleada* o = new Oleada(1, 1, nIni*5, 1);
+    Oleada* o = new Oleada(3, 3, nIni*5, 1);
     return o;
 }

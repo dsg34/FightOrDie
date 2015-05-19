@@ -29,10 +29,11 @@ public:
     void menuPuntuaciones();
     bool capturarCierre();
     int ejecutarMenu(int tipo);
+    int menuFinDelJuego();
     
-    void reiniciarJuego();
-    void siguienteNivel();
-    void repetirNivel();
+    void reiniciarJuego(int p);
+    void siguienteNivel(int p);
+    void repetirNivel(int p);
     
     
     int ejecutarJuego();

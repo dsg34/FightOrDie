@@ -46,6 +46,8 @@ public:
     void actualizarRecurso();
     void setEstaEnInventario(bool b);
     
+    bool getReducirEnInventario();
+    void setReducirEnInventario(bool b);
     
 protected:
     sf::Vector2<float> vectorActual;
@@ -62,6 +64,7 @@ protected:
     sf::Sprite* spriteRecurso;
     sf::Texture* tex;       
     sf::FloatRect* boundingBox;
+    bool reducirEnInventario;
 };
 
 #endif	/* RECURSO_H */

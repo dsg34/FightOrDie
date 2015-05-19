@@ -1,5 +1,7 @@
 #include <SFML/Graphics.hpp>
 
+#include "Sonidos.h"
+
 #ifndef GRANADA_H
 #define	GRANADA_H
 
@@ -44,6 +46,8 @@ protected:
     int estado;
     
     bool haExplotadoYa;
+    Sonidos* audios;
+    bool sonido;
     
     sf::Vector2<int> iteracionExplosion;
     sf::Sprite* sprite;

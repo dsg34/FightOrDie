@@ -25,6 +25,8 @@ public:
     void guardarPuntuacion(Nivel* n);
     std::vector<int> cargarPuntuaciones();
     void inicializarPuntuaciones();
+    void guardarPuntuacionSimple(Nivel* n);
+    int cargarPuntuacionSimple();
     
     bool existeFichero(std::string nombre);
     std::string intAString(int f);

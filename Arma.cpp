@@ -127,6 +127,13 @@ void Arma::aumentarMunicionSecundaria(int i){
 }
 /**************************************METODOS CUSTOM***********************************************************/
 
+void Arma::anyadirGranada(sf::Vector2<float> p){                    
+    Granada* aux = new Granada(p,p,4,(sf::Vector2<int>)p);
+    aux->setContador(aux->getRango()-20);
+    
+    secundaria.push_back(aux);
+}
+
 sf::Vector2<float> Arma::vectorDisparo(sf::Vector2<float> puntoPersonaje, sf::Vector2<int> puntoCursor){
     static const float pi = 3.141592654f;        
     //std::cout<<puntoCursor.x<<" - "<< puntoCursor.y << std::endl;

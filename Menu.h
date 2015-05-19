@@ -1,6 +1,7 @@
 #ifndef MENU_H
 #define	MENU_H
 #include <SFML/Graphics.hpp>
+#include "Sonidos.h"
 
 class Menu {
 public:
@@ -20,6 +21,7 @@ private:
     int elementos;
     std::vector<sf::Text*> menu;
     sf::Clock xbox;
+    Sonidos* audios;
 };
 
 #endif	/* MENU_H */

@@ -31,7 +31,7 @@ Menu::Menu(sf::Sprite* s, sf::Texture* t, sf::Font* font, int x, int y, std::vec
         menu[0]->setColor(sf::Color::Yellow);
         menu[1]->setColor(sf::Color::Red);
     }
-    
+    audios = Sonidos::Instance();
     xbox.restart();
 }
 
@@ -44,136 +44,39 @@ int Menu::update(sf::RenderWindow &window)
     int devuelve=-1;
     
     int mando = 0;
-        for(int i = 0; i < 8; i++)
-        {
-           if(sf::Joystick::isConnected(i))
-           {
-               mando = i;
-           }                    
-        }
-    
-    if(xbox.getElapsedTime().asSeconds() > 0.1 && sf::Joystick::isConnected(mando) )
+    for(int i = 0; i < 8; i++)
     {
-        if(sf::Joystick::isConnected(mando))
-        {
-            //std::cout << "--------------------------------------------------------------------------mando " << mando << std::endl;
-            float positionY = sf::Joystick::getAxisPosition(mando, sf::Joystick::Y);   
-
-            if(positionY < -20)
-                MoveUp();
-            else if(positionY > 20)
-                MoveDown();
-
-            if(sf::Joystick::isButtonPressed(mando, 0))
-            {
-                devuelve=GetPressedItem();
-                    if(menu[devuelve]->getString() == sf::String("Salir"))
-                        devuelve=-2;
-                    else if(menu[devuelve]->getString() == "Jugar")
-                        devuelve=-3;
-                    else if(menu[devuelve]->getString() == "Continuar")
-                        devuelve=-4;
-                    else if(menu[devuelve]->getString() == "Mejoras")
-                        devuelve=-5;
-                    else if(menu[devuelve]->getString() == "Siguiente nivel")
-                        devuelve=-6;
-                    else if(menu[devuelve]->getString() == "Reiniciar juego")
-                        devuelve=-7;
-                    else if(menu[devuelve]->getString() == "Opciones")
-                        devuelve=-8;
-                    else if(menu[devuelve]->getString() == "Volver a inicio")
-                        devuelve=-9;
-                    else if(menu[devuelve]->getString() == "Si")
-                        devuelve=-10;
-                    else if(menu[devuelve]->getString() == "No")
-                        devuelve=-11;
-                    else if(menu[devuelve]->getString() == "Atras")
-                        devuelve=-12;
-                    else if(menu[devuelve]->getString() == "Mejorar pistola")
-                        devuelve=-13;
-                    else if(menu[devuelve]->getString() == "Mejorar metralleta")
-                        devuelve=-14;
-                    else if(menu[devuelve]->getString() == "Mejorar escopeta")
-                        devuelve=-15; 
-                    else if(menu[devuelve]->getString() == "Mejorar hacha")
-                        devuelve=-16;
-                    else if(menu[devuelve]->getString() == "Guardar partida")
-                        devuelve=-18;
-                    else if(menu[devuelve]->getString() == "Continuar partida")
-                        devuelve=-19;
-                    else if(menu[devuelve]->getString() == "Mejores puntuaciones")
-                        devuelve=-20;
-            }
-        }
-        
-        xbox.restart();
+       if(sf::Joystick::isConnected(i))
+       {
+           mando = i;
+       }                    
     }
-    else if(xbox.getElapsedTime().asSeconds() > 0.08)
+    
+    if(xbox.getElapsedTime().asSeconds() > 0.1)
     {
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+        
+        float positionY = sf::Joystick::getAxisPosition(mando, sf::Joystick::Y);   
+
+        if(positionY < -20)
             MoveUp();
-        }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+        else if(positionY > 20)
             MoveDown();
-        }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return)){            
-            devuelve=GetPressedItem();
-            if(menu[devuelve]->getString() == sf::String("Salir"))
-                devuelve=-2;
-            else if(menu[devuelve]->getString() == "Jugar")
-                devuelve=-3;
-            else if(menu[devuelve]->getString() == "Continuar")
-                devuelve=-4;
-            else if(menu[devuelve]->getString() == "Mejoras")
-                devuelve=-5;
-            else if(menu[devuelve]->getString() == "Siguiente nivel")
-                devuelve=-6;
-            else if(menu[devuelve]->getString() == "Reiniciar juego")
-                devuelve=-7;
-            else if(menu[devuelve]->getString() == "Opciones")
-                devuelve=-8;
-            else if(menu[devuelve]->getString() == "Volver a inicio")
-                devuelve=-9;
-            else if(menu[devuelve]->getString() == "Si")
-                devuelve=-10;
-            else if(menu[devuelve]->getString() == "No")
-                devuelve=-11;
-            else if(menu[devuelve]->getString() == "Atras")
-                devuelve=-12;
-            else if(menu[devuelve]->getString() == "Mejorar pistola")
-                devuelve=-13;
-            else if(menu[devuelve]->getString() == "Mejorar metralleta")
-                devuelve=-14;
-            else if(menu[devuelve]->getString() == "Mejorar escopeta")
-                devuelve=-15; 
-            else if(menu[devuelve]->getString() == "Mejorar hacha")
-                devuelve=-16;
-            else if(menu[devuelve]->getString() == "Guardar partida")
-                devuelve=-18;
-            else if(menu[devuelve]->getString() == "Continuar partida")
-                devuelve=-19;
-            else if(menu[devuelve]->getString() == "Mejores puntuaciones")
-                        devuelve=-20;
-        }
-        
-        xbox.restart();
-    }
-    /*
-    else
-    {
-    
-        sf::Event event;
-        window.pollEvent(event);
 
-        if(event.type == sf::Event::KeyReleased){
-            if(event.key.code==sf::Keyboard::Up){
-                MoveUp();
-            }else if(event.key.code==sf::Keyboard::Down){
-                MoveDown();
-            }else if(event.key.code==sf::Keyboard::Return ){            
-                devuelve=GetPressedItem();
+        if(sf::Joystick::isButtonPressed(mando, 0))
+        {
+            audios->menu2.stop();
+            audios->menu2.play();
+            devuelve=GetPressedItem();
                 if(menu[devuelve]->getString() == sf::String("Salir"))
                     devuelve=-2;
                 else if(menu[devuelve]->getString() == "Jugar")
+                {
+                    audios->escopeta.setVolume(100);
+                    audios->escopeta.stop();
+                    audios->escopeta.play();
+                    //audios->escopeta.setVolume(35);
                     devuelve=-3;
+                }
                 else if(menu[devuelve]->getString() == "Continuar")
                     devuelve=-4;
                 else if(menu[devuelve]->getString() == "Mejoras")
@@ -204,9 +107,70 @@ int Menu::update(sf::RenderWindow &window)
                     devuelve=-18;
                 else if(menu[devuelve]->getString() == "Continuar partida")
                     devuelve=-19;
+                else if(menu[devuelve]->getString() == "Mejores puntuaciones")
+                    devuelve=-20;
+        }        
+        else
+        {
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+                MoveUp();
+            }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+                MoveDown();
+            }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return)){   
+                
+                audios->menu2.stop();
+                audios->menu2.play();
+                
+                devuelve=GetPressedItem();
+                if(menu[devuelve]->getString() == sf::String("Salir"))
+                    devuelve=-2;
+                else if(menu[devuelve]->getString() == "Jugar")
+                {
+                    audios->escopeta.setVolume(100);
+                    audios->escopeta.stop();
+                    audios->escopeta.play();
+                    //audios->escopeta.setVolume(35);
+                    devuelve=-3;
+                }
+                else if(menu[devuelve]->getString() == "Continuar")
+                    devuelve=-4;
+                else if(menu[devuelve]->getString() == "Mejoras")
+                    devuelve=-5;
+                else if(menu[devuelve]->getString() == "Siguiente nivel")
+                    devuelve=-6;
+                else if(menu[devuelve]->getString() == "Reiniciar juego")
+                    devuelve=-7;
+                else if(menu[devuelve]->getString() == "Opciones")
+                    devuelve=-8;
+                else if(menu[devuelve]->getString() == "Volver a inicio")
+                    devuelve=-9;
+                else if(menu[devuelve]->getString() == "Si")
+                    devuelve=-10;
+                else if(menu[devuelve]->getString() == "No")
+                    devuelve=-11;
+                else if(menu[devuelve]->getString() == "Atras")
+                    devuelve=-12;
+                else if(menu[devuelve]->getString() == "Mejorar pistola")
+                    devuelve=-13;
+                else if(menu[devuelve]->getString() == "Mejorar metralleta")
+                    devuelve=-14;
+                else if(menu[devuelve]->getString() == "Mejorar escopeta")
+                    devuelve=-15; 
+                else if(menu[devuelve]->getString() == "Mejorar hacha")
+                    devuelve=-16;
+                else if(menu[devuelve]->getString() == "Guardar partida")
+                    devuelve=-18;
+                else if(menu[devuelve]->getString() == "Continuar partida")
+                    devuelve=-19;
+                else if(menu[devuelve]->getString() == "Mejores puntuaciones")
+                            devuelve=-20;
             }
         }
-    }*/
+        
+        xbox.restart();
+    }
+      
+    
     return devuelve;
 }
 
@@ -220,14 +184,19 @@ void Menu::draw(sf::RenderWindow &window){
 
 void Menu::MoveUp(){
     if(selectedItemIndex - 1 >= 0 && (menu[selectedItemIndex-1]->getString()!=sf::String("ABANDONAR EL JUEGO")) && (menu[selectedItemIndex-1]->getString()!=sf::String("HAS MUERTO")) && (menu[selectedItemIndex-1]->getString()!=sf::String("NIVEL FINALIZADO")) && (menu[selectedItemIndex-1]->getString()!=sf::String("MEJORAR ARMA")) ){
+        audios->menu1.stop();
+        audios->menu1.play();
         menu[selectedItemIndex]->setColor(sf::Color::White);
         selectedItemIndex--;
         menu[selectedItemIndex]->setColor(sf::Color::Red);
+        
     }
 }
 
 void Menu::MoveDown(){
     if(selectedItemIndex + 1 < elementos){
+        audios->menu1.stop();
+        audios->menu1.play();
         menu[selectedItemIndex]->setColor(sf::Color::White);
         selectedItemIndex++;
         menu[selectedItemIndex]->setColor(sf::Color::Red);

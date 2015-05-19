@@ -5,7 +5,7 @@ PersonajeFactory::PersonajeFactory()
     protagonistaCreado=false;
     
     sf::Texture texAux;
-    if (!texAux.loadFromFile("resources/protagonistaCabezon.png"))
+    if (!texAux.loadFromFile("resources/BillyPistola.png"))
     {
         std::cerr << "Error cargando la imagen sprites.png";
         exit(0);

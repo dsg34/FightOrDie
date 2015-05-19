@@ -29,6 +29,9 @@ HUD::HUD(Protagonista* p, sf::Vector2<int> tam) {
     armas.push_back(escopeta);    
     */    
     
+    sprintDisponible = new sf::Sprite(*textura);
+    sprintDisponible->setTextureRect(sf::IntRect(9*75, 4*75, 75*3, 75));
+    sprintDisponible->setPosition(tam.x/10*1, tam.y/8*6);
     //***************************************************Inicializacion sprite municion
     municion = new sf::Sprite(*textura);
     municion->setScale(0.8,0.8);
@@ -46,7 +49,7 @@ HUD::HUD(Protagonista* p, sf::Vector2<int> tam) {
     //spriteVida->setPosition(133, 500);
     vida=p->getVida();
     cargarSpriteVida();
-    boss=false;
+    sprint=false;
 
     //***************************************************Inicializacion textos        
     // Load it from a file
@@ -77,13 +80,13 @@ HUD::HUD(Protagonista* p, sf::Vector2<int> tam) {
     }    
     
     //***************************************************Inicializacion de opacidades
-    boss=false;
+    sprint=false;
     opacidadVida=1.0;
     opacidadMunicion=1.0;
     opacidadPuntuacion=1.0;
     opacidadVidaBoss=0.0;
     recursos = std::vector<RecursoHUD*>(); 
-    actualizarArrayRecursos(p->getInventario());
+    actualizarArrayRecursos(p, p->getInventario());
     actualizarRecursosHUD();
     
     /*RecursoHUD* recurso1 = new RecursoHUD(5);
@@ -137,6 +140,13 @@ void HUD::setTextura(sf::Texture* t){
     textura=t;
 }
 
+void HUD::cambiarHachaPorSerrucho(){
+    for(int i=0; i<armas.size(); i++){
+        if(armas[i]->getTipo()==4)
+            armas[i]->cambiarASerrucho();
+    }
+}
+
 sf::Sprite* HUD::getVida(){
     return spriteVida;
 }
@@ -166,10 +176,10 @@ void HUD::setPuntuacion(int p){
 }
 
 bool HUD::getBoss(){
-    return boss;
+    return sprint;
 }
 void HUD::setBoss(bool b){
-    boss=b;
+    sprint=b;
 }
 
 float HUD::getOpacidadVida(){
@@ -207,7 +217,10 @@ sf::Vector2<int>* HUD::getTamPantalla(){
 /******************************************METODOS CUSTOM************************************************************/   
     
 void HUD::cargarSpriteVida(){    
-    spriteVida->setTextureRect(sf::IntRect(0*75*9, (vida-1)*75/2, 75*8, 75/2));
+    if(vida>0)
+        spriteVida->setTextureRect(sf::IntRect(0*75*9, (vida-1)*75/2, 75*8, 75/2));
+    else
+        spriteVida->setTextureRect(sf::IntRect(0*75*9, 20*75/2, 75*8, 75/2));
 }
 
 void HUD::cargarSpriteVidaBoss(int i){
@@ -229,6 +242,8 @@ void HUD::actualizarHUD(Protagonista* p, int punt){
     //Actualizamos vida
     cargarSpriteVida();
     
+    sprint=p->devuelveSprintDisponible();
+    
     //Actualizamos arma principal
     Arma* a = p->getArma();
     tipoPrincipal=a->getTipo();
@@ -248,7 +263,7 @@ void HUD::actualizarHUD(Protagonista* p, int punt){
     actualizarOpacidades(pos);
     setPuntuacion(punt);
     actualizarArrayArmas(p->getArmas());
-    actualizarArrayRecursos(p->getInventario());
+    actualizarArrayRecursos(p, p->getInventario());
 }
     
 void HUD::actualizarArmasHUD(){    
@@ -302,15 +317,35 @@ void HUD::actualizarArrayArmas(std::vector<Arma*> v){
     actualizarArmasHUD();
 } 
 
-void HUD::actualizarArrayRecursos(std::vector<Recurso*> v){
+void HUD::actualizarArrayRecursos(Protagonista* p, std::vector<Recurso*> v){
     for(int i=0; i<v.size();i++){
         Recurso* aux = v[i];
         if(aux->getEstaEnInventario()==false){
             aux->setEstaEnInventario(true);   
             anyadirRecurso(aux);
         }
+        if(aux->getReducirEnInventario()==true){
+            std::cout<<"Reduzco en inventario num "<<intAString(i)<<std::endl;
+            eliminarGranada(aux, v, i);
+            std::cout<<"Eliminado recurso en hud"<<std::endl;
+            p->sacarDeInventario(i);
+        }
     }
     actualizarRecursosHUD();
+}
+
+void HUD::eliminarGranada(Recurso* r, std::vector<Recurso*> v, int i){
+    bool reducido = false;
+    if(i<recursos.size()){
+        for(int j=0;j<recursos.size();j++){
+            if(recursos[j]->getTipo()==r->getTipo()&& reducido==false && r->getReducirEnInventario()==true){
+                reducido = true;
+                recursos[j]->menosNum(); //reduzco el numero de granadas 
+                if(recursos[i]->getNum()<=0)
+                    recursos.erase(recursos.begin()+j);                
+            }
+        }
+    }
 }
 
 void HUD::anyadirArma(Arma* a){
@@ -484,6 +519,10 @@ void HUD::pintarHUD(sf::RenderWindow &window){
     balas->setScale(1.0,1.0);
     window.draw(*balas);
     
+    if(sprint){
+        cambiarOpacidad(sprintDisponible, opacidadVida);
+        window.draw(*sprintDisponible);
+    }
     puntuacion->setColor(sf::Color::White);
     cambiarOpacidad(puntuacion, opacidadPuntuacion);
     puntuacion->setScale(1.05,1.05);

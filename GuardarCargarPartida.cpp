@@ -20,9 +20,7 @@ GuardarCargarPartida::~GuardarCargarPartida() {
 //Debe devolver: -Estado mejoras de armas (4 ints) -Nivel actual (1 int) -Oleada actual (1 int)
 /***********************************************************************************************************GESTION DE PARTIDAS*/
 void GuardarCargarPartida::guardarPartida(Nivel* n, Protagonista* p){
-    std::cout << "hola" << std::endl;
     std::ofstream escribirPartida;
-    std::cout << "adios" << std::endl;
     escribirPartida.open("data.txt");
     if(existeFichero(std::string("data.txt"))){
         //ESCRIBIMOS LAS MEJORAS DE ARMAS
@@ -59,7 +57,6 @@ std::vector<int> GuardarCargarPartida::cargarPartida(){
 }
 /***********************************************************************************************************GESTION DE PUNTUACIONES*/
 void GuardarCargarPartida::guardarPuntuacion(Nivel* n){
-    cout<<"Guarda puntuacion"<<endl;
     std::vector<int> v;
     std::vector<std::string> original;
     int intAux=-1, nuevaPunt=n->getPuntuacion(), pos=-1;
@@ -103,45 +100,27 @@ void GuardarCargarPartida::guardarPuntuacion(Nivel* n){
         }                 
         
         //EN CASO DE QUE ASÍ SEA, ANYADIMOS LA PUNTUACION DONDE CORRESPONDA
-        if(pos>-1){
-            
-            cout<<endl<<endl<<"Antigua clasificacion: "<<endl;
-            for(int i=0; i<v.size(); i++)
-                cout<<"-"<<intAString(v[i])<<endl;
-
-            cout<<endl;
-            
-            cout<< "Insertamos en: " <<intAString(pos)<<endl;
+        if(pos>-1){            
             
             v.insert(v.begin()+pos, nuevaPunt);
-            v.pop_back();
-            
-            cout<<endl<<endl<<"Nueva clasificacion: "<<endl;
-            for(int i=0; i<v.size(); i++)
-                cout<<"-"<<intAString(v[i])<<endl;
-
-            cout<<endl;
+            v.pop_back();            
             
             //POR ULTIMO, REESCRIBIMOS EL FICHERO
             std::ofstream escribirPartida("data-point.txt");
             int cont=1;//Llevamos la cuenta del nivel que estamos comprobando y de la iteracion que llevamos en total
             while(cont<4){
-                cout<<"Iteracion "<<cont<<endl;
                 if(cont==nivel){
                     for(int i=0; i<v.size(); i++){
                         escribirPartida<<encriptado(intAString(v[i]))<<endl;                                        
-                        cout<<"Escribo: "<< intAString(v[i]) << "(POS "<< i << ")" <<endl;
                     }
                 }else{
                     for(int i=(cont-1)*6; i<(cont*5)+((cont-1)); i++){
                         escribirPartida<<encriptado(original[i])<<endl;
-                        cout<<"Escribo: "<< original[i]<< "(POS "<< i << ")" <<endl;
                     }
                 }
                 //Cuando llega aqui, ha escrito un nivel entero, por lo que escribimos un -
                 
                 escribirPartida<<encriptado(std::string("-"))<<endl;
-                cout<<"Escribo: "<< std::string("-") <<endl;
                 cont++;
             }
             escribirPartida.close();
@@ -151,7 +130,6 @@ void GuardarCargarPartida::guardarPuntuacion(Nivel* n){
 //Devuelve un vector con las 5 mejores puntuaciones del nivel indicado
 std::vector<int> GuardarCargarPartida::cargarPuntuaciones(){
     std::vector<int> v;
-    cout<<"Carga puntuaciones:"<<endl;
     
     if(existeFichero("data-point.txt")==false)
         inicializarPuntuaciones();    
@@ -175,9 +153,36 @@ std::vector<int> GuardarCargarPartida::cargarPuntuaciones(){
            leerPuntuaciones.close();
         }        
     }
-    cout<<"Fin de la carga"<<endl;
     return v;
 }
+
+void GuardarCargarPartida::guardarPuntuacionSimple(Nivel* n){
+    std::ofstream escribirPartida;
+    int punt=n->getPuntuacion();
+    escribirPartida.open("data-p.txt");
+    if(existeFichero(std::string("data-p.txt"))){
+        escribirPartida<<encriptado(intAString(punt))<<endl;        
+        escribirPartida.close();
+    }    
+}
+
+int GuardarCargarPartida::cargarPuntuacionSimple(){
+    int v=0;
+    if(existeFichero("data-p.txt")){
+        std::ifstream leerPartida("data-p.txt");
+        std::string linea;        
+        if (leerPartida.is_open())
+        {
+          while ( getline (leerPartida,linea) )
+          {
+            v=stringAInt(encriptado(linea))+0;
+          }
+           leerPartida.close();
+        }     
+    }
+    return v;    
+}
+
 
 void GuardarCargarPartida::inicializarPuntuaciones(){
     std::ofstream inicializarPuntuaciones("data-point.txt");

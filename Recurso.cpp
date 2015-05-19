@@ -13,6 +13,7 @@ Recurso::Recurso(sf::Sprite* s, sf::Texture* te, int bloq, int dan, int inv, int
     existe = 1;
     reloj.restart();
     estaEnInventario = false;
+    reducirEnInventario=false;
     
     srand(time(NULL));
     
@@ -104,6 +105,14 @@ int Recurso::getRecogida(){
 void Recurso::setRecogida(int r){
     recogida=r;
 } 
+
+bool Recurso::getReducirEnInventario(){
+    return reducirEnInventario;
+}
+void Recurso::setReducirEnInventario(bool b){
+    reducirEnInventario = b;
+}
+
 sf::FloatRect* Recurso::getBoundingBox(){
     return boundingBox;
 }
@@ -128,7 +137,7 @@ void Recurso::actualizarRecurso()
 {
     tiempo = reloj.getElapsedTime();
     
-    if(tiempo.asSeconds() > 15)
+    if(tiempo.asSeconds() > 15 && bloqueante!=true)
     {
         existe = 0;
     }

@@ -78,9 +78,9 @@ Menu* MenuFactory::hacerMenu(int x, int y, int id){
         apartados.push_back("Atras");
     }else if(id==7){                                  //Menu Puntuaciones
         apartados.push_back("Atras");
-    }
-    else{
-        apartados.push_back("Opciones");
+    }else if(id==8){
+        apartados.push_back("Volver a inicio");
+    }else{
         apartados.push_back("Salir");
     }
     

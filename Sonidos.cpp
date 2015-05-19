@@ -13,17 +13,17 @@ Sonidos::Sonidos() {
     inicio.openFromFile("resources/inicio.wav");
     inicio.setVolume(75);
     nivel1.openFromFile("resources/Nivel1.wav");
-    nivel1.setVolume(40);
+    nivel1.setVolume(60);
     nivel2.openFromFile("resources/Nivel2.wav");
-    nivel2.setVolume(10);
+    nivel2.setVolume(40);
     nivel3.openFromFile("resources/Nivel3.wav");
-    nivel3.setVolume(20);
+    nivel3.setVolume(40);
     pistola.openFromFile("resources/pistola2.wav");
-    pistola.setVolume(6);
+    pistola.setVolume(12);
     escopeta.openFromFile("resources/escopeta.wav");
-    escopeta.setVolume(35);
+    escopeta.setVolume(50);
     metralleta.openFromFile("resources/metralleta.wav");
-    metralleta.setVolume(35);
+    metralleta.setVolume(20);
     risaBoss.openFromFile("resources/risaBoss.wav");
     ataqueZombie.openFromFile("resources/ataqueZombie.wav");
     ataqueZombie.setVolume(60);
@@ -41,6 +41,14 @@ Sonidos::Sonidos() {
     zombie7.setVolume(60);   
     zombie8.openFromFile("resources/zombie8.wav");
     zombie8.setVolume(80);
+    granada.openFromFile("resources/granada2.wav");
+    menu1.openFromFile("resources/menu1.wav");
+    menu2.openFromFile("resources/menu2.wav");
+    hacha.openFromFile("resources/hacha.wav");
+    hacha.setVolume(60);
+    serrucho.openFromFile("resources/Serrucho.wav");
+    serrucho.setVolume(30);
+    resoplido.openFromFile("resources/resoplido.wav");
     
 }
 

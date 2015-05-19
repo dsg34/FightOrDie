@@ -61,7 +61,17 @@ build/Release/MinGW-Windows/Granada.o: Granada.cpp Granada.h \
  ../SFML-2.1/include/SFML/Graphics/RectangleShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/ConvexShape.hpp \
  ../SFML-2.1/include/SFML/Graphics/Sprite.hpp \
- ../SFML-2.1/include/SFML/Graphics/Text.hpp Arma.h Proyectil.h
+ ../SFML-2.1/include/SFML/Graphics/Text.hpp Sonidos.h \
+ ../SFML-2.1/include/SFML/Audio.hpp \
+ ../SFML-2.1/include/SFML/Audio/Listener.hpp \
+ ../SFML-2.1/include/SFML/Audio/Export.hpp \
+ ../SFML-2.1/include/SFML/Audio/Music.hpp \
+ ../SFML-2.1/include/SFML/Audio/SoundStream.hpp \
+ ../SFML-2.1/include/SFML/Audio/SoundSource.hpp \
+ ../SFML-2.1/include/SFML/Audio/Sound.hpp \
+ ../SFML-2.1/include/SFML/Audio/SoundBuffer.hpp \
+ ../SFML-2.1/include/SFML/Audio/SoundBufferRecorder.hpp \
+ ../SFML-2.1/include/SFML/Audio/SoundRecorder.hpp Arma.h Proyectil.h
 
 Granada.h:
 
@@ -192,6 +202,28 @@ Granada.h:
 ../SFML-2.1/include/SFML/Graphics/Sprite.hpp:
 
 ../SFML-2.1/include/SFML/Graphics/Text.hpp:
+
+Sonidos.h:
+
+../SFML-2.1/include/SFML/Audio.hpp:
+
+../SFML-2.1/include/SFML/Audio/Listener.hpp:
+
+../SFML-2.1/include/SFML/Audio/Export.hpp:
+
+../SFML-2.1/include/SFML/Audio/Music.hpp:
+
+../SFML-2.1/include/SFML/Audio/SoundStream.hpp:
+
+../SFML-2.1/include/SFML/Audio/SoundSource.hpp:
+
+../SFML-2.1/include/SFML/Audio/Sound.hpp:
+
+../SFML-2.1/include/SFML/Audio/SoundBuffer.hpp:
+
+../SFML-2.1/include/SFML/Audio/SoundBufferRecorder.hpp:
+
+../SFML-2.1/include/SFML/Audio/SoundRecorder.hpp:
 
 Arma.h:
 

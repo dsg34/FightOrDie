@@ -94,6 +94,14 @@ void RecursoHUD::setMostrarPuntuacion(bool m){
     mostrarPuntuacion=m;
 }
 
+void RecursoHUD::cambiarASerrucho(){
+    if(sprite->getTextureRect()==sf::IntRect(9*75, 2*75, 75, 75))
+        sprite->setTextureRect(sf::IntRect(10*75, 3*75, 75, 75));
+    else
+        sprite->setTextureRect(sf::IntRect(9*75, 2*75, 75, 75));
+        
+}
+
 void RecursoHUD::setOpacity(float o){
     sf::Color c = sprite->getColor();
     c.a=255*o;
@@ -129,20 +137,20 @@ void RecursoHUD::cambiarNum(int i){
 
 void RecursoHUD::aumentarNum(int i){
     if(tipo!=1 && tipo!=4){
-        num+i;    
+        num=num+i;    
         texto->setString("x"+intAString(num));
     }
 }
        
 void RecursoHUD::masNum(){
     if(tipo!=1 && tipo!=4){
-        num++;    
+        num=num+1;    
         texto->setString("x"+intAString(num));
     }
 }
 void RecursoHUD::menosNum(){
     if(tipo!=1 && tipo!=4){
-        num--;    
+        num=num-1;    
         texto->setString("x"+intAString(num));
     }
 }

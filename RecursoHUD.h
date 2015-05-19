@@ -20,6 +20,7 @@ public:
     void setScale(float s);
     void setMostrarPuntuacion(bool m);
     void setOpacity(float o);
+    void cambiarASerrucho();
     
     void cambiarNum(int i);
     void aumentarNum(int i);

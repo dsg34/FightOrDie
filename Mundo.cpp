@@ -11,7 +11,7 @@ Mundo::Mundo(sf::RenderWindow &w) {
     fabricaPersonaje=new PersonajeFactory();
 
     sf::Vector2<float> pos;
-    pos.x=tamPantalla.x/2;
+    pos.x=tamPantalla.x/2+100;
     pos.y=tamPantalla.y/2;
 
     protagonista=fabricaPersonaje->crearProtagonista(pos);
@@ -40,9 +40,9 @@ Mundo::Mundo(sf::RenderWindow &w) {
     apuntar->setPosition((sf::Vector2f)posicionCursor());
     px = 600;
     py = 400;
-    
+    serrucho = false;
     audios = Sonidos::Instance();
-    contInterpolacion = 0;
+    contInterpolacion = 1;
     
 }
 
@@ -77,15 +77,19 @@ void Mundo::setMejoraArma(int i, int m)
     c->setMejora(m);
 }
 
-void Mundo::cargarPartida(std::vector<int> v){
+void Mundo::cargarPartida(std::vector<int> v, int p){
     //Los cuatro primeros enteros son el valor de mejora de las cuatro primeras armas
-    for(int i=0; i<4; i++)
+    reiniciarProtagonista();
+    for(int i=0; i<4; i++){
         setMejoraArma(i, v[i]);
+        for(int j=0; j<v[i]; j++)
+            protagonista->getArmas()[i]->aumentarDanyo();
+    }    
     //El siguiente es el nivel
-    protagonista->getSprite()->setPosition(tamPantalla.x/2, tamPantalla.y/2);    
+    protagonista->getSprite()->setPosition(tamPantalla.x/2+100, tamPantalla.y/2);    
     nivel = fabricaNivel->crearNivel(v[4], protagonista, (sf::Vector2<int>)window->getSize());
     //El siguiente es la puntuacion
-    nivel->setPuntuacion(v[5]);
+    nivel->setPuntuacion(p);
 }
 
 Protagonista* Mundo::getProtagonista(){
@@ -100,18 +104,27 @@ int Mundo::setPuntuacionMundo(int p){
     nivel->setPuntuacion(p);
 }
 
-void Mundo::cambiarNivel(int i){
-    protagonista->getSprite()->setPosition(tamPantalla.x/2, tamPantalla.y/2);
+void Mundo::cambiarNivel(int i, int p){
+    protagonista->getSprite()->setPosition(tamPantalla.x/2+100, tamPantalla.y/2);
     nivel = fabricaNivel->crearNivel(i,protagonista, (sf::Vector2<int>)window->getSize());
+    if(p>0)
+        nivel->setPuntuacion(p);
 }
 
 bool Mundo::capturarPausa()
 {
     bool pausa = false;
     //Bucle de obtencion de eventos
+    int mando=0;
+    for(int i = 0; i < 8; i++)
+        {
+           if(sf::Joystick::isConnected(i))
+           {
+               mando = i;
+           }                    
+        }
     
-    
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Joystick::isButtonPressed(1, 7))
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Joystick::isButtonPressed(mando, 7))
     {
         pausa=true;
     }
@@ -194,32 +207,58 @@ sf::Vector2<int> Mundo::posicionCursor()
 }
 
 
-void Mundo::reiniciarMundo(){
+void Mundo::reiniciarMundo(int p){
     reiniciarProtagonista();
 
     //delete nivel;
     nivel = fabricaNivel->crearNivel(1,protagonista, (sf::Vector2<int>)window->getSize());
+    nivel->setPuntuacion(p);
 }
 
-void Mundo::siguienteNivel(){
+void Mundo::siguienteNivel(int p){
     //delete nivel;
-    protagonista->getSprite()->setPosition(tamPantalla.x/2, tamPantalla.y/2);
+    protagonista->getSprite()->setPosition(tamPantalla.x/2+100, tamPantalla.y/2);
     nivel = fabricaNivel->crearNivel(nivel->getId()+1,protagonista, (sf::Vector2<int>)window->getSize());
+    nivel->setPuntuacion(p);
+}
+
+void Mundo::reinicioInterpolar(){
+    
+        protagonista->getSprite()->setPosition(protagonista->getPosActual());
+        
+        std::vector<Zombie*> zom = nivel->getZombies();
+        for(int i=0; i<zom.size(); i++)
+        {
+            zom[i]->getSprite()->setPosition(zom[i]->getPosActual());
+        }
+        
+        std::vector<Proyectil*> bal = protagonista->getArma()->getCargador();
+        for(int i=0; i<bal.size(); i++){
+            bal[i]->getSprite()->setPosition(bal[i]->getPosActual());
+        }
+
+        std::vector<Granada*> gra = protagonista->getArma()->getSecundaria();
+        for(int i=0; i<gra.size(); i++){
+            gra[i]->getSprite()->setPosition(gra[i]->getPosActual());
+        }
+        
+        contInterpolacion=0;       
 }
 
 void Mundo::reiniciarProtagonista(){
     //delete protagonista;
     
     sf::Vector2<float> pos = (sf::Vector2<float>) window->getSize();
-    pos.x = pos.x/2;
+    pos.x = pos.x/2+100;
     pos.y = pos.y/2;
     
     protagonista = fabricaPersonaje->crearProtagonista(pos);        
 }
 
-void Mundo::reiniciarNivel(){
+void Mundo::reiniciarNivel(int p){
     reiniciarProtagonista();
     nivel = fabricaNivel->crearNivel(nivel->getId(),protagonista, (sf::Vector2<int>)window->getSize());
+    nivel->setPuntuacion(p);
 }
 
 int Mundo::ejecutarMundo(){    
@@ -238,7 +277,7 @@ int Mundo::ejecutarMundo(){
         frecuencia = relojUpdate.getElapsedTime().asMilliseconds();
         //Actualizamos 15 veces por segundo
         if(frecuencia>UPDATE_TIME){ 
-            
+            reinicioInterpolar();
             //Bucle de obtenciÃ³n de eventos
             sf::Event event;         
                       
@@ -256,9 +295,14 @@ int Mundo::ejecutarMundo(){
                 audios->escopeta.play();
                 disparo.restart();
             }
-            else if(disparando == 2 && disparo.getElapsedTime().asSeconds() > 0.1)
+            else if(disparando == 2 && disparo.getElapsedTime().asSeconds() > 0.2)
             {      
                 audios->metralleta.play();
+                disparo.restart();
+            }
+            else if(disparando == 4 && disparo.getElapsedTime().asSeconds() > 0.8)
+            {      
+                audios->hacha.play();
                 disparo.restart();
             }
             
@@ -296,13 +340,82 @@ int Mundo::ejecutarMundo(){
                 
             }
             
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::O) && sf::Keyboard::isKeyPressed(sf::Keyboard::I))
+            {
+                if(serrucho == false)
+                {
+                    nivel->cambiarSerrucho();
+                    audios->serrucho.setLoop(true);
+                    audios->nivel1.stop();
+                    audios->nivel2.stop();
+                    audios->nivel3.stop();
+                    audios->serrucho.play();
+                    
+                    serrucho = true;
+                }
+            
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::L) && sf::Keyboard::isKeyPressed(sf::Keyboard::K))
+            {
+                if(serrucho)
+                {
+                    sonandoNivel = false;
+                    nivel->cambiarSerrucho();
+                    serrucho = false;
+                    audios->serrucho.stop();
+            
+                    if(nivel->getId() == 1)
+                    {
+                        if(sonandoNivel == false)
+                        {
+                            audios->nivel1.setLoop(true);
+
+                            sonandoNivel = true;
+                            audios->nivel1.play();
+                        }
+
+                    }
+                    else if(nivel->getId() == 2)
+                    {
+                        if(sonandoNivel == false)
+                        {
+                            audios->nivel2.setLoop(true);
+
+                            sonandoNivel = true;
+                            audios->nivel2.play();
+                        }
+
+                    }
+                    else if(nivel->getId() == 3)
+                    {
+                        if(sonandoNivel == false)
+                        {
+                            audios->nivel3.setLoop(true);
+
+                            sonandoNivel = true;
+                            audios->nivel3.play();
+                        }
+
+                    }
+                }
+            
+
+            }
+            
             
             
             existePersonaje=protagonista->muerto();
             
             //1: Menu Inicio ; 2: Menu Pausa ; 3: Menu Fin de nivel ; 4: Menu muerte ; 5: Menu ¿Desea Salir?
             if(existePersonaje==false)
-                estado=4;
+            {
+                audios->nivel1.stop();
+                audios->nivel2.stop();
+                audios->nivel3.stop();
+                serrucho = false;
+                audios->serrucho.stop();
+                estado=4;                
+            }
             
             int impactos = 0;
             std::vector<Arma*> arm = protagonista->getArmas();           
@@ -320,7 +433,7 @@ int Mundo::ejecutarMundo(){
                 }
             }
             
-            nivelAcabado = nivel->actualizarNivel(protagonista, impactos,fallos);
+            nivelAcabado = nivel->actualizarNivel(protagonista, impactos,fallos, posicionCursor());
                 
             if(nivelAcabado==true){//Nivel finalizado                
                 nivel->calcularPuntuacionTotal();
@@ -330,17 +443,30 @@ int Mundo::ejecutarMundo(){
                 if(nivel->getId() == 1)
                 {
                     audios->nivel1.stop();                    
+                    estado=3;
                 }
                 else if(nivel->getId() == 2)
                 {
-                    audios->nivel2.stop();                    
+                    audios->nivel2.stop();  
+                    estado=3;
                 }
                 else if(nivel->getId() == 3)
                 {
                     audios->nivel3.stop();                    
+                    estado=8;
                 }
                 audios->pistola.stop();
-                estado=3;
+                audios->metralleta.stop();
+                audios->granada.stop();
+                audios->escopeta.stop();
+                if(serrucho)
+                {
+                    serrucho = false;
+                    audios->serrucho.stop();
+                    nivel->cambiarSerrucho();
+                }
+                
+                
             }
             relojUpdate.restart();
             
@@ -370,6 +496,12 @@ int Mundo::ejecutarMundo(){
                 audios->nivel3.pause();
             }
             sonandoNivel = false;
+            if(serrucho)
+            {
+                serrucho = false;
+                audios->serrucho.stop();
+                nivel->cambiarSerrucho();
+            }
             estado=5;
         }
         if(capturarPausa())
@@ -385,6 +517,12 @@ int Mundo::ejecutarMundo(){
             else if(nivel->getId() == 3)
             {
                 audios->nivel3.pause();
+            }
+            if(serrucho)
+            {
+                serrucho = false;
+                audios->serrucho.stop();
+                nivel->cambiarSerrucho();
             }
             sonandoNivel = false;
             estado=2;
@@ -405,55 +543,50 @@ int Mundo::getPuntuacionNivel(){
 }
 
 void Mundo::interpolarMundo()
-{
-    //SE INTERPOLA: PERSONAJE - ZOMBIES - GRANADAS - PROYECTILES
-    if(contInterpolacion > 4)
-        contInterpolacion=0;
-    
-    sf::Vector2<float> mov;
-    mov.x= protagonista->getPosActual().x-protagonista->getPosAnterior().x;
-    mov.y= protagonista->getPosActual().y-protagonista->getPosAnterior().y;
-    
-    mov.x = mov.x*contInterpolacion*0.25;
-    mov.y = mov.y*contInterpolacion*0.25;
-    //protagonista->getSprite()->setPosition(protagonista->getPosActual().x+mov.x, protagonista->getPosActual().y+mov.y);
-    protagonista->mover(mov.x, mov.y);
-    
-    std::vector<Zombie*> zom = nivel->getZombies();
-    for(int i=0; i<zom.size(); i++)
-    {
-        
-        mov.x= zom[i]->getPosActual().x-zom[i]->getPosAnterior().x;
-        mov.y= zom[i]->getPosActual().y-zom[i]->getPosAnterior().y;
-        std::cout << "mov x " << mov.x << std::endl;
-        mov.x = mov.x*contInterpolacion*0.25;
-        mov.y = mov.y*contInterpolacion*0.25;
-        std::cout << "mov x2 " << mov.x << std::endl;
-        zom[i]->mover(mov.x, mov.y);
-        
+{if(contInterpolacion>0 && contInterpolacion<4){
+        sf::Vector2<float> mov;
+        mov.x= protagonista->getPosActual().x-protagonista->getPosAnterior().x;
+        mov.y= protagonista->getPosActual().y-protagonista->getPosAnterior().y;
+
+        mov.x = mov.x*0.25;/*contInterpolacion**/
+        mov.y = mov.y*0.25;/*contInterpolacion**/
+        //protagonista->getSprite()->setPosition(protagonista->getPosActual().x+mov.x, protagonista->getPosActual().y+mov.y);
+        protagonista->mover(mov.x, mov.y);
+
+        std::vector<Zombie*> zom = nivel->getZombies();
+        for(int i=0; i<zom.size(); i++)
+        {
+
+            mov.x= zom[i]->getPosActual().x-zom[i]->getPosAnterior().x;
+            mov.y= zom[i]->getPosActual().y-zom[i]->getPosAnterior().y;
+            mov.x = mov.x*0.25;/*contInterpolacion**/;
+            mov.y = mov.y*0.25;/*contInterpolacion**/;
+            if(fabs(mov.x)<3 && fabs(mov.y)<3)
+                zom[i]->mover(mov.x, mov.y);
+            //std::cout << zom[i]->getPosActual().x << " & " << zom[i]->getPosAnterior().x <<std::endl;
+        }
+        //std::cout<<std::endl;
+        std::vector<Proyectil*> bal = protagonista->getArma()->getCargador();
+        for(int i=0; i<bal.size(); i++){
+            mov.x= bal[i]->getPosActual().x-bal[i]->getPosActual().x;
+            mov.y= bal[i]->getPosActual().y-bal[i]->getPosActual().y;
+
+            mov.x = mov.x*0.25;/*contInterpolacion**/
+            mov.y = mov.y*0.25;/*contInterpolacion**/
+            bal[i]->mover(mov.x, mov.y);
+        }
+
+        std::vector<Granada*> gra = protagonista->getArma()->getSecundaria();
+        for(int i=0; i<gra.size(); i++){
+            mov.x= gra[i]->getPosActual().x-gra[i]->getPosAnterior().x;
+            mov.y= gra[i]->getPosActual().y-gra[i]->getPosAnterior().y;
+
+            mov.x = mov.x*0.25;/*contInterpolacion**/
+            mov.y = mov.y*0.25;/*contInterpolacion**/
+            gra[i]->mover(mov.x, mov.y);
+        }
     }
-    
-    std::vector<Proyectil*> bal = protagonista->getArma()->getCargador();
-    for(int i=0; i<bal.size(); i++){
-        mov.x= bal[i]->getPosActual().x-bal[i]->getPosActual().x;
-        mov.y= bal[i]->getPosActual().y-bal[i]->getPosActual().y;
-        
-        mov.x = mov.x*contInterpolacion*0.25;
-        mov.y = mov.y*contInterpolacion*0.25;
-        bal[i]->mover(mov.x, mov.y);
-    }
-    
-    std::vector<Granada*> gra = protagonista->getArma()->getSecundaria();
-    for(int i=0; i<gra.size(); i++){
-        mov.x= gra[i]->getPosActual().x-gra[i]->getPosAnterior().x;
-        mov.y= gra[i]->getPosActual().y-gra[i]->getPosAnterior().y;
-        
-        mov.x = mov.x*contInterpolacion*0.25;
-        mov.y = mov.y*contInterpolacion*0.25;
-        gra[i]->mover(mov.x, mov.y);
-    }
-    
-    //contInterpolacion++;
+    contInterpolacion++;
 }
 
 void Mundo::pintarMundo(){

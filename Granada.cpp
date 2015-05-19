@@ -40,6 +40,9 @@ Granada::Granada(sf::Vector2<float> s, sf::Vector2<float> m, int d, sf::Vector2<
     posAnterior = s;
     haExplotadoYa = false;
     
+    sonido=false;
+    audios=Sonidos::Instance();
+    
 }
 
 Granada::Granada(const Granada& orig) {
@@ -161,6 +164,11 @@ int Granada::updateGranada(){
         if(iteracionExplosion.y<5){                
             if(iteracionExplosion.x<5){
                 iteracionExplosion.x++;
+                if(sonido==false){
+                    sonido=true;
+                    audios->granada.stop();
+                    audios->granada.play();
+                }
             }
             else{
                 iteracionExplosion.x=2;
