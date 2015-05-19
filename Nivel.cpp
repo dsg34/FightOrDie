@@ -488,12 +488,17 @@ void Nivel::generarRecurso(){
     int tipo = devuelveTipoRecurso();
     
     Recurso* r = fabR->crearRecurso(tipo);
-    while(mapa->Colision((int)r->getVectorActual().x, (int)r->getVectorActual().y, 0)==false)
+    if(mapa->Colision((int)r->getVectorActual().x, (int)r->getVectorActual().y, 0)==false)
+    {
         r = fabR->crearRecurso(tipo);
-    //if(map->Colision(sprite.getPosition().x,(sprite.getPosition().y - kVel + 75/2))){    
-    recursos.push_back(r);
-    
-    tApareceRecurso = 4+rand()%11;
+        tApareceRecurso = 2+rand()%5;
+    }
+    else
+    {       
+        recursos.push_back(r);
+
+        tApareceRecurso = 4+rand()%11;
+    }
 }
 
 sf::Vector2<int> Nivel::creaPos(){
