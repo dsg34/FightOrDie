@@ -11,11 +11,11 @@ public:
     virtual ~PersonajeFactory();
     
     Protagonista* crearProtagonista(sf::Vector2<float> p);
-    Zombie* crearZombie(int tipoZombie, sf::Vector2<float> p);
+    Zombie* crearZombie(int tipoZombie, sf::Vector2<float> p, int n);
     Zombie* crearZombieNormal(sf::Vector2<float> p);
     Zombie* crearZombieRapido(sf::Vector2<float> p);
     Zombie* crearZombieGordo(sf::Vector2<float> p);
-    Zombie* crearBoss(sf::Vector2<float> p);
+    Zombie* crearBoss(sf::Vector2<float> p, int n);
     /*
     Zombie crearZombieNormal(sf::Vector2 p);
     Zombie* crearZombieRapido(sf::Vector2 p);

@@ -69,7 +69,7 @@ private:
     sf::Texture* texPistola;
     sf::Texture* texEscopeta;
     sf::Texture* texMetralleta;
-    sf::Texture* texAcha;
+    sf::Texture* texHacha;
     Sonidos* audios;
     bool correr;
     bool granada;

@@ -32,12 +32,12 @@ Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, 
     texMetralleta = new sf::Texture(texMetra);
 
     sf::Texture texA;
-    if (!texA.loadFromFile("resources/BillyEscopeta.png"))
+    if (!texA.loadFromFile("resources/BillyHacha.png"))
     {
         std::cerr << "Error cargando la imagen sprites.png";
         exit(0);
     }
-    texAcha = new sf::Texture(texA);
+    texHacha = new sf::Texture(texA);
     
     sprite = new sf::Sprite(*s);
     sprite->setTexture(*tex);
@@ -222,7 +222,7 @@ void Protagonista::siguienteArma(){
                 }else if(arma->getTipo()==3){
                     sprite->setTexture(*texEscopeta);
                 }else if(arma->getTipo()==4){
-                    sprite->setTexture(*texAcha);
+                    sprite->setTexture(*texHacha);
                 }
             }else{
                 sprite->setTexture(*texPistola);
@@ -254,7 +254,7 @@ void Protagonista::anteriorArma(){
             }else if(arma->getTipo()==3){
                 sprite->setTexture(*texEscopeta);
             }else if(arma->getTipo()==4){
-                sprite->setTexture(*texAcha);
+                sprite->setTexture(*texHacha);
             }
         }
     }

@@ -448,7 +448,9 @@ void Nivel::crearZombies(int num){
         
         
         
-        aux = fabP->crearZombie(tipo, v);
+        aux = fabP->crearZombie(tipo, v, id);
+            
+            
         if(tipo = 4)
         {
             int x = aux->getPosActual().x;

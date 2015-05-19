@@ -60,7 +60,7 @@ Protagonista* PersonajeFactory::crearProtagonista(sf::Vector2<float> p){
     }
     return protagonista;
 }
-Zombie* PersonajeFactory::crearZombie(int tipoZombie, sf::Vector2<float> p){    
+Zombie* PersonajeFactory::crearZombie(int tipoZombie, sf::Vector2<float> p, int n){    
     if(tipoZombie == 1){
         //normal
         zombie = crearZombieNormal(p);
@@ -73,7 +73,7 @@ Zombie* PersonajeFactory::crearZombie(int tipoZombie, sf::Vector2<float> p){
     }
     else if(tipoZombie == 4){
         //gordo
-        zombie = crearBoss(p);
+        zombie = crearBoss(p, n);
     }
     return zombie;
 }
@@ -92,18 +92,44 @@ Zombie* PersonajeFactory::crearZombieNormal(sf::Vector2<float> p)
     return zombie;
 }
 
-Zombie* PersonajeFactory::crearBoss(sf::Vector2<float> p)
+Zombie* PersonajeFactory::crearBoss(sf::Vector2<float> p, int n)
 {
-    
-    sf::Sprite sprite(*texturaZombieRapido);
-    
-    sprite.setOrigin(75/2,75/2);
-    sprite.setTextureRect(sf::IntRect(0*75,0*75,75,75));
-    sprite.setScale(2.5, 2.5);
-    
-    sf::Sprite* aux = new sf::Sprite(sprite);
-    //Zombie(sprite, textura, posicion, maxVida, velocidad, danyo)
-    zombie = new Zombie(aux, texturaZombieRapido, p, 150, 6, 3);
+    if(n == 1)
+    {
+        sf::Sprite sprite(*texturaZombieRapido);
+
+        sprite.setOrigin(75/2,75/2);
+        sprite.setTextureRect(sf::IntRect(0*75,0*75,75,75));
+        sprite.setScale(2.5, 2.5);
+
+        sf::Sprite* aux = new sf::Sprite(sprite);
+        //Zombie(sprite, textura, posicion, maxVida, velocidad, danyo)
+        zombie = new Zombie(aux, texturaZombieRapido, p, 100, 6, 2);
+    }
+    else if(n == 2)
+    {
+        sf::Sprite sprite(*texturaZombieNormal);
+
+        sprite.setOrigin(75/2,75/2);
+        sprite.setTextureRect(sf::IntRect(0*75,0*75,75,75));
+        sprite.setScale(2.5, 2.5);
+
+        sf::Sprite* aux = new sf::Sprite(sprite);
+        //Zombie(sprite, textura, posicion, maxVida, velocidad, danyo)
+        zombie = new Zombie(aux, texturaZombieNormal, p, 150, 5, 3);
+    }
+    else
+    {
+        sf::Sprite sprite(*texturaZombieFuerte);
+
+        sprite.setOrigin(75/2,75/2);
+        sprite.setTextureRect(sf::IntRect(0*75,0*75,75,75));
+        sprite.setScale(2.5, 2.5);
+
+        sf::Sprite* aux = new sf::Sprite(sprite);
+        //Zombie(sprite, textura, posicion, maxVida, velocidad, danyo)
+        zombie = new Zombie(aux, texturaZombieFuerte, p, 300, 4.5, 5);
+    }
     
     return zombie;
 }
