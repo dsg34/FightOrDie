@@ -85,7 +85,7 @@ std::vector<Zombie*> Nivel::getZombies(){
 }
 
 void Nivel::siguienteOleadaArcade(int i){
-    oleada = oleada->siguienteOleadaArcade(i);
+    //oleada = oleada->siguienteOleadaArcade(i);
     numZombies=0;
 }
 
@@ -470,7 +470,7 @@ void Nivel::crearZombies(int num){
 
         tipo=devuelveTipo();
         
-        if(numZombies == oleada->getNumZombies() -10 && oleada->getId() == 3)
+        if(numZombies == oleada->getNumZombies() -10 && oleada->getId()%3 == 0)
             crearMensaje("Se acerca algo fuera de lo normal...", 40, 150, 1);
         
         if(numZombies == oleada->getNumZombies() - 1 && oleada->getId() == 3)

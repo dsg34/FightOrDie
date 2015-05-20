@@ -155,7 +155,7 @@ bool Zombie::calcularDireccion(sf::Sprite protagonista){
                 sprite->setTextureRect(sf::IntRect(cont*75, 0, 75, 75));                
 
                 if(cont == 5)
-                    cont = 0;
+                    cont = -1;
 
 
             }
@@ -180,7 +180,7 @@ bool Zombie::calcularDireccion(sf::Sprite protagonista){
                 sprite->setTextureRect(sf::IntRect(cont*75, 3*75, 75, 75));                
 
                 if(cont == 5)
-                    cont = 0;
+                    cont = -1;
 
 
             }
@@ -210,7 +210,7 @@ bool Zombie::calcularDireccion(sf::Sprite protagonista){
                 sprite->setTextureRect(sf::IntRect(cont*75, 2*75, 75, 75));                
 
                 if(cont == 5)
-                    cont = 0;
+                    cont = -1;
 
 
             }
@@ -236,7 +236,7 @@ bool Zombie::calcularDireccion(sf::Sprite protagonista){
                 sprite->setTextureRect(sf::IntRect(cont*75, 75, 75, 75));                
 
                 if(cont == 5)
-                    cont = 0;
+                    cont = -1;
 
 
             }
