@@ -30,11 +30,9 @@ Menu* MenuFactory::hacerMenu(int x, int y, int id){
     }
     sf::Texture* tex = new sf::Texture(auxText);
     sf::Sprite sprite(*tex);
-
     //Este es el sprite que le pasaremos a disparar, para que las balas que se creen lo hagan con dicho sprite
     sprite.setOrigin(1300/2,750/2);
     sprite.setTextureRect(sf::IntRect(0, 0, 1300, 750));
-
     sf::Sprite* aux = new sf::Sprite(sprite);
     aux->setPosition(1300/2,750/2);
     
@@ -49,6 +47,7 @@ Menu* MenuFactory::hacerMenu(int x, int y, int id){
     if(id==1){                                  //Inicio
         apartados.push_back("Jugar");
         apartados.push_back("Continuar partida");
+        apartados.push_back("Controles");
         apartados.push_back("Mejores puntuaciones");
     }else if(id==2){                            //Pausa
         apartados.push_back("Continuar");
@@ -80,7 +79,8 @@ Menu* MenuFactory::hacerMenu(int x, int y, int id){
         apartados.push_back("Atras");
     }else if(id==8){
         apartados.push_back("Volver a inicio");
-    }else{
+    }
+    else{
         apartados.push_back("Salir");
     }
     

@@ -51,6 +51,8 @@ public:
     void anyadirGranada(sf::Vector2<float> p);
     bool devuelveSprintDisponible();
     std::string intAString(int p);
+    bool getRec();
+    void setRec(bool r);
     //sf::RectangleShape* getRectangle();
 private:
     
@@ -73,6 +75,7 @@ private:
     Sonidos* audios;
     bool correr;
     bool granada;
+    bool rec;
 };
 
 #endif	/* PROTAGONISTA_H */

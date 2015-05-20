@@ -30,7 +30,7 @@ public:
     bool capturarCierre();
     int ejecutarMenu(int tipo);
     int menuFinDelJuego();
-    
+    int menuControles();
     void reiniciarJuego(int p);
     void siguienteNivel(int p);
     void repetirNivel(int p);

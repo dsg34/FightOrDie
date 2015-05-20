@@ -109,6 +109,8 @@ int Menu::update(sf::RenderWindow &window)
                     devuelve=-19;
                 else if(menu[devuelve]->getString() == "Mejores puntuaciones")
                     devuelve=-20;
+                else if(menu[devuelve]->getString() == "Controles")
+                    devuelve=-21;
         }        
         else
         {
@@ -163,7 +165,9 @@ int Menu::update(sf::RenderWindow &window)
                 else if(menu[devuelve]->getString() == "Continuar partida")
                     devuelve=-19;
                 else if(menu[devuelve]->getString() == "Mejores puntuaciones")
-                            devuelve=-20;
+                    devuelve=-20;
+                else if(menu[devuelve]->getString() == "Controles")
+                    devuelve=-21;
             }
         }
         

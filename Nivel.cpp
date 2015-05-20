@@ -46,7 +46,7 @@ Nivel::Nivel(int i, Protagonista* &p, sf::Vector2<int> t, std::vector<int> s, fl
    
    sonidosClock.restart();
     
-    
+   rec.restart();
 }
 
 Nivel::Nivel(const Nivel& orig) {
@@ -205,10 +205,25 @@ bool Nivel::actualizarNivel(Protagonista* p, int impac, int fall, sf::Vector2<in
        }                    
     }
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::V) || sf::Joystick::isButtonPressed(mando, 2))
-        soltarRecurso(p, 1, posCursor);
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::B) || sf::Joystick::isButtonPressed(mando, 1))
-        soltarRecurso(p, 2, posCursor);
+    if(rec.getElapsedTime().asSeconds() > 0.9)
+    {
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::B) || sf::Joystick::isButtonPressed(mando, 1))
+        {
+            soltarRecurso(p, 2, posCursor);
+        
+            rec.restart();
+        }
+    }
+    
+    if(rec.getElapsedTime().asSeconds() > 0.9)
+    {
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::V) || sf::Joystick::isButtonPressed(mando, 2))
+        {
+            soltarRecurso(p, 1, posCursor);        
+        
+            rec.restart();
+        }
+    }
     
     return terminado;
 }

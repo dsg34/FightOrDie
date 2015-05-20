@@ -383,7 +383,11 @@ int Juego::ejecutarJuego()
                 exit(0);
         }else if(estadoMenu==-20){
             menuPuntuaciones();
-        }else if(estadoMenu==-19 && gestionPartida->cargarPartida().size()<=0){
+        }
+        else if(estadoMenu==-21){
+            menuControles();
+        }
+        else if(estadoMenu==-19 && gestionPartida->cargarPartida().size()<=0){
         
         }else
         {
@@ -448,4 +452,47 @@ int Juego::ejecutarJuego()
         }
     }
     return 0;
+}
+
+int Juego::menuControles(){
+//1: Menu Inicio ; 2: Menu Pausa ; 3: Menu Fin de nivel ; 4: Menu muerte ; 5: Salir
+    sf::Clock reloj, relojAux;
+    reloj.restart();    
+    relojAux.restart();
+    MenuFactory* fab = new MenuFactory();
+    Menu* menu;        
+    menu=fab->hacerMenu(window->getSize().x, window->getSize().y, 7);
+    
+    sf::Texture tex;
+    if (!tex.loadFromFile("resources/controles.png"))
+    {
+        std::cerr << "Error cargando la imagen sprites.png";
+        exit(0);
+    }
+    //sf::Vector2<int> tam = (sf::Vector2<int>) w.getSize();
+    sf::Texture* textura=new sf::Texture(tex);
+    sf::Sprite* aux = new sf::Sprite();
+    aux->setTexture(*textura);
+    aux->setPosition(0,0);    
+    
+    /**************************************************************BUCLE DE MENU**************************************************************************/
+    int estadoMenu = -1;    
+    while(estadoMenu!=-12){                              
+        if(reloj.getElapsedTime().asMilliseconds()>UPDATE_TIME){
+            estadoMenu = menu->update(*window);                                    
+            window->clear();                        
+            window->draw(*aux);
+            window->display();
+            reloj.restart();
+            capturarCierre();
+        }
+        if(relojAux.getElapsedTime().asMilliseconds()<500)
+            estadoMenu=-1;
+    }
+    
+    
+    delete aux;
+    delete textura;
+    
+    return estadoMenu;
 }

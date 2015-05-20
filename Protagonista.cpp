@@ -49,7 +49,7 @@ Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, 
     velocidad = ve;
     estaVivo = true;
     municionSecundaria = 5;
-    
+    rec = false;
     fabR = new RecursosFactory();
     
     vida = maxVida;
@@ -89,6 +89,14 @@ Protagonista::~Protagonista()
         delete inventario[i];
     }
 }
+bool Protagonista::getRec()
+{
+    return rec;
+}
+void Protagonista::setRec(bool r)
+{
+    rec = r;
+}
 void Protagonista::setPosMira(sf::Vector2<int> pos){
     posmira = pos;
 }
@@ -112,8 +120,8 @@ std::string Protagonista::intAString(int p){
 void Protagonista::sacarRecursoInventario(int tipo){       
      bool eliminado = false;
     for(int i=0;i<inventario.size();i++){  
-        std::cout<<intAString(i)<<std::endl;
-        if(inventario[i]->getTipo()==tipo && inventario[i]->getReducirEnInventario()==false && eliminado == false){
+        //std::cout<<intAString(i)<<std::endl;
+        if(inventario[i]->getTipo()==tipo /*&& inventario[i]->getReducirEnInventario()==false*/ && eliminado == false){
             inventario[i]->setReducirEnInventario(true);
             eliminado = true;                
         }     
@@ -413,11 +421,12 @@ int Protagonista::update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, Ma
         frecuencia = reloj.getElapsedTime();            
         if(frecuencia.asSeconds()>0.7){
             granada=false;
+            rec = false;
             disparando=false;
             reloj.restart();
         }
         frecuencia = relojSprint.getElapsedTime();            
-        if(frecuencia.asSeconds()>1.5){
+        if(frecuencia.asSeconds()>2.5){
             if(correr==true){
                 correr=false;
                 velocidad=velocidad/2;
