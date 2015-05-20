@@ -24,6 +24,7 @@ public:
     int calcularPuntuacionDinamica();  
     int getPuntuacion();
     void setPuntuacion(int p);
+    void siguienteOleadaArcade(int i);
     
     int getId();
     
@@ -38,7 +39,7 @@ public:
     void siguienteOleada();
     void generarRecurso();
     sf::Vector2<float> actualizarRecursosExistentes();
-    bool actualizarNivel(Protagonista* p, int impactos, int fallos, sf::Vector2<int> posCursor);
+    bool actualizarNivel(Protagonista* p, int impactos, int fallos, sf::Vector2<int> posCursor, bool arcade);
     void actualizarInfoBalas(int impactos, int fallos);//Debe actulizar la variable de impactos y fallos
     void soltarRecurso(Protagonista* p, int tipo, sf::Vector2<int> posCursor);
     void cambiarSerrucho();
@@ -65,7 +66,7 @@ private:
     std::vector<Zombie*> zombies;
     std::vector<Recurso*> recursos;
     std::vector<Recurso*> recursosBloqueantes;
-    
+    int oleadaArcade;
     sf::Clock relojZombie;
     sf::Clock relojRecurso;
     sf::Clock relojRacha;

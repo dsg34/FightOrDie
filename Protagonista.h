@@ -45,6 +45,7 @@ public:
     void setInventario(std::vector<Recurso*> i);
     void recibirDanyo(float cant);
     bool muerto();
+    void controlRelojSprint();
     void actualizaMuerte();
     void sacarDeInventario(int posicion);
     void sacarRecursoInventario(int tipo);
@@ -62,6 +63,7 @@ private:
     sf::Clock relojCambioArma;
     sf::Clock reloj;
     sf::Clock relojSprint;
+    sf::Clock sp;
     int municionSecundaria;
     //sf::RectangleShape* rectangle;
     RecursosFactory* fabR;
@@ -76,6 +78,8 @@ private:
     bool correr;
     bool granada;
     bool rec;
+    bool hachazo;
+    sf::Clock relojHacha;
 };
 
 #endif	/* PROTAGONISTA_H */

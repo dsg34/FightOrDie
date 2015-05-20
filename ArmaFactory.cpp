@@ -1,5 +1,8 @@
 #include "ArmaFactory.h"
 
+
+ArmaFactory* ArmaFactory::pinstance = 0;
+
 ArmaFactory::ArmaFactory() {
 }
 

@@ -133,3 +133,8 @@ Oleada* Oleada::crearOleada33(){
     Oleada* o = new Oleada(3, 3, nIni*5, 1);
     return o;
 }
+
+Oleada* Oleada::siguienteOleadaArcade(int i){
+    Oleada* o = new Oleada(i, -1, nIni*i, 1);
+    return o;
+}

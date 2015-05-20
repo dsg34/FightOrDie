@@ -111,6 +111,8 @@ int Menu::update(sf::RenderWindow &window)
                     devuelve=-20;
                 else if(menu[devuelve]->getString() == "Controles")
                     devuelve=-21;
+                else if(menu[devuelve]->getString() == "Modo arcade")
+                    devuelve=-22;
         }        
         else
         {
@@ -168,6 +170,8 @@ int Menu::update(sf::RenderWindow &window)
                     devuelve=-20;
                 else if(menu[devuelve]->getString() == "Controles")
                     devuelve=-21;
+                else if(menu[devuelve]->getString() == "Modo arcade")
+                    devuelve=-22;
             }
         }
         

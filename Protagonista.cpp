@@ -6,7 +6,7 @@
 
 Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, float ve) :Personaje(s,t,p,mV,ve) {
 
-    ArmaFactory* fab = new ArmaFactory();    
+    ArmaFactory* fab = ArmaFactory::Instance();    
     armas.push_back(fab->crearPistola());
     arma=armas[0];
     armas.push_back(fab->crearMetralleta());
@@ -50,7 +50,7 @@ Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, 
     estaVivo = true;
     municionSecundaria = 5;
     rec = false;
-    fabR = new RecursosFactory();
+    fabR = RecursosFactory::Instance();;
     
     vida = maxVida;
     cont = 0;
@@ -70,6 +70,9 @@ Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, 
     audios = Sonidos::Instance();
     granada=false;
     correr=false;
+    sp.restart();
+    relojHacha.restart();
+    hachazo = false;
 }
 
 Protagonista::Protagonista(const Protagonista& orig) : Personaje(orig) {
@@ -89,6 +92,12 @@ Protagonista::~Protagonista()
         delete inventario[i];
     }
 }
+
+void Protagonista::controlRelojSprint()
+{
+    
+}
+
 bool Protagonista::getRec()
 {
     return rec;
@@ -438,7 +447,24 @@ int Protagonista::update(sf::Vector2<int> pos, std::vector<Zombie*> enemigos, Ma
         { //miPistola->disparar(sprite.getPosition(), posicionCursor(window));
             dispara = disparar(posmira);
             disp = dispara;
-            disparando = true;
+            frecuencia = relojHacha.getElapsedTime();            
+            if(arma->getTipo()!=4)
+                disparando = true;
+            else{
+                if(frecuencia.asSeconds()>1 && hachazo==true){
+                    disparando = true;
+                    hachazo=true;
+                    relojHacha.restart();
+                }else if(frecuencia.asSeconds()>0.35 && hachazo==true){
+                    hachazo=false;
+                    disparando=false;
+                    relojHacha.restart();
+                }else if(frecuencia.asSeconds()>0.35 && hachazo==false){
+                    disparando = true;
+                    hachazo=true;
+                    relojHacha.restart();
+                }
+            }
             reloj.restart();
         } //miProtagonista->getArma()->disparar(*miProtagonista->getSprite()->getPosition(), posicionCursor(window));
         else if (sf::Joystick::isButtonPressed(mando,4) || sf::Mouse::isButtonPressed((sf::Mouse::Right))){

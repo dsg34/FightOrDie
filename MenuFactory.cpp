@@ -47,6 +47,7 @@ Menu* MenuFactory::hacerMenu(int x, int y, int id){
     if(id==1){                                  //Inicio
         apartados.push_back("Jugar");
         apartados.push_back("Continuar partida");
+        apartados.push_back("Modo arcade");
         apartados.push_back("Controles");
         apartados.push_back("Mejores puntuaciones");
     }else if(id==2){                            //Pausa
@@ -61,6 +62,10 @@ Menu* MenuFactory::hacerMenu(int x, int y, int id){
     }else if(id==4){                            //Menu muerte
         apartados.push_back("HAS MUERTO");           /**/
         apartados.push_back("Reiniciar juego");
+        apartados.push_back("Volver a inicio");
+    }else if(id==9){                            //Pausa
+        apartados.push_back("Continuar");
+        apartados.push_back("Mejoras");
         apartados.push_back("Volver a inicio");
     }
     

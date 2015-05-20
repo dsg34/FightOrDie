@@ -24,6 +24,8 @@ int recogida;
 
 #include "RecursosFactory.h"
 
+RecursosFactory* RecursosFactory::pinstance = 0;
+
 RecursosFactory::RecursosFactory() 
 {
     sf::Texture tex;
@@ -180,7 +182,7 @@ Recurso* RecursosFactory::crearRecurso(int tip)
     }
     else if(tip == 8)
     {
-        p = crearValla(25);
+        p = crearValla(50);
     }
     else
     {

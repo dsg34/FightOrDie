@@ -56,7 +56,7 @@ std::vector<int> GuardarCargarPartida::cargarPartida(){
     return v;
 }
 /***********************************************************************************************************GESTION DE PUNTUACIONES*/
-void GuardarCargarPartida::guardarPuntuacion(Nivel* n){
+void GuardarCargarPartida::guardarPuntuacion(Nivel* n, bool arcade){
     std::vector<int> v;
     std::vector<std::string> original;
     int intAux=-1, nuevaPunt=n->getPuntuacion(), pos=-1;
@@ -65,8 +65,13 @@ void GuardarCargarPartida::guardarPuntuacion(Nivel* n){
     std::ifstream leerPuntuaciones("data-point.txt");            
     if(existeFichero("data-point.txt")){
         //COMPROBAMOS SI LA NUEVA PUNTUACION ES MAS ALTA QUE LAS 5 QUE YA HAY EN EL NIVEL
-        std::string linea;        
-        int nivel = n->getId();
+        std::string linea;    
+        int nivel=0;
+        if(arcade==false)
+            nivel = n->getId();
+        else
+            nivel = 4;
+            
         int cont = 1;
         if (leerPuntuaciones.is_open())
         {
@@ -108,7 +113,7 @@ void GuardarCargarPartida::guardarPuntuacion(Nivel* n){
             //POR ULTIMO, REESCRIBIMOS EL FICHERO
             std::ofstream escribirPartida("data-point.txt");
             int cont=1;//Llevamos la cuenta del nivel que estamos comprobando y de la iteracion que llevamos en total
-            while(cont<4){
+            while(cont<5){
                 if(cont==nivel){
                     for(int i=0; i<v.size(); i++){
                         escribirPartida<<encriptado(intAString(v[i]))<<endl;                                        
@@ -189,7 +194,7 @@ void GuardarCargarPartida::inicializarPuntuaciones(){
     if(existeFichero(std::string("data-point.txt"))){
         
         int cont=0;
-        while(cont<3){
+        while(cont<4){
             for(int i=0; i<5; i++)
                 inicializarPuntuaciones<<encriptado(intAString(0))<<endl;
             

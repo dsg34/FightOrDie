@@ -29,6 +29,8 @@ public:
     Oleada* crearOleada31();
     Oleada* crearOleada32();
     Oleada* crearOleada33();
+    
+    Oleada* siguienteOleadaArcade(int i);
 
 private:
     int id;

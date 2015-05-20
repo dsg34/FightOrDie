@@ -1,5 +1,7 @@
 #include "PersonajeFactory.h"
 
+PersonajeFactory* PersonajeFactory::pinstance = 0;
+
 PersonajeFactory::PersonajeFactory() 
 {   
     protagonistaCreado=false;

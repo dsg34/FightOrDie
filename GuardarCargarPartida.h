@@ -22,7 +22,7 @@ public:
     void guardarPartida(Nivel* n, Protagonista* p);
     std::vector<int> cargarPartida();
     
-    void guardarPuntuacion(Nivel* n);
+    void guardarPuntuacion(Nivel* n, bool arcade);
     std::vector<int> cargarPuntuaciones();
     void inicializarPuntuaciones();
     void guardarPuntuacionSimple(Nivel* n);

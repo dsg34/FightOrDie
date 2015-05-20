@@ -35,7 +35,9 @@ Zombie::Zombie(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, int mV, floa
 Zombie::Zombie(const Zombie& orig) : Personaje(orig){
 }
 
-Zombie::~Zombie() {
+Zombie::~Zombie() 
+{
+    
 }
 
 int Zombie::update(sf::Sprite protagonista , std::vector<Zombie*> zombies, std::vector<Arma*> armas, std::vector<Recurso*> recursos, MapLoader* mapa){

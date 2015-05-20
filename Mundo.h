@@ -38,7 +38,7 @@ public:
     void setPuntuacionNivel(int p);
     int getPuntuacionNivel();
     
-    int ejecutarMundo();
+    int ejecutarMundo(bool arcade);
     
     void interpolarMundo();
     void pintarMundo();

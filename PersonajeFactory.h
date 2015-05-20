@@ -6,6 +6,14 @@
 
 class PersonajeFactory {
 public:
+    
+    static PersonajeFactory *Instance()
+    {
+        if(!pinstance)
+            pinstance = new PersonajeFactory();
+        return pinstance;
+    }
+    
     PersonajeFactory();
     PersonajeFactory(const PersonajeFactory& orig);
     virtual ~PersonajeFactory();
@@ -23,6 +31,9 @@ public:
     Zombie* crearZombieBoss(int i);
     Zombie* crearZombieDistancia(sf::Vector2 p);
      */
+    
+    PersonajeFactory &operator = (const PersonajeFactory & );
+    
 private:
     bool protagonistaCreado;
     Protagonista* protagonista;
@@ -32,6 +43,7 @@ private:
     sf::Texture* texturaZombieFuerte;
     sf::Texture* texturaProtagonista;
     
+    static PersonajeFactory* pinstance;
 };
 
 #endif	/* PERSONAJEFACTORY_H */

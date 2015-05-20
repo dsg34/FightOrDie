@@ -97,8 +97,8 @@ void Juego::menuPuntuaciones(){
     
     std::vector<sf::Text*> puntuacionesNivel1;
     sf::Text* aux;
-    sf::Vector2<int> pos(window->getSize().x/8*2, window->getSize().y/8);
-    int ampX=window->getSize().x/8*0.7;
+    sf::Vector2<int> pos(window->getSize().x/10*2, window->getSize().y/8);
+    int ampX=window->getSize().x/10*0.7;
     int ampY=window->getSize().y/6*2;
     
     sf::Text* tex = new sf::Text();
@@ -129,32 +129,46 @@ void Juego::menuPuntuaciones(){
     niv3->setPosition(pos.x*3+(0.5*ampX), pos.y*(-0.5)+ampY);
     niv3->setColor(sf::Color::Yellow);
     
-    for(int i=0; i<punt.size()/3; i++){
+    sf::Text* niv4 = new sf::Text();
+    niv4->setFont(font);
+    niv4->setCharacterSize(50);
+    niv4->setString("ARCADE");
+    niv4->setPosition(pos.x*4+(0.5*ampX), pos.y*(-0.5)+ampY);
+    niv4->setColor(sf::Color::Yellow);
+    
+    for(int i=0; i<punt.size()/4; i++){
         aux = new sf::Text();
         aux->setFont(font);
-        aux->setCharacterSize(45);
+        aux->setCharacterSize(40);
         aux->setString(intAString(punt[i]));
         aux->setPosition(pos.x+ampX, pos.y*i+ampY);
         aux->setColor(sf::Color::White);
         puntuacionesNivel1.push_back(aux);
     }    
-    std::vector<sf::Text*> puntuacionesNivel2;
-    for(int i=0; i<punt.size()/3; i++){
+    for(int i=0; i<punt.size()/4; i++){
         aux = new sf::Text();
         aux->setFont(font);
-        aux->setCharacterSize(45);
+        aux->setCharacterSize(40);
         aux->setString(intAString(punt[i+5]));
         aux->setPosition(pos.x*2+ampX, pos.y*i+ampY);
         aux->setColor(sf::Color::White);
         puntuacionesNivel1.push_back(aux);
     }
-    std::vector<sf::Text*> puntuacionesNivel3;
-    for(int i=0; i<punt.size()/3; i++){
+    for(int i=0; i<punt.size()/4; i++){
         aux = new sf::Text();
         aux->setFont(font);
-        aux->setCharacterSize(45);
+        aux->setCharacterSize(40);
         aux->setString(intAString(punt[i+10]));
         aux->setPosition(pos.x*3+ampX, pos.y*i+ampY);
+        aux->setColor(sf::Color::White);
+        puntuacionesNivel1.push_back(aux);
+    }
+    for(int i=0; i<punt.size()/4; i++){
+        aux = new sf::Text();
+        aux->setFont(font);
+        aux->setCharacterSize(40);
+        aux->setString(intAString(punt[i+15]));
+        aux->setPosition(pos.x*4+ampX, pos.y*i+ampY);
         aux->setColor(sf::Color::White);
         puntuacionesNivel1.push_back(aux);
     }
@@ -170,12 +184,9 @@ void Juego::menuPuntuaciones(){
             window->draw(*niv1);
             window->draw(*niv2);
             window->draw(*niv3);
+            window->draw(*niv4);
             for(int j=0; j<puntuacionesNivel1.size(); j++)
                 window->draw(*puntuacionesNivel1[j]);
-            for(int k=0; k<puntuacionesNivel1.size(); k++)
-                window->draw(*puntuacionesNivel1[k]);
-            for(int l=0; l<puntuacionesNivel1.size(); l++)
-                window->draw(*puntuacionesNivel1[l]);
             window->display();
             reloj.restart();
             capturarCierre();
@@ -367,7 +378,8 @@ int Juego::ejecutarJuego()
     sf::Clock reloj;
     reloj.restart();   
     
-   
+    bool arcade=false;
+    int nivelArcade=1;
     
     audios->inicio.play();
 
@@ -375,7 +387,7 @@ int Juego::ejecutarJuego()
     //MENU DE INICIO
     while(salir!=true)
     {
-        
+        arcade=false;
         estadoMenu = ejecutarMenu(1);    
         if(estadoMenu==-2)
         {            
@@ -395,11 +407,19 @@ int Juego::ejecutarJuego()
             {//Cargar partida
                 mundo->cargarPartida(gestionPartida->cargarPartida(), gestionPartida->cargarPuntuacionSimple());                
             }
+            
+            if(estadoMenu==-22){
+                arcade=true;
+                nivelArcade=1+rand()%3;
+                cout<<intAString(nivelArcade);
+                mundo->cambiarNivel(nivelArcade, -1);
+            }
+            
             audios->inicio.stop();
             
             while(salirJuego!=true)
             {
-                estadoMundo = mundo->ejecutarMundo();   
+                estadoMundo = mundo->ejecutarMundo(arcade);   
                 
                 while(salirMenu!=true)
                 {
@@ -407,16 +427,20 @@ int Juego::ejecutarJuego()
                     //MENU DE PAUSA-FIN DE NIVEL-MUERTE
                     //CAMBIO DE NIVEL
                     if(estadoMundo==3){
-                        gestionPartida->guardarPuntuacion(mundo->getNivel());
+                        gestionPartida->guardarPuntuacion(mundo->getNivel(), false);
                         gestionPartida->guardarPuntuacionSimple(mundo->getNivel());
                         siguienteNivel(mundo->getNivel()->getPuntuacion());
                         gestionPartida->guardarPartida(mundo->getNivel(),mundo->getProtagonista());
                     }
                     
+                    if(estadoMundo==4 && arcade==true){
+                        gestionPartida->guardarPuntuacion(mundo->getNivel(), true);
+                    }
+                    
                     if(estadoMundo!=8)
                         estadoMenu = ejecutarMenu(estadoMundo);
                     else{
-                        gestionPartida->guardarPuntuacion(mundo->getNivel());
+                        gestionPartida->guardarPuntuacion(mundo->getNivel(), false);
                         estadoMenu = menuFinDelJuego();
                     }
                     //-2: Salir ; -3: Jugar ; -4: Continuar ; -5: Mejoras ; -6: Siguiente nivel ; -7: Reiniciar juego; -8: Opciones ; -9: Volver a inicio      
@@ -429,10 +453,16 @@ int Juego::ejecutarJuego()
                         case -5: menuMejoras();break;           //Mejoras
                         case -6: salirMenu=true;gestionPartida->guardarPartida(mundo->getNivel(),mundo->getProtagonista());break; //Siguiente nivel                    
                         case -7: salirMenu=true; 
-                                 if(mundo->getNivel()->getId()==1)
-                                     repetirNivel(0);
-                                 else{
-                                     mundo->cargarPartida(gestionPartida->cargarPartida(), gestionPartida->cargarPuntuacionSimple());
+                                if(arcade==true){
+                                    nivelArcade=1+rand()%3;
+                                    cout<<intAString(nivelArcade);
+                                    mundo->cambiarNivel(nivelArcade, -1);
+                                }else{                        
+                                    if(mundo->getNivel()->getId()==1)
+                                        repetirNivel(0);
+                                    else{
+                                        mundo->cargarPartida(gestionPartida->cargarPartida(), gestionPartida->cargarPuntuacionSimple());
+                                    }
                                  }
                                  break; //Reiniciar juego 
                         case -8: break; //Opciones
@@ -448,6 +478,7 @@ int Juego::ejecutarJuego()
                 salirMenu=false;
                 
             }
+            arcade=false;
             salirJuego=false;
         }
     }

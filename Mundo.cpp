@@ -8,7 +8,7 @@ Mundo::Mundo(sf::RenderWindow &w) {
     window=&w;
     tamPantalla=(sf::Vector2<int>) window->getSize();
     
-    fabricaPersonaje=new PersonajeFactory();
+    fabricaPersonaje=PersonajeFactory::Instance();
 
     sf::Vector2<float> pos;
     pos.x=tamPantalla.x/2+100;
@@ -261,7 +261,7 @@ void Mundo::reiniciarNivel(int p){
     nivel->setPuntuacion(p);
 }
 
-int Mundo::ejecutarMundo(){    
+int Mundo::ejecutarMundo(bool arcade){    
     int estado=0;   //estado 0: Sigue en juego; estado 1: Menu de pausa; estado 2: Menu de "Has muerto"; estado 3: Nivel finalizado; estado 4: Juego finalizado
     bool nivelAcabado=false;  
     bool existePersonaje=false;  
@@ -271,6 +271,8 @@ int Mundo::ejecutarMundo(){
     sf::Clock disparo;    
     disparo.restart();
     //Bucle del juego    
+    
+    
     while (window->isOpen() && estado==0)
     {
         //Controlamos la frecuencia a la que se ejecuta el programa
@@ -340,7 +342,16 @@ int Mundo::ejecutarMundo(){
                 
             }
             
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::O) && sf::Keyboard::isKeyPressed(sf::Keyboard::I))
+            int mando = 0;
+            for(int i = 0; i < 8; i++)
+            {
+               if(sf::Joystick::isConnected(i))
+               {
+                   mando = i;
+               }                    
+            }
+            
+            if((sf::Keyboard::isKeyPressed(sf::Keyboard::O) && sf::Keyboard::isKeyPressed(sf::Keyboard::I)) || sf::Joystick::isButtonPressed(mando, 8))
             {
                 if(serrucho == false)
                 {
@@ -355,7 +366,7 @@ int Mundo::ejecutarMundo(){
                 }
             
             }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::L) && sf::Keyboard::isKeyPressed(sf::Keyboard::K))
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::L) && sf::Keyboard::isKeyPressed(sf::Keyboard::K) || sf::Joystick::isButtonPressed(mando, 9))
             {
                 if(serrucho)
                 {
@@ -433,9 +444,9 @@ int Mundo::ejecutarMundo(){
                 }
             }
             
-            nivelAcabado = nivel->actualizarNivel(protagonista, impactos,fallos, posicionCursor());
+            nivelAcabado = nivel->actualizarNivel(protagonista, impactos,fallos, posicionCursor(), arcade);
                 
-            if(nivelAcabado==true){//Nivel finalizado                
+            if(nivelAcabado==true || (existePersonaje==false && arcade==true)){//Nivel finalizado                
                 nivel->calcularPuntuacionTotal();
                 pintarMundo();
                 sf::Time delayTime = sf::seconds(10);
@@ -466,7 +477,8 @@ int Mundo::ejecutarMundo(){
                     nivel->cambiarSerrucho();
                 }
                 
-                
+                if(arcade==true)
+                    estado=4;
             }
             relojUpdate.restart();
             
@@ -524,8 +536,13 @@ int Mundo::ejecutarMundo(){
                 audios->serrucho.stop();
                 nivel->cambiarSerrucho();
             }
+            
             sonandoNivel = false;
-            estado=2;
+            
+            if(arcade==false)
+                estado=2;
+            else
+                estado=9;
         }
                 
                 

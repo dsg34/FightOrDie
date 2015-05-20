@@ -4,10 +4,20 @@
 
 class RecursosFactory {
 public:
+    
+    static RecursosFactory *Instance()
+    {
+        if(!pinstance)
+            pinstance = new RecursosFactory();
+        return pinstance;
+    }
+    
     RecursosFactory();
     RecursosFactory(const RecursosFactory& orig);
     virtual ~RecursosFactory();
     Recurso* crearRecurso(int tip);
+    
+    RecursosFactory &operator = (const RecursosFactory & );
     
 private:
     
@@ -20,6 +30,8 @@ private:
     Recurso* crearBarril();
     
     sf::Texture* texturaHud;
+    
+    static RecursosFactory* pinstance;
     
 
 };

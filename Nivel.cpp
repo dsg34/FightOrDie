@@ -23,8 +23,8 @@ Nivel::Nivel(int i, Protagonista* &p, sf::Vector2<int> t, std::vector<int> s, fl
     fallos=0;
     impactos=0;
     
-    fabR = new RecursosFactory();
-    fabP = new PersonajeFactory();
+    fabR = RecursosFactory::Instance();
+    fabP = PersonajeFactory::Instance();
     
     tApareceZombie=tZ;
     tApareceRecurso=4+rand()%11;
@@ -47,6 +47,8 @@ Nivel::Nivel(int i, Protagonista* &p, sf::Vector2<int> t, std::vector<int> s, fl
    sonidosClock.restart();
     
    rec.restart();
+   
+   oleadaArcade=1;
 }
 
 Nivel::Nivel(const Nivel& orig) {
@@ -82,10 +84,17 @@ std::vector<Zombie*> Nivel::getZombies(){
     return zombies;
 }
 
+void Nivel::siguienteOleadaArcade(int i){
+    oleada = oleada->siguienteOleadaArcade(i);
+    numZombies=0;
+}
+
 void Nivel::siguienteOleada(){
     oleada = oleada->crearOleada(id, oleada->getId()+1);
     numZombies=0;
 }
+
+
     
 void Nivel::addRecurso(Recurso* r){
     recursos.push_back(r);
@@ -121,7 +130,7 @@ void Nivel::controlarRacha(int imp){//
     }        
 }
 
-bool Nivel::actualizarNivel(Protagonista* p, int impac, int fall, sf::Vector2<int> posCursor)
+bool Nivel::actualizarNivel(Protagonista* p, int impac, int fall, sf::Vector2<int> posCursor, bool arcade)
 {   
     
     bool terminado=false;
@@ -190,12 +199,22 @@ bool Nivel::actualizarNivel(Protagonista* p, int impac, int fall, sf::Vector2<in
     }
     if(estadoNivel==1)
     {
-        crearMensaje("Se acerca una nueva oleada de zombies...", 40, 150, 1);        
-        siguienteOleada();
+        crearMensaje("Se acerca una nueva oleada de zombies...", 40, 150, 1);   
+        if(arcade==false)
+            siguienteOleada();
+        else{
+            oleadaArcade=oleadaArcade+1;
+            siguienteOleadaArcade(oleadaArcade);
+        }            
     }
-    else if(estadoNivel==2)
-        terminado=true;
-    
+    else if(estadoNivel==2){
+        if(arcade==false)
+            terminado=true;
+        else{
+            oleadaArcade=oleadaArcade+1;
+            siguienteOleadaArcade(oleadaArcade);            
+        }
+    }
     int mando = 0;
     for(int i = 0; i < 8; i++)
     {

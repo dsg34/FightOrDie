@@ -19,11 +19,11 @@ Recurso::Recurso(sf::Sprite* s, sf::Texture* te, int bloq, int dan, int inv, int
     
     int num = rand();
     
-    num=100+rand()%(1200-100);
+    num=200+rand()%(1000);
     
     int num2 = rand();
     
-    num2=100+rand()%(700-100);
+    num2=200+rand()%(550);
     
     spriteRecurso->setPosition(num, num2);
     
