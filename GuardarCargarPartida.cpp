@@ -20,6 +20,7 @@ GuardarCargarPartida::~GuardarCargarPartida() {
 //Debe devolver: -Estado mejoras de armas (4 ints) -Nivel actual (1 int) -Oleada actual (1 int)
 /***********************************************************************************************************GESTION DE PARTIDAS*/
 void GuardarCargarPartida::guardarPartida(Nivel* n, Protagonista* p){
+    /*
     std::ofstream escribirPartida;
     escribirPartida.open("data.txt");
     if(existeFichero(std::string("data.txt"))){
@@ -32,7 +33,7 @@ void GuardarCargarPartida::guardarPartida(Nivel* n, Protagonista* p){
         escribirPartida<<encriptado(intAString(n->getPuntuacion()))<<endl;
         
         escribirPartida.close();
-    }    
+    }    */
 }
 
 //Debe devolver: -Estado mejoras de armas (4 ints) -Nivel actual (1 int) -Oleada actual (1 int)
@@ -57,6 +58,7 @@ std::vector<int> GuardarCargarPartida::cargarPartida(){
 }
 /***********************************************************************************************************GESTION DE PUNTUACIONES*/
 void GuardarCargarPartida::guardarPuntuacion(Nivel* n, bool arcade){
+    /*
     std::vector<int> v;
     std::vector<std::string> original;
     int intAux=-1, nuevaPunt=n->getPuntuacion(), pos=-1;
@@ -94,7 +96,7 @@ void GuardarCargarPartida::guardarPuntuacion(Nivel* n, bool arcade){
               cout<<"-"<<intAString(v[i])<<endl;
           
           cout<<endl;
-          cout<<"Tamaño de V: "<<intAString(v.size())<<endl;*/
+          cout<<"Tamaño de V: "<<intAString(v.size())<<endl;
            leerPuntuaciones.close();
         }
         //cout<<"Tamaño de V: "<<intAString(v.size())<<endl;
@@ -130,12 +132,14 @@ void GuardarCargarPartida::guardarPuntuacion(Nivel* n, bool arcade){
             }
             escribirPartida.close();
         }
-    }
+    }*/
 }
 //Devuelve un vector con las 5 mejores puntuaciones del nivel indicado
-std::vector<int> GuardarCargarPartida::cargarPuntuaciones(){
-    std::vector<int> v;
+std::vector<int> GuardarCargarPartida::cargarPuntuaciones()
+{
     
+    std::vector<int> v;
+    /*
     if(existeFichero("data-point.txt")==false)
         inicializarPuntuaciones();    
         
@@ -157,21 +161,23 @@ std::vector<int> GuardarCargarPartida::cargarPuntuaciones(){
           }
            leerPuntuaciones.close();
         }        
-    }
+    }*/
     return v;
 }
 
 void GuardarCargarPartida::guardarPuntuacionSimple(Nivel* n){
+    /*
     std::ofstream escribirPartida;
     int punt=n->getPuntuacion();
     escribirPartida.open("data-p.txt");
     if(existeFichero(std::string("data-p.txt"))){
         escribirPartida<<encriptado(intAString(punt))<<endl;        
         escribirPartida.close();
-    }    
+    }    */
 }
 
 int GuardarCargarPartida::cargarPuntuacionSimple(){
+    /*
     int v=0;
     if(existeFichero("data-p.txt")){
         std::ifstream leerPartida("data-p.txt");
@@ -185,11 +191,13 @@ int GuardarCargarPartida::cargarPuntuacionSimple(){
            leerPartida.close();
         }     
     }
-    return v;    
+    return v;    */
+    return 1;
 }
 
 
 void GuardarCargarPartida::inicializarPuntuaciones(){
+    /*
     std::ofstream inicializarPuntuaciones("data-point.txt");
     if(existeFichero(std::string("data-point.txt"))){
         
@@ -202,7 +210,7 @@ void GuardarCargarPartida::inicializarPuntuaciones(){
             cont++;
         }
         inicializarPuntuaciones.close();
-    }  
+    }  */
 }
 
 

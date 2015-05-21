@@ -85,7 +85,7 @@ std::vector<Zombie*> Nivel::getZombies(){
 }
 
 void Nivel::siguienteOleadaArcade(int i){
-    //oleada = oleada->siguienteOleadaArcade(i);
+    oleada = oleada->siguienteOleadaArcade(i);
     numZombies=0;
 }
 
@@ -352,7 +352,7 @@ int Nivel::actualizarZombiesExistentes(Protagonista* p){
     Zombie* z;
     for(int i=0; i<zombies.size(); i++)
     { 
-        zombieAtaca=zombies[i]->update(*(p->getSprite()), zombies, p->getArmas(), recursos, mapa);
+        zombieAtaca=zombies[i]->update(*(p->getSprite()), zombies, p->getArmas(), recursos, mapa, id);
         if(zombieAtaca==1){
             if(p->getVida()>0){
                 p->recibirDanyo(zombies[i]->getDanyo());
@@ -412,13 +412,15 @@ int Nivel::devuelveTipoRecurso(){
         tipo=4;
     else if(val<60)
         tipo=5;
+    else if(val<75)
+        tipo=7;
     else
         tipo=6;
     
     return tipo;
 }
 
-
+/*
 sf::Vector2<int> Nivel::devuelvePos(){
     sf::Vector2<int> pos, tam=*hud->getTamPantalla();
     
@@ -455,6 +457,49 @@ sf::Vector2<int> Nivel::devuelvePos(){
                     break; 
     }         
     return pos;
+}*/
+
+sf::Vector2<int> Nivel::devuelvePos(){
+    sf::Vector2<int> pos, tam=*hud->getTamPantalla();
+    
+    bool correcto=false;
+    int lado=-1;
+    while(!correcto){
+        lado = 1+(int)rand() % 4;
+        if(std::find(spawnsZombies.begin(), spawnsZombies.end(), lado)!=spawnsZombies.end())
+            correcto=true;
+    }
+    
+    //Genera aleatoriamente el lado en el que aparece el zombie
+    
+     switch(lado){
+        //Por la izquierda
+         case 1:    pos.x=-80;
+                    pos.y=(rand()%8)*80;
+                    break;
+        //Por la derecha
+        case 2:     pos.x=tam.x+80;
+                    pos.y=(rand()%8)*80+125;
+                    break; 
+        //Por arriba-izq
+        case 3:     pos.y=-80;
+                    pos.x=(rand()%4)*80+110;
+                    break;
+        //Por arriba-der
+        case 4:     pos.y=-80;
+                    pos.x=(rand()%4)*80+925;
+                    break;
+        //Por abajo          
+        case 5:     pos.y=tam.y+80;
+                    pos.x=(rand()%8)*80+360;
+                    break;
+        //Por abajo especial
+        case 6:     pos.y=tam.y+80;
+                    pos.x=(rand()%7)*80+150;
+                    break;
+                        
+    }         
+    return pos;
 }
 
 void Nivel::crearZombies(int num){
@@ -463,44 +508,46 @@ void Nivel::crearZombies(int num){
     Zombie* aux;    
     for(int i=0; i<num; i++){
         pos=creaPos();
-        sf::Vector2<float> v;
-
-        v.x = (float) pos.x;
-        v.y = (float) pos.y;
-
-        tipo=devuelveTipo();
-        
-        if(numZombies == oleada->getNumZombies() -10 && oleada->getId()%3 == 0)
-            crearMensaje("Se acerca algo fuera de lo normal...", 40, 150, 1);
-        
-        if(numZombies == oleada->getNumZombies() - 1 && oleada->getId() == 3)
-        {
-            tipo = 4;      
-            //audios->risaBoss.setVolume(25);
-            audios->risaBoss.play();
-        }
-        
-        
-        
-        aux = fabP->crearZombie(tipo, v, id);
-            
-            
-        if(tipo = 4)
-        {
-            int x = aux->getPosActual().x;
-            if(x < 450)
-                x = x - 100;
-            else
-                x = x + 100;
-            
+        if(pos.x!=-1000 && pos.y!=-1000){
             sf::Vector2<float> v;
-            v.x = x;
-            v.y = aux->getPosActual().y;
-            
-            aux->setPosActual(v);
+
+            v.x = (float) pos.x;
+            v.y = (float) pos.y;
+
+            tipo=devuelveTipo();
+
+            if(numZombies == oleada->getNumZombies() -10 && oleada->getId()%3 == 0)
+                crearMensaje("Se acerca algo fuera de lo normal...", 40, 150, 1);
+
+            if(numZombies == oleada->getNumZombies() - 1 && oleada->getId() == 3)
+            {
+                tipo = 4;      
+                //audios->risaBoss.setVolume(25);
+                audios->risaBoss.play();
+            }
+
+
+
+            aux = fabP->crearZombie(tipo, v, id);
+
+
+            if(tipo = 4)
+            {
+                int x = aux->getPosActual().x;
+                if(x < 450)
+                    x = x - 100;
+                else
+                    x = x + 100;
+
+                sf::Vector2<float> v;
+                v.x = x;
+                v.y = aux->getPosActual().y;
+
+                aux->setPosActual(v);
+            }
+            zombies.push_back(aux);
+            numZombies++;
         }
-        zombies.push_back(aux);
-        numZombies++;
     }
 }
 
@@ -541,19 +588,22 @@ sf::Vector2<int> Nivel::creaPos(){
     bool ocupado=false;
     sf::Vector2<int> pos;
     float distX=0;
-    float distY=0;
-    do{
-        ocupado=false;
-        pos=devuelvePos();
-        for(int i=0; i<zombies.size(); i++)
-        { 
-            distX=fabs(zombies[i]->getSprite()->getPosition().x-pos.x);
-            distY=fabs(zombies[i]->getSprite()->getPosition().y-pos.y);
+    float distY=0;   
+    ocupado=false;
+    pos=devuelvePos();
+    for(int i=0; i<zombies.size(); i++)
+    { 
+        distX=fabs(zombies[i]->getSprite()->getPosition().x-pos.x);
+        distY=fabs(zombies[i]->getSprite()->getPosition().y-pos.y);
 
-            if(distX<80 && distY<80)
-                ocupado=true;
+        if(distX<80 && distY<80){
+            ocupado=true;
         }
-    }while(ocupado==true);
+    }
+    if(ocupado==true){
+        pos.x=-1000;
+        pos.y=-1000;
+    }
     return pos;
 }
 

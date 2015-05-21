@@ -39,6 +39,15 @@ Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, 
     }
     texHacha = new sf::Texture(texA);
     
+    sf::Texture texS;
+    if (!texS.loadFromFile("resources/BillySerrucho.png"))
+    {
+        std::cerr << "Error cargando la imagen sprites.png";
+        exit(0);
+    }
+    texSERRUCHO = new sf::Texture(texS);
+    
+    
     sprite = new sf::Sprite(*s);
     sprite->setTexture(*tex);
     sprite->setPosition(p);
@@ -48,7 +57,7 @@ Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, 
     maxVida = mV;
     velocidad = ve;
     estaVivo = true;
-    municionSecundaria = 5;
+    municionSecundaria = 0;
     rec = false;
     fabR = RecursosFactory::Instance();;
     
@@ -73,6 +82,7 @@ Protagonista::Protagonista(sf::Sprite* s, sf::Texture* t, sf::Vector2<float> p, 
     sp.restart();
     relojHacha.restart();
     hachazo = false;
+    serrucho = false;
 }
 
 Protagonista::Protagonista(const Protagonista& orig) : Personaje(orig) {
@@ -90,6 +100,23 @@ Protagonista::~Protagonista()
     for(int i = 0; i < inventario.size(); i++)
     {
         delete inventario[i];
+    }
+}
+
+void Protagonista::cambiarSerrucho()
+{
+    if(!serrucho)
+    {
+        serrucho = true;
+        if(arma->getTipo() == 4)
+            sprite->setTexture(*texSERRUCHO);
+            
+    }
+    else
+    {
+        serrucho = false;
+        if(arma->getTipo() == 4)
+            sprite->setTexture(*texHacha);
     }
 }
 
@@ -130,7 +157,7 @@ void Protagonista::sacarRecursoInventario(int tipo){
      bool eliminado = false;
     for(int i=0;i<inventario.size();i++){  
         //std::cout<<intAString(i)<<std::endl;
-        if(inventario[i]->getTipo()==tipo /*&& inventario[i]->getReducirEnInventario()==false*/ && eliminado == false){
+        if(inventario[i]->getTipo()==tipo && eliminado == false){
             inventario[i]->setReducirEnInventario(true);
             eliminado = true;                
         }     
@@ -238,8 +265,16 @@ void Protagonista::siguienteArma(){
                     sprite->setTexture(*texMetralleta);
                 }else if(arma->getTipo()==3){
                     sprite->setTexture(*texEscopeta);
-                }else if(arma->getTipo()==4){
-                    sprite->setTexture(*texHacha);
+                }else if(arma->getTipo()==4)
+                {
+                    if(serrucho)
+                    {
+                        sprite->setTexture(*texSERRUCHO);
+                    }
+                    else
+                    {
+                        sprite->setTexture(*texHacha);
+                    }
                 }
             }else{
                 sprite->setTexture(*texPistola);
@@ -271,7 +306,14 @@ void Protagonista::anteriorArma(){
             }else if(arma->getTipo()==3){
                 sprite->setTexture(*texEscopeta);
             }else if(arma->getTipo()==4){
-                sprite->setTexture(*texHacha);
+                if(serrucho)
+                {
+                    sprite->setTexture(*texSERRUCHO);
+                }
+                else
+                {
+                    sprite->setTexture(*texHacha);
+                }
             }
         }
     }

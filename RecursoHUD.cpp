@@ -1,4 +1,5 @@
 #include "RecursoHUD.h"
+using namespace std;
 
 RecursoHUD::RecursoHUD(int ti) {
     //Tipo: 1=pistola; 2=metralleta; 3=escopeta; 4=hacha; 5=barril; 6=madera; 7=valla; 8=granada
@@ -131,6 +132,7 @@ void RecursoHUD::setScale(float s){
 
 void RecursoHUD::cambiarNum(int i){
     if(tipo!=1 && tipo!=4){    
+        //num=num+i;
         texto->setString("x"+intAString(i));
     }
 }
@@ -176,8 +178,7 @@ std::string RecursoHUD::intAString(int p){
 }
 
 void RecursoHUD::pintarRecurso(sf::RenderWindow &window){
-    window.draw(*sprite);
-
+    window.draw(*sprite);    
     if(mostrarPuntuacion==true){
         sf::Color c = sf::Color(255,255,255,opacidad*255);        
         texto->setScale(1.05, 1.05);

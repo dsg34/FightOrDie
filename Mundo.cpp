@@ -356,6 +356,7 @@ int Mundo::ejecutarMundo(bool arcade){
                 if(serrucho == false)
                 {
                     nivel->cambiarSerrucho();
+                    protagonista->cambiarSerrucho();
                     audios->serrucho.setLoop(true);
                     audios->nivel1.stop();
                     audios->nivel2.stop();
@@ -372,6 +373,7 @@ int Mundo::ejecutarMundo(bool arcade){
                 {
                     sonandoNivel = false;
                     nivel->cambiarSerrucho();
+                    protagonista->cambiarSerrucho();
                     serrucho = false;
                     audios->serrucho.stop();
             
@@ -449,8 +451,12 @@ int Mundo::ejecutarMundo(bool arcade){
             if(nivelAcabado==true || (existePersonaje==false && arcade==true)){//Nivel finalizado                
                 nivel->calcularPuntuacionTotal();
                 pintarMundo();
-                sf::Time delayTime = sf::seconds(10);
-                sf::sleep(delayTime);
+                sf::Clock qq;                
+                qq.restart();
+                while(qq.getElapsedTime().asSeconds() < 5)
+                    {
+                        //window->draw(anim);
+                    } 
                 if(nivel->getId() == 1)
                 {
                     audios->nivel1.stop();                    

@@ -38,6 +38,13 @@ PersonajeFactory::PersonajeFactory()
     
     texturaZombieFuerte = new sf::Texture(texAux);
     
+    if(!texAux.loadFromFile("resources/zombie_fuerte2.png")){
+        std::cerr <<"Error cargando la imagen zombie.png";
+        exit(0);
+    }
+    
+    texturaZombieFuerte2 = new sf::Texture(texAux);
+    
 }
 
 PersonajeFactory::PersonajeFactory(const PersonajeFactory& orig) {
@@ -102,7 +109,7 @@ Zombie* PersonajeFactory::crearBoss(sf::Vector2<float> p, int n)
 
         sprite.setOrigin(75/2,75/2);
         sprite.setTextureRect(sf::IntRect(0*75,0*75,75,75));
-        sprite.setScale(2.5, 2.5);
+        sprite.setScale(2, 2);
 
         sf::Sprite* aux = new sf::Sprite(sprite);
         //Zombie(sprite, textura, posicion, maxVida, velocidad, danyo)
@@ -114,7 +121,7 @@ Zombie* PersonajeFactory::crearBoss(sf::Vector2<float> p, int n)
 
         sprite.setOrigin(75/2,75/2);
         sprite.setTextureRect(sf::IntRect(0*75,0*75,75,75));
-        sprite.setScale(2.5, 2.5);
+        sprite.setScale(2, 2);
 
         sf::Sprite* aux = new sf::Sprite(sprite);
         //Zombie(sprite, textura, posicion, maxVida, velocidad, danyo)
@@ -122,15 +129,15 @@ Zombie* PersonajeFactory::crearBoss(sf::Vector2<float> p, int n)
     }
     else
     {
-        sf::Sprite sprite(*texturaZombieFuerte);
+        sf::Sprite sprite(*texturaZombieFuerte2);
 
         sprite.setOrigin(75/2,75/2);
         sprite.setTextureRect(sf::IntRect(0*75,0*75,75,75));
-        sprite.setScale(2.5, 2.5);
+        sprite.setScale(2, 2);
 
         sf::Sprite* aux = new sf::Sprite(sprite);
         //Zombie(sprite, textura, posicion, maxVida, velocidad, danyo)
-        zombie = new Zombie(aux, texturaZombieFuerte, p, 300, 4.5, 5);
+        zombie = new Zombie(aux, texturaZombieFuerte2, p, 300, 4.5, 5);
     }
     
     return zombie;

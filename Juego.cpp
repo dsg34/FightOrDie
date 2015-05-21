@@ -378,6 +378,7 @@ int Juego::ejecutarJuego()
     sf::Clock reloj;
     reloj.restart();   
     
+    bool animacion=true;
     bool arcade=false;
     int nivelArcade=1;
     
@@ -419,6 +420,65 @@ int Juego::ejecutarJuego()
             
             while(salirJuego!=true)
             {
+                if(arcade==false && animacion==true){
+                    sf::Sprite anim;
+                    int id = mundo->getNivel()->getId();                                        
+                    
+                    sf::Clock qq;
+                    qq.restart();
+
+
+                    if(id == 2)
+                    {
+                        window->clear();
+                        sf::Texture tex1;
+                        if (!tex1.loadFromFile("resources/animacion2.png"))
+                        {
+                            std::cerr << "Error cargando la imagen animacion2.png";
+                            exit(0);
+                        }
+                        anim.setTexture(tex1);
+
+                        window->draw(anim);
+                        window->display();
+                    }
+                    else if(id == 1)
+                    {
+                        window->clear();
+                        sf::Texture tex1;
+                        if (!tex1.loadFromFile("resources/animacion1.png"))
+                        {
+                            std::cerr << "Error cargando la imagen animacion1.png";
+                            exit(0);
+                        }
+                        anim.setTexture(tex1);
+
+                        window->draw(anim);
+                        window->display();
+                    }
+                    else if(id == 3)
+                    {
+                        window->clear();
+                        sf::Texture tex1;
+                        if (!tex1.loadFromFile("resources/animacion3.png"))
+                        {
+                            std::cerr << "Error cargando la imagen animacion3.png";
+                            exit(0);
+                        }
+                        anim.setTexture(tex1);
+
+                        window->draw(anim);
+                        window->display();
+
+                    }
+
+
+                    while(qq.getElapsedTime().asSeconds() < 5)
+                    {
+                        //window->draw(anim);
+                    }  
+                    animacion=false;
+                }
                 estadoMundo = mundo->ejecutarMundo(arcade);   
                 
                 while(salirMenu!=true)
@@ -431,6 +491,7 @@ int Juego::ejecutarJuego()
                         gestionPartida->guardarPuntuacionSimple(mundo->getNivel());
                         siguienteNivel(mundo->getNivel()->getPuntuacion());
                         gestionPartida->guardarPartida(mundo->getNivel(),mundo->getProtagonista());
+                        animacion=true;
                     }
                     
                     if(estadoMundo==4 && arcade==true){
@@ -470,7 +531,7 @@ int Juego::ejecutarJuego()
                         case -10: salir=true;salirJuego=true;salirMenu=true; break; //Salir del juego
                         case -11: salirMenu=true; break;                    //No salir
                         case -12: estadoMundo=2; break;                     //Atras
-                        case -18: gestionPartida->guardarPartida(mundo->getNivel(),mundo->getProtagonista());estadoMundo=2;estadoMundo=2;  break;//Guardar partida
+                        case -18: gestionPartida->guardarPartida(mundo->getNivel(),mundo->getProtagonista());gestionPartida->guardarPuntuacionSimple(mundo->getNivel());estadoMundo=2;  break;//Guardar partida
                     }
                 }
                 if(estadoMenu!=-9)

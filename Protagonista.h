@@ -48,6 +48,7 @@ public:
     void controlRelojSprint();
     void actualizaMuerte();
     void sacarDeInventario(int posicion);
+    void cambiarSerrucho();
     void sacarRecursoInventario(int tipo);
     void anyadirGranada(sf::Vector2<float> p);
     bool devuelveSprintDisponible();
@@ -74,11 +75,13 @@ private:
     sf::Texture* texEscopeta;
     sf::Texture* texMetralleta;
     sf::Texture* texHacha;
+    sf::Texture* texSERRUCHO;
     Sonidos* audios;
     bool correr;
     bool granada;
     bool rec;
     bool hachazo;
+    bool serrucho;
     sf::Clock relojHacha;
 };
 

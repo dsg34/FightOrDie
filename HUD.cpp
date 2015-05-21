@@ -393,13 +393,12 @@ void HUD::anyadirRecurso(Recurso* r){
             esta=true;
         }            
     }
-    
     if(esta==false){
         RecursoHUD* nuevoRecurso = new RecursoHUD(tipo);
         nuevoRecurso->masNum();
         recursos.push_back(nuevoRecurso);
         actualizarRecursosHUD();
-    }    
+    }
 }
 
 void HUD::eliminarRecurso(Recurso* r){

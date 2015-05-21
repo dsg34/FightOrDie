@@ -42,7 +42,7 @@ private:
     sf::Texture* texturaZombieRapido;
     sf::Texture* texturaZombieFuerte;
     sf::Texture* texturaProtagonista;
-    
+    sf::Texture* texturaZombieFuerte2;
     static PersonajeFactory* pinstance;
 };
 

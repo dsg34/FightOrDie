@@ -35,6 +35,7 @@ Nivel* NivelFactory::crearNivel2(Protagonista* p, sf::Vector2<int> t){
 
     s.push_back(3);
     s.push_back(4);
+    s.push_back(5);
     
     float tz=4.0;
     
@@ -45,8 +46,9 @@ Nivel* NivelFactory::crearNivel2(Protagonista* p, sf::Vector2<int> t){
 
 Nivel* NivelFactory::crearNivel3(Protagonista* p, sf::Vector2<int> t){
     std::vector<int> s;
+    s.push_back(2);
     s.push_back(3);
-    s.push_back(4);
+    s.push_back(6);
     
     float tz=2.0;
     

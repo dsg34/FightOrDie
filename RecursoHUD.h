@@ -20,6 +20,7 @@ public:
     void setScale(float s);
     void setMostrarPuntuacion(bool m);
     void setOpacity(float o);
+    std::string intAString(int p);
     void cambiarASerrucho();
     
     void cambiarNum(int i);
@@ -27,7 +28,6 @@ public:
     void masNum();
     void menosNum();
     void cambiarPosicion(int x, int y);
-    std::string intAString(int p);
     
     void pintarRecurso(sf::RenderWindow &window);
     
